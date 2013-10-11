@@ -94,10 +94,10 @@ define( function( require ) {
     var pointsString = Util.toFixed( score, numberOfDecimalPlaces );
     var perfectScoreString = Util.toFixed( perfectScore, numberOfDecimalPlaces );
     if ( score === perfectScore ) {
-      return StringUtils.format( pattern_0points_1max, pointsString, perfectScoreString );
+      return StringUtils.format( pattern_0points_1max_perfect, pointsString, perfectScoreString );
     }
     else {
-      return StringUtils.format( pattern_0points_1max_perfect, pointsString, perfectScoreString );
+      return StringUtils.format( pattern_0points_1max, pointsString, perfectScoreString );
     }
   };
 
