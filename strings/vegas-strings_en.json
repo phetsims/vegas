@@ -1,0 +1,4 @@
+{
+  "pattern.0hours.1minutes.2seconds": "{0}:{1}:{2}",
+  "pattern.0minutes.1seconds": "{0}:{1}"
+}
