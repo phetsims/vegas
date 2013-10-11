@@ -13,5 +13,10 @@
   "pattern.0label.1value": "{0}: {1}",
   "pattern.0challenge.1max": "Challenge {0} of {1}",
   "pattern.0hours.1minutes.2seconds": "{0}:{1}:{2}",
-  "pattern.0minutes.1seconds": "{0}:{1}"
+  "pattern.0minutes.1seconds": "{0}:{1}",
+  "pattern.0points.1max": "Score: {0} out of {1}",
+  "pattern.0points.1max.perfect": "Score: {0} out of {1} (Perfect!)",
+  "pattern.0time": "Time: {0}",
+  "pattern.0time.newBest": "Time: {0} (Your New Best!)",
+  "pattern.0time.yourBest": "Time: {0} (Your Best: {1})"
 }
