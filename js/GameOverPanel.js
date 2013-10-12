@@ -84,7 +84,7 @@ define( function( require ) {
     timeNode.top = scoreNode.bottom + ySpacing;
     bottomSeparator.top = timeNode.bottom + ySpacing;
     newGameButton.centerX = bottomSeparator.centerX;
-    newGameButton.top = bottomSeparator.bottom + ySpacing
+    newGameButton.top = bottomSeparator.bottom + ySpacing;
 
     Panel.call( this, content, options );
   }

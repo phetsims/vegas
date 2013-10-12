@@ -115,7 +115,7 @@ define( function( require ) {
       subContent.addChild( nodes[i] );
       if ( i > 0 ) {
         nodes[i].left = nodes[i - 1].right + options.xSpacing;
-        nodes[i].centerY = nodes[i - 1].centerY
+        nodes[i].centerY = nodes[i - 1].centerY;
       }
     }
 
