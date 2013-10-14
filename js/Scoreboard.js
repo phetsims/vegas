@@ -22,11 +22,10 @@ define( function( require ) {
   var TextButton = require( 'SUN/TextButton' );
 
   // strings
-  var levelString = require( 'string!VEGAS/level' );
   var newGameString = require( 'string!VEGAS/newGame' );
-  var pattern_0label_1value = require( 'string!VEGAS/pattern.0label.1value' );
+  var pattern_0level = require( 'string!VEGAS/pattern.0level' );
+  var pattern_0score = require( 'string!VEGAS/pattern.0score' );
   var pattern_0challenge_1max = require( 'string!VEGAS/pattern.0challenge.1max' );
-  var scoreString = require( 'string!VEGAS/score' );
 
   /**
    * @param {Property<Number>} challengeIndexProperty which challenge is the user current playing? (index starts at 0, displayed starting at 1)
@@ -68,7 +67,7 @@ define( function( require ) {
     // Level
     var levelNode = new Text( '', { font: options.font, pickable: false } );
     levelProperty.link( function( level ) {
-      levelNode.text = StringUtils.format( pattern_0label_1value, levelString, level + 1 );
+      levelNode.text = StringUtils.format( pattern_0level, level + 1 );
     } );
 
     // Challenge number
@@ -80,7 +79,7 @@ define( function( require ) {
     // Score
     var scoreNode = new Text( '', { font: options.font, pickable: false } );
     scoreProperty.link( function( score ) {
-      scoreNode.text = StringUtils.format( pattern_0label_1value, scoreString, score );
+      scoreNode.text = StringUtils.format( pattern_0score, score );
     } );
 
     // Timer, always takes up space even when hidden.

@@ -24,9 +24,8 @@ define( function( require ) {
 
   // strings
   var gameOverString = require( 'string!VEGAS/gameOver' );
-  var levelString = require( 'string!VEGAS/level' );
   var newGameString = require( 'string!VEGAS/newGame' );
-  var pattern_0label_1value = require( 'string!VEGAS/pattern.0label.1value' );
+  var pattern_0level = require( 'string!VEGAS/pattern.0level' );
   var pattern_0points_1max = require( 'string!VEGAS/pattern.0points.1max' );
   var pattern_0points_1max_perfect = require( 'string!VEGAS/pattern.0points.1max.perfect' );
   var pattern_0time = require( 'string!VEGAS/pattern.0time' );
@@ -48,7 +47,7 @@ define( function( require ) {
     var titleNode = new Text( gameOverString, { font: options.titleFont } );
 
     var textOptions = { font: options.font };
-    var levelNode = new Text( StringUtils.format( pattern_0label_1value, levelString, level + 1 ), textOptions );
+    var levelNode = new Text( StringUtils.format( pattern_0level, level + 1 ), textOptions );
     var scoreNode = new Text( getScoreString( score, perfectScore, scoreDecimalPlaces ), textOptions );
     var timeNode = new Text( getTimeString( ( score === perfectScore ), time, bestTime ), textOptions );
     timeNode.visible = timerEnabled;
