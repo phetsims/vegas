@@ -8,10 +8,10 @@ define( function( require ) {
 
   // Imports
   var Sound = require( 'VIBE/Sound' );
-  var correctAnswerSound = require( 'audio!VEGAS/correctAnswer.mp3' );
-  var wrongAnswerSound = require( 'audio!VEGAS/incorrectAnswer.mp3' );
-  var imperfectScoreSound = require( 'audio!VEGAS/gameOver-imperfectScore.mp3' );
-  var perfectScoreSound = require( 'audio!VEGAS/gameOver-perfectScore2.mp3' );
+  var correctAnswerSound = require( 'audio!VEGAS/correctAnswer' );
+  var wrongAnswerSound = require( 'audio!VEGAS/incorrectAnswer' );
+  var imperfectScoreSound = require( 'audio!VEGAS/gameOver-imperfectScore' );
+  var perfectScoreSound = require( 'audio!VEGAS/gameOver-perfectScore2' );
 
   // Constants
   var CORRECT_ANSWER = new Sound( correctAnswerSound );
