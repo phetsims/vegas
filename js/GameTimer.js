@@ -39,7 +39,7 @@ define( function( require ) {
     var minutes = Math.floor( (time - (hours * 3600)) / 60 );
     var seconds = Math.floor( time - (hours * 3600) - (minutes * 60) );
 
-    var minutesString = ( minutes > 9 ) ? minutes.toString() : ( '0' + minutes );
+    var minutesString = ( minutes > 9 || hours == 0 ) ? minutes.toString() : ( '0' + minutes );
     var secondsString = ( seconds > 9 ) ? seconds.toString() : ( '0' + seconds );
 
     if ( hours > 0 ) {
