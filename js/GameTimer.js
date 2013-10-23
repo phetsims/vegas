@@ -39,8 +39,8 @@ define( function( require ) {
     var minutes = Math.floor( (time - (hours * 3600)) / 60 );
     var seconds = Math.floor( time - (hours * 3600) - (minutes * 60) );
 
-    var minutesString = ( minutes > 9 || hours == 0 ) ? minutes.toString() : ( '0' + minutes );
-    var secondsString = ( seconds > 9 ) ? seconds.toString() : ( '0' + seconds );
+    var minutesString = ( minutes > 9 || hours == 0 ) ? minutes : ( '0' + minutes );
+    var secondsString = ( seconds > 9 ) ? seconds : ( '0' + seconds );
 
     if ( hours > 0 ) {
       return StringUtils.format( pattern_0hours_1minutes_2seconds, hours, minutesString, secondsString );
