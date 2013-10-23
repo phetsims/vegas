@@ -1,0 +1,21 @@
+{
+  "Games.label.level": "Szint: {0}",
+  "Games.title.gameSettings": "Játékbeállítások",
+  "Games.label.score": "Pontszám: {0}",
+  "Games.button.start": "Mehet!",
+  "Games.check": "Ellenőrzés",
+  "Games.radioButton.on": "be",
+  "Games.radioButton.off": "ki",
+  "Games.title.gameOver": "Játék vége",
+  "Games.next": "A következőt",
+  "Games.button.newGame": "Új játék",
+  "Games.label.newBest": "REKORD!",
+  "Games.label.best": "Legjobb: {0}",
+  "Games.showAnswer": "Mutasd a választ",
+  "Games.label.levelControl": "Szint:",
+  "Games.label.time": "Idő: {0}",
+  "Games.label.score.max": "Pontszám: {0} (max.: {1})",
+  "Games.tryAgain": "Új próbálkozás",
+  "Games.label.score.max.perfect": "Pontszám: {0} (max.: {1}) TÖKÉLETES!",
+  "Games.message.confirmNewGame": "<html>Még nem fejezted be a játékot!<br>Biztos, hogy újat akarsz kezdeni?</html>"
+}

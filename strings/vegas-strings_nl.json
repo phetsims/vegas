@@ -1,0 +1,18 @@
+{
+  "Games.label.level": "Niveau: {0}",
+  "Games.title.gameSettings": "Spelinstellingen",
+  "Games.label.score": "Score: {0}",
+  "Games.button.start": "Start!",
+  "Games.radioButton.on": "aan",
+  "Games.radioButton.off": "uit",
+  "Games.title.gameOver": "Einde spel",
+  "Games.button.newGame": "Opnieuw",
+  "Games.label.newBest": "JE BENT DE BESTE!",
+  "Games.label.best": "Beste: {0}",
+  "Games.format.time.best": "{0} ({1})",
+  "Games.label.levelControl": "Niveau:",
+  "Games.label.time": "Tijd: {0}",
+  "Games.label.score.max": "Score: {0} van {1}",
+  "Games.label.score.max.perfect": "Score: {0} van {1} (PERFECT!)",
+  "Games.message.confirmNewGame": "<html>Je hebt deze ronde nog niet afgemaakt.<br>Toch een nieuwe ronde starten?</html>"
+}

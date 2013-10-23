@@ -1,0 +1,18 @@
+{
+  "Games.label.level": "Niveli: {0}",
+  "Games.title.gameSettings": "Parametra të Lojës",
+  "Games.label.score": "Pikët: {0}",
+  "Games.button.start": "Fillo!",
+  "Games.radioButton.on": "on",
+  "Games.radioButton.off": "off",
+  "Games.title.gameOver": "Loja Mbaroi",
+  "Games.button.newGame": "Lojë e Re",
+  "Games.label.newBest": "Më i miri I RI!",
+  "Games.label.best": "Më i miri: {0}",
+  "Games.format.time.best": "{0} ({1})",
+  "Games.label.levelControl": "Niveli:",
+  "Games.label.time": "Koha: {0}",
+  "Games.label.score.max": "Pikët: {0} nga {1}",
+  "Games.label.score.max.perfect": "Pikët: {0} nga {1} (PERFEKTE!)",
+  "Games.message.confirmNewGame": "<html>Ju nuk e keni mbaruar akoma këtë lojë.<br>Jeni të sigurt që doni të filloni një lojë të re?</html>"
+}

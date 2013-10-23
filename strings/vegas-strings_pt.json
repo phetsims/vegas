@@ -1,0 +1,17 @@
+{
+  "Games.label.levelControl": "Nível:",
+  "Games.label.score.max.perfect": "Resultado: {0} em {1} (PERFEITO)",
+  "Games.message.confirmNewGame": "<html>Não terminou este jogo.<br>Pretende iniciar um novo jogo?</html>",
+  "Games.button.newGame": "Novo Jogo",
+  "Games.label.newBest": "NOVO RECORD",
+  "Games.title.gameSettings": "Definições do Jogo",
+  "Games.radioButton.on": "ligar",
+  "Games.label.score": "Resultado: {0}",
+  "Games.label.best": "O Melhor: {0}",
+  "Games.radioButton.off": "desligar",
+  "Games.label.level": "Nível: {0}",
+  "Games.button.start": "Iniciar!",
+  "Games.label.time": "Tempo: {0}",
+  "Games.title.gameOver": "Jogo Terminado",
+  "Games.label.score.max": "Resultado: {0} em {1}"
+}

@@ -1,0 +1,16 @@
+{
+  "Games.title.gameSettings": "Spiel Einstellungen",
+  "Games.label.score": "Score: {0}",
+  "Games.radioButton.on": "Aus",
+  "Games.radioButton.off": "An",
+  "Games.title.gameOver": "Spiel vorbei",
+  "Games.button.newGame": "Neues Spiel",
+  "Games.label.newBest": "Deine neue Bestleistung!",
+  "Games.label.best": "Bestleistung: {0}",
+  "Games.showAnswer": "Antwort zeigen",
+  "Games.label.time": "Zeit {0}",
+  "Games.label.score.max": "Score: {0} von {1}",
+  "Games.tryAgain": "Noch einmal",
+  "Games.label.score.max.perfect": "Score: {0} von {1}! (Perfekt!)",
+  "Games.message.confirmNewGame": "<html>Du hast das Spiel nicht abgeschlossen.<br>Bist Du sicher, dass Du ein neues Spiel starten willst?</html>"
+}

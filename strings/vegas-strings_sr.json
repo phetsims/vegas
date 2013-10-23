@@ -1,0 +1,17 @@
+{
+  "Games.label.level": "Ниво: {0}",
+  "Games.title.gameSettings": "Подешавања игре",
+  "Games.label.score": "Резултат: {0}",
+  "Games.button.start": "Старт!",
+  "Games.radioButton.on": "укљ.",
+  "Games.radioButton.off": "искљ.",
+  "Games.title.gameOver": "Крај игре",
+  "Games.button.newGame": "Нова игра",
+  "Games.label.newBest": "НОВИ РЕКОРД!",
+  "Games.label.best": "Најбољи: {0}",
+  "Games.label.levelControl": "Ниво:",
+  "Games.label.time": "Време: {0}",
+  "Games.label.score.max": "Укупно: {0}  од {1}",
+  "Games.label.score.max.perfect": "Укупно: {0} од  {1} (САВРШЕНО!)",
+  "Games.message.confirmNewGame": "<html>Нисте завршили ову игру.<br>Да ли сте сигурни да желите да започнете нову?</html>"
+}

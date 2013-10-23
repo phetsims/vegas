@@ -1,0 +1,18 @@
+{
+  "Games.label.level": "Nível: {0}",
+  "Games.title.gameSettings": "Configurações do jogo",
+  "Games.label.score": "Pontos: {0}",
+  "Games.button.start": "Iniciar!",
+  "Games.radioButton.on": "liga",
+  "Games.radioButton.off": "deslig.",
+  "Games.title.gameOver": "Fim de jogo",
+  "Games.button.newGame": "Novo Jogo",
+  "Games.label.newBest": "Novo Recorde!",
+  "Games.label.best": "melhor: {0}",
+  "Games.format.time.best": "{0} ({1})",
+  "Games.label.levelControl": "Nível:",
+  "Games.label.time": "Tempo: {0}",
+  "Games.label.score.max": "Pontos: {0} de {1}",
+  "Games.label.score.max.perfect": "Pontos: {0} de {1} (PERFEITO!)",
+  "Games.message.confirmNewGame": "<html>Você não terminou esse jogo.<br>Tem certeza que quer começar um jogo novo?</html>"
+}

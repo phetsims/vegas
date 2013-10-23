@@ -26,4 +26,25 @@
   "pattern.0yourBest": "(Your Best: {0})",
   "game.continue": "Continue"
 
+  // Ported old strings:
+  "Games.label.level": "Level: {0}",
+  "Games.title.gameSettings": "Game Settings",
+  "Games.label.score": "Score: {0}",
+  "Games.button.start": "Start",
+  "Games.check": "Check",
+  "Games.radioButton.on": "on",
+  "Games.radioButton.off": "off",
+  "Games.title.gameOver": "Game Over",
+  "Games.next": "Next",
+  "Games.button.newGame": "New Game",
+  "Games.label.newBest": "Your New Best!",
+  "Games.label.best": "Your Best: {0}",
+  "Games.showAnswer": "Show Answer",
+  "Games.format.time.best": "{0} ({1})",
+  "Games.label.levelControl": "Level:",
+  "Games.label.time": "Time: {0}",
+  "Games.label.score.max": "Score: {0} out of {1}",
+  "Games.tryAgain": "Try Again",
+  "Games.label.score.max.perfect": "Score: {0} out of {1} (Perfect!)",
+  "Games.message.confirmNewGame": "<html>You haven't finished this game.<br>Are you sure you want to start a new game?</html>"
 }

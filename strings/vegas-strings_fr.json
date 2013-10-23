@@ -1,0 +1,21 @@
+{
+  "Games.label.level": "Niveau : {0}",
+  "Games.title.gameSettings": "Paramètres du jeu",
+  "Games.label.score": "Score : {0}",
+  "Games.button.start": "Départ",
+  "Games.check": "Vérifier",
+  "Games.radioButton.on": "Activé",
+  "Games.radioButton.off": "Inactif",
+  "Games.title.gameOver": "Terminé",
+  "Games.button.newGame": "Nouvelle partie",
+  "Games.label.newBest": "Votre nouveau score !",
+  "Games.label.best": "Meilleur score : {0}",
+  "Games.showAnswer": "Montrer la réponse",
+  "Games.format.time.best": "{0} ({1})",
+  "Games.label.levelControl": "Niveau :",
+  "Games.label.time": "Temps : {0}",
+  "Games.label.score.max": "Score : {0} sur {1}",
+  "Games.tryAgain": "Essaye encore",
+  "Games.label.score.max.perfect": "Score : {0} sur {1} (Parfait)",
+  "Games.message.confirmNewGame": "<html>Vous n'avez pas terminée cette partie.<br>Etes-vous sûr de vouloir en commencer une nouvelle ?</html>"
+}
