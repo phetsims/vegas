@@ -1,4 +1,5 @@
 {
+  // TODO: Need to modify these strings to be preceeded with "Games." here an in all usages, and need to consolidate with old strings below.
   "start": "Start",
   "gameOver": "Game Over",
   "gameSettings": "Game Settings",
