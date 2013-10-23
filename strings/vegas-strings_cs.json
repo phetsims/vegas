@@ -13,6 +13,6 @@
   "Games.label.levelControl": "Kolo:",
   "Games.label.time": "Čas: {0}",
   "Games.label.score.max": "Skóre: {0} z {1}",
-  "Games.label.score.max.perfect": "Skóre: {0} z {1} (BEZ CHYB!",
-  "Games.message.confirmNewGame": "<html>Nedokončili jste tuto hru.<br>Chcete opravdu začít novou  hru?</html>"
+  "Games.label.score.max.perfect": "Skóre: {0} z {1} (BEZ CHYB!)",
+  "Games.message.confirmNewGame": "Nedokončili jste tuto hru.\nChcete opravdu začít novou  hru?"
 }

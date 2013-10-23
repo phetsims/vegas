@@ -25,7 +25,7 @@
   "game.excellent": "Excellent!",
   "game.yourNewBest": "(Your New Best!)",
   "pattern.0yourBest": "(Your Best: {0})",
-  "game.continue": "Continue"
+  "game.continue": "Continue",
 
   // Ported old strings:
   "Games.label.level": "Level: {0}",
@@ -47,5 +47,5 @@
   "Games.label.score.max": "Score: {0} out of {1}",
   "Games.tryAgain": "Try Again",
   "Games.label.score.max.perfect": "Score: {0} out of {1} (Perfect!)",
-  "Games.message.confirmNewGame": "<html>You haven't finished this game.<br>Are you sure you want to start a new game?</html>"
+  "Games.message.confirmNewGame": "You haven't finished this game.\nAre you sure you want to start a new game?"
 }

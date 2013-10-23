@@ -14,5 +14,5 @@
   "Games.label.time": "时间: {0}",
   "Games.label.score.max": "得分: {0} 超出 {1}",
   "Games.label.score.max.perfect": "得分: {0} 超出 {1} (非常棒!)",
-  "Games.message.confirmNewGame": "<html>你还没有结束游戏<br>你确信要开始新的游戏么?</html>"
+  "Games.message.confirmNewGame": "你还没有结束游戏\n你确信要开始新的游戏么?"
 }

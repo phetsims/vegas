@@ -14,5 +14,5 @@
   "Games.label.time": "Tan: {0}",
   "Games.label.score.max": "Skore: {0} sou {1}",
   "Games.label.score.max.perfect": "Skore: {0} sou {1} (Sa a bon nèt!)",
-  "Games.message.confirmNewGame": "<html>Ou poko fini ak pati sa a. Èske ou si ke w vle kòmanse yon lòt pati?</html>"
+  "Games.message.confirmNewGame": "Ou poko fini ak pati sa a. Èske ou si ke w vle kòmanse yon lòt pati?"
 }

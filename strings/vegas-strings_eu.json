@@ -14,5 +14,5 @@
   "Games.label.time": "Denbora: {0} ",
   "Games.label.score.max": "Puntuazioa: {1}-(e)tik {0} ",
   "Games.label.score.max.perfect": "Puntuazioa: {1}-(e)tik {0} (Bikain!)",
-  "Games.message.confirmNewGame": "<html>Ez duzu jokoa bukatu.<br>Seguru joko berri bat hasi nahi duzula?</html>"
+  "Games.message.confirmNewGame": "Ez duzu jokoa bukatu.\nSeguru joko berri bat hasi nahi duzula?"
 }

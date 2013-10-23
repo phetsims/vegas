@@ -1,7 +1,7 @@
 {
   "Games.label.levelControl": "Nível:",
   "Games.label.score.max.perfect": "Resultado: {0} em {1} (PERFEITO)",
-  "Games.message.confirmNewGame": "<html>Não terminou este jogo.<br>Pretende iniciar um novo jogo?</html>",
+  "Games.message.confirmNewGame": "Não terminou este jogo.\nPretende iniciar um novo jogo?",
   "Games.button.newGame": "Novo Jogo",
   "Games.label.newBest": "NOVO RECORD",
   "Games.title.gameSettings": "Definições do Jogo",

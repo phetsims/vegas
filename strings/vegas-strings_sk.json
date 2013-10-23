@@ -13,5 +13,5 @@
   "Games.label.time": "Čas: {0}",
   "Games.label.score.max": "Skóre: {0} z {1}",
   "Games.label.score.max.perfect": "Skóre: {0} z {1} (PERFEKTNÉ!)",
-  "Games.message.confirmNewGame": "<html>Túto hru ste neskončili. <br>Naozaj chcete začať novú hru?</html>"
+  "Games.message.confirmNewGame": "Túto hru ste neskončili. \nNaozaj chcete začať novú hru?"
 }

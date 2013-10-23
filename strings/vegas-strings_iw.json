@@ -14,5 +14,5 @@
   "Games.label.time": "זמן: {0}",
   "Games.label.score.max": "ניקוד: {0} מתוך {1}",
   "Games.label.score.max.perfect": "ניקוד: {0} מתוך {1} (מושלם!)",
-  "Games.message.confirmNewGame": "<html>לא סיימת את המשחק.<br>אתה בטוח שאתה רוצה להתחיל משחק חדש?</html>"
+  "Games.message.confirmNewGame": "לא סיימת את המשחק.\nאתה בטוח שאתה רוצה להתחיל משחק חדש?"
 }

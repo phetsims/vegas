@@ -14,5 +14,5 @@
   "Games.label.time": "Aika: {0}",
   "Games.label.score.max": "Pisteet: {0} / {1}",
   "Games.label.score.max.perfect": "Pisteet: {0} / {1} (Huipputulos!)",
-  "Games.message.confirmNewGame": "<html>Peli on kesken.<br>Haluatko varmasti aloittaa uuden pelin?</html>"
+  "Games.message.confirmNewGame": "Peli on kesken.\nHaluatko varmasti aloittaa uuden pelin?"
 }

@@ -1,7 +1,7 @@
 {
   "Games.label.levelControl": "Niveau:",
   "Games.label.score.max.perfect": "Score: {0} ud af {1} (Perfekt!)",
-  "Games.message.confirmNewGame": "<html>Du har ikke færdiggjort dette spil.<br>Er du sikker på, at du vil starte et nyt spil?</html>",
+  "Games.message.confirmNewGame": "Du har ikke færdiggjort dette spil.\nEr du sikker på, at du vil starte et nyt spil?",
   "Games.button.newGame": "Nyt spil",
   "Games.label.newBest": "Ny rekord!",
   "Games.title.gameSettings": "Indstillinger",

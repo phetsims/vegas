@@ -12,5 +12,5 @@
   "Games.label.time": "Czas: {0}",
   "Games.label.score.max": "Wynik: {0} z {1}",
   "Games.label.score.max.perfect": "Wynik: {0} z {1} (Świetnie!)",
-  "Games.message.confirmNewGame": "<html>Gra nie została zakończona.<br>Czy chcesz rozpocząć nową grę?</html>"
+  "Games.message.confirmNewGame": "Gra nie została zakończona.\nCzy chcesz rozpocząć nową grę?"
 }

@@ -18,5 +18,5 @@
   "Games.label.score.max": "점수: {1} 점 만점에 {0}점",
   "Games.tryAgain": "다시 해보세요",
   "Games.label.score.max.perfect": "점수: {1}점 만점에 {0}점 (만점)",
-  "Games.message.confirmNewGame": "<html>아직 게임이 끝나지 아니했습니다.<br>새로운 게임을 시작하시겠습니까?</html>"
+  "Games.message.confirmNewGame": "아직 게임이 끝나지 아니했습니다.\n새로운 게임을 시작하시겠습니까?"
 }

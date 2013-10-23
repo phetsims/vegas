@@ -14,5 +14,5 @@
   "Games.label.time": "زمان: {0}",
   "Games.label.score.max": "حساب : {0} out of {1}",
   "Games.label.score.max.perfect": "حساب : {0} out of {1}",
-  "Games.message.confirmNewGame": "شما این بازی را تمام نکرده اید! .<br>شما مطمئنید که<html> میخواهید بازی جدید را شروع کنید؟</html>"
+  "Games.message.confirmNewGame": "شما این بازی را تمام نکرده اید! .\nشما مطمئنید که میخواهید بازی جدید را شروع کنید؟"
 }

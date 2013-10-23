@@ -12,5 +12,5 @@
   "Games.label.score.max": "Score: {0} von {1}",
   "Games.tryAgain": "Noch einmal",
   "Games.label.score.max.perfect": "Score: {0} von {1}! (Perfekt!)",
-  "Games.message.confirmNewGame": "<html>Du hast das Spiel nicht abgeschlossen.<br>Bist Du sicher, dass Du ein neues Spiel starten willst?</html>"
+  "Games.message.confirmNewGame": "Du hast das Spiel nicht abgeschlossen.\nBist Du sicher, dass Du ein neues Spiel starten willst?"
 }

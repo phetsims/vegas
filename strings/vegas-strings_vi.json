@@ -14,5 +14,5 @@
   "Games.label.time": "Thời gian: {0}",
   "Games.label.score.max": "Điểm: {0} trên {1}",
   "Games.label.score.max.perfect": "Điểm: {0} trên {1} (Xuất sắc!)",
-  "Games.message.confirmNewGame": "<html>Bạn chưa hoàn thành game này.<br>Bắt đầu một game mới nhé?</html>"
+  "Games.message.confirmNewGame": "Bạn chưa hoàn thành game này.\nBắt đầu một game mới nhé?"
 }

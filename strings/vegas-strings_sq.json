@@ -14,5 +14,5 @@
   "Games.label.time": "Koha: {0}",
   "Games.label.score.max": "Pikët: {0} nga {1}",
   "Games.label.score.max.perfect": "Pikët: {0} nga {1} (PERFEKTE!)",
-  "Games.message.confirmNewGame": "<html>Ju nuk e keni mbaruar akoma këtë lojë.<br>Jeni të sigurt që doni të filloni një lojë të re?</html>"
+  "Games.message.confirmNewGame": "Ju nuk e keni mbaruar akoma këtë lojë.\nJeni të sigurt që doni të filloni një lojë të re?"
 }

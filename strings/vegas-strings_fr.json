@@ -17,5 +17,5 @@
   "Games.label.score.max": "Score : {0} sur {1}",
   "Games.tryAgain": "Essaye encore",
   "Games.label.score.max.perfect": "Score : {0} sur {1} (Parfait)",
-  "Games.message.confirmNewGame": "<html>Vous n'avez pas terminée cette partie.<br>Etes-vous sûr de vouloir en commencer une nouvelle ?</html>"
+  "Games.message.confirmNewGame": "Vous n'avez pas terminée cette partie.\nEtes-vous sûr de vouloir en commencer une nouvelle ?"
 }
