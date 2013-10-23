@@ -3,7 +3,7 @@ vegas
 
 Reusable game components for PhET simulations.
 
-Third Party Dependencies
+Third-Party Dependencies
 =============
 
 This repository uses third-party libraries.
