@@ -15,18 +15,25 @@ define( function( require ) {
   var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var TextButton = require( 'SUN/TextButton' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // Strings
-  var keepTryingString = require( 'string!BUILD_AN_ATOM/game.keepTrying' );
-  var goodString = require( 'string!BUILD_AN_ATOM/game.good' );
-  var greatString = require( 'string!BUILD_AN_ATOM/game.great' );
-  var excellentString = require( 'string!BUILD_AN_ATOM/game.excellent' );
+  var keepTryingString = require( 'string!VEGAS/game.keepTrying' );
+  var goodString = require( 'string!VEGAS/game.good' );
+  var greatString = require( 'string!VEGAS/game.great' );
+  var excellentString = require( 'string!VEGAS/game.excellent' );
+  var scoreOutOfString = require( 'string!VEGAS/pattern.0points.1max' );
+  var timeString = require( 'string!VEGAS/pattern.0time' );
+  var yourNewBestString = require( 'string!VEGAS/game.yourNewBest' );
+  var pattern0YourBestString = require( 'string!VEGAS/pattern.0yourBest' );
+  var continueString = require( 'string!VEGAS/game.continue' );
 
   // Constants
   var BACKGROUND_COLOR = new Color( 180, 205, 255 );
@@ -79,20 +86,19 @@ define( function( require ) {
     background.addChild( gameProgressIndicator );
 
     // TODO: i18n of everything below
-    var scoreText = new Text( 'Score: ' + score + ' out of ' + maxPossibleScore, { font: INFO_TEXT_FONT } );
+    var scoreText = new Text( StringUtils.format( scoreOutOfString, score, maxPossibleScore ), { font: INFO_TEXT_FONT } );
     background.addChild( scoreText );
 
-    var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
-    var time = new MultiLineText( 'Time: ' + GameTimer.formatTime( elapsedTime ), { font: INFO_TEXT_FONT, align: 'center' } );
+    var time = new MultiLineText( StringUtils.format( timeString, GameTimer.formatTime( elapsedTime ) ), { font: INFO_TEXT_FONT, align: 'center' } );
     if ( elapsedTime === bestTimeAtThisLevel ) {
-      time.text += '\n(Your New Best!)';
+      time.text += '\n' + yourNewBestString;
     }
     else {
-      time.text += '\n(Your Best: ' + GameTimer.formatTime( bestTimeAtThisLevel ) + ')';
+      time.text += '\n' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( elapsedTime ) );
     }
     background.addChild( time );
 
-    var continueButton = new TextButton( 'Continue', continueFunction, { font: new PhetFont( 28 ), rectangleFillUp: new Color( 255, 255, 0 ) } );
+    var continueButton = new TextButton( continueString, continueFunction, { font: new PhetFont( 28 ), rectangleFillUp: new Color( 255, 255, 0 ) } );
     background.addChild( continueButton );
 
     // Layout

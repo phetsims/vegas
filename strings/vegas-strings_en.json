@@ -17,5 +17,13 @@
   "pattern.0points.1max.perfect": "Score: {0} out of {1} (Perfect!)",
   "pattern.0time": "Time: {0}",
   "pattern.0time.newBest": "Time: {0} (Your New Best!)",
-  "pattern.0time.yourBest": "Time: {0} (Your Best: {1})"
+  "pattern.0time.yourBest": "Time: {0} (Your Best: {1})",
+  "game.keepTrying": "Keep Trying",
+  "game.good": "Good!",
+  "game.great": "Great!",
+  "game.excellent": "Excellent!",
+  "game.yourNewBest": "(Your New Best!)",
+  "pattern.0yourBest": "(Your Best: {0})",
+  "game.continue": "Continue"
+
 }
