@@ -26,7 +26,6 @@
   "pattern.0yourBest": "(Your Best: {0})",
   "game.continue": "Continue",
 
-  // Ported old strings:
   "Games.label.level": "Level: {0}",
   "Games.title.gameSettings": "Game Settings",
   "Games.label.score": "Score: {0}",
