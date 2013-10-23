@@ -121,7 +121,7 @@ define( function( require ) {
       time.visible = false;
       scoreText.centerY = gameProgressIndicator.bottom + verticalSpaceForInfoText * 0.5;
     }
-  };
+  }
 
   // Inherit from Node.
   return inherit( Node, LevelCompletedNode );

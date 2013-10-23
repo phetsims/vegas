@@ -103,7 +103,7 @@ define( function( require ) {
           }
         }
       } );
-  };
+  }
 
   return inherit( Node, LevelStartButton );
 } );
