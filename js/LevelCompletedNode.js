@@ -1,7 +1,7 @@
 // Copyright 2002-2013, University of Colorado Boulder
 
 /**
- * Node that is shown when the user completes a level of the game.
+ * When a level is completed, this node shows how you did.
  *
  * @author John Blanco
  */

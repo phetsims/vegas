@@ -1,8 +1,7 @@
 // Copyright 2002-2013, University of Colorado Boulder
 
 /**
- * A type that defines a specialized button for initiating game levels and for
- * depicting the progress made on each level.
+ * Button for initiating game levels and for depicting the progress made on each level.
  *
  * @author John Blanco
  */

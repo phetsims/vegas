@@ -1,8 +1,7 @@
 // Copyright 2002-2013, University of Colorado Boulder
 
 /**
- * Node that indicates a user's progress on a game or game level by
- * illuminating stars.
+ * Indicates a user's progress on a level by illuminating stars.
  *
  * @author John Blanco
  */

@@ -1,7 +1,7 @@
 // Copyright 2002-2013, University of Colorado Boulder
 
 /**
- * Node that represents a half-star shape.
+ * A half star in a game's progress indicator.
  *
  * @author John Blanco
  */

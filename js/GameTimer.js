@@ -2,7 +2,8 @@
 
 /**
  * Game timer, keeps track of the elapsed time in the game using "wall clock" time.
- * The frame rate of this clock is sufficient for displaying a game timer in "seconds", but not for driving smooth animation.
+ * The frame rate of this clock is sufficient for displaying a game timer in "seconds",
+ * but not for driving smooth animation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

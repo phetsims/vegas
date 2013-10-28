@@ -2,6 +2,8 @@
 
 /**
  * Audio player for the various sounds that are commonly used in PhET games.
+ *
+ * @author John Blanco
  */
 define( function( require ) {
   'use strict';
