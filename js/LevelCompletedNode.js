@@ -25,15 +25,15 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // Strings
-  var keepTryingString = require( 'string!VEGAS/game.keepTrying' );
-  var goodString = require( 'string!VEGAS/game.good' );
-  var greatString = require( 'string!VEGAS/game.great' );
-  var excellentString = require( 'string!VEGAS/game.excellent' );
-  var scoreOutOfString = require( 'string!VEGAS/pattern.0points.1max' );
-  var timeString = require( 'string!VEGAS/pattern.0time' );
-  var yourNewBestString = require( 'string!VEGAS/game.yourNewBest' );
+  var keepTryingString = require( 'string!VEGAS/keepTrying' );
+  var goodString = require( 'string!VEGAS/good' );
+  var greatString = require( 'string!VEGAS/great' );
+  var excellentString = require( 'string!VEGAS/excellent' );
+  var scoreOutOfString = require( 'string!VEGAS/Games.label.score.max' );
+  var timeString = require( 'string!VEGAS/Games.label.time' );
+  var yourNewBestString = require( 'string!VEGAS/yourNewBest' );
   var pattern0YourBestString = require( 'string!VEGAS/pattern.0yourBest' );
-  var continueString = require( 'string!VEGAS/game.continue' );
+  var continueString = require( 'string!VEGAS/continue' );
 
   // Constants
   var BACKGROUND_COLOR = new Color( 180, 205, 255 );

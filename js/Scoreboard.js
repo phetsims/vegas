@@ -22,9 +22,9 @@ define( function( require ) {
   var TextButton = require( 'SUN/TextButton' );
 
   // strings
-  var newGameString = require( 'string!VEGAS/newGame' );
-  var pattern_0level = require( 'string!VEGAS/pattern.0level' );
-  var pattern_0score = require( 'string!VEGAS/pattern.0score' );
+  var newGameString = require( 'string!VEGAS/Games.button.newGame' );
+  var pattern_0level = require( 'string!VEGAS/Games.label.level' );
+  var pattern_0score = require( 'string!VEGAS/Games.label.score' );
   var pattern_0challenge_1max = require( 'string!VEGAS/pattern.0challenge.1max' );
 
   /**
