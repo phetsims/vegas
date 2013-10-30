@@ -1,8 +1,4 @@
 {
-  "check": "Check",
-  "tryAgain": "Try Again",
-  "showAnswer": "Show Answer",
-  "next": "Next",
   "pattern.0challenge.1max": "Challenge {0} of {1}",
   "pattern.0hours.1minutes.2seconds": "{0}:{1}:{2}",
   "pattern.0minutes.1seconds": "{0}:{1}",
