@@ -29,8 +29,8 @@ define( function( require ) {
   var goodString = require( 'string!VEGAS/good' );
   var greatString = require( 'string!VEGAS/great' );
   var excellentString = require( 'string!VEGAS/excellent' );
-  var scoreOutOfString = require( 'string!VEGAS/Games.label.score.max' );
-  var timeString = require( 'string!VEGAS/Games.label.time' );
+  var scoreOutOfString = require( 'string!VEGAS/label.score.max' );
+  var timeString = require( 'string!VEGAS/label.time' );
   var yourNewBestString = require( 'string!VEGAS/yourNewBest' );
   var pattern0YourBestString = require( 'string!VEGAS/pattern.0yourBest' );
   var continueString = require( 'string!VEGAS/continue' );

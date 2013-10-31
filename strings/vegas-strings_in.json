@@ -1,14 +1,14 @@
 {
-  "Games.title.gameSettings": "Pengaturan Permainan",
-  "Games.label.score": "Skor : {0}",
-  "Games.radioButton.on": "ON",
-  "Games.radioButton.off": "OFF",
-  "Games.title.gameOver": "Permainan Usai",
-  "Games.button.newGame": "Permainan Baru",
-  "Games.label.newBest": "Nilai Terbaik Anda Terbaru !",
-  "Games.label.best": "Nilai Terbaik Anda : {0}",
-  "Games.label.time": "Waktu : {0}",
-  "Games.label.score.max": "Skor : {0} dari {1}",
-  "Games.label.score.max.perfect": "Skor : {0} dari {1} ( Sempurna )",
-  "Games.message.confirmNewGame": "\nAnda belum menyelesaikan permainan ini. \nAnda sungguh akan memulai permainan baru ?\n"
+  "title.gameSettings": "Pengaturan Permainan",
+  "label.score": "Skor : {0}",
+  "radioButton.on": "ON",
+  "radioButton.off": "OFF",
+  "title.gameOver": "Permainan Usai",
+  "button.newGame": "Permainan Baru",
+  "label.newBest": "Nilai Terbaik Anda Terbaru !",
+  "label.best": "Nilai Terbaik Anda : {0}",
+  "label.time": "Waktu : {0}",
+  "label.score.max": "Skor : {0} dari {1}",
+  "label.score.max.perfect": "Skor : {0} dari {1} ( Sempurna )",
+  "message.confirmNewGame": "\nAnda belum menyelesaikan permainan ini. \nAnda sungguh akan memulai permainan baru ?\n"
 }

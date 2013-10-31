@@ -9,13 +9,13 @@
   "yourNewBest": "(Your New Best!)",
   "pattern.0yourBest": "(Your Best: {0})",
   "continue": "Continue",
-  "Games.label.level": "Level: {0}",
-  "Games.label.score": "Score: {0}",
-  "Games.check": "Check",
-  "Games.next": "Next",
-  "Games.button.newGame": "New Game",
-  "Games.showAnswer": "Show Answer",
-  "Games.label.time": "Time: {0}",
-  "Games.label.score.max": "Score: {0} out of {1}",
-  "Games.tryAgain": "Try Again"
+  "label.level": "Level: {0}",
+  "label.score": "Score: {0}",
+  "check": "Check",
+  "next": "Next",
+  "button.newGame": "New Game",
+  "showAnswer": "Show Answer",
+  "label.time": "Time: {0}",
+  "label.score.max": "Score: {0} out of {1}",
+  "tryAgain": "Try Again"
 }
