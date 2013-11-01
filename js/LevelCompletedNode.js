@@ -45,7 +45,7 @@ define( function( require ) {
    * @param {number} numStars
    * @param {boolean} timerEnabled
    * @param {number} elapsedTime In seconds
-   * @param {number} bestTimeAtThisLevel In seconds
+   * @param {number} bestTimeAtThisLevel In seconds, should be Number.POSITIVE_INFINITY if no best time exists yet.
    * @param {Bounds2} layoutBounds
    * @param {function} continueFunction Function to call when the user presses the 'Continue' button.
    * @constructor
@@ -93,8 +93,8 @@ define( function( require ) {
     if ( elapsedTime === bestTimeAtThisLevel ) {
       time.text += '\n' + yourNewBestString;
     }
-    else {
-      time.text += '\n' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( elapsedTime ) );
+    else if ( bestTimeAtThisLevel !== Number.POSITIVE_INFINITY ) {
+      time.text += '\n' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( bestTimeAtThisLevel ) );
     }
     background.addChild( time );
 
