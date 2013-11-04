@@ -42,8 +42,6 @@ define( function( require ) {
     // Add the drop shadow.
     this.addChild( new Rectangle( 0, 0, WIDTH, HEIGHT, CORNER_ROUNDING, CORNER_ROUNDING,
       {
-        stroke: 'black',
-        lineWidth: 1,
         fill: 'black',
         top: DROP_SHADOW_OFFSET,
         left: DROP_SHADOW_OFFSET
