@@ -38,7 +38,7 @@ define( function( require ) {
   var levelString = require( 'string!VEGAS/label.level' );
 
   /**
-   * @param {number} level starting from zero
+   * @param {number} level starting from zero, 1 added to this when displayed
    * @param {number} score
    * @param {number} maxPossibleScore
    * @param {number} numStars
