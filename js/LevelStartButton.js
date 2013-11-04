@@ -23,7 +23,7 @@ define( function( require ) {
   var HEIGHT = 150; // In screen coords, which are roughly pixels.
   var BACKGROUND_COLOR = 'rgb( 242, 255, 204 )';
   var HIGHLIGHTED_BACKGROUND_COLOR = 'rgb( 250, 255, 230 )';
-  var DROP_SHADOW_OFFSET = WIDTH * 0.02;
+  var DROP_SHADOW_OFFSET = WIDTH * 0.026;
   var CORNER_ROUNDING = 10;
 
   /**
