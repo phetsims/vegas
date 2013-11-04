@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // Imports
+  var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var LinearGradient = require( 'SCENERY/util/LinearGradient' );
@@ -78,31 +79,30 @@ define( function( require ) {
       { centerX: buttonOutline.width / 2, centerY: progressIndicatorBackground.height / 2, pickable: false } ) );
     buttonOutline.addChild( progressIndicatorBackground );
 
+    //TODO This behavior was borrowed from sun.PushButton, because sun.RectanglePushButton doesn't support the pseudo-3D behavior of this button.
     // Add the listener to update the appearance and handle a click.
-    thisNode._armed = false;
-    buttonOutline.addInputListener(
-      {
-        down: function() {
-          buttonOutline.fill = HIGHLIGHTED_BACKGROUND_COLOR;
-          buttonOutline.top = DROP_SHADOW_OFFSET;
-          buttonOutline.left = DROP_SHADOW_OFFSET;
-          thisNode._armed = true;
-        },
-        over: function() {
-          buttonOutline.fill = HIGHLIGHTED_BACKGROUND_COLOR;
-        },
-        out: function() {
-          buttonOutline.fill = BACKGROUND_COLOR;
-        },
-        up: function() {
-          buttonOutline.fill = BACKGROUND_COLOR;
-          buttonOutline.top = 0;
-          buttonOutline.left = 0;
-          if ( thisNode._armed ) {
-            onFireFunction();
-          }
-        }
-      } );
+    var update = function( state ) {
+      if ( state === 'up' ) {
+        buttonOutline.fill = BACKGROUND_COLOR;
+        buttonOutline.top = 0;
+        buttonOutline.left = 0;
+      }
+      else if ( state === 'over' ) {
+        buttonOutline.fill = HIGHLIGHTED_BACKGROUND_COLOR;
+      }
+      else if ( state === 'down' ) {
+        buttonOutline.fill = HIGHLIGHTED_BACKGROUND_COLOR;
+        buttonOutline.top = DROP_SHADOW_OFFSET;
+        buttonOutline.left = DROP_SHADOW_OFFSET;
+      }
+    };
+    buttonOutline.addInputListener( new ButtonListener( {
+      up: function() { update( 'up' ); },
+      over: function() { update( 'over' ); },
+      down: function() { update( 'down' ); },
+      out: function() { update( 'up' ); }, // 'out' state looks the same as 'up'
+      fire: onFireFunction
+    } ) );
   }
 
   return inherit( Node, LevelStartButton );
