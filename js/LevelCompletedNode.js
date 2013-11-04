@@ -40,17 +40,26 @@ define( function( require ) {
   var INFO_TEXT_FONT = new PhetFont( { size: 22, weight: 'bold' } );
 
   /**
+   * @param {number} level
    * @param {number} score
    * @param {number} maxPossibleScore
    * @param {number} numStars
    * @param {boolean} timerEnabled
    * @param {number} elapsedTime In seconds
-   * @param {number} bestTimeAtThisLevel In seconds, should be Number.POSITIVE_INFINITY if no best time exists yet.
+   * @param {number} bestTimeAtThisLevel In seconds, null if no best time exists yet.
+   * @param {boolean} isNewBestTime
    * @param {Bounds2} layoutBounds
    * @param {function} continueFunction Function to call when the user presses the 'Continue' button.
+   * @param {*} options
    * @constructor
    */
-  function LevelCompletedNode( score, maxPossibleScore, numStars, timerEnabled, elapsedTime, bestTimeAtThisLevel, layoutBounds, continueFunction ) {
+  function LevelCompletedNode( level, score, maxPossibleScore, numStars, timerEnabled, elapsedTime, bestTimeAtThisLevel, isNewBestTime, layoutBounds, continueFunction, options ) {
+
+    options = _.extend( {
+      levelVisible: false // display the level number?
+    }, options );
+
+    //TODO display the level number based on options.levelVisible
 
     Node.call( this ); // Call super constructor.
 
@@ -77,7 +86,7 @@ define( function( require ) {
     else if ( proportionCorrect >= 0.5 ) {
       titleText = goodString;
     }
-    var title = new Text( titleText, {font: new PhetFont( { size: 28, weight: 'bold' } )} ); // TODO: i18n
+    var title = new Text( titleText, {font: new PhetFont( { size: 28, weight: 'bold' } )} );
     title.scale( Math.min( 1, (size.width * 0.9 ) / title.width ) );
     background.addChild( title );
 
@@ -90,10 +99,10 @@ define( function( require ) {
     background.addChild( scoreText );
 
     var time = new MultiLineText( StringUtils.format( timeString, GameTimer.formatTime( elapsedTime ) ), { font: INFO_TEXT_FONT, align: 'center' } );
-    if ( elapsedTime === bestTimeAtThisLevel ) {
+    if ( isNewBestTime ) {
       time.text += '\n' + yourNewBestString;
     }
-    else if ( bestTimeAtThisLevel !== Number.POSITIVE_INFINITY ) {
+    else if ( bestTimeAtThisLevel !== null ) {
       time.text += '\n' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( bestTimeAtThisLevel ) );
     }
     background.addChild( time );
