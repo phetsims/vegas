@@ -65,6 +65,7 @@ define( function( require ) {
     icon.scale( iconScaleFactor );
     icon.centerX = WIDTH / 2;
     icon.centerY = HEIGHT * 0.4;
+    icon.pickable = false;
     buttonOutline.addChild( icon );
 
     // Add the progress indicator to the button.
@@ -74,7 +75,7 @@ define( function( require ) {
         stroke: 'black', lineWidth: 1
       } ).mutate( { bottom: HEIGHT } );
     progressIndicatorBackground.addChild( new ProgressIndicator( numStars, WIDTH / 6, scoreProperty, maxPossibleScore ).mutate(
-      { centerX: buttonOutline.width / 2, centerY: progressIndicatorBackground.height / 2 } ) );
+      { centerX: buttonOutline.width / 2, centerY: progressIndicatorBackground.height / 2, pickable: false } ) );
     buttonOutline.addChild( progressIndicatorBackground );
 
     // Add the listener to update the appearance and handle a click.
