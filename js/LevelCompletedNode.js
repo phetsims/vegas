@@ -38,7 +38,7 @@ define( function( require ) {
   var levelString = require( 'string!VEGAS/label.level' );
 
   /**
-   * @param {number} level
+   * @param {number} level starting from zero
    * @param {number} score
    * @param {number} maxPossibleScore
    * @param {number} numStars
@@ -95,7 +95,7 @@ define( function( require ) {
 
     // Level (optional)
     if ( options.levelVisible ) {
-      children.push( new Text( StringUtils.format( levelString, level ), { font: options.infoFont } ) );
+      children.push( new Text( StringUtils.format( levelString, level + 1 ), { font: options.infoFont } ) );
     }
 
     // Score
