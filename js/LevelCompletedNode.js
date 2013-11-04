@@ -98,7 +98,7 @@ define( function( require ) {
     }
     background.addChild( time );
 
-    var continueButton = new TextButton( continueString, continueFunction, { font: new PhetFont( 28 ), rectangleFillUp: new Color( 255, 255, 0 ) } );
+    var continueButton = new TextButton( continueString, { callback: continueFunction, font: new PhetFont( 28 ), rectangleFillUp: new Color( 255, 255, 0 ) } );
     background.addChild( continueButton );
 
     // Layout
