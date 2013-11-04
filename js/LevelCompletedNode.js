@@ -40,7 +40,7 @@ define( function( require ) {
   /**
    * @param {number} level starting from zero, 1 added to this when displayed
    * @param {number} score
-   * @param {number} maxPossibleScore
+   * @param {number} perfectScore
    * @param {number} numStars
    * @param {boolean} timerEnabled
    * @param {number} elapsedTime In seconds
@@ -51,7 +51,7 @@ define( function( require ) {
    * @param {*} options
    * @constructor
    */
-  function LevelCompletedNode( level, score, maxPossibleScore, numStars, timerEnabled, elapsedTime, bestTimeAtThisLevel, isNewBestTime, layoutBounds, continueFunction, options ) {
+  function LevelCompletedNode( level, score, perfectScore, numStars, timerEnabled, elapsedTime, bestTimeAtThisLevel, isNewBestTime, layoutBounds, continueFunction, options ) {
 
     var size = new Dimension2( layoutBounds.width * 0.5, layoutBounds.height * 0.7 );
 
@@ -74,7 +74,7 @@ define( function( require ) {
     var children = [];
 
     // Title
-    var proportionCorrect = score / maxPossibleScore;
+    var proportionCorrect = score / perfectScore;
     var titleText = keepTryingString;
     if ( proportionCorrect > 0.95 ) {
       titleText = excellentString;
@@ -91,7 +91,7 @@ define( function( require ) {
 
     // Progress indicator
     var starDiameter = Math.min( size.width / numStars * 0.8, size.width * 0.2 );
-    children.push( new ProgressIndicator( numStars, starDiameter, new Property( score ), maxPossibleScore ) );
+    children.push( new ProgressIndicator( numStars, starDiameter, new Property( score ), perfectScore ) );
 
     // Level (optional)
     if ( options.levelVisible ) {
@@ -99,7 +99,7 @@ define( function( require ) {
     }
 
     // Score
-    children.push( new Text( StringUtils.format( scoreOutOfString, score, maxPossibleScore ), { font: options.infoFont } ) );
+    children.push( new Text( StringUtils.format( scoreOutOfString, score, perfectScore ), { font: options.infoFont } ) );
 
     // Time (optional)
     if ( timerEnabled ) {
