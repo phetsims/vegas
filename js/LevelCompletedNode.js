@@ -94,7 +94,6 @@ define( function( require ) {
     var gameProgressIndicator = new ProgressIndicator( numStars, starDiameter, new Property( score ), maxPossibleScore );
     background.addChild( gameProgressIndicator );
 
-    // TODO: i18n of everything below
     var scoreText = new Text( StringUtils.format( scoreOutOfString, score, maxPossibleScore ), { font: INFO_TEXT_FONT } );
     background.addChild( scoreText );
 
