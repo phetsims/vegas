@@ -4,6 +4,7 @@
  * When a level is completed, this node shows how you did.
  *
  * @author John Blanco
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';
@@ -14,15 +15,15 @@ define( function( require ) {
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
   var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TextPushButton = require( 'SUN/TextPushButton' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // Strings
   var keepTryingString = require( 'string!VEGAS/keepTrying' );
@@ -34,10 +35,7 @@ define( function( require ) {
   var yourNewBestString = require( 'string!VEGAS/yourNewBest' );
   var pattern0YourBestString = require( 'string!VEGAS/pattern.0yourBest' );
   var continueString = require( 'string!VEGAS/continue' );
-
-  // Constants
-  var BACKGROUND_COLOR = new Color( 180, 205, 255 );
-  var INFO_TEXT_FONT = new PhetFont( { size: 22, weight: 'bold' } );
+  var levelString = require( 'string!VEGAS/label.level' );
 
   /**
    * @param {number} level
@@ -55,26 +53,27 @@ define( function( require ) {
    */
   function LevelCompletedNode( level, score, maxPossibleScore, numStars, timerEnabled, elapsedTime, bestTimeAtThisLevel, isNewBestTime, layoutBounds, continueFunction, options ) {
 
-    options = _.extend( {
-      levelVisible: false // display the level number?
-    }, options );
-
-    //TODO display the level number based on options.levelVisible
-
-    Node.call( this ); // Call super constructor.
-
     var size = new Dimension2( layoutBounds.width * 0.5, layoutBounds.height * 0.7 );
 
-    var rounding = size.width * 0.1;
-    var background = new Rectangle( 0, 0, size.width, size.height, rounding, rounding,
-      {
-        fill: BACKGROUND_COLOR,
-        stroke: 'black',
-        lineWidth: 2
-      } );
+    options = _.extend( {
+      levelVisible: true, // display the level number?
+      fill: new Color( 180, 205, 255 ),
+      stroke: 'black',
+      lineWidth: 2,
+      cornerRadius: 0.1 * size.width,
+      xMargin: 20,
+      yMargin: 20,
+      ySpacing: 30,
+      titleFont: new PhetFont( { size: 28, weight: 'bold' } ),
+      infoFont: new PhetFont( { size: 22, weight: 'bold' } ),
+      buttonFont: new PhetFont( 28 ),
+      buttonColor: new Color( 255, 255, 0 )
+    }, options );
 
-    this.addChild( background );
+    // nodes to be added to the panel
+    var children = [];
 
+    // Title
     var proportionCorrect = score / maxPossibleScore;
     var titleText = keepTryingString;
     if ( proportionCorrect > 0.95 ) {
@@ -86,51 +85,47 @@ define( function( require ) {
     else if ( proportionCorrect >= 0.5 ) {
       titleText = goodString;
     }
-    var title = new Text( titleText, {font: new PhetFont( { size: 28, weight: 'bold' } )} );
+    var title = new Text( titleText, {font: options.titleFont} );
     title.scale( Math.min( 1, (size.width * 0.9 ) / title.width ) );
-    background.addChild( title );
+    children.push( title );
 
+    // Progress indicator
     var starDiameter = Math.min( size.width / numStars * 0.8, size.width * 0.2 );
-    var gameProgressIndicator = new ProgressIndicator( numStars, starDiameter, new Property( score ), maxPossibleScore );
-    background.addChild( gameProgressIndicator );
+    children.push( new ProgressIndicator( numStars, starDiameter, new Property( score ), maxPossibleScore ) );
 
-    var scoreText = new Text( StringUtils.format( scoreOutOfString, score, maxPossibleScore ), { font: INFO_TEXT_FONT } );
-    background.addChild( scoreText );
-
-    var time = new MultiLineText( StringUtils.format( timeString, GameTimer.formatTime( elapsedTime ) ), { font: INFO_TEXT_FONT, align: 'center' } );
-    if ( isNewBestTime ) {
-      time.text += '\n' + yourNewBestString;
+    // Level (optional)
+    if ( options.levelVisible ) {
+      children.push( new Text( StringUtils.format( levelString, level ), { font: options.infoFont } ) );
     }
-    else if ( bestTimeAtThisLevel !== null ) {
-      time.text += '\n' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( bestTimeAtThisLevel ) );
-    }
-    background.addChild( time );
 
-    var continueButton = new TextPushButton( continueString, { listener: continueFunction, font: new PhetFont( 28 ), rectangleFillUp: new Color( 255, 255, 0 ) } );
-    background.addChild( continueButton );
+    // Score
+    children.push( new Text( StringUtils.format( scoreOutOfString, score, maxPossibleScore ), { font: options.infoFont } ) );
 
-    // Layout
-    var inset = size.width * 0.05;
-    var centerX = size.width / 2;
-    title.centerX = centerX;
-    title.top = inset;
-    gameProgressIndicator.centerX = centerX;
-    gameProgressIndicator.top = title.bottom + inset / 2;
-    continueButton.centerX = centerX;
-    continueButton.bottom = size.height - inset;
-    var verticalSpaceForInfoText = continueButton.top - gameProgressIndicator.bottom;
-    scoreText.centerX = centerX;
-    time.centerX = centerX;
+    // Time (optional)
     if ( timerEnabled ) {
-      scoreText.centerY = gameProgressIndicator.bottom + verticalSpaceForInfoText * 0.3;
-      time.centerY = gameProgressIndicator.bottom + verticalSpaceForInfoText * 0.7;
+      var time = new MultiLineText( StringUtils.format( timeString, GameTimer.formatTime( elapsedTime ) ), { font: options.infoFont, align: 'center' } );
+      if ( isNewBestTime ) {
+        time.text += '\n' + yourNewBestString;
+      }
+      else if ( bestTimeAtThisLevel !== null ) {
+        time.text += '\n' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( bestTimeAtThisLevel ) );
+      }
+      children.push( time );
     }
-    else {
-      time.visible = false;
-      scoreText.centerY = gameProgressIndicator.bottom + verticalSpaceForInfoText * 0.5;
-    }
+
+    // Continue button
+    children.push( new TextPushButton( continueString, {
+      listener: continueFunction,
+      font: options.buttonFont,
+      rectangleFillUp: options.buttonColor,
+      rectangleXMargin: 10,
+      rectangleYMargin: 5
+    } ) );
+
+    // Panel
+    Panel.call( this, new VBox( { children: children, spacing: options.ySpacing } ), options );
   }
 
   // Inherit from Node.
-  return inherit( Node, LevelCompletedNode );
+  return inherit( Panel, LevelCompletedNode );
 } );
