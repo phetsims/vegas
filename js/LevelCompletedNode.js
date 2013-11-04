@@ -21,8 +21,8 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var TextButton = require( 'SUN/TextButton' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var TextPushButton = require( 'SUN/TextPushButton' );
 
   // Strings
   var keepTryingString = require( 'string!VEGAS/keepTrying' );
@@ -98,7 +98,7 @@ define( function( require ) {
     }
     background.addChild( time );
 
-    var continueButton = new TextButton( continueString, { listener: continueFunction, font: new PhetFont( 28 ), rectangleFillUp: new Color( 255, 255, 0 ) } );
+    var continueButton = new TextPushButton( continueString, { listener: continueFunction, font: new PhetFont( 28 ), rectangleFillUp: new Color( 255, 255, 0 ) } );
     background.addChild( continueButton );
 
     // Layout
