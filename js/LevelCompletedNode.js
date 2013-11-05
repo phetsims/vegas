@@ -43,8 +43,8 @@ define( function( require ) {
    * @param {number} perfectScore
    * @param {number} numStars
    * @param {boolean} timerEnabled
-   * @param {number} elapsedTime In seconds
-   * @param {number} bestTimeAtThisLevel In seconds, null if no best time exists yet.
+   * @param {number} elapsedTime (in seconds)
+   * @param {number} bestTimeAtThisLevel (in seconds)
    * @param {boolean} isNewBestTime
    * @param {function} continueFunction Function to call when the user presses the 'Continue' button.
    * @param {*} options
@@ -71,7 +71,7 @@ define( function( require ) {
     // nodes to be added to the panel
     var children = [];
 
-    // Title
+    // Title, which changes based on how the user did.
     var proportionCorrect = score / perfectScore;
     var titleText = keepTryingString;
     if ( proportionCorrect > 0.95 ) {
