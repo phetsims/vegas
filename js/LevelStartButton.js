@@ -72,10 +72,14 @@ define( function( require ) {
       fill: 'white',
       stroke: 'black',
       lineWidth: 1,
+      pickable: false,
+      bottom: options.buttonHeight
+    } );
+    progressIndicatorBackground.addChild( new ProgressIndicator( numStars, options.buttonWidth / 6, scoreProperty, maxPossibleScore, {
+      centerX: progressIndicatorBackground.centerX,
+      centerY: progressIndicatorBackground.height / 2,
       pickable: false
-    } ).mutate( { bottom: options.buttonHeight } );
-    progressIndicatorBackground.addChild( new ProgressIndicator( numStars, options.buttonWidth / 6, scoreProperty, maxPossibleScore ).mutate(
-      { centerX: buttonOutline.width / 2, centerY: progressIndicatorBackground.height / 2, pickable: false } ) );
+    } ) );
     buttonOutline.addChild( progressIndicatorBackground );
 
     //TODO This behavior was borrowed from sun.PushButton, because sun.RectanglePushButton doesn't support the pseudo-3D behavior of this button.
