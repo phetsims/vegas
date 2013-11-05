@@ -44,7 +44,7 @@ define( function( require ) {
    * @param {number} numStars
    * @param {boolean} timerEnabled
    * @param {number} elapsedTime (in seconds)
-   * @param {number} bestTimeAtThisLevel (in seconds)
+   * @param {number} bestTimeAtThisLevel (in seconds), null indicates no best time
    * @param {boolean} isNewBestTime
    * @param {function} continueFunction Function to call when the user presses the 'Continue' button.
    * @param {*} options
