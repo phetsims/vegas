@@ -64,7 +64,7 @@ define( function( require ) {
       titleFont: new PhetFont( { size: 28, weight: 'bold' } ),
       infoFont: new PhetFont( { size: 22, weight: 'bold' } ),
       buttonFont: new PhetFont( 28 ),
-      buttonColor: new Color( 255, 255, 0 ),
+      buttonFill: new Color( 255, 255, 0 ),
       starDiameter: 62
     }, options );
 
@@ -113,7 +113,7 @@ define( function( require ) {
     children.push( new TextPushButton( continueString, {
       listener: continueFunction,
       font: options.buttonFont,
-      rectangleFillUp: options.buttonColor,
+      rectangleFillUp: options.buttonFill,
       rectangleXMargin: 10,
       rectangleYMargin: 5
     } ) );
