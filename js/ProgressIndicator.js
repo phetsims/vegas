@@ -36,13 +36,12 @@ define( function( require ) {
 
     // Add stars.
     var starLeft = 0; // left edge of the star we're adding
-    var unfilledStars = [];
     var filledStars = [];
     var filledHalfStars = [];
     for ( var i = 0; i < numStars; i++ ) {
 
       // Unfilled stars will always be visible. Add them first, so they are behind filled stars.
-      unfilledStars.push( new Star( starDiameter,
+      this.addChild( new Star( starDiameter,
         {
           fill: options.unfilledStarColor,
           stroke: options.unfilledStarStroke,
@@ -50,7 +49,6 @@ define( function( require ) {
           left: starLeft,
           lineCap: 'round'
         } ) );
-      this.addChild( unfilledStars[i] );
 
       filledStars.push( new Star( starDiameter,
         {
