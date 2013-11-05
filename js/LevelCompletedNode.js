@@ -63,7 +63,7 @@ define( function( require ) {
       ySpacing: 30,
       titleFont: new PhetFont( { size: 28, weight: 'bold' } ),
       infoFont: new PhetFont( { size: 22, weight: 'bold' } ),
-      buttonFont: new PhetFont( 28 ),
+      buttonFont: new PhetFont( 26 ),
       buttonFill: new Color( 255, 255, 0 ),
       starDiameter: 62
     }, options );
