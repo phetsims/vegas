@@ -15,69 +15,69 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Star = require( 'VEGAS/Star' );
 
-  // Constants
-  var FILLED_STAR_COLOR = 'yellow';
-  var FILLED_STAR_STROKE = 'black';
-  var UNFILLED_STAR_COLOR = 'rgb( 220, 220, 220 )';
-  var UNFILLED_STAR_STROKE = 'rgb( 190, 190, 190 )';
-
   /**
-   * Constructor.
-   *
-   * @param numStars
-   * @param starDiameter
-   * @param scoreProperty
-   * @param maxPossibleScore
+   * @param {number} numStars
+   * @param {number} starDiameter
+   * @param {Property<Number>} scoreProperty
+   * @param {number} perfectScore
    * @constructor
    */
-  function ProgressIndicator( numStars, starDiameter, scoreProperty, maxPossibleScore ) {
+  function ProgressIndicator( numStars, starDiameter, scoreProperty, perfectScore, options ) {
 
-    Node.call( this ); // Call super constructor.
+    options = _.extend( {
+      filledStarColor: 'yellow',
+      filledStarStroke: 'black',
+      unfilledStarColor: 'rgb( 220, 220, 220 )',
+      unfilledStarStroke: 'rgb( 190, 190, 190 )',
+      distanceBetweenStars: starDiameter * 0.15
+    }, options );
 
-    // Add the un-highlighted progress stars.
-    var distanceBetweenStars = starDiameter * 0.15;
-    var starLeft = 0;
+    Node.call( this );
+
+    // Add stars.
+    var starLeft = 0; // left edge of the star we're adding
     var unfilledStars = [];
     var filledStars = [];
     var filledHalfStars = [];
-    var starHeight = new Star( starDiameter ).height;
     for ( var i = 0; i < numStars; i++ ) {
+
+      // Unfilled stars will always be visible. Add them first, so they are behind filled stars.
       unfilledStars.push( new Star( starDiameter,
         {
-          fill: UNFILLED_STAR_COLOR,
-          stroke: UNFILLED_STAR_STROKE,
+          fill: options.unfilledStarColor,
+          stroke: options.unfilledStarStroke,
           lineWidth: 1,
           left: starLeft,
-          centerY: starHeight / 2,
           lineCap: 'round'
         } ) );
       this.addChild( unfilledStars[i] );
+
       filledStars.push( new Star( starDiameter,
         {
-          fill: FILLED_STAR_COLOR,
-          stroke: FILLED_STAR_STROKE,
+          fill: options.filledStarColor,
+          stroke: options.filledStarStroke,
           lineWidth: 1,
           left: starLeft,
-          centerY: starHeight / 2,
           lineCap: 'round'
         } ) );
       this.addChild( filledStars[i] );
+
       filledHalfStars.push( new HalfStar( starDiameter,
         {
-          fill: FILLED_STAR_COLOR,
-          stroke: FILLED_STAR_STROKE,
+          fill: options.filledStarColor,
+          stroke: options.filledStarStroke,
           lineWidth: 1,
           left: starLeft,
-          centerY: starHeight / 2,
           lineCap: 'round'
         } ) );
       this.addChild( filledHalfStars[i] );
-      starLeft += distanceBetweenStars + starDiameter;
+
+      starLeft += options.distanceBetweenStars + starDiameter;
     }
 
-    // Update star visibility based on proportion of game successfully completed.
+    // Update visibility of filled and half-filled stars based on score.
     scoreProperty.link( function( score ) {
-      var proportion = score / maxPossibleScore;
+      var proportion = score / perfectScore;
       var numFilledStars = Math.floor( proportion * numStars );
       for ( var i = 0; i < numStars; i++ ) {
         filledStars[i].visible = i < numFilledStars;
@@ -89,8 +89,9 @@ define( function( require ) {
         filledHalfStars[numFilledStars ].visible = true;
       }
     } );
+
+    this.mutate( options );
   }
 
-  // Inherit from Node.
   return inherit( Node, ProgressIndicator );
 } );
