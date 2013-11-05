@@ -46,28 +46,26 @@ define( function( require ) {
    * @param {number} elapsedTime In seconds
    * @param {number} bestTimeAtThisLevel In seconds, null if no best time exists yet.
    * @param {boolean} isNewBestTime
-   * @param {Bounds2} layoutBounds
    * @param {function} continueFunction Function to call when the user presses the 'Continue' button.
    * @param {*} options
    * @constructor
    */
-  function LevelCompletedNode( level, score, perfectScore, numStars, timerEnabled, elapsedTime, bestTimeAtThisLevel, isNewBestTime, layoutBounds, continueFunction, options ) {
-
-    var size = new Dimension2( layoutBounds.width * 0.5, layoutBounds.height * 0.7 );
+  function LevelCompletedNode( level, score, perfectScore, numStars, timerEnabled, elapsedTime, bestTimeAtThisLevel, isNewBestTime, continueFunction, options ) {
 
     options = _.extend( {
       levelVisible: true, // display the level number?
       fill: new Color( 180, 205, 255 ),
       stroke: 'black',
       lineWidth: 2,
-      cornerRadius: 0.1 * size.width,
+      cornerRadius: 35,
       xMargin: 20,
       yMargin: 20,
       ySpacing: 30,
       titleFont: new PhetFont( { size: 28, weight: 'bold' } ),
       infoFont: new PhetFont( { size: 22, weight: 'bold' } ),
       buttonFont: new PhetFont( 28 ),
-      buttonColor: new Color( 255, 255, 0 )
+      buttonColor: new Color( 255, 255, 0 ),
+      starDiameter: 62
     }, options );
 
     // nodes to be added to the panel
@@ -86,12 +84,10 @@ define( function( require ) {
       titleText = goodString;
     }
     var title = new Text( titleText, {font: options.titleFont} );
-    title.scale( Math.min( 1, (size.width * 0.9 ) / title.width ) );
     children.push( title );
 
     // Progress indicator
-    var starDiameter = Math.min( size.width / numStars * 0.8, size.width * 0.2 );
-    children.push( new ProgressIndicator( numStars, starDiameter, new Property( score ), perfectScore ) );
+    children.push( new ProgressIndicator( numStars, options.starDiameter, new Property( score ), perfectScore ) );
 
     // Level (optional)
     if ( options.levelVisible ) {
