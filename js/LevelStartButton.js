@@ -19,15 +19,15 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
-   * @param {Image} icon Scenery image that appears on the button, scaled to fit
+   * @param {Image} icon Scenery node that appears on the button, scaled to fit
    * @param {number} numStars Number of stars to show in the progress indicator at the bottom of the button
-   * @param {function} onFireFunction
-   * @param {Property} scoreProperty
-   * @param {number} maxPossibleScore
+   * @param {function} fireFunction Called when the button fires
+   * @param {Property<number>} scoreProperty
+   * @param {number} perfectScore
    * @param {*} options
    * @constructor
    */
-  function LevelStartButton( icon, numStars, onFireFunction, scoreProperty, maxPossibleScore, options ) {
+  function LevelStartButton( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
 
     options = _.extend( {
       buttonWidth: 150,
@@ -49,8 +49,7 @@ define( function( require ) {
       }
     ) );
 
-    // Add the button outline, which is also the root node for everything else
-    // that is on the button.
+    // Add the button outline, which is also the parent node for everything else that is on the button.
     var buttonOutline = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
       stroke: 'black',
       lineWidth: 1,
@@ -59,7 +58,7 @@ define( function( require ) {
     } );
     this.addChild( buttonOutline );
 
-    // Add the icon, scaling as needed.
+    // Icon, scaled to fit.
     var iconScaleFactor = Math.min( options.buttonHeight * 0.65 / icon.height, options.buttonWidth * 0.85 / icon.width );
     icon.scale( iconScaleFactor );
     icon.centerX = options.buttonWidth / 2;
@@ -67,7 +66,7 @@ define( function( require ) {
     icon.pickable = false;
     buttonOutline.addChild( icon );
 
-    // Add the progress indicator to the button.
+    // Progress indicator (stars), scaled to fit
     var progressIndicatorBackground = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight * 0.2, options.cornerRadius, options.cornerRadius, {
       fill: 'white',
       stroke: 'black',
@@ -75,7 +74,7 @@ define( function( require ) {
       pickable: false,
       bottom: options.buttonHeight
     } );
-    progressIndicatorBackground.addChild( new ProgressIndicator( numStars, options.buttonWidth / 6, scoreProperty, maxPossibleScore, {
+    progressIndicatorBackground.addChild( new ProgressIndicator( numStars, options.buttonWidth / 6, scoreProperty, perfectScore, {
       centerX: progressIndicatorBackground.centerX,
       centerY: progressIndicatorBackground.height / 2,
       pickable: false
@@ -104,7 +103,7 @@ define( function( require ) {
       over: function() { update( 'over' ); },
       down: function() { update( 'down' ); },
       out: function() { update( 'up' ); }, // 'out' state looks the same as 'up'
-      fire: onFireFunction
+      fire: fireFunction
     } ) );
 
     this.mutate( options );
