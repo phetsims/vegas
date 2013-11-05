@@ -18,62 +18,62 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  // Constants
-  var WIDTH = 150; // In screen coords, which are roughly pixels.
-  var HEIGHT = 150; // In screen coords, which are roughly pixels.
-  var BACKGROUND_COLOR = 'rgb( 242, 255, 204 )';
-  var HIGHLIGHTED_BACKGROUND_COLOR = 'rgb( 250, 255, 230 )';
-  var DROP_SHADOW_OFFSET = WIDTH * 0.026;
-  var CORNER_ROUNDING = 10;
-
   /**
    * @param {Image} icon Scenery image that appears on the button, scaled to fit
    * @param {number} numStars Number of stars to show in the progress indicator at the bottom of the button
    * @param {function} onFireFunction
    * @param {Property} scoreProperty
    * @param {number} maxPossibleScore
+   * @param {*} options
    * @constructor
    */
-  function LevelStartButton( icon, numStars, onFireFunction, scoreProperty, maxPossibleScore ) {
+  function LevelStartButton( icon, numStars, onFireFunction, scoreProperty, maxPossibleScore, options ) {
+
+    options = _.extend( {
+      buttonWidth: 150,
+      buttonHeight: 150,
+      backgroundColor:'rgb( 242, 255, 204 )',
+      highlightedBackgroundColor: 'rgb( 250, 255, 230 )',
+      shadowColor: 'black',
+      cornerRadius: 10
+    }, options );
+    var shadowOffset = 0.026 * options.buttonWidth;
 
     Node.call( this ); // Call super constructor.
-    var thisNode = this;
 
     // Add the drop shadow.
-    this.addChild( new Rectangle( 0, 0, WIDTH, HEIGHT, CORNER_ROUNDING, CORNER_ROUNDING,
-      {
-        fill: 'black',
-        top: DROP_SHADOW_OFFSET,
-        left: DROP_SHADOW_OFFSET
+    this.addChild( new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
+        fill: options.shadowColor,
+        top: shadowOffset,
+        left: shadowOffset
       }
     ) );
 
     // Add the button outline, which is also the root node for everything else
     // that is on the button.
-    var buttonOutline = new Rectangle( 0, 0, WIDTH, HEIGHT, CORNER_ROUNDING, CORNER_ROUNDING,
-      {
-        stroke: 'black',
-        lineWidth: 1,
-        fill: BACKGROUND_COLOR,
-        cursor: 'pointer'
-      } );
-    thisNode.addChild( buttonOutline );
+    var buttonOutline = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
+      stroke: 'black',
+      lineWidth: 1,
+      fill: options.backgroundColor,
+      cursor: 'pointer'
+    } );
+    this.addChild( buttonOutline );
 
     // Add the icon, scaling as needed.
-    var iconScaleFactor = Math.min( HEIGHT * 0.65 / icon.height, WIDTH * 0.85 / icon.width );
+    var iconScaleFactor = Math.min( options.buttonHeight * 0.65 / icon.height, options.buttonWidth * 0.85 / icon.width );
     icon.scale( iconScaleFactor );
-    icon.centerX = WIDTH / 2;
-    icon.centerY = HEIGHT * 0.4;
+    icon.centerX = options.buttonWidth / 2;
+    icon.centerY = options.buttonHeight * 0.4;
     icon.pickable = false;
     buttonOutline.addChild( icon );
 
     // Add the progress indicator to the button.
-    var progressIndicatorBackground = new Rectangle( 0, 0, WIDTH, HEIGHT * 0.2, CORNER_ROUNDING, CORNER_ROUNDING,
-      {
-        fill: 'white',
-        stroke: 'black', lineWidth: 1
-      } ).mutate( { bottom: HEIGHT } );
-    progressIndicatorBackground.addChild( new ProgressIndicator( numStars, WIDTH / 6, scoreProperty, maxPossibleScore ).mutate(
+    var progressIndicatorBackground = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight * 0.2, options.cornerRadius, options.cornerRadius, {
+      fill: 'white',
+      stroke: 'black',
+      lineWidth: 1
+    } ).mutate( { bottom: options.buttonHeight } );
+    progressIndicatorBackground.addChild( new ProgressIndicator( numStars, options.buttonWidth / 6, scoreProperty, maxPossibleScore ).mutate(
       { centerX: buttonOutline.width / 2, centerY: progressIndicatorBackground.height / 2, pickable: false } ) );
     buttonOutline.addChild( progressIndicatorBackground );
 
@@ -81,17 +81,17 @@ define( function( require ) {
     // Add the listener to update the appearance and handle a click.
     var update = function( state ) {
       if ( state === 'up' ) {
-        buttonOutline.fill = BACKGROUND_COLOR;
+        buttonOutline.fill = options.backgroundColor;
         buttonOutline.top = 0;
         buttonOutline.left = 0;
       }
       else if ( state === 'over' ) {
-        buttonOutline.fill = HIGHLIGHTED_BACKGROUND_COLOR;
+        buttonOutline.fill = options.highlightedBackgroundColor;
       }
       else if ( state === 'down' ) {
-        buttonOutline.fill = HIGHLIGHTED_BACKGROUND_COLOR;
-        buttonOutline.top = DROP_SHADOW_OFFSET;
-        buttonOutline.left = DROP_SHADOW_OFFSET;
+        buttonOutline.fill = options.highlightedBackgroundColor;
+        buttonOutline.top = shadowOffset;
+        buttonOutline.left = shadowOffset;
       }
     };
     buttonOutline.addInputListener( new ButtonListener( {
@@ -101,6 +101,8 @@ define( function( require ) {
       out: function() { update( 'up' ); }, // 'out' state looks the same as 'up'
       fire: onFireFunction
     } ) );
+
+    this.mutate( options );
   }
 
   return inherit( Node, LevelStartButton );
