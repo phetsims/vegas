@@ -71,7 +71,8 @@ define( function( require ) {
     var progressIndicatorBackground = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight * 0.2, options.cornerRadius, options.cornerRadius, {
       fill: 'white',
       stroke: 'black',
-      lineWidth: 1
+      lineWidth: 1,
+      pickable: false
     } ).mutate( { bottom: options.buttonHeight } );
     progressIndicatorBackground.addChild( new ProgressIndicator( numStars, options.buttonWidth / 6, scoreProperty, maxPossibleScore ).mutate(
       { centerX: buttonOutline.width / 2, centerY: progressIndicatorBackground.height / 2, pickable: false } ) );
