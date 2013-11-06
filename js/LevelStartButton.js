@@ -94,11 +94,12 @@ define( function( require ) {
           buttonOutline.fill = BACKGROUND_COLOR;
         },
         up: function() {
-          buttonOutline.fill = BACKGROUND_COLOR;
+          buttonOutline.fill = HIGHLIGHTED_BACKGROUND_COLOR;
           buttonOutline.top = 0;
           buttonOutline.left = 0;
           if ( thisNode._armed ) {
             onFireFunction();
+            thisNode._armed = false;
           }
         }
       } );
