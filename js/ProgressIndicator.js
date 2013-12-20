@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // Imports
-  var Color = require( 'SCENERY/util/Color' );
   var HalfStar = require( 'VEGAS/HalfStar' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );

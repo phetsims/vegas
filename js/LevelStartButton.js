@@ -12,11 +12,8 @@ define( function( require ) {
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
-  var LinearGradient = require( 'SCENERY/util/LinearGradient' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Text = require( 'SCENERY/nodes/Text' );
 
   /**
    * @param {Image} icon Scenery node that appears on the button, scaled to fit
@@ -32,7 +29,7 @@ define( function( require ) {
     options = _.extend( {
       buttonWidth: 150,
       buttonHeight: 150,
-      backgroundColor:'rgb( 242, 255, 204 )',
+      backgroundColor: 'rgb( 242, 255, 204 )',
       highlightedBackgroundColor: 'rgb( 250, 255, 230 )',
       shadowColor: 'black',
       cornerRadius: 10

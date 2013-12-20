@@ -12,7 +12,6 @@ define( function( require ) {
 
   // imports
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var PropertySet = require( 'AXON/PropertySet' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Timer = require( 'JOIST/Timer' );
