@@ -71,7 +71,7 @@ define( function( require ) {
       pickable: false,
       bottom: options.buttonHeight
     } );
-    progressIndicatorBackground.addChild( new ProgressIndicator( numStars, options.buttonWidth / 6, scoreProperty, perfectScore, {
+    progressIndicatorBackground.addChild( new ProgressIndicator( numStars, options.buttonWidth / ( numStars + 1 ), scoreProperty, perfectScore, {
       centerX: progressIndicatorBackground.centerX,
       centerY: progressIndicatorBackground.height / 2,
       pickable: false
