@@ -103,6 +103,10 @@ define( function( require ) {
       fire: fireFunction
     } ) );
 
+    // Update for initial state
+    update( 'up' );
+
+    // Pass options to parent class
     this.mutate( options );
   }
 
