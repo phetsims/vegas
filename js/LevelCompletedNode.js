@@ -20,7 +20,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var TextPushButton = require( 'SUN/TextPushButton' );
+  var TextPushButtonDeprecated = require( 'SUN/TextPushButtonDeprecated' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // Strings
@@ -108,7 +108,7 @@ define( function( require ) {
     }
 
     // Continue button
-    children.push( new TextPushButton( continueString, {
+    children.push( new TextPushButtonDeprecated( continueString, {
       listener: continueFunction,
       font: options.buttonFont,
       rectangleFillUp: options.buttonFill,

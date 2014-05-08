@@ -19,7 +19,7 @@ define( function( require ) {
   var SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var TextPushButton = require( 'SUN/TextPushButton' );
+  var TextPushButtonDeprecated = require( 'SUN/TextPushButtonDeprecated' );
 
   // strings
   var newGameString = require( 'string!VEGAS/button.newGame' );
@@ -98,7 +98,7 @@ define( function( require ) {
     } );
 
     // New Game button
-    var newGameButton = new TextPushButton( newGameString, {
+    var newGameButton = new TextPushButtonDeprecated( newGameString, {
       listener: newGameCallback,
       font: options.font,
       rectangleFillUp: options.newGameButtonColor,
