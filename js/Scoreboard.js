@@ -20,6 +20,8 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TextPushButtonDeprecated = require( 'SUN/TextPushButtonDeprecated' );
+  var ReturnToLevelSelectButton = require( 'SCENERY_PHET/ReturnToLevelSelectButton' );
+  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
   var newGameString = require( 'string!VEGAS/button.newGame' );
@@ -47,11 +49,12 @@ define( function( require ) {
       levelVisible: true,
       challengeNumberVisible: true,
       // all text
-      font: new PhetFont( 20 ),
+      font: new PhetFont( 16 ),
       // "New Game" button
       newGameButtonColor: new Color( 235, 235, 235 ),
       newGameButtonXMargin: 20,
       newGameButtonYMargin: 5,
+      newGameButtonCaption: newGameString,
       // Timer
       clockIconRadius: 15,
       // Panel
@@ -98,12 +101,10 @@ define( function( require ) {
     } );
 
     // New Game button
-    var newGameButton = new TextPushButtonDeprecated( newGameString, {
+    var newGameButton = new TextPushButton( options.newGameButtonCaption, {
       listener: newGameCallback,
       font: options.font,
-      rectangleFillUp: options.newGameButtonColor,
-      rectangleXMargin: options.newGameButtonXMargin,
-      rectangleYMargin: options.newGameButtonYMargin
+      baseColor: new Color( 229, 243, 255 )
     } );
 
     // Content for the panel, one row.
