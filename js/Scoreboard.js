@@ -24,7 +24,7 @@ define( function( require ) {
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
-  var newGameString = require( 'string!VEGAS/button.newGame' );
+  var startOverString = require( 'string!VEGAS/startOver' );
   var pattern_0level = require( 'string!VEGAS/label.level' );
   var pattern_0score = require( 'string!VEGAS/label.score' );
   var pattern_0challenge_1max = require( 'string!VEGAS/pattern.0challenge.1max' );
@@ -40,7 +40,7 @@ define( function( require ) {
    * @param {*} options
    * @constructor
    */
-  function Scoreboard( challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, newGameCallback, options ) {
+  function Scoreboard( challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
 
     var thisNode = this;
 
@@ -50,11 +50,11 @@ define( function( require ) {
       challengeNumberVisible: true,
       // all text
       font: new PhetFont( 16 ),
-      // "New Game" button
-      newGameButtonColor: new Color( 235, 235, 235 ),
-      newGameButtonXMargin: 20,
-      newGameButtonYMargin: 5,
-      newGameButtonCaption: newGameString,
+      // "Start Over" button
+      startOverButtonColor: new Color( 235, 235, 235 ),
+      startOverButtonXMargin: 20,
+      startOverButtonYMargin: 5,
+      startOverButtonCaption: startOverString,
       // Timer
       clockIconRadius: 15,
       // Panel
@@ -100,16 +100,16 @@ define( function( require ) {
       timerNode.visible = timerEnabled;
     } );
 
-    // New Game button
-    var newGameButton = new TextPushButton( options.newGameButtonCaption, {
-      listener: newGameCallback,
+    // Start Over button
+    var startOverButton = new TextPushButton( options.startOverButtonCaption, {
+      listener: startOverCallback,
       font: options.font,
       baseColor: new Color( 229, 243, 255 )
     } );
 
     // Content for the panel, one row.
     var subContent = new Node();
-    var nodes = [ levelNode, challengeNumberNode, scoreNode, timerNode, newGameButton ];
+    var nodes = [ levelNode, challengeNumberNode, scoreNode, timerNode, startOverButton ];
     if ( !options.levelVisible ) { nodes.splice( nodes.indexOf( levelNode ), 1 ); }
     if ( !options.challengeNumberVisible ) { nodes.splice( nodes.indexOf( challengeNumberNode ), 1 ); }
     for ( var i = 0; i < nodes.length; i++ ) {

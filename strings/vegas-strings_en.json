@@ -18,5 +18,6 @@
   "label.time": "Time: {0}",
   "label.score.max": "Score: {0} out of {1}",
   "tryAgain": "Try Again",
-  "selectLevel": "Select Level"
+  "selectLevel": "Select Level",
+  "startOver": "Start Over"
 }
