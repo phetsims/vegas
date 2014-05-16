@@ -51,10 +51,10 @@ define( function( require ) {
       // all text
       font: new PhetFont( 16 ),
       // "Start Over" button
-      startOverButtonColor: new Color( 235, 235, 235 ),
-      startOverButtonXMargin: 20,
+      startOverButtonText: startOverString,
+      startOverButtonBaseColor: new Color( 229, 243, 255 ),
+      startOverButtonXMargin: 10,
       startOverButtonYMargin: 5,
-      startOverButtonCaption: startOverString,
       // Timer
       clockIconRadius: 15,
       // Panel
@@ -101,10 +101,12 @@ define( function( require ) {
     } );
 
     // Start Over button
-    var startOverButton = new TextPushButton( options.startOverButtonCaption, {
+    var startOverButton = new TextPushButton( options.startOverButtonText, {
       listener: startOverCallback,
       font: options.font,
-      baseColor: new Color( 229, 243, 255 )
+      baseColor: options.startOverButtonBaseColor,
+      xMargin: options.startOverButtonXMargin,
+      yMargin: options.startOverButtonYMargin
     } );
 
     // Content for the panel, one row.
