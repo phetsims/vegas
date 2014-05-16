@@ -49,7 +49,7 @@ define( function( require ) {
       levelVisible: true,
       challengeNumberVisible: true,
       // all text
-      font: new PhetFont( 16 ),
+      font: new PhetFont( 20 ),
       // "Start Over" button
       startOverButtonText: startOverString,
       startOverButtonBaseColor: new Color( 229, 243, 255 ),
