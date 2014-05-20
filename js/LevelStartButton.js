@@ -78,7 +78,7 @@ define( function( require ) {
     } ) );
     buttonOutline.addChild( progressIndicatorBackground );
 
-    //TODO This behavior was borrowed from sun.PushButton, because sun.RectanglePushButtonDeprecated doesn't support the pseudo-3D behavior of this button.
+    //TODO This behavior was borrowed from sun.PushButton, because sun.RectanglePushButton doesn't support the look/behavior of this button.
     // Add the listener to update the appearance and handle a click.
     var update = function( state ) {
       if ( state === 'up' ) {
