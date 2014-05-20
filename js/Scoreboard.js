@@ -19,8 +19,6 @@ define( function( require ) {
   var SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var TextPushButtonDeprecated = require( 'SUN/TextPushButtonDeprecated' );
-  var ReturnToLevelSelectButton = require( 'SCENERY_PHET/ReturnToLevelSelectButton' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
