@@ -25,6 +25,10 @@ define( function( require ) {
   function ProgressIndicator2( numStars, starDiameter, scoreProperty, perfectScore, options ) {
 
     options = _.extend( {
+      outerRadius: 10,
+      innerRadius: 5,
+      filledLineWidth: 1.5,
+      emptyLineWidth: 1.5
     }, options );
 
     HBox.call( this, {spacing: 3, children: []} );
@@ -37,8 +41,6 @@ define( function( require ) {
 
       var proportion = score / perfectScore;
       var numFilledStars = Math.floor( proportion * numStars );
-
-      var options = {outerRadius: 10, innerRadius: 5, filledLineWidth: 1.5, emptyLineWidth: 1.5};
 
       for ( var i = 0; i < numFilledStars; i++ ) {
         children.push( new StarNode( _.extend( {value: 1}, options ) ) );
