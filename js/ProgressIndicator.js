@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var HalfStar = require( 'VEGAS/HalfStar' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
