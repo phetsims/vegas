@@ -1,7 +1,7 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * Main file for the scenery-phet library demo.
+ * Main file for the vegas library demo.
  *
  * @author Sam Reid
  */
