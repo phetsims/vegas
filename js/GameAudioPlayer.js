@@ -8,14 +8,14 @@
 define( function( require ) {
   'use strict';
 
-  // Imports
+  // modules
   var Sound = require( 'VIBE/Sound' );
   var correctAnswerSound = require( 'audio!VEGAS/correctAnswer' );
   var wrongAnswerSound = require( 'audio!VEGAS/incorrectAnswer' );
   var imperfectScoreSound = require( 'audio!VEGAS/gameOver-imperfectScore' );
   var perfectScoreSound = require( 'audio!VEGAS/gameOver-perfectScore2' );
 
-  // Constants
+  // constants
   var CORRECT_ANSWER = new Sound( correctAnswerSound );
   var WRONG_ANSWER = new Sound( wrongAnswerSound );
   var IMPERFECT_SCORE = new Sound( imperfectScoreSound );

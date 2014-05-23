@@ -8,7 +8,7 @@
 define( function( require ) {
   'use strict';
 
-  // Imports
+  // modules
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );

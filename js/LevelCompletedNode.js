@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  // Imports
+  // modules
   var Color = require( 'SCENERY/util/Color' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var GameTimer = require( 'VEGAS/GameTimer' );
@@ -23,7 +23,7 @@ define( function( require ) {
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
-  // Strings
+  // strings
   var keepTryingString = require( 'string!VEGAS/keepTrying' );
   var goodString = require( 'string!VEGAS/good' );
   var greatString = require( 'string!VEGAS/great' );
