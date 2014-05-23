@@ -1,9 +1,10 @@
-// Copyright 2002-2013, University of Colorado Boulder
+//  Copyright 2002-2014, University of Colorado Boulder
 
 /**
  * Indicates a user's progress on a level by illuminating stars.
  *
  * @author John Blanco
+ * @author Sam Reid
  */
 define( function( require ) {
   'use strict';
@@ -12,83 +13,60 @@ define( function( require ) {
   var HalfStar = require( 'VEGAS/HalfStar' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Star = require( 'VEGAS/Star' );
+  var StarNode = require( 'SCENERY_PHET/StarNode' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
 
   /**
-   * @param {number} numStars
-   * @param {number} starDiameter
+   * @param {Number} numStars
    * @param {Property<Number>} scoreProperty
-   * @param {number} perfectScore
+   * @param {Number} perfectScore
+   * @param {Object} options
    * @constructor
    */
-  function ProgressIndicator( numStars, starDiameter, scoreProperty, perfectScore, options ) {
+  function ProgressIndicator( numStars, scoreProperty, perfectScore, options ) {
 
     options = _.extend( {
-      filledStarColor: 'yellow',
-      filledStarStroke: 'black',
-      unfilledStarColor: 'rgb( 220, 220, 220 )',
-      unfilledStarStroke: 'rgb( 190, 190, 190 )',
-      distanceBetweenStars: starDiameter * 0.15
+      starOuterRadius: 10,
+      starInnerRadius: 5,
+      starFilledLineWidth: 1.5,
+      starEmptyLineWidth: 1.5
     }, options );
 
-    Node.call( this );
-
-    // Add stars.
-    var starLeft = 0; // left edge of the star we're adding
-    var filledStars = [];
-    var filledHalfStars = [];
-    for ( var i = 0; i < numStars; i++ ) {
-
-      // Unfilled stars will always be visible. Add them first, so they are behind filled stars.
-      this.addChild( new Star( starDiameter,
-        {
-          fill: options.unfilledStarColor,
-          stroke: options.unfilledStarStroke,
-          lineWidth: 1,
-          left: starLeft,
-          lineCap: 'round'
-        } ) );
-
-      filledStars.push( new Star( starDiameter,
-        {
-          fill: options.filledStarColor,
-          stroke: options.filledStarStroke,
-          lineWidth: 1,
-          left: starLeft,
-          lineCap: 'round'
-        } ) );
-      this.addChild( filledStars[i] );
-
-      filledHalfStars.push( new HalfStar( starDiameter,
-        {
-          fill: options.filledStarColor,
-          stroke: options.filledStarStroke,
-          lineWidth: 1,
-          left: starLeft,
-          lineCap: 'round'
-        } ) );
-      this.addChild( filledHalfStars[i] );
-
-      starLeft += options.distanceBetweenStars + starDiameter;
-    }
+    HBox.call( this, {spacing: 3, children: []} );
+    var progressIndicator = this;
 
     // Update visibility of filled and half-filled stars based on score.
+    // TODO: Could be rewritten to use deltas if it needs to animate
     scoreProperty.link( function( score ) {
+      var children = [];
+
       var proportion = score / perfectScore;
       var numFilledStars = Math.floor( proportion * numStars );
-      for ( var i = 0; i < numStars; i++ ) {
-        filledStars[i].visible = i < numFilledStars;
+
+      var starOptions = {
+        outerRadius: options.starOuterRadius,
+        innerRadius: options.starInnerRadius,
+        filledLineWidth: options.starFilledLineWidth,
+        emptyLineWidth: options.starEmptyLineWidth
+      };
+
+      for ( var i = 0; i < numFilledStars; i++ ) {
+        children.push( new StarNode( _.extend( {value: 1}, starOptions ) ) );
       }
-      filledHalfStars.forEach( function( halfStar ) {
-        halfStar.visible = false;
-      } );
-      if ( proportion * numStars - numFilledStars > 0.49 ) {
-        filledHalfStars[numFilledStars ].visible = true;
+      var remainder = proportion * numStars - numFilledStars;
+      if ( remainder > 1E-6 ) {
+        children.push( new StarNode( _.extend( {value: remainder}, starOptions ) ) );
       }
+      var numEmptyStars = numStars - children.length;
+      for ( i = 0; i < numEmptyStars; i++ ) {
+        children.push( new StarNode( _.extend( {value: 0}, starOptions ) ) );
+      }
+
+      progressIndicator.children = children;
     } );
 
     this.mutate( options );
   }
 
-  return inherit( Node, ProgressIndicator );
+  return inherit( HBox, ProgressIndicator );
 } );

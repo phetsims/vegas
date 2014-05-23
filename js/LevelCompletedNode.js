@@ -85,7 +85,10 @@ define( function( require ) {
     children.push( title );
 
     // Progress indicator
-    children.push( new ProgressIndicator( numStars, options.starDiameter, new Property( score ), perfectScore ) ); //TODO propagate options related to ProgressIndicator
+    children.push( new ProgressIndicator( numStars, new Property( score ), perfectScore, {
+      starInnerRadius: options.starDiameter / 4,
+      starOuterRadius: options.starDiameter / 2
+    } ) );
 
     // Level (optional)
     if ( options.levelVisible ) {
