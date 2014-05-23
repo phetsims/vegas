@@ -18,6 +18,8 @@ define( function( require ) {
   var HSlider = require( 'SUN/HSlider' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
+  var ProgressIndicator2 = require( 'VEGAS/ProgressIndicator2' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   function VegasScreenView() {
     ScreenView.call( this, { renderer: 'svg' } );
@@ -26,9 +28,10 @@ define( function( require ) {
     this.addChild( new OutsideBackgroundNode( this.layoutBounds.centerX, this.layoutBounds.centerY + 20, this.layoutBounds.width * 3, this.layoutBounds.height, this.layoutBounds.height ) );
 
     var scoreProperty = new Property( 1 );
-    //numStars, starDiameter, scoreProperty, perfectScore, options
-    var progressIndicator = new ProgressIndicator( 4, 20, scoreProperty, 1, {} );
-    this.addChild( progressIndicator );
+
+    this.addChild( new VBox( {children: [
+      new ProgressIndicator( 4, 20, scoreProperty, 1, {} ),
+      new ProgressIndicator2( 4, 20, scoreProperty, 1, {} )]} ) );
 
     this.addChild( new HSlider( scoreProperty, {min: 0, max: 1} ).mutate( {left: 20, top: 80} ) );
   }
