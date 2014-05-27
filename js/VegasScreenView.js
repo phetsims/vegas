@@ -12,13 +12,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var OutsideBackgroundNode = require( 'SCENERY_PHET/OutsideBackgroundNode' );
-  var ThermometerNode = require( 'SCENERY_PHET/ThermometerNode' );
   var Property = require( 'AXON/Property' );
-  var StarNode = require( 'SCENERY_PHET/StarNode' );
   var HSlider = require( 'SUN/HSlider' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
 
   function VegasScreenView() {
     ScreenView.call( this, { renderer: 'svg' } );
