@@ -15,8 +15,10 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var HSlider = require( 'SUN/HSlider' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
+  var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
 
   function VegasScreenView() {
+    var vegasScreenView = this;
     ScreenView.call( this, { renderer: 'svg' } );
 
     // background
@@ -26,6 +28,27 @@ define( function( require ) {
 
     this.addChild( new ProgressIndicator( 4, scoreProperty, 1, { left: 20, top: 20, scale: 2 } ) );
     this.addChild( new HSlider( scoreProperty, {min: 0, max: 1} ).mutate( {left: 20, top: 80} ) );
+
+    //Show a sample LevelCompletedNode that cycles through score values when you press "continue"
+    var score = 0;
+    var addLevelCompletedNode = function() {
+      var maxScore = 12;
+      var levelCompletedNode = new LevelCompletedNode( 7, score, maxScore, 4, true, 77, 74, true, function() {
+        console.log( 'continue' );
+        score++;
+        if ( score > maxScore ) {
+          score = 0;
+        }
+        levelCompletedNode.detach();
+        addLevelCompletedNode();
+      }, {
+        right: vegasScreenView.layoutBounds.right - 10,
+        top: vegasScreenView.layoutBounds.top + 10
+      } );
+      vegasScreenView.addChild( levelCompletedNode );
+    };
+
+    addLevelCompletedNode();
   }
 
   return inherit( ScreenView, VegasScreenView, {
