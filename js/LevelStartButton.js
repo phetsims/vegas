@@ -55,6 +55,7 @@ define( function( require ) {
     } );
     this.addChild( buttonOutline );
 
+    //TODO add ability to specify the margins around the icon instead of hard-coding it here
     // Icon, scaled to fit.
     var iconScaleFactor = Math.min( options.buttonHeight * 0.65 / icon.height, options.buttonWidth * 0.85 / icon.width );
     icon.scale( iconScaleFactor );
