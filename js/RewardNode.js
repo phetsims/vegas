@@ -65,7 +65,7 @@ define( function( require ) {
         imageWrapper: imageWrappers[i % imageWrappers.length],
         x: (Math.random() * options.canvasBounds.width + options.canvasBounds.left) * options.scaleForResolution,
         y: options.canvasBounds.top - Math.random() * options.canvasBounds.height - 200,
-        speed: (Math.random() + 1) * 120
+        speed: (Math.random() + 1) * 200
       } );
     }
 
