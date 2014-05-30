@@ -14,18 +14,29 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  var Image = require( 'SCENERY/nodes/Image' );
+
+  var starNode = new Node();
+  var faceNode = new Node();
+
+  new StarNode().toImage( function( image ) {
+    starNode.children = [new Image( image )];
+  } );
+
+  //Create a smiling face.
+  //NOTE: Would look better with black stroke, but that is somehow throwing off the positions
+  new FaceNode( 40, {headStroke: null} ).toImage( function( image ) {
+    faceNode.children = [new Image( image )];
+  } );
 
   function RewardNode( options ) {
     options = _.extend( {
 
       layoutBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS,
       nodes: _.shuffle( _.times( 100, function() {
-          return new StarNode();
+          return new Node( {children: [starNode]} );
         } ).concat( _.times( 100, function() {
-
-          //Create a smiling face.
-          //NOTE: Would look better with black stroke, but that is somehow throwing off the positions
-          return new FaceNode( 40, {headStroke: null} );
+          return new Node( {children: [faceNode]} );
         } ) )
       )
     }, options );
