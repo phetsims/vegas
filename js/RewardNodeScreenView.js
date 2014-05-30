@@ -21,12 +21,13 @@ define( function( require ) {
     // background
     this.addChild( new OutsideBackgroundNode( this.layoutBounds.centerX, this.layoutBounds.centerY + 20, this.layoutBounds.width * 3, this.layoutBounds.height, this.layoutBounds.height ) );
 
-    this.addChild( new RewardNode() );
+    this.rewardNode = new RewardNode();
+    this.addChild( this.rewardNode );
   }
 
   return inherit( ScreenView, RewardNodeScreenView, {
     step: function( timeElapsed ) {
-      // Does nothing for now.
+      this.rewardNode.step( timeElapsed );
     }
   } );
 } );
