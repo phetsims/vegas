@@ -47,10 +47,10 @@ define( function( require ) {
           faceNode.children = [new Image( image )];
         } );
 
-        var stars = _.times( 100, function() {
+        var stars = _.times( 50, function() {
           return new Node( {children: [starNode]} );
         } );
-        var faces = _.times( 100, function() {
+        var faces = _.times( 50, function() {
           return new Node( {children: [faceNode]} );
         } );
         return _.shuffle( stars.concat( faces ) );
