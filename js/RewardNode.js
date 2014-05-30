@@ -9,7 +9,7 @@
  * 2. We could make the performance optimization to only animate objects that are currently onscreen, but that would lead to slowing down and speeding up behavior
  * 3. TODO: I would like to add optional support for rotation, scaling or other visual candy
  * 4. TODO: It is not exactly right to use the layout bounds, we should instead use the visible screen bounds.  EnergySkatePark has an example of computing the visual screen bounds.
- * 5. TODO: Provide utility support for this code and client code so that nodes can automatically be replicated and cached.
+ * 5. TODO: Provide utility support for the default node creation code and client code so that nodes can automatically be replicated and cached.
  *
  * @author Sam Reid
  */
