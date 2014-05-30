@@ -45,7 +45,6 @@ define( function( require ) {
       this.speeds.push( Math.random() + 1 );
     }
 
-    this.totalTime = 0;
     Node.call( this, {children: children} );
 
     this.mutate( options );
@@ -53,12 +52,10 @@ define( function( require ) {
 
   return inherit( Node, RewardNode, {
     step: function( elapsed ) {
-      this.totalTime += elapsed;
       var children = this.children;
       var numChildren = children.length;
       for ( var i = 0; i < numChildren; i++ ) {
         var child = children[i];
-//        child.rotate( Math.PI / 16 * elapsed );
         child.translate( 0, 1 * elapsed * 60 * this.speeds[i] );
       }
     }
