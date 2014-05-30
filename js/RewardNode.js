@@ -3,6 +3,12 @@
 /**
  * Reward node that shows many nodes animating, for fun!  Shown when a perfect score is achieved in a game.
  *
+ * Notes:
+ * 1. Instead of continuous animation, the animation is shown as a transient behavior that shows for a few seconds and then disappears.
+ *    This is to encourage the student to move to the next challenge, instead of becoming mesmerized by a perpetual animation.
+ * 2. We could make the performance optimization to only animate objects that are currently onscreen, but that would lead to slowing down and speeding up behavior
+ * 3. I would like to add optional support for rotation
+ *
  * @author Sam Reid
  */
 define( function( require ) {
@@ -32,6 +38,8 @@ define( function( require ) {
     options = _.extend( {
 
       layoutBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS,
+
+      //Default nodes are many stars and smiling faces
       nodes: _.shuffle( _.times( 100, function() {
           return new Node( {children: [starNode]} );
         } ).concat( _.times( 100, function() {
