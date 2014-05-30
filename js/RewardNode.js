@@ -24,8 +24,7 @@ define( function( require ) {
   } );
 
   //Create a smiling face.
-  //NOTE: Would look better with black stroke, but that is somehow throwing off the positions
-  new FaceNode( 40, {headStroke: null} ).toImage( function( image ) {
+  new FaceNode( 40, {headStroke: 'black', headLineWidth: 1.5} ).toImage( function( image ) {
     faceNode.children = [new Image( image )];
   } );
 
