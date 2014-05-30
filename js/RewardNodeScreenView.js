@@ -12,7 +12,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var OutsideBackgroundNode = require( 'SCENERY_PHET/OutsideBackgroundNode' );
-  var Property = require( 'AXON/Property' );
   var RewardNode = require( 'VEGAS/RewardNode' );
 
   function RewardNodeScreenView() {

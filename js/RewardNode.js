@@ -20,12 +20,12 @@ define( function( require ) {
 
       layoutBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS,
       nodes: _.shuffle( _.times( 100, function() {
-          return new StarNode()
+          return new StarNode();
         } ).concat( _.times( 100, function() {
 
           //Create a smiling face.
           //NOTE: Would look better with black stroke, but that is somehow throwing off the positions
-          return new FaceNode( 40, {headStroke: null} )
+          return new FaceNode( 40, {headStroke: null} );
         } ) )
       )
     }, options );
