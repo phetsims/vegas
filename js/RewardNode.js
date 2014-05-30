@@ -34,6 +34,9 @@ define( function( require ) {
       //Bounds in which to render the canvas.  TODO: Should be full screen
       canvasBounds: new Bounds2( 0, 0, ScreenView.DEFAULT_LAYOUT_BOUNDS.width, ScreenView.DEFAULT_LAYOUT_BOUNDS.height ),
 
+      //Scale things up for rasterization and back down for rendering so they have nice resolution on retina
+      scaleForResolution: 2,
+
       //Nodes to appear in the reward node.  They will be cached as images to improve performance
       nodes: [
         new FaceNode( 40, {headStroke: 'black', headLineWidth: 1.5} ),
@@ -49,6 +52,7 @@ define( function( require ) {
     var imageWrappers = [];
     options.nodes.forEach( function( node, i ) {
       imageWrappers.push( {image: null} );
+      node.scale( options.scaleForResolution );
       node.toImage( function( image ) {
         imageWrappers[i].image = image;
       } );
@@ -59,7 +63,7 @@ define( function( require ) {
     for ( var i = 0; i < options.rewardNodeCount; i++ ) {
       this.rewards.push( {
         imageWrapper: imageWrappers[i % imageWrappers.length],
-        x: Math.random() * options.canvasBounds.width + options.canvasBounds.left,
+        x: (Math.random() * options.canvasBounds.width + options.canvasBounds.left) * options.scaleForResolution,
         y: options.canvasBounds.top - Math.random() * options.canvasBounds.height - 200,
         speed: (Math.random() + 1) * 120
       } );
@@ -74,6 +78,7 @@ define( function( require ) {
     // @param {CanvasContextWrapper} wrapper
     paintCanvas: function( wrapper ) {
       var context = wrapper.context;
+      context.scale( 1 / this.options.scaleForResolution, 1 / this.options.scaleForResolution );
       if ( debug ) {
         context.fillStyle = 'rgba(50,50,50,0.5)';
         context.fillRect( 0, 0, this.options.canvasBounds.width, this.options.canvasBounds.height );
