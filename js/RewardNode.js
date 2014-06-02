@@ -136,11 +136,13 @@ define( function( require ) {
       //Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
       //TODO: The bounds are not working yet and I (@samreid) don't know why
       scene.addEventListener( 'resize', function() {
-        console.log( 'resized' );
 
         var globalBounds = scene.sceneBounds;
         var local = rewardNode.globalToParentBounds( globalBounds );
+
         rewardNode.setCanvasBounds( local );
+
+        //Also, store the bounds in the options so the debug flag can render the bounds
         rewardNode.options.canvasBounds = local;
       } );
     },
