@@ -87,14 +87,16 @@ define( function( require ) {
 
       //If the debugging flag is on, show the bounds of the canvas
       if ( debug ) {
+        var bounds = this.options.canvasBounds;
+        
         //Fill the canvas with gray
         context.fillStyle = 'rgba(50,50,50,0.5)';
-        context.fillRect( 0, 0, this.options.canvasBounds.width, this.options.canvasBounds.height );
+        context.fillRect( bounds.minX, bounds.minY, bounds.width, bounds.height );
 
         //Stroke the canvas border with blue
         context.strokeStyle = "#0000ff";
         context.lineWidth = 5;
-        context.strokeRect( 0, 0, this.options.canvasBounds.width, this.options.canvasBounds.height );
+        context.strokeRect( bounds.minX, bounds.minY, bounds.width, bounds.height );
       }
       context.scale( 1 / this.options.scaleForResolution, 1 / this.options.scaleForResolution );
 
@@ -148,10 +150,11 @@ define( function( require ) {
         var globalBounds = scene.sceneBounds;
         var local = rewardNode.globalToLocalBounds( globalBounds );
 
-        rewardNode.setCanvasBounds( new Bounds2( 0, 0, local.width, local.height ) );
-        rewardNode.setTranslation( local.minX, local.minY );
+        rewardNode.setCanvasBounds( local );
 
         console.log( 'resized', local );
+        console.log( rewardNode.localToGlobalBounds( rewardNode.localBounds ) );
+        console.log( scene.sceneBounds );
 
         //Also, store the bounds in the options so the debug flag can render the bounds
         rewardNode.options.canvasBounds = local;
