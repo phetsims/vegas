@@ -85,9 +85,16 @@ define( function( require ) {
     paintCanvas: function( wrapper ) {
       var context = wrapper.context;
 
+      //If the debugging flag is on, show the bounds of the canvas
       if ( debug ) {
+        //Fill the canvas with gray
         context.fillStyle = 'rgba(50,50,50,0.5)';
         context.fillRect( 0, 0, this.options.canvasBounds.width, this.options.canvasBounds.height );
+
+        //Stroke the canvas border with blue
+        context.strokeStyle = "#0000ff";
+        context.lineWidth = 5;
+        context.strokeRect( 0, 0, this.options.canvasBounds.width, this.options.canvasBounds.height );
       }
       context.scale( 1 / this.options.scaleForResolution, 1 / this.options.scaleForResolution );
 
@@ -137,10 +144,14 @@ define( function( require ) {
       //TODO: The bounds are not working yet and I (@samreid) don't know why
       scene.addEventListener( 'resize', function() {
 
+//        debugger;
         var globalBounds = scene.sceneBounds;
-        var local = rewardNode.globalToParentBounds( globalBounds );
+        var local = rewardNode.globalToLocalBounds( globalBounds );
 
-        rewardNode.setCanvasBounds( local );
+        rewardNode.setCanvasBounds( new Bounds2( 0, 0, local.width, local.height ) );
+        rewardNode.setTranslation( local.minX, local.minY );
+
+        console.log( 'resized', local );
 
         //Also, store the bounds in the options so the debug flag can render the bounds
         rewardNode.options.canvasBounds = local;
