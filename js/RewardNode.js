@@ -2,6 +2,7 @@
 
 /**
  * Reward node that shows many nodes animating, for fun!  Shown when a perfect score is achieved in a game.
+ * You can also test this by running vegas/vegas_en.html and clicking on the "Reward" screen
  *
  * Notes:
  * 1. Instead of continuous animation, the animation is shown as a transient behavior that shows for a few seconds and then disappears.
@@ -24,8 +25,10 @@ define( function( require ) {
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var Image = require( 'SCENERY/nodes/Image' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
-  var debug = false;
+  //This debug flag shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
+  var debug = true;
 
   function RewardNode( options ) {
 
@@ -70,6 +73,9 @@ define( function( require ) {
     }
 
     CanvasNode.call( this, options );
+
+    //Some initialization must occur after this node is attached to the scene graph, see documentation for RewardNode.init below.
+    this.inited = false;
   }
 
   return inherit( CanvasNode, RewardNode, {
@@ -78,11 +84,12 @@ define( function( require ) {
     // @param {CanvasContextWrapper} wrapper
     paintCanvas: function( wrapper ) {
       var context = wrapper.context;
-      context.scale( 1 / this.options.scaleForResolution, 1 / this.options.scaleForResolution );
+
       if ( debug ) {
         context.fillStyle = 'rgba(50,50,50,0.5)';
         context.fillRect( 0, 0, this.options.canvasBounds.width, this.options.canvasBounds.height );
       }
+      context.scale( 1 / this.options.scaleForResolution, 1 / this.options.scaleForResolution );
 
       for ( var i = 0; i < this.rewards.length; i++ ) {
         var reward = this.rewards[i];
@@ -92,8 +99,58 @@ define( function( require ) {
       }
     },
 
+    getScene: function() {
+      //Find the root of the scene tree
+      var node = this;
+      while ( node ) {
+        assert && assert( node._parents[1] === undefined, 'globalToLocalPoint unable to work for DAG' );
+        if ( node._parents[0] ) {
+          node = node._parents[0];
+        }
+        else {
+          break;
+        }
+      }
+
+      //TODO: add assertion to make sure node is a scenery.Scene
+      return node;
+    },
+
+    //Only init after being attached to the scene graph, since we must ascertain the local bounds such that they take up the global screen.
+    //@jonathanolson suggested getting the bounds right by doing the following:
+    // 1. listen to the size of the scene/display
+    // 2. record the trail between the scene and your CanvasNode, and
+    // 3. apply the inverse of that transform to the CanvasNode (whenever an ancestor's transform changes, or when the scene/display size changes).
+
+    // Later @jonathanolson continued:
+    // I don't recall how Scenery will handle Bounds2.EVERYTHING (probably assertion fails) right now, but that can change
+    // for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on changes to be precise (since you need them anyways to draw)
+    init: function() {
+      var rewardNode = this;
+
+      var scene = this.getScene();
+
+      var bounds = scene.sceneBounds;
+      console.log( bounds );
+
+      //Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
+      //TODO: The bounds are not working yet and I (@samreid) don't know why
+      scene.addEventListener( 'resize', function() {
+        console.log( 'resized' );
+
+        var globalBounds = scene.sceneBounds;
+        var local = rewardNode.globalToParentBounds( globalBounds );
+        rewardNode.setCanvasBounds( local );
+        rewardNode.options.canvasBounds = local;
+      } );
+    },
+
     //Move the rewards down according to their speed
     step: function( dt ) {
+      if ( !this.inited && this.getScene() !== null ) {
+        this.init();
+        this.inited = true;
+      }
       for ( var i = 0; i < this.rewards.length; i++ ) {
         var reward = this.rewards[i];
         reward.y += reward.speed * dt;
