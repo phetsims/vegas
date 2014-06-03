@@ -18,14 +18,11 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var CanvasNode = require( 'SCENERY/nodes/CanvasNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Text = require( 'SCENERY/nodes/Text' );
 
   //This debug flag shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
   var debug = true;
