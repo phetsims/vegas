@@ -27,7 +27,7 @@ define( function( require ) {
   var debug = false;
 
   function RewardNode( options ) {
-
+    var rewardNode = this;
     this.options = options = _.extend( {
 
       //Bounds in which to render the canvas.  TODO: Should be full screen
@@ -48,25 +48,17 @@ define( function( require ) {
 
     //Cache the nodes as images.  Use an intermediate imageWrapper since the images will be returned later asynchronously
     //And we need a place to store them, and know when they have arrived
-    var imageWrappers = [];
+    this.imageWrappers = [];
     options.nodes.forEach( function( node, i ) {
-      imageWrappers.push( {image: null} );
+      rewardNode.imageWrappers.push( {image: null,
+
+        //Record the width so the nodes can be partially offscreen
+        width: node.width} );
       node.scale( options.scaleForResolution );
       node.toImage( function( image ) {
-        imageWrappers[i].image = image;
+        rewardNode.imageWrappers[i].image = image;
       } );
     } );
-
-    //Store each reward, which has an imageWrapper (see above), x, y, speed
-    this.rewards = [];
-    for ( var i = 0; i < options.rewardNodeCount; i++ ) {
-      this.rewards.push( {
-        imageWrapper: imageWrappers[i % imageWrappers.length],
-        x: (Math.random() * options.canvasBounds.width + options.canvasBounds.left) * options.scaleForResolution,
-        y: options.canvasBounds.top - Math.random() * options.canvasBounds.height - 200,
-        speed: (Math.random() + 1) * 200
-      } );
-    }
 
     CanvasNode.call( this, options );
 
@@ -170,6 +162,18 @@ define( function( require ) {
 
       //Set the initial bounds
       updateBounds();
+
+      //Store each reward, which has an imageWrapper (see above), x, y, speed
+      this.rewards = [];
+      for ( var i = 0; i < this.options.rewardNodeCount; i++ ) {
+        var imageWrapper = this.imageWrappers[i % this.imageWrappers.length];
+        this.rewards.push( {
+          imageWrapper: imageWrapper,
+          x: (Math.random() * this.options.canvasBounds.width + this.options.canvasBounds.left) * this.options.scaleForResolution - imageWrapper.width / 2,
+          y: this.options.canvasBounds.top - Math.random() * this.options.canvasBounds.height - 200,
+          speed: (Math.random() + 1) * 200
+        } );
+      }
     },
 
     //Move the rewards down according to their speed
