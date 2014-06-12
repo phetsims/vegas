@@ -8,8 +8,7 @@
  * 1. Instead of continuous animation, the animation is shown as a transient behavior that shows for a few seconds and then disappears.
  *    This is to encourage the student to move to the next challenge, instead of becoming mesmerized by a perpetual animation.
  * 2. TODO: I would like to add optional support for rotation, scaling or other visual candy
- * 3. TODO: It is not exactly right to use the layout bounds, we should instead use the visible screen bounds.  EnergySkatePark has an example of computing the visual screen bounds.
- * 4. TODO: The RewardNode automatically detaches from its parents after the animation is complete?  Or perhaps this is normally coupled to the "continue" button in the LevelCompletedDialogNode?
+ * 3. TODO: The RewardNode automatically detaches from its parents after the animation is complete?  Or perhaps this is normally coupled to the "continue" button in the LevelCompletedDialogNode?
  *
  * @author Sam Reid
  */
@@ -25,7 +24,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
 
   //This debug flag shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
-  var debug = true;
+  var debug = false;
 
   function RewardNode( options ) {
 
@@ -85,7 +84,7 @@ define( function( require ) {
       //If the debugging flag is on, show the bounds of the canvas
       if ( debug ) {
         var bounds = this.options.canvasBounds;
-        
+
         //Fill the canvas with gray
         context.fillStyle = 'rgba(50,50,50,0.5)';
         context.fillRect( bounds.minX, bounds.minY, bounds.width, bounds.height );
@@ -122,40 +121,55 @@ define( function( require ) {
       return node;
     },
 
+    //Find the first parent that is a ScreenView so we can listen for its transform, see https://github.com/phetsims/vegas/issues/4
+    getScreenView: function() {
+      var node = this;
+      while ( node ) {
+        assert && assert( node._parents[1] === undefined, 'globalToLocalPoint unable to work for DAG' );
+        if ( node._parents[0] ) {
+          node = node._parents[0];
+          if ( node instanceof ScreenView ) {
+            return node;
+          }
+        }
+        else {
+          break;
+        }
+      }
+
+      throw new Error( 'No ScreenView found' );
+    },
+
     //Only init after being attached to the scene graph, since we must ascertain the local bounds such that they take up the global screen.
-    //@jonathanolson suggested getting the bounds right by doing the following:
     // 1. listen to the size of the scene/display
     // 2. record the trail between the scene and your CanvasNode, and
     // 3. apply the inverse of that transform to the CanvasNode (whenever an ancestor's transform changes, or when the scene/display size changes).
-
+    //
     // Later @jonathanolson continued:
     // I don't recall how Scenery will handle Bounds2.EVERYTHING (probably assertion fails) right now, but that can change
     // for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on changes to be precise (since you need them anyways to draw)
     init: function() {
       var rewardNode = this;
-
       var scene = this.getScene();
 
-      var bounds = scene.sceneBounds;
-      console.log( bounds );
-
       //Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
-      //TODO: The bounds are not working yet and I (@samreid) don't know why
-      scene.addEventListener( 'resize', function() {
+      var updateBounds = function() {
 
-//        debugger;
-        var globalBounds = scene.sceneBounds;
-        var local = rewardNode.globalToLocalBounds( globalBounds );
-
+        var local = rewardNode.globalToLocalBounds( scene.sceneBounds );
         rewardNode.setCanvasBounds( local );
-
-        console.log( 'resized', local );
-        console.log( rewardNode.localToGlobalBounds( rewardNode.localBounds ) );
-        console.log( scene.sceneBounds );
 
         //Also, store the bounds in the options so the debug flag can render the bounds
         rewardNode.options.canvasBounds = local;
-      } );
+      };
+
+      //When the scene is resized, update the bounds
+      scene.addEventListener( 'resize', updateBounds );
+
+      //When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
+      this.getScreenView().getTransform().addTransformListener( {before: function() {}, after: function() {updateBounds();}} );
+
+      //Set the initial bounds
+      updateBounds();
     },
 
     //Move the rewards down according to their speed
