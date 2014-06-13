@@ -1,17 +1,11 @@
 //  Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * Reward node that shows many nodes animating, for fun!  Shown when a perfect score is achieved in a game.
+ * Reward node that shows many nodes animating continuously, for fun!  Shown when a perfect score is achieved in a game.
  * You can also test this by running vegas/vegas_en.html and clicking on the "Reward" screen
  *
  * There are two ways to run the animation step function.  The client code can manually call step(dt), or the client code can pass in an Events instance that triggers events on 'step'.
  * In the latter case, the listener will automatically be removed when the animation is complete.
- *
- * Notes:
- * 1. Instead of continuous animation, the animation is shown as a transient behavior that shows for a few seconds and then disappears.
- *    This is to encourage the student to move to the next challenge, instead of becoming mesmerized by a perpetual animation.
- * 2. TODO: I would like to add optional support for rotation, scaling or other visual candy
- * 3. TODO: The RewardNode automatically detaches from its parents after the animation is complete?  Or perhaps this is normally coupled to the "continue" button in the LevelCompletedDialogNode?
  *
  * @author Sam Reid
  */
@@ -47,6 +41,7 @@ define( function( require ) {
       ], 150 ),
 
       //If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source
+      //TODO: Make it so the client doesn't pass in the entire model
       stepSource: null
     }, options );
 
@@ -56,7 +51,7 @@ define( function( require ) {
       options.stepSource.on( 'step', this.stepCallback );
     }
 
-    //Cache the nodes as images.  Use an intermediate imageWrapper since the images will be returned later asynchronously
+    //Cache each unique node as an image for faster rendering in canvas.  Use an intermediate imageWrapper since the images will be returned later asynchronously
     //And we need a place to store them, and know when they have arrived
     this.imageWrappers = [];
 
@@ -66,11 +61,15 @@ define( function( require ) {
     uniqueNodes.forEach( function( node, i ) {
       rewardNode.imageWrappers.push(
         {
+
+          //The image to be rendered in the canvas, will be filled in by toImage callback
           image: null,
 
-          //Record the width so the nodes can be partially offscreen since layout done before toImage completed
+          //Record the width and height so the nodes can be positioned before the toImage call has completed
           width: node.width,
+          height: node.height,
 
+          //The node itself is recorded in the wrapper so the wrapper can be looked up based on the original node
           node: node
         } );
       var parent = new Node( {children: [node], scale: options.scaleForResolution} );
