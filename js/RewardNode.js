@@ -191,7 +191,7 @@ define( function( require ) {
           (function( node ) {
 
             //find the image wrapper corresponding to the node
-            var imageWrapper = _.find( rewardNode.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node} );
+            var imageWrapper = _.find( rewardNode.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node;} );
             rewardNode.rewards.push( {
               imageWrapper: imageWrapper,
               x: (Math.random() * rewardNode.options.canvasBounds.width + rewardNode.options.canvasBounds.left) * rewardNode.options.scaleForResolution - imageWrapper.width / 2,
