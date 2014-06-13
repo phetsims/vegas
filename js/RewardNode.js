@@ -44,16 +44,10 @@ define( function( require ) {
       nodes: RewardNode.createRandomNodes( [
         new FaceNode( 40, {headStroke: 'black', headLineWidth: 1.5} ),
         new StarNode()
-      ], 100 ),
-
-      //Total number of nodes to display
-      rewardNodeCount: 100,
+      ], 150 ),
 
       //If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source
-      stepSource: null,
-
-      //Function to be called when the reward animation is complete
-      completionListener: function() {}
+      stepSource: null
     }, options );
 
     //If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source
@@ -201,7 +195,7 @@ define( function( require ) {
           this.rewards.push( {
             imageWrapper: imageWrapper,
             x: (Math.random() * this.options.canvasBounds.width + this.options.canvasBounds.left) * this.options.scaleForResolution - imageWrapper.width / 2,
-            y: this.options.canvasBounds.top - Math.random() * this.options.canvasBounds.height - 200,
+            y: this.options.canvasBounds.top - Math.random() * this.options.canvasBounds.height * 2 - 200,
             speed: (Math.random() + 1) * 200
           } );
         }
@@ -215,24 +209,15 @@ define( function( require ) {
         }
 
         //Update all of the rewards
-        //Track their location so that we know when the animation is complete (when all nodes are offscreen)
-        var minY = this.rewards[0].y;
+        var maxY = this.options.canvasBounds.height * this.options.scaleForResolution;
         for ( var i = 0; i < this.rewards.length; i++ ) {
           var reward = this.rewards[i];
           reward.y += reward.speed * dt;
-          minY = Math.min( minY, reward.y );
+          if ( reward.y > maxY ) {
+            reward.y = this.options.canvasBounds.top - Math.random() * this.options.canvasBounds.height * 2 - 200;
+          }
         }
         this.invalidatePaint();
-
-        //If the icons are all off screen, then detach the step listener and signify completion
-        if ( minY > this.options.canvasBounds.height * this.options.scaleForResolution ) {
-          if ( this.options.stepSource ) {
-            this.options.stepSource.off( 'step', this.stepCallback );
-          }
-          if ( this.options.completionListener ) {
-            this.options.completionListener();
-          }
-        }
       }
     },
 
