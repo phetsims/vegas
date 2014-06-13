@@ -41,10 +41,10 @@ define( function( require ) {
       scaleForResolution: 2,
 
       //Nodes to appear in the reward node.  They will be cached as images to improve performance
-      nodes: [
+      nodes: RewardNode.createRandomNodes( [
         new FaceNode( 40, {headStroke: 'black', headLineWidth: 1.5} ),
         new StarNode()
-      ],
+      ], 100 ),
 
       //Total number of nodes to display
       rewardNodeCount: 100,
@@ -65,13 +65,19 @@ define( function( require ) {
     //Cache the nodes as images.  Use an intermediate imageWrapper since the images will be returned later asynchronously
     //And we need a place to store them, and know when they have arrived
     this.imageWrappers = [];
-    options.nodes.forEach( function( node, i ) {
+
+    //find the unique nodes in the array
+    var uniqueNodes = _.uniq( this.options.nodes );
+
+    uniqueNodes.forEach( function( node, i ) {
       rewardNode.imageWrappers.push(
         {
           image: null,
 
-          //Record the width so the nodes can be partially offscreen
-          width: node.width
+          //Record the width so the nodes can be partially offscreen since layout done before toImage completed
+          width: node.width,
+
+          node: node
         } );
       var parent = new Node( {children: [node], scale: options.scaleForResolution} );
       parent.toImage( function( image ) {
@@ -187,8 +193,11 @@ define( function( require ) {
 
         //Store each reward, which has an imageWrapper (see above), x, y, speed
         this.rewards = [];
-        for ( var i = 0; i < this.options.rewardNodeCount; i++ ) {
-          var imageWrapper = this.imageWrappers[i % this.imageWrappers.length];
+        for ( var i = 0; i < this.options.nodes.length; i++ ) {
+
+          var node = this.options.nodes[i];
+          //find the image wrapper corresponding to the node
+          var imageWrapper = _.find( this.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node} );
           this.rewards.push( {
             imageWrapper: imageWrapper,
             x: (Math.random() * this.options.canvasBounds.width + this.options.canvasBounds.left) * this.options.scaleForResolution - imageWrapper.width / 2,
