@@ -188,14 +188,17 @@ define( function( require ) {
         for ( var i = 0; i < this.options.nodes.length; i++ ) {
 
           var node = this.options.nodes[i];
-          //find the image wrapper corresponding to the node
-          var imageWrapper = _.find( this.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node} );
-          this.rewards.push( {
-            imageWrapper: imageWrapper,
-            x: (Math.random() * this.options.canvasBounds.width + this.options.canvasBounds.left) * this.options.scaleForResolution - imageWrapper.width / 2,
-            y: this.options.canvasBounds.top - Math.random() * this.options.canvasBounds.height * 2 - 200,
-            speed: (Math.random() + 1) * 200
-          } );
+          (function( node ) {
+
+            //find the image wrapper corresponding to the node
+            var imageWrapper = _.find( rewardNode.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node} );
+            rewardNode.rewards.push( {
+              imageWrapper: imageWrapper,
+              x: (Math.random() * rewardNode.options.canvasBounds.width + rewardNode.options.canvasBounds.left) * rewardNode.options.scaleForResolution - imageWrapper.width / 2,
+              y: rewardNode.options.canvasBounds.top - Math.random() * rewardNode.options.canvasBounds.height * 2 - 200,
+              speed: (Math.random() + 1) * 200
+            } );
+          })( node );
         }
       },
 
