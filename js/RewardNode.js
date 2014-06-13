@@ -4,6 +4,9 @@
  * Reward node that shows many nodes animating, for fun!  Shown when a perfect score is achieved in a game.
  * You can also test this by running vegas/vegas_en.html and clicking on the "Reward" screen
  *
+ * There are two ways to run the animation step function.  The client code can manually call step(dt), or the client code can pass in an Events instance that triggers events on 'step'.
+ * In the latter case, the listener will automatically be removed when the animation is complete.
+ *
  * Notes:
  * 1. Instead of continuous animation, the animation is shown as a transient behavior that shows for a few seconds and then disappears.
  *    This is to encourage the student to move to the next challenge, instead of becoming mesmerized by a perpetual animation.
@@ -22,6 +25,7 @@ define( function( require ) {
   var StarNode = require( 'SCENERY_PHET/StarNode' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Node = require( 'SCENERY/nodes/Node' );
 
   //This debug flag shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
   var debug = false;
@@ -43,19 +47,34 @@ define( function( require ) {
       ],
 
       //Total number of nodes to display
-      rewardNodeCount: 100
+      rewardNodeCount: 100,
+
+      //If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source
+      stepSource: null,
+
+      //Function to be called when the reward animation is complete
+      completionListener: function() {}
     }, options );
+
+    //If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source
+    if ( options.stepSource ) {
+      this.stepCallback = function( dt ) {rewardNode.step( dt );};
+      options.stepSource.on( 'step', this.stepCallback );
+    }
 
     //Cache the nodes as images.  Use an intermediate imageWrapper since the images will be returned later asynchronously
     //And we need a place to store them, and know when they have arrived
     this.imageWrappers = [];
     options.nodes.forEach( function( node, i ) {
-      rewardNode.imageWrappers.push( {image: null,
+      rewardNode.imageWrappers.push(
+        {
+          image: null,
 
-        //Record the width so the nodes can be partially offscreen
-        width: node.width} );
-      node.scale( options.scaleForResolution );
-      node.toImage( function( image ) {
+          //Record the width so the nodes can be partially offscreen
+          width: node.width
+        } );
+      var parent = new Node( {children: [node], scale: options.scaleForResolution} );
+      parent.toImage( function( image ) {
         rewardNode.imageWrappers[i].image = image;
       } );
     } );
@@ -88,10 +107,13 @@ define( function( require ) {
       }
       context.scale( 1 / this.options.scaleForResolution, 1 / this.options.scaleForResolution );
 
-      for ( var i = 0; i < this.rewards.length; i++ ) {
-        var reward = this.rewards[i];
-        if ( reward.imageWrapper.image ) {
-          context.drawImage( reward.imageWrapper.image, reward.x, reward.y );
+      //Display the rewards, but check that they exist first.  They do not exist when attached to the timer with stepSource
+      if ( this.rewards ) {
+        for ( var i = 0; i < this.rewards.length; i++ ) {
+          var reward = this.rewards[i];
+          if ( reward.imageWrapper.image ) {
+            context.drawImage( reward.imageWrapper.image, reward.x, reward.y );
+          }
         }
       }
     },
@@ -182,11 +204,26 @@ define( function( require ) {
         this.init();
         this.inited = true;
       }
+
+      //Update all of the rewards
+      //Track their location so that we know when the animation is complete (when all nodes are offscreen)
+      var minY = this.rewards[0].y;
       for ( var i = 0; i < this.rewards.length; i++ ) {
         var reward = this.rewards[i];
         reward.y += reward.speed * dt;
+        minY = Math.min( minY, reward.y );
       }
       this.invalidatePaint();
+
+      //If the icons are all off screen, then detach the step listener and signify completion
+      if ( minY > this.options.canvasBounds.height * this.options.scaleForResolution ) {
+        if ( this.options.stepSource ) {
+          this.options.stepSource.off( 'step', this.stepCallback );
+        }
+        if ( this.options.completionListener ) {
+          this.options.completionListener();
+        }
+      }
     }
   } );
 } );
