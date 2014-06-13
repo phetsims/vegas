@@ -12,8 +12,8 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
-  var VegasScreenView = require( 'VEGAS/examples/VegasScreenView' );
-  var RewardNodeScreenView = require( 'VEGAS/examples/RewardNodeScreenView' );
+  var VegasScreenView = require( 'VEGAS/demo/VegasScreenView' );
+  var RewardNodeScreenView = require( 'VEGAS/demo/RewardNodeScreenView' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // Strings
