@@ -159,9 +159,7 @@ define( function( require ) {
       // 2. record the trail between the scene and your CanvasNode, and
       // 3. apply the inverse of that transform to the CanvasNode (whenever an ancestor's transform changes, or when the scene/display size changes).
       //
-      // Later @jonathanolson continued:
-      // I don't recall how Scenery will handle Bounds2.EVERYTHING (probably assertion fails) right now, but that can change
-      // for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on changes to be precise (since you need them anyways to draw)
+      // JO said: for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on changes to be precise (since you need them anyways to draw)
       init: function() {
         var rewardNode = this;
         var scene = this.getScene();
