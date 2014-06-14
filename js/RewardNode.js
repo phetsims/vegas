@@ -118,40 +118,16 @@ define( function( require ) {
         }
       },
 
+      //Find the root of the scene tree
       getScene: function() {
-        //Find the root of the scene tree
-        var node = this;
-        while ( node ) {
-          assert && assert( node._parents[1] === undefined, 'globalToLocalPoint unable to work for DAG' );
-          if ( node._parents[0] ) {
-            node = node._parents[0];
-          }
-          else {
-            break;
-          }
-        }
-
-        //TODO: add assertion to make sure node is a scenery.Scene
-        return node;
+        return this.getUniqueTrail().nodes[0];
       },
 
       //Find the first parent that is a ScreenView so we can listen for its transform, see https://github.com/phetsims/vegas/issues/4
       getScreenView: function() {
-        var node = this;
-        while ( node ) {
-          assert && assert( node._parents[1] === undefined, 'globalToLocalPoint unable to work for DAG' );
-          if ( node._parents[0] ) {
-            node = node._parents[0];
-            if ( node instanceof ScreenView ) {
-              return node;
-            }
-          }
-          else {
-            break;
-          }
-        }
-
-        throw new Error( 'No ScreenView found' );
+        var nodes = this.getUniqueTrail().nodes.slice( 0 );
+        nodes.reverse();
+        return _.find( nodes, function( node ) {return node instanceof ScreenView;} );
       },
 
       //Only init after being attached to the scene graph, since we must ascertain the local bounds such that they take up the global screen.
