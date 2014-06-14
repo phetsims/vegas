@@ -26,10 +26,11 @@ define( function( require ) {
 
   function RewardNode( options ) {
     var rewardNode = this;
-    this.options = options = _.extend( {
 
-      //Bounds in which to render the canvas.  TODO: Should be full screen
-      canvasBounds: new Bounds2( 0, 0, ScreenView.DEFAULT_LAYOUT_BOUNDS.width, ScreenView.DEFAULT_LAYOUT_BOUNDS.height ),
+    //Bounds in which to render the canvas.  Should be the full screen.  See below for how this is computed based on ScreenView bounds and relative transforms
+    this.canvasDisplayBounds = new Bounds2( 0, 0, ScreenView.DEFAULT_LAYOUT_BOUNDS.width, ScreenView.DEFAULT_LAYOUT_BOUNDS.height );
+
+    this.options = options = _.extend( {
 
       //Scale things up for rasterization and back down for rendering so they have nice resolution on retina
       scaleForResolution: 2,
@@ -93,7 +94,7 @@ define( function( require ) {
 
         //If the debugging flag is on, show the bounds of the canvas
         if ( debug ) {
-          var bounds = this.options.canvasBounds;
+          var bounds = this.options.canvasDisplayBounds;
 
           //Fill the canvas with gray
           context.fillStyle = 'rgba(50,50,50,0.5)';
@@ -170,7 +171,7 @@ define( function( require ) {
           rewardNode.setCanvasBounds( local );
 
           //Also, store the bounds in the options so the debug flag can render the bounds
-          rewardNode.options.canvasBounds = local;
+          rewardNode.canvasDisplayBounds = local;
         };
 
         //When the scene is resized, update the bounds
@@ -193,8 +194,8 @@ define( function( require ) {
             var imageWrapper = _.find( rewardNode.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node;} );
             rewardNode.rewards.push( {
               imageWrapper: imageWrapper,
-              x: (Math.random() * rewardNode.options.canvasBounds.width + rewardNode.options.canvasBounds.left) * rewardNode.options.scaleForResolution - imageWrapper.width / 2,
-              y: rewardNode.options.canvasBounds.top - Math.random() * rewardNode.options.canvasBounds.height * 2 - 200,
+              x: (Math.random() * rewardNode.canvasDisplayBounds.width + rewardNode.canvasDisplayBounds.left) * rewardNode.options.scaleForResolution - imageWrapper.width / 2,
+              y: rewardNode.canvasDisplayBounds.top - Math.random() * rewardNode.canvasDisplayBounds.height * 2 - 200,
               speed: (Math.random() + 1) * 200
             } );
           })( node );
@@ -209,12 +210,12 @@ define( function( require ) {
         }
 
         //Update all of the rewards
-        var maxY = this.options.canvasBounds.height * this.options.scaleForResolution;
+        var maxY = this.canvasDisplayBounds.height * this.options.scaleForResolution;
         for ( var i = 0; i < this.rewards.length; i++ ) {
           var reward = this.rewards[i];
           reward.y += reward.speed * dt;
           if ( reward.y > maxY ) {
-            reward.y = this.options.canvasBounds.top - Math.random() * this.options.canvasBounds.height * 2 - 200;
+            reward.y = this.canvasDisplayBounds.top - Math.random() * this.canvasDisplayBounds.height * 2 - 200;
           }
         }
         this.invalidatePaint();
