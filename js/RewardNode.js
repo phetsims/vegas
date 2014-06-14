@@ -2,7 +2,8 @@
 
 /**
  * Reward node that shows many nodes animating continuously, for fun!  Shown when a perfect score is achieved in a game.
- * You can also test this by running vegas/vegas_en.html and clicking on the "Reward" screen
+ * You can also test this by running vegas/vegas_en.html and clicking on the "Reward" screen.
+ * Note that the number of images falling is constant, so if the screen is stretched out vertically (tall thin window) they will be less dense.
  *
  * There are two ways to run the animation step function.  The client code can manually call step(dt), or the client code can pass in an Events instance that triggers events on 'step'.
  * In the latter case, the listener will automatically be removed when the animation is complete.
@@ -134,7 +135,7 @@ define( function( require ) {
       // 2. record the trail between the scene and your CanvasNode, and
       // 3. apply the inverse of that transform to the CanvasNode (whenever an ancestor's transform changes, or when the scene/display size changes).
       //
-      // JO said: for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on changes to be precise (since you need them anyways to draw)
+      // @jonathanolson said: for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on changes to be precise (since you need them anyways to draw)
       init: function() {
         var rewardNode = this;
         var scene = this.getScene();
@@ -188,7 +189,11 @@ define( function( require ) {
         var maxY = this.canvasDisplayBounds.height * this.options.scaleForResolution;
         for ( var i = 0; i < this.rewards.length; i++ ) {
           var reward = this.rewards[i];
+
+          //Move each node straight down at constant speed
           reward.y += reward.speed * dt;
+
+          //Move back to the top after the node falls off the bottom
           if ( reward.y > maxY ) {
             reward.y = this.canvasDisplayBounds.top - Math.random() * this.canvasDisplayBounds.height * 2 - 200;
           }
