@@ -125,8 +125,7 @@ define( function( require ) {
 
       //Find the first parent that is a ScreenView so we can listen for its transform, see https://github.com/phetsims/vegas/issues/4
       getScreenView: function() {
-        var nodes = this.getUniqueTrail().nodes.slice( 0 );
-        nodes.reverse();
+        var nodes = this.getUniqueTrail().nodes.slice( 0 ).reverse();
         return _.find( nodes, function( node ) {return node instanceof ScreenView;} );
       },
 
