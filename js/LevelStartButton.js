@@ -47,7 +47,7 @@ define( function( require ) {
 
     assert && assert( options.progressIndicatorPercentage > 0 && options.progressIndicatorPercentage <= 0.5 );
 
-    Node.call( this );
+    Node.call( this ); //TODO this should be a subtype of a 'button with shadow' sun component
 
     // Drop shadow
     this.addChild( new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
@@ -78,7 +78,8 @@ define( function( require ) {
     buttonForegroundNode.addChild( icon );
 
     // Progress indicator (stars), scaled to fit
-    var progressIndicatorBackground = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight * options.progressIndicatorPercentage, options.cornerRadius, options.cornerRadius, {
+    var progressIndicatorYSpace = options.buttonHeight - iconYSpace; // vertical space available for progress indicator
+    var progressIndicatorBackground = new Rectangle( 0, 0, options.buttonWidth, progressIndicatorYSpace, options.cornerRadius, options.cornerRadius, {
       fill: 'white',
       stroke: 'black',
       lineWidth: 1,
@@ -96,7 +97,7 @@ define( function( require ) {
     buttonForegroundNode.addChild( progressIndicatorBackground );
     buttonForegroundNode.addChild( progressIndicator );
 
-    //TODO This behavior was borrowed from sun.PushButton, because sun.RectanglePushButton doesn't support the look/behavior of this button.
+    //TODO This behavior was copied from sun.PushButtonDeprecated, because sun.RectangularPushButton doesn't support the look/behavior of this button.
     // Button listener
     var update = function( state ) {
       if ( state === 'up' ) {
