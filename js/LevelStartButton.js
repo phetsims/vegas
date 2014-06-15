@@ -4,6 +4,7 @@
  * Button for initiating game levels and for depicting the progress made on each level.
  *
  * @author John Blanco
+ * @author Chris Malley
  */
 define( function( require ) {
   'use strict';
