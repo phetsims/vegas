@@ -49,15 +49,14 @@ define( function( require ) {
       }
     ) );
 
-    //TODO this is a non-intuitive decision that made changing this button difficult
-    // Add the button outline, which is also the parent node for everything else that is on the button.
-    var buttonOutline = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
+    // Add the button foreground, which is the parent node for everything else that is on the button.
+    var buttonForegroundNode = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
       stroke: 'black',
       lineWidth: 1,
       fill: options.backgroundColor,
       cursor: 'pointer'
     } );
-    this.addChild( buttonOutline );
+    this.addChild( buttonForegroundNode );
 
     //TODO add ability to specify the margins around the icon instead of hard-coding it here
     // Icon, scaled to fit.
@@ -66,7 +65,7 @@ define( function( require ) {
     icon.centerX = options.buttonWidth / 2;
     icon.centerY = options.buttonHeight * 0.4;
     icon.pickable = false;
-    buttonOutline.addChild( icon );
+    buttonForegroundNode.addChild( icon );
 
     // Progress indicator (stars), scaled to fit
     var progressIndicatorBackground = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight * 0.2, options.cornerRadius, options.cornerRadius, {
@@ -84,27 +83,27 @@ define( function( require ) {
       ( progressIndicatorBackground.width - 2 * options.progressIndicatorXMargin ) / progressIndicator.width,
       ( progressIndicatorBackground.height - 2 * options.progressIndicatorYMargin ) / progressIndicator.height  ) );
     progressIndicator.center = progressIndicatorBackground.center;
-    buttonOutline.addChild( progressIndicatorBackground );
-    buttonOutline.addChild( progressIndicator );
+    buttonForegroundNode.addChild( progressIndicatorBackground );
+    buttonForegroundNode.addChild( progressIndicator );
 
     //TODO This behavior was borrowed from sun.PushButton, because sun.RectanglePushButton doesn't support the look/behavior of this button.
     // Add the listener to update the appearance and handle a click.
     var update = function( state ) {
       if ( state === 'up' ) {
-        buttonOutline.fill = options.backgroundColor;
-        buttonOutline.top = 0;
-        buttonOutline.left = 0;
+        buttonForegroundNode.fill = options.backgroundColor;
+        buttonForegroundNode.top = 0;
+        buttonForegroundNode.left = 0;
       }
       else if ( state === 'over' ) {
-        buttonOutline.fill = options.highlightedBackgroundColor;
+        buttonForegroundNode.fill = options.highlightedBackgroundColor;
       }
       else if ( state === 'down' ) {
-        buttonOutline.fill = options.highlightedBackgroundColor;
-        buttonOutline.top = shadowOffset;
-        buttonOutline.left = shadowOffset;
+        buttonForegroundNode.fill = options.highlightedBackgroundColor;
+        buttonForegroundNode.top = shadowOffset;
+        buttonForegroundNode.left = shadowOffset;
       }
     };
-    buttonOutline.addInputListener( new ButtonListener( {
+    buttonForegroundNode.addInputListener( new ButtonListener( {
       up: function() { update( 'up' ); },
       over: function() { update( 'over' ); },
       down: function() { update( 'down' ); },
