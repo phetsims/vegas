@@ -17,7 +17,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   /**
-   * @param {Image} icon Scenery node that appears on the button, scaled to fit
+   * @param {Node} icon Scenery node that appears on the button, scaled to fit
    * @param {number} numStars Number of stars to show in the progress indicator at the bottom of the button
    * @param {function} fireFunction Called when the button fires
    * @param {Property<number>} scoreProperty
@@ -49,7 +49,7 @@ define( function( require ) {
 
     Node.call( this );
 
-    // Add the drop shadow.
+    // Drop shadow
     this.addChild( new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
         fill: options.shadowColor,
         top: options.shadowOffset,
@@ -57,7 +57,7 @@ define( function( require ) {
       }
     ) );
 
-    // Add the button foreground, which is the parent node for everything else that is on the button.
+    // Button foreground, which is the parent node for everything else that is on the button.
     var buttonForegroundNode = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
       stroke: 'black',
       lineWidth: 1,
@@ -97,7 +97,7 @@ define( function( require ) {
     buttonForegroundNode.addChild( progressIndicator );
 
     //TODO This behavior was borrowed from sun.PushButton, because sun.RectanglePushButton doesn't support the look/behavior of this button.
-    // Add the listener to update the appearance and handle a click.
+    // Button listener
     var update = function( state ) {
       if ( state === 'up' ) {
         buttonForegroundNode.fill = options.backgroundColor;
@@ -111,6 +111,9 @@ define( function( require ) {
         buttonForegroundNode.fill = options.highlightedBackgroundColor;
         buttonForegroundNode.top = options.shadowOffset;
         buttonForegroundNode.left = options.shadowOffset;
+      }
+      else {
+        throw new Error( 'unsupported state: ' + state );
       }
     };
     buttonForegroundNode.addInputListener( new ButtonListener( {
