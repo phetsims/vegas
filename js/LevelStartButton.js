@@ -31,9 +31,10 @@ define( function( require ) {
       buttonHeight: 150,
       backgroundColor: 'rgb( 242, 255, 204 )',
       highlightedBackgroundColor: 'rgb( 250, 255, 230 )',
+      cornerRadius: 10,
+      // shadow
       shadowColor: 'black',
       shadowOffset: 3,
-      cornerRadius: 10,
       // icon
       iconMinXMargin: 10,
       iconMinYMargin: 10,
