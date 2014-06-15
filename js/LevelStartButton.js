@@ -32,7 +32,10 @@ define( function( require ) {
       backgroundColor: 'rgb( 242, 255, 204 )',
       highlightedBackgroundColor: 'rgb( 250, 255, 230 )',
       shadowColor: 'black',
-      cornerRadius: 10
+      cornerRadius: 10,
+      // options for progress indicator (stars)
+      progressIndicatorXMargin: 10,
+      progressIndicatorYMargin: 5
     }, options );
     var shadowOffset = 0.026 * options.buttonWidth;
 
@@ -46,6 +49,7 @@ define( function( require ) {
       }
     ) );
 
+    //TODO this is a non-intuitive decision that made changing this button difficult
     // Add the button outline, which is also the parent node for everything else that is on the button.
     var buttonOutline = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
       stroke: 'black',
@@ -72,13 +76,16 @@ define( function( require ) {
       pickable: false,
       bottom: options.buttonHeight
     } );
-    progressIndicatorBackground.addChild( new ProgressIndicator( numStars, scoreProperty, perfectScore, {
-      centerX: progressIndicatorBackground.centerX,
-      centerY: progressIndicatorBackground.height / 2,
+    var progressIndicator = new ProgressIndicator( numStars, scoreProperty, perfectScore, {
       pickable: false,
       starDiameter: options.buttonWidth / ( numStars + 1 )
-    } ) );
+    } );
+    progressIndicator.setScaleMagnitude( Math.min(
+      ( progressIndicatorBackground.width - 2 * options.progressIndicatorXMargin ) / progressIndicator.width,
+      ( progressIndicatorBackground.height - 2 * options.progressIndicatorYMargin ) / progressIndicator.height  ) );
+    progressIndicator.center = progressIndicatorBackground.center;
     buttonOutline.addChild( progressIndicatorBackground );
+    buttonOutline.addChild( progressIndicator );
 
     //TODO This behavior was borrowed from sun.PushButton, because sun.RectanglePushButton doesn't support the look/behavior of this button.
     // Add the listener to update the appearance and handle a click.
