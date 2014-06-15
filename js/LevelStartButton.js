@@ -11,10 +11,13 @@ define( function( require ) {
 
   // modules
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
+  var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   /**
    * @param {Node} icon Scenery node that appears on the button, scaled to fit
@@ -42,7 +45,13 @@ define( function( require ) {
       // progress indicator (stars)
       progressIndicatorPercentage: 0.2, // percentage of the button height occupied by the progress indicator, (0,0.5]
       progressIndicatorMinXMargin: 10,
-      progressIndicatorMinYMargin: 5
+      progressIndicatorMinYMargin: 5,
+      // best time (optional)
+      bestTimeProperty: null, // null if no best time || {Property<Number>} best time in seconds
+      bestTimeVisibleProperty: null, // null || Property<Boolean>} controls visibility of best time
+      bestTimeFill: 'black',
+      bestTimeFont: new PhetFont( 24 ),
+      bestTimeYSpacing: 10  // vertical space between drop shadow and best time
     }, options );
 
     assert && assert( options.progressIndicatorPercentage > 0 && options.progressIndicatorPercentage <= 0.5 );
@@ -50,12 +59,13 @@ define( function( require ) {
     Node.call( this ); //TODO this should be a subtype of a 'button with shadow' sun component
 
     // Drop shadow
-    this.addChild( new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
+    var shadowNode = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
         fill: options.shadowColor,
         top: options.shadowOffset,
         left: options.shadowOffset
       }
-    ) );
+    );
+    this.addChild( shadowNode );
 
     // Button foreground, which is the parent node for everything else that is on the button.
     var buttonForegroundNode = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
@@ -91,11 +101,25 @@ define( function( require ) {
       starDiameter: options.buttonWidth / ( numStars + 1 )
     } );
     progressIndicator.scale( Math.min(
-      ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
-      ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height  ) );
+        ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
+        ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height ) );
     progressIndicator.center = progressIndicatorBackground.center;
     buttonForegroundNode.addChild( progressIndicatorBackground );
     buttonForegroundNode.addChild( progressIndicator );
+
+    // Best time (optional), centered below the button, does not move when button is pressed
+    if ( options.bestTimeProperty ) {
+      var bestTimeNode = new Text( '', { font: options.bestTimeFont, fill: options.bestTimeFill } );
+      this.addChild( bestTimeNode );
+      options.bestTimeProperty.link( function( bestTime ) {
+        bestTimeNode.text = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
+        bestTimeNode.centerX = buttonForegroundNode.centerX;
+        bestTimeNode.top = shadowNode.bottom + options.bestTimeYSpacing;
+      } );
+      if ( options.bestTimeVisibleProperty ) {
+        options.bestTimeVisibleProperty.linkAttribute( bestTimeNode, 'visible' );
+      }
+    }
 
     //TODO This behavior was copied from sun.PushButtonDeprecated, because sun.RectangularPushButton doesn't support the look/behavior of this button.
     // Button listener
