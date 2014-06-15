@@ -32,6 +32,7 @@ define( function( require ) {
       backgroundColor: 'rgb( 242, 255, 204 )',
       highlightedBackgroundColor: 'rgb( 250, 255, 230 )',
       shadowColor: 'black',
+      shadowOffset: 3,
       cornerRadius: 10,
       // icon
       iconMinXMargin: 10,
@@ -41,7 +42,6 @@ define( function( require ) {
       progressIndicatorMinXMargin: 10,
       progressIndicatorMinYMargin: 5
     }, options );
-    var shadowOffset = 0.026 * options.buttonWidth; //TODO this should be an option, and a fixed amount, not a percentage
 
     assert && assert( options.progressIndicatorPercentage > 0 && options.progressIndicatorPercentage <= 0.5 );
 
@@ -50,8 +50,8 @@ define( function( require ) {
     // Add the drop shadow.
     this.addChild( new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
         fill: options.shadowColor,
-        top: shadowOffset,
-        left: shadowOffset
+        top: options.shadowOffset,
+        left: options.shadowOffset
       }
     ) );
 
@@ -107,8 +107,8 @@ define( function( require ) {
       }
       else if ( state === 'down' ) {
         buttonForegroundNode.fill = options.highlightedBackgroundColor;
-        buttonForegroundNode.top = shadowOffset;
-        buttonForegroundNode.left = shadowOffset;
+        buttonForegroundNode.top = options.shadowOffset;
+        buttonForegroundNode.left = options.shadowOffset;
       }
     };
     buttonForegroundNode.addInputListener( new ButtonListener( {
