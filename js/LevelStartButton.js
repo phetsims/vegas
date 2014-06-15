@@ -33,13 +33,19 @@ define( function( require ) {
       highlightedBackgroundColor: 'rgb( 250, 255, 230 )',
       shadowColor: 'black',
       cornerRadius: 10,
-      // options for progress indicator (stars)
-      progressIndicatorXMargin: 10,
-      progressIndicatorYMargin: 5
+      // icon
+      iconMinXMargin: 10,
+      iconMinYMargin: 10,
+      // progress indicator (stars)
+      progressIndicatorPercentage: 0.2, // percentage of the button height occupied by the progress indicator, (0,0.5]
+      progressIndicatorMinXMargin: 10,
+      progressIndicatorMinYMargin: 5
     }, options );
-    var shadowOffset = 0.026 * options.buttonWidth;
+    var shadowOffset = 0.026 * options.buttonWidth; //TODO this should be an option, and a fixed amount, not a percentage
 
-    Node.call( this ); // Call super constructor.
+    assert && assert( options.progressIndicatorPercentage > 0 && options.progressIndicatorPercentage <= 0.5 );
+
+    Node.call( this );
 
     // Add the drop shadow.
     this.addChild( new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
@@ -58,17 +64,19 @@ define( function( require ) {
     } );
     this.addChild( buttonForegroundNode );
 
-    //TODO add ability to specify the margins around the icon instead of hard-coding it here
     // Icon, scaled to fit.
-    var iconScaleFactor = Math.min( options.buttonHeight * 0.65 / icon.height, options.buttonWidth * 0.85 / icon.width );
+    var iconYSpace = ( 1 - options.progressIndicatorPercentage ) * options.buttonHeight; // vertical space available for icon
+    var iconScaleFactor = Math.min(
+        ( options.buttonWidth - 2 * options.iconMinYMargin ) / icon.width,
+        ( iconYSpace - 2 * options.iconMinXMargin ) / icon.height );
     icon.scale( iconScaleFactor );
-    icon.centerX = options.buttonWidth / 2;
-    icon.centerY = options.buttonHeight * 0.4;
+    icon.centerX = buttonForegroundNode.centerX;
+    icon.centerY = buttonForegroundNode.top + ( iconYSpace / 2 );
     icon.pickable = false;
     buttonForegroundNode.addChild( icon );
 
     // Progress indicator (stars), scaled to fit
-    var progressIndicatorBackground = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight * 0.2, options.cornerRadius, options.cornerRadius, {
+    var progressIndicatorBackground = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight * options.progressIndicatorPercentage, options.cornerRadius, options.cornerRadius, {
       fill: 'white',
       stroke: 'black',
       lineWidth: 1,
@@ -80,8 +88,8 @@ define( function( require ) {
       starDiameter: options.buttonWidth / ( numStars + 1 )
     } );
     progressIndicator.setScaleMagnitude( Math.min(
-      ( progressIndicatorBackground.width - 2 * options.progressIndicatorXMargin ) / progressIndicator.width,
-      ( progressIndicatorBackground.height - 2 * options.progressIndicatorYMargin ) / progressIndicator.height  ) );
+      ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
+      ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height  ) );
     progressIndicator.center = progressIndicatorBackground.center;
     buttonForegroundNode.addChild( progressIndicatorBackground );
     buttonForegroundNode.addChild( progressIndicator );
