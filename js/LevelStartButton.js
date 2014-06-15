@@ -90,7 +90,7 @@ define( function( require ) {
       pickable: false,
       starDiameter: options.buttonWidth / ( numStars + 1 )
     } );
-    progressIndicator.setScaleMagnitude( Math.min(
+    progressIndicator.scale( Math.min(
       ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
       ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height  ) );
     progressIndicator.center = progressIndicatorBackground.center;
