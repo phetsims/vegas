@@ -54,7 +54,7 @@ define( function( require ) {
       bestTimeYSpacing: 10  // vertical space between drop shadow and best time
     }, options );
 
-    assert && assert( options.progressIndicatorPercentage > 0 && options.progressIndicatorPercentage <= 0.5 );
+    assert && assert( options.progressIndicatorPercentage > 0 && options.progressIndicatorPercentage <= 0.5, 'progressIndicatorPercentage value out of range' );
 
     Node.call( this ); //TODO this should be a subtype of a 'button with shadow' sun component
 
