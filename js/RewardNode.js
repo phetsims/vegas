@@ -8,6 +8,8 @@
  * There are two ways to run the animation step function.  The client code can manually call step(dt), or the client code can pass in an Events instance that triggers events on 'step'.
  * In the latter case, the listener will automatically be removed when the animation is complete.
  *
+ * For details about the development of the RewardNode, please see https://github.com/phetsims/vegas/issues/4
+ *
  * @author Sam Reid
  */
 define( function( require ) {
@@ -28,8 +30,8 @@ define( function( require ) {
   function RewardNode( options ) {
     var rewardNode = this;
 
-    //Bounds in which to render the canvas.  Should be the full screen.  See below for how this is computed based on ScreenView bounds and relative transforms
-    this.canvasDisplayBounds = new Bounds2( 0, 0, ScreenView.DEFAULT_LAYOUT_BOUNDS.width, ScreenView.DEFAULT_LAYOUT_BOUNDS.height );
+    //Bounds in which to render the canvas, which represents the full window.  See below for how this is computed based on ScreenView bounds and relative transforms
+    this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
 
     this.options = options = _.extend( {
 
@@ -180,6 +182,7 @@ define( function( require ) {
         this.inited = true;
       },
 
+      // Cease the animation.  If there is a stepSource, remove the listener from the stepSource
       stop: function() {
         this.options.stepSource.off( 'step', this.stepCallback );
       },
