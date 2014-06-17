@@ -180,6 +180,10 @@ define( function( require ) {
         this.inited = true;
       },
 
+      stop: function() {
+        this.options.stepSource.off( 'step', this.stepCallback );
+      },
+
       //Move the rewards down according to their speed
       step: function( dt ) {
         if ( !this.inited && this.getScene() !== null ) {
