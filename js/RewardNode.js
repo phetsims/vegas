@@ -43,17 +43,18 @@ define( function( require ) {
       scaleForResolution: 2,
 
       //Nodes to appear in the reward node.  They will be cached as images to improve performance
+      //The simulation should override this array to provide images specific to the simulation.
       nodes: RewardNode.createRandomNodes( [
         new FaceNode( 40, {headStroke: 'black', headLineWidth: 1.5} ),
         new StarNode()
       ], 150 ),
 
       //If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source
-      //TODO: Make it so the client doesn't pass in the entire model
+      //TODO: Make it so the client doesn't pass in the entire model, see #22
       stepSource: null
     }, options );
 
-    //If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source
+    //If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source, see #22
     if ( options.stepSource ) {
       this.stepCallback = function( dt ) {rewardNode.step( dt );};
       options.stepSource.on( 'step', this.stepCallback );
@@ -77,7 +78,7 @@ define( function( require ) {
           width: node.width,
           height: node.height,
 
-          //The node itself is recorded in the wrapper so the wrapper can be looked up based on the original node
+          //The node itself is recorded in the imageWrapper so the imageWrapper can be looked up based on the original node
           node: node
         } );
       var parent = new Node( {children: [node], scale: options.scaleForResolution} );
@@ -166,6 +167,8 @@ define( function( require ) {
         updateBounds();
 
         //Store each reward, which has an imageWrapper (see above), x, y, speed
+        //It is not an image, it is not a node, but it is one of the things that animates as falling in the RewardNode and its associated data
+        //For Reviewer: should we create a separate class for this?
         this.rewards = [];
         for ( var i = 0; i < this.options.nodes.length; i++ ) {
 
