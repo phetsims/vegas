@@ -27,6 +27,10 @@ define( function( require ) {
   //This debug flag shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
   var debug = false;
 
+  //Constants
+  //The maximum speed an image can fall in screen pixels per second.
+  var MAX_SPEED = 200;
+
   function RewardNode( options ) {
     var rewardNode = this;
 
@@ -172,9 +176,9 @@ define( function( require ) {
             var imageWrapper = _.find( rewardNode.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node;} );
             rewardNode.rewards.push( {
               imageWrapper: imageWrapper,
-              x: (Math.random() * rewardNode.canvasDisplayBounds.width + rewardNode.canvasDisplayBounds.left) * rewardNode.options.scaleForResolution - imageWrapper.width / 2,
-              y: rewardNode.canvasDisplayBounds.top - Math.random() * rewardNode.canvasDisplayBounds.height * 2 - 200,
-              speed: (Math.random() + 1) * 200
+              x: rewardNode.sampleImageXValue( imageWrapper ),
+              y: rewardNode.sampleImageYValue( imageWrapper ),
+              speed: (Math.random() + 1) * MAX_SPEED
             } );
           })( node );
         }
@@ -185,6 +189,18 @@ define( function( require ) {
       // Cease the animation.  If there is a stepSource, remove the listener from the stepSource
       stop: function() {
         this.options.stepSource.off( 'step', this.stepCallback );
+      },
+
+      // Select a random X value for the image when it is created.
+      sampleImageXValue: function( imageWrapper ) {
+        return (Math.random() * this.canvasDisplayBounds.width + this.canvasDisplayBounds.left) * this.options.scaleForResolution - imageWrapper.width / 2;
+      },
+
+      // Select a random Y value for the image when it is created, or when it goes back to the top of the screen.
+      sampleImageYValue: function( imageWrapper ) {
+        //Start things about 1 second off the top of the screen
+        var distanceOffTopOfScreen = MAX_SPEED;
+        return this.canvasDisplayBounds.top - Math.random() * this.canvasDisplayBounds.height * 2 - distanceOffTopOfScreen - imageWrapper.height;
       },
 
       //Move the rewards down according to their speed
@@ -203,7 +219,7 @@ define( function( require ) {
 
           //Move back to the top after the node falls off the bottom
           if ( reward.y > maxY ) {
-            reward.y = this.canvasDisplayBounds.top - Math.random() * this.canvasDisplayBounds.height * 2 - 200;
+            reward.y = this.sampleImageYValue( reward.imageWrapper );
           }
         }
         this.invalidatePaint();
