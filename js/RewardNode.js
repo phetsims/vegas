@@ -176,13 +176,14 @@ define( function( require ) {
             } );
           })( node );
         }
+
+        this.inited = true;
       },
 
       //Move the rewards down according to their speed
       step: function( dt ) {
         if ( !this.inited && this.getScene() !== null ) {
           this.init();
-          this.inited = true;
         }
 
         //Update all of the rewards
