@@ -72,7 +72,6 @@ define( function( require ) {
     uniqueNodes.forEach( function( node, i ) {
       rewardNode.imageWrappers.push(
         {
-
           //The image to be rendered in the canvas, will be filled in by toImage callback
           image: null,
 
