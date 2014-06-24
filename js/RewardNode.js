@@ -3,10 +3,12 @@
 /**
  * Reward node that shows many nodes animating continuously, for fun!  Shown when a perfect score is achieved in a game.
  * You can also test this by running vegas/vegas_en.html and clicking on the "Reward" screen.
- * Note that the number of images falling is constant, so if the screen is stretched out vertically (tall thin window) they will be less dense.
+ * Note that the number of images falling is constant, so if the screen is stretched out vertically (tall thin window)
+ * they will be less dense.
  *
- * There are two ways to run the animation step function.  The client code can manually call step(dt), or the client code can pass in an Events instance that triggers events on 'step'.
- * In the latter case, the listener will automatically be removed when the animation is complete.
+ * There are two ways to run the animation step function.  The client code can manually call step(dt), or the client
+ * code can pass in an Events instance that triggers events on 'step'. In the latter case, the listener will
+ * automatically be removed when the animation is complete.
  *
  * For details about the development of the RewardNode, please see https://github.com/phetsims/vegas/issues/4
  *
