@@ -13,13 +13,13 @@ define( function( require ) {
   var correctAnswerSound = require( 'audio!VEGAS/correctAnswer' );
   var wrongAnswerSound = require( 'audio!VEGAS/incorrectAnswer' );
   var imperfectScoreSound = require( 'audio!VEGAS/gameOver-imperfectScore' );
-  var perfectScoreSound = require( 'audio!VEGAS/gameOver-perfectScore2' );
+  var cheerSound = require( 'audio!VEGAS/cheer' );
 
   // constants
   var CORRECT_ANSWER = new Sound( correctAnswerSound );
   var WRONG_ANSWER = new Sound( wrongAnswerSound );
   var IMPERFECT_SCORE = new Sound( imperfectScoreSound );
-  var PERFECT_SCORE = new Sound( perfectScoreSound );
+  var PERFECT_SCORE = new Sound( cheerSound );
 
   /**
    * @param soundEnabledProperty
