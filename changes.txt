@@ -1,3 +1,5 @@
+6/25/14 #16 rename all sounds so that names describe what they sound like, describe their purpose in code
+6/25/14 #16 use 'cheer' for perfect-score sound
 10/30/2013 Removed some duplicated strings in favor of the names/keys ported over from Java.
 10/23/2013 Migrated game strings from Java phetcommon
 10/22/2013 Migrated LevelCompletedNode & LevelStartButton from BAA
