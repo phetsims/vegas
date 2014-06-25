@@ -10,15 +10,15 @@ define( function( require ) {
 
   // modules
   var Sound = require( 'VIBE/Sound' );
-  var correctAnswerSound = require( 'audio!VEGAS/correctAnswer' );
-  var wrongAnswerSound = require( 'audio!VEGAS/incorrectAnswer' );
-  var imperfectScoreSound = require( 'audio!VEGAS/gameOver-imperfectScore' );
+  var dingSound = require( 'audio!VEGAS/ding' );
+  var boingSound = require( 'audio!VEGAS/boing' );
+  var trumpetSound = require( 'audio!VEGAS/trumpet' );
   var cheerSound = require( 'audio!VEGAS/cheer' );
 
   // constants
-  var CORRECT_ANSWER = new Sound( correctAnswerSound );
-  var WRONG_ANSWER = new Sound( wrongAnswerSound );
-  var IMPERFECT_SCORE = new Sound( imperfectScoreSound );
+  var CORRECT_ANSWER = new Sound( dingSound );
+  var WRONG_ANSWER = new Sound( boingSound );
+  var IMPERFECT_SCORE = new Sound( trumpetSound );
   var PERFECT_SCORE = new Sound( cheerSound );
 
   /**
