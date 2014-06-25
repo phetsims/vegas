@@ -115,8 +115,8 @@ define( function( require ) {
       listener: continueFunction,
       font: options.buttonFont,
       baseColor: options.buttonFill,
-      rectangleXMargin: 10,
-      rectangleYMargin: 5
+      xMargin: 10,
+      yMargin: 5
     } ) );
 
     // Panel
