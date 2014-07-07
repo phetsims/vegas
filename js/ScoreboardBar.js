@@ -21,10 +21,10 @@ define( function( require ) {
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
-  var pattern_Challenge_0_of_1 = require( 'string!GRAPHING_LINES/pattern_Challenge_0_of_1' );
-  var pattern_Level_0 = require( 'string!GRAPHING_LINES/pattern_Level_0' );
-  var pattern_Score_0 = require( 'string!GRAPHING_LINES/pattern_Score_0' );
-  var startOverString = require( 'string!GRAPHING_LINES/startOver' );
+  var startOverString = require( 'string!VEGAS/startOver' );
+  var pattern_0level = require( 'string!VEGAS/label.level' );
+  var pattern_0score = require( 'string!VEGAS/label.score' );
+  var pattern_0challenge_1max = require( 'string!VEGAS/pattern.0challenge.1max' );
 
   /**
    * @param {Number} screenWidth
@@ -72,19 +72,19 @@ define( function( require ) {
     // Level
     var levelNode = new Text( '', textOptions );
     levelProperty.link( function( level ) {
-      levelNode.text = StringUtils.format( pattern_Level_0, level + 1 );
+      levelNode.text = StringUtils.format( pattern_0level, level + 1 );
     } );
 
     // Challenge number
     var challengeNumberNode = new Text( '', textOptions );
     challengeIndexProperty.link( function( challengeIndex ) {
-      challengeNumberNode.text = StringUtils.format( pattern_Challenge_0_of_1, challengeIndex + 1, challengesPerGameProperty.get() );
+      challengeNumberNode.text = StringUtils.format( pattern_0challenge_1max, challengeIndex + 1, challengesPerGameProperty.get() );
     } );
 
     // Score
     var scoreNode = new Text( '', textOptions );
     scoreProperty.link( function( score ) {
-      scoreNode.text = StringUtils.format( pattern_Score_0, score );
+      scoreNode.text = StringUtils.format( pattern_0score, score );
     } );
 
     // Timer, always takes up space even when hidden.
