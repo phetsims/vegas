@@ -38,7 +38,7 @@ define( function( require ) {
    * @param {*} options
    * @constructor
    */
-  function Scoreboard( challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
+  function ScoreboardPanel( challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
 
     var thisNode = this;
 
@@ -134,5 +134,5 @@ define( function( require ) {
     Panel.call( thisNode, content, options );
   }
 
-  return inherit( Panel, Scoreboard );
+  return inherit( Panel, ScoreboardPanel );
 } );
