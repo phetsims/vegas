@@ -34,7 +34,7 @@ define( function( require ) {
    * @param {Property<Number>} scoreProperty
    * @param {Property<Number>} elapsedTimeProperty elapsed time in seconds
    * @param {Property<Number>} timerEnabledProperty is the timer enabled?
-   * @param {Function} newGameCallback
+   * @param {Function} startOverCallback
    * @param {*} options
    * @constructor
    */
