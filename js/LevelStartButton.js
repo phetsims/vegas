@@ -71,10 +71,14 @@ define( function( require ) {
     var buttonForegroundNode = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius, {
       stroke: 'black',
       lineWidth: 1,
-      fill: options.backgroundColor,
-      cursor: 'pointer'
+      fill: options.backgroundColor
     } );
     this.addChild( buttonForegroundNode );
+
+    // We'll attach input listener to this node. Attaching to the button causes problems, because the button moves. See #26.
+    var transparentRectangleNode = new Rectangle( 0, 0, options.buttonWidth, options.buttonHeight, options.cornerRadius, options.cornerRadius,
+      { cursor: 'pointer' } );
+    this.addChild( transparentRectangleNode );
 
     // Icon, scaled to fit.
     var iconYSpace = ( 1 - options.progressIndicatorPercentage ) * options.buttonHeight; // vertical space available for icon
@@ -141,7 +145,7 @@ define( function( require ) {
         throw new Error( 'unsupported state: ' + state );
       }
     };
-    buttonForegroundNode.addInputListener( new ButtonListener( {
+    transparentRectangleNode.addInputListener( new ButtonListener( {
       up: function() { update( 'up' ); },
       over: function() { update( 'over' ); },
       down: function() { update( 'down' ); },
