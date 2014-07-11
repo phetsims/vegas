@@ -77,9 +77,11 @@ define( function( require ) {
 
     // Challenge number
     var challengeNumberNode = new Text( '', textOptions );
-    challengeIndexProperty.link( function( challengeIndex ) {
-      challengeNumberNode.text = StringUtils.format( pattern_0challenge_1max, challengeIndex + 1, challengesPerGameProperty.get() );
-    } );
+    var updateChallengeString = function() {
+      challengeNumberNode.text = StringUtils.format( pattern_0challenge_1max, challengeIndexProperty.get() + 1, challengesPerGameProperty.get() );
+    };
+    challengeIndexProperty.link( updateChallengeString );
+    challengesPerGameProperty.link( updateChallengeString );
 
     // Score
     var scoreNode = new Text( '', textOptions );
