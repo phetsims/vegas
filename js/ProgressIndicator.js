@@ -36,6 +36,9 @@ define( function( require ) {
     // Update visibility of filled and half-filled stars based on score.
     // TODO: Could be rewritten to use deltas if it needs to animate
     scoreProperty.link( function( score ) {
+
+      assert && assert( score <= perfectScore );
+
       var children = [];
 
       var proportion = score / perfectScore;
