@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var inherit = require( 'PHET_CORE/inherit' );
   var Sound = require( 'VIBE/Sound' );
   var dingSound = require( 'audio!VEGAS/ding' );
   var boingSound = require( 'audio!VEGAS/boing' );
@@ -29,35 +30,35 @@ define( function( require ) {
     this.soundEnabledProperty = soundEnabledProperty;
   }
 
-  GameAudioPlayer.prototype.correctAnswer = function() {
-    if ( this.soundEnabledProperty.value ) {
-      CORRECT_ANSWER.play();
-    }
-  };
+  return inherit( Object, GameAudioPlayer, {
 
-  GameAudioPlayer.prototype.wrongAnswer = function() {
-    if ( this.soundEnabledProperty.value ) {
-      WRONG_ANSWER.play();
-    }
-  };
+    correctAnswer: function() {
+      if ( this.soundEnabledProperty.value ) {
+        CORRECT_ANSWER.play();
+      }
+    },
 
-  GameAudioPlayer.prototype.gameOverZeroScore = function() {
-    if ( this.soundEnabledProperty.value ) {
-      WRONG_ANSWER.play();
-    }
-  };
+    wrongAnswer: function() {
+      if ( this.soundEnabledProperty.value ) {
+        WRONG_ANSWER.play();
+      }
+    },
+    gameOverZeroScore: function() {
+      if ( this.soundEnabledProperty.value ) {
+        WRONG_ANSWER.play();
+      }
+    },
 
-  GameAudioPlayer.prototype.gameOverImperfectScore = function() {
-    if ( this.soundEnabledProperty.value ) {
-      IMPERFECT_SCORE.play();
-    }
-  };
+    gameOverImperfectScore: function() {
+      if ( this.soundEnabledProperty.value ) {
+        IMPERFECT_SCORE.play();
+      }
+    },
 
-  GameAudioPlayer.prototype.gameOverPerfectScore = function() {
-    if ( this.soundEnabledProperty.value ) {
-      PERFECT_SCORE.play();
+    gameOverPerfectScore: function() {
+      if ( this.soundEnabledProperty.value ) {
+        PERFECT_SCORE.play();
+      }
     }
-  };
-
-  return GameAudioPlayer;
+  } );
 } );
