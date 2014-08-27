@@ -43,6 +43,7 @@ define( function( require ) {
         WRONG_ANSWER.play();
       }
     },
+
     gameOverZeroScore: function() {
       if ( this.soundEnabledProperty.value ) {
         WRONG_ANSWER.play();
