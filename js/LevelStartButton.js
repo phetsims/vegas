@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {function} fireFunction Called when the button fires
    * @param {Property<number>} scoreProperty
    * @param {number} perfectScore
-   * @param {*} options
+   * @param {Object} options
    * @constructor
    */
   function LevelStartButton( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {

@@ -45,7 +45,7 @@ define( function( require ) {
    * @param {number} bestTimeAtThisLevel (in seconds), null indicates no best time
    * @param {boolean} isNewBestTime
    * @param {function} continueFunction Function to call when the user presses the 'Continue' button.
-   * @param {*} options
+   * @param {Object} options
    * @constructor
    */
   function LevelCompletedNode( level, score, perfectScore, numStars, timerEnabled, elapsedTime, bestTimeAtThisLevel, isNewBestTime, continueFunction, options ) {
