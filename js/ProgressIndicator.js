@@ -18,7 +18,7 @@ define( function( require ) {
    * @param {Number} numStars
    * @param {Property<Number>} scoreProperty
    * @param {Number} perfectScore
-   * @param {Object} options
+   * @param {Object} [options]
    * @constructor
    */
   function ProgressIndicator( numStars, scoreProperty, perfectScore, options ) {

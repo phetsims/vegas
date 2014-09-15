@@ -35,7 +35,7 @@ define( function( require ) {
    * @param {Property<Number>} elapsedTimeProperty elapsed time in seconds
    * @param {Property<Number>} timerEnabledProperty is the timer enabled?
    * @param {Function} startOverCallback
-   * @param {Object} options
+   * @param {Object} [options]
    * @constructor
    */
   function ScoreboardBar( screenWidth, challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
