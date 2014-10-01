@@ -15,9 +15,9 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
 
   /**
-   * @param {Number} numStars
-   * @param {Property<Number>} scoreProperty
-   * @param {Number} perfectScore
+   * @param {number} numStars
+   * @param {Property.<number>} scoreProperty
+   * @param {number} perfectScore
    * @param {Object} [options]
    * @constructor
    */

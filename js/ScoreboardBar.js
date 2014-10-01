@@ -27,14 +27,14 @@ define( function( require ) {
   var pattern_0challenge_1max = require( 'string!VEGAS/pattern.0challenge.1max' );
 
   /**
-   * @param {Number} screenWidth
-   * @param {Property<Number>} challengeIndexProperty which challenge is the user current playing? (index starts at 0, displayed starting at 1)
-   * @param {Property<Number>} challengesPerGameProperty how many challenges are in the current game
-   * @param {Property<Number>} levelProperty
-   * @param {Property<Number>} scoreProperty
-   * @param {Property<Number>} elapsedTimeProperty elapsed time in seconds
-   * @param {Property<Number>} timerEnabledProperty is the timer enabled?
-   * @param {Function} startOverCallback
+   * @param {number} screenWidth
+   * @param {Property.<number>} challengeIndexProperty which challenge is the user current playing? (index starts at 0, displayed starting at 1)
+   * @param {Property.<number>} challengesPerGameProperty how many challenges are in the current game
+   * @param {Property.<number>} levelProperty
+   * @param {Property.<number>} scoreProperty
+   * @param {Property.<number>} elapsedTimeProperty elapsed time in seconds
+   * @param {Property.<number>} timerEnabledProperty is the timer enabled?
+   * @param {function} startOverCallback
    * @param {Object} [options]
    * @constructor
    */

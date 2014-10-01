@@ -23,7 +23,7 @@ define( function( require ) {
    * @param {Node} icon Scenery node that appears on the button, scaled to fit
    * @param {number} numStars Number of stars to show in the progress indicator at the bottom of the button
    * @param {function} fireFunction Called when the button fires
-   * @param {Property<number>} scoreProperty
+   * @param {Property.<number>} scoreProperty
    * @param {number} perfectScore
    * @param {Object} [options]
    * @constructor
@@ -47,8 +47,8 @@ define( function( require ) {
       progressIndicatorMinXMargin: 10,
       progressIndicatorMinYMargin: 5,
       // best time (optional)
-      bestTimeProperty: null, // null if no best time || {Property<Number>} best time in seconds
-      bestTimeVisibleProperty: null, // null || Property<Boolean>} controls visibility of best time
+      bestTimeProperty: null, // null if no best time || {Property.<number>} best time in seconds
+      bestTimeVisibleProperty: null, // null || Property.<boolean>} controls visibility of best time
       bestTimeFill: 'black',
       bestTimeFont: new PhetFont( 24 ),
       bestTimeYSpacing: 10  // vertical space between drop shadow and best time

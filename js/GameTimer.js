@@ -30,7 +30,7 @@ define( function( require ) {
 
   /**
    * Formats a value representing seconds into H:MM:SS (localized).
-   * @param {Number} time in seconds
+   * @param {number} time in seconds
    * @returns {string}
    */
   GameTimer.formatTime = function( time ) {
