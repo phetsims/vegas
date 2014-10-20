@@ -5,6 +5,7 @@
  *
  * @author John Blanco
  * @author Chris Malley
+ * @deprecated use LevelSelectionButton
  */
 define( function( require ) {
   'use strict';
@@ -28,7 +29,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function LevelStartButton( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
+  function LevelStartButtonDeprecated( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
 
     options = _.extend( {
       buttonWidth: 150,
@@ -160,5 +161,5 @@ define( function( require ) {
     this.mutate( options );
   }
 
-  return inherit( Node, LevelStartButton );
+  return inherit( Node, LevelStartButtonDeprecated );
 } );
