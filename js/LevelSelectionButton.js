@@ -1,7 +1,8 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * Button for initiating game levels and for depicting the progress made on each level.
+ * Button for selecting a game level.
+ * Also depicts the progress made on each level.
  *
  * @author John Blanco
  * @author Chris Malley
@@ -29,7 +30,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function LevelStartButton( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
+  function LevelSelectionButton( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
 
     Node.call( this );
 
@@ -124,5 +125,5 @@ define( function( require ) {
     this.mutate( options );
   }
 
-  return inherit( Node, LevelStartButton );
+  return inherit( Node, LevelSelectionButton );
 } );
