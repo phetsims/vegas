@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Dimension2 = require( 'DOT/Dimension2' );
   var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -19,6 +20,25 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
+
+  // constants
+  var SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
+
+  // TODO: Consider making this commonly accessible (or finding a better way to do it).
+  // Create a node that is scaled and padded out to meet the size specification.
+  function createSizedImageNode( icon, size ) {
+    icon.scale( Math.min( size.width / icon.bounds.width, size.height / icon.bounds.height ) );
+    if ( Math.abs( icon.bounds.width - size.width ) < SCALING_TOLERANCE &&
+         Math.abs( icon.bounds.height - size.height ) < SCALING_TOLERANCE ) {
+      // The aspect ratio of the icon matched that of the specified size, so no padding is necessary.
+      return icon;
+    }
+    // else padding is needed in either the horizontal or vertical direction.
+    var background = new Rectangle( 0, 0, size.width, size.height, 0, 0, { fill: null } );
+    icon.center = background.center;
+    background.addChild( icon );
+    return background;
+  }
 
   /**
    * @param {Node} icon Scenery node that appears on the button above the progress indicator, scaled to fit
@@ -74,23 +94,22 @@ define( function( require ) {
         ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
         ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height ) );
 
-    // Icon, scaled to fit.
-    var iconYSpace = options.buttonHeight - progressIndicatorBackground.height - 2 * options.buttonYMargin; // vertical space available for icon
-    var iconScaleFactor = Math.min( maxContentWidth / icon.width, iconYSpace / icon.height );
-    icon.scale( iconScaleFactor );
-    icon.pickable = false;
+    // Icon, scaled and padded to fit and to make the button size correct.
+    var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - progressIndicatorBackground.height - 2 * options.buttonYMargin );
+    var adjustedIcon = createSizedImageNode( icon, iconSize );
+    adjustedIcon.pickable = false; // TODO: is this needed?
 
     // Assemble the content.
     var contentNode = new Node();
-    if ( progressIndicatorBackground.width > icon.width ) {
-      icon.centerX = progressIndicatorBackground.centerX;
+    if ( progressIndicatorBackground.width > adjustedIcon.width ) {
+      adjustedIcon.centerX = progressIndicatorBackground.centerX;
     }
     else {
-      progressIndicatorBackground.centerX = icon.centerX;
+      progressIndicatorBackground.centerX = adjustedIcon.centerX;
     }
-    progressIndicatorBackground.top = icon.bottom + options.iconToProgressIndicatorYSpace;
+    progressIndicatorBackground.top = adjustedIcon.bottom + options.iconToProgressIndicatorYSpace;
     progressIndicator.center = progressIndicatorBackground.center;
-    contentNode.addChild( icon );
+    contentNode.addChild( adjustedIcon );
     contentNode.addChild( progressIndicatorBackground );
     contentNode.addChild( progressIndicator );
 
