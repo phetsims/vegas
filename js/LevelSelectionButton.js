@@ -95,7 +95,8 @@ define( function( require ) {
         ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height ) );
 
     // Icon, scaled and padded to fit and to make the button size correct.
-    var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - progressIndicatorBackground.height - 2 * options.buttonYMargin );
+    var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - progressIndicatorBackground.height -
+                                                    2 * options.buttonYMargin - options.iconToProgressIndicatorYSpace );
     var adjustedIcon = createSizedImageNode( icon, iconSize );
     adjustedIcon.pickable = false; // TODO: is this needed?
 
