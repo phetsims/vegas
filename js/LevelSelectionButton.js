@@ -46,7 +46,7 @@ define( function( require ) {
       progressIndicatorProportion: 0.2, // percentage of the button height occupied by the progress indicator, (0,0.5]
       progressIndicatorMinXMargin: 10,
       progressIndicatorMinYMargin: 5,
-      iconToProgressIndicatorYSpace: 5,
+      iconToProgressIndicatorYSpace: 10,
       // best time (optional)
       bestTimeProperty: null, // null if no best time || {Property.<number>} best time in seconds
       bestTimeVisibleProperty: null, // null || Property.<boolean>} controls visibility of best time
