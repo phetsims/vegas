@@ -114,9 +114,7 @@ define( function( require ) {
     children.push( new TextPushButton( continueString, {
       listener: continueFunction,
       font: options.buttonFont,
-      baseColor: options.buttonFill,
-      xMargin: 10,
-      yMargin: 5
+      baseColor: options.buttonFill
     } ) );
 
     // Panel
