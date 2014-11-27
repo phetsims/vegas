@@ -236,6 +236,7 @@ define( function( require ) {
        * Convenience factory method to create an array of the specified nodes in an even distribution.
        * @param {Array[Node]} nodes array of nodes to use
        * @param {number} count
+       * @returns {[Node]}
        */
       createRandomNodes: function( nodes, count ) {
         var array = [];
