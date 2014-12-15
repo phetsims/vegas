@@ -33,6 +33,10 @@ define( function( require ) {
   //The maximum speed an image can fall in screen pixels per second.
   var MAX_SPEED = 200;
 
+  /**
+   * @param {Object} [options]
+   * @constructor
+   */
   function RewardNode( options ) {
     var rewardNode = this;
 
@@ -234,9 +238,9 @@ define( function( require ) {
     {
       /**
        * Convenience factory method to create an array of the specified nodes in an even distribution.
-       * @param {Array[Node]} nodes array of nodes to use
+       * @param {Node[]} nodes array of nodes to use
        * @param {number} count
-       * @returns {[Node]}
+       * @returns {Node[]}
        */
       createRandomNodes: function( nodes, count ) {
         var array = [];
