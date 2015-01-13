@@ -81,7 +81,7 @@ define( function( require ) {
     else if ( proportionCorrect >= 0.5 ) {
       titleText = goodString;
     }
-    var title = new Text( titleText, {font: options.titleFont} );
+    var title = new Text( titleText, { font: options.titleFont } );
     children.push( title );
 
     // Progress indicator
@@ -100,7 +100,10 @@ define( function( require ) {
 
     // Time (optional)
     if ( timerEnabled ) {
-      var time = new MultiLineText( StringUtils.format( timeString, GameTimer.formatTime( elapsedTime ) ), { font: options.infoFont, align: 'center' } );
+      var time = new MultiLineText( StringUtils.format( timeString, GameTimer.formatTime( elapsedTime ) ), {
+        font: options.infoFont,
+        align: 'center'
+      } );
       if ( isNewBestTime ) {
         time.text += '\n' + yourNewBestString;
       }

@@ -29,12 +29,12 @@ define( function( require ) {
     // Create and start the sim
     //Create and start the sim
     new Sim( simTitle, [
-      new Screen( 'Vegas', new Rectangle( 0, 0, 548, 373, {fill: 'yellow'} ),
+      new Screen( 'Vegas', new Rectangle( 0, 0, 548, 373, { fill: 'yellow' } ),
         function() {return {};},
         function( model ) {return new VegasScreenView();},
         { backgroundColor: '#fff' }
       ),
-      new Screen( 'Rewards', new Rectangle( 0, 0, 548, 373, {fill: 'blue'} ),
+      new Screen( 'Rewards', new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ),
         function() {return {};},
         function( model ) {return new RewardNodeScreenView();},
         { backgroundColor: '#fff' }

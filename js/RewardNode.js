@@ -51,7 +51,7 @@ define( function( require ) {
       //Nodes to appear in the reward node.  They will be cached as images to improve performance
       //The simulation should override this array to provide images specific to the simulation.
       nodes: RewardNode.createRandomNodes( [
-        new FaceNode( 40, {headStroke: 'black', headLineWidth: 1.5} ),
+        new FaceNode( 40, { headStroke: 'black', headLineWidth: 1.5 } ),
         new StarNode()
       ], 150 ),
 
@@ -86,9 +86,9 @@ define( function( require ) {
           //The node itself is recorded in the imageWrapper so the imageWrapper can be looked up based on the original node
           node: node
         } );
-      var parent = new Node( {children: [node], scale: options.scaleForResolution} );
+      var parent = new Node( { children: [ node ], scale: options.scaleForResolution } );
       parent.toImage( function( image ) {
-        rewardNode.imageWrappers[i].image = image;
+        rewardNode.imageWrappers[ i ].image = image;
       } );
     } );
 
@@ -123,7 +123,7 @@ define( function( require ) {
         //Display the rewards, but check that they exist first.  They do not exist when attached to the timer with stepSource
         if ( this.rewards ) {
           for ( var i = 0; i < this.rewards.length; i++ ) {
-            var reward = this.rewards[i];
+            var reward = this.rewards[ i ];
             if ( reward.imageWrapper.image ) {
               context.drawImage( reward.imageWrapper.image, reward.x, reward.y );
             }
@@ -133,7 +133,7 @@ define( function( require ) {
 
       //Find the root of the scene tree
       getScene: function() {
-        return this.getUniqueTrail().nodes[0];
+        return this.getUniqueTrail().nodes[ 0 ];
       },
 
       //Find the first parent that is a ScreenView so we can listen for its transform, see https://github.com/phetsims/vegas/issues/4
@@ -166,7 +166,7 @@ define( function( require ) {
         scene.addEventListener( 'resize', updateBounds );
 
         //When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
-        this.getScreenView().getTransform().addTransformListener( {before: function() {}, after: function() {updateBounds();}} );
+        this.getScreenView().getTransform().addTransformListener( { before: function() {}, after: function() {updateBounds();} } );
 
         //Set the initial bounds
         updateBounds();
@@ -177,7 +177,7 @@ define( function( require ) {
         this.rewards = [];
         for ( var i = 0; i < this.options.nodes.length; i++ ) {
 
-          var node = this.options.nodes[i];
+          var node = this.options.nodes[ i ];
           (function( node ) {
 
             //find the image wrapper corresponding to the node
@@ -220,7 +220,7 @@ define( function( require ) {
         //Update all of the rewards
         var maxY = this.canvasDisplayBounds.height * this.options.scaleForResolution;
         for ( var i = 0; i < this.rewards.length; i++ ) {
-          var reward = this.rewards[i];
+          var reward = this.rewards[ i ];
 
           //Move each node straight down at constant speed
           reward.y += reward.speed * dt;
@@ -245,7 +245,7 @@ define( function( require ) {
       createRandomNodes: function( nodes, count ) {
         var array = [];
         for ( var i = 0; i < count; i++ ) {
-          array.push( nodes[i % nodes.length] );
+          array.push( nodes[ i % nodes.length ] );
         }
         return array;
       }

@@ -30,7 +30,7 @@ define( function( require ) {
       starEmptyLineWidth: 1.5
     }, options );
 
-    HBox.call( this, {spacing: 3, children: []} );
+    HBox.call( this, { spacing: 3, children: [] } );
     var progressIndicator = this;
 
     // Update visibility of filled and half-filled stars based on score.
@@ -52,15 +52,15 @@ define( function( require ) {
       };
 
       for ( var i = 0; i < numFilledStars; i++ ) {
-        children.push( new StarNode( _.extend( {value: 1}, starOptions ) ) );
+        children.push( new StarNode( _.extend( { value: 1 }, starOptions ) ) );
       }
       var remainder = proportion * numStars - numFilledStars;
       if ( remainder > 1E-6 ) {
-        children.push( new StarNode( _.extend( {value: remainder}, starOptions ) ) );
+        children.push( new StarNode( _.extend( { value: remainder }, starOptions ) ) );
       }
       var numEmptyStars = numStars - children.length;
       for ( i = 0; i < numEmptyStars; i++ ) {
-        children.push( new StarNode( _.extend( {value: 0}, starOptions ) ) );
+        children.push( new StarNode( _.extend( { value: 0 }, starOptions ) ) );
       }
 
       progressIndicator.children = children;

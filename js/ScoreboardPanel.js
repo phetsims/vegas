@@ -113,10 +113,10 @@ define( function( require ) {
     if ( !options.levelVisible ) { nodes.splice( nodes.indexOf( levelNode ), 1 ); }
     if ( !options.challengeNumberVisible ) { nodes.splice( nodes.indexOf( challengeNumberNode ), 1 ); }
     for ( var i = 0; i < nodes.length; i++ ) {
-      subContent.addChild( nodes[i] );
+      subContent.addChild( nodes[ i ] );
       if ( i > 0 ) {
-        nodes[i].left = nodes[i - 1].right + options.xSpacing;
-        nodes[i].centerY = nodes[i - 1].centerY;
+        nodes[ i ].left = nodes[ i - 1 ].right + options.xSpacing;
+        nodes[ i ].centerY = nodes[ i - 1 ].centerY;
       }
     }
 

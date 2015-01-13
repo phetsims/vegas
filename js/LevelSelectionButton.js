@@ -80,7 +80,7 @@ define( function( require ) {
 
     // Progress indicator (stars), scaled to fit
     var progressIndicatorBackground = new Rectangle( 0, 0, maxContentWidth,
-        options.buttonHeight * options.progressIndicatorProportion, options.cornerRadius, options.cornerRadius, {
+      options.buttonHeight * options.progressIndicatorProportion, options.cornerRadius, options.cornerRadius, {
         fill: 'white',
         stroke: 'black',
         lineWidth: 1,
@@ -91,8 +91,8 @@ define( function( require ) {
       starDiameter: options.buttonWidth / ( numStars + 1 )
     } );
     progressIndicator.scale( Math.min(
-        ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
-        ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height ) );
+      ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
+      ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height ) );
 
     // Icon, scaled and padded to fit and to make the button size correct.
     var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - progressIndicatorBackground.height -

@@ -84,8 +84,8 @@ define( function( require ) {
     // Icon, scaled to fit.
     var iconYSpace = ( 1 - options.progressIndicatorPercentage ) * options.buttonHeight; // vertical space available for icon
     var iconScaleFactor = Math.min(
-        ( options.buttonWidth - 2 * options.iconMinYMargin ) / icon.width,
-        ( iconYSpace - 2 * options.iconMinXMargin ) / icon.height );
+      ( options.buttonWidth - 2 * options.iconMinYMargin ) / icon.width,
+      ( iconYSpace - 2 * options.iconMinXMargin ) / icon.height );
     icon.scale( iconScaleFactor );
     icon.centerX = buttonForegroundNode.centerX;
     icon.centerY = buttonForegroundNode.top + ( iconYSpace / 2 );
@@ -106,8 +106,8 @@ define( function( require ) {
       starDiameter: options.buttonWidth / ( numStars + 1 )
     } );
     progressIndicator.scale( Math.min(
-        ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
-        ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height ) );
+      ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
+      ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height ) );
     progressIndicator.center = progressIndicatorBackground.center;
     buttonForegroundNode.addChild( progressIndicatorBackground );
     buttonForegroundNode.addChild( progressIndicator );
