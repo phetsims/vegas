@@ -138,8 +138,7 @@ define( function( require ) {
 
       //Find the first parent that is a ScreenView so we can listen for its transform, see https://github.com/phetsims/vegas/issues/4
       getScreenView: function() {
-        var nodes = this.getUniqueTrail().nodes.slice( 0 ).reverse();
-        return _.find( nodes, function( node ) {return node instanceof ScreenView;} );
+        return this.getUniqueTrail( function( node ) { return node instanceof ScreenView; } ).rootNode();
       },
 
       //Only init after being attached to the scene graph, since we must ascertain the local bounds such that they take up the global screen.
@@ -155,7 +154,7 @@ define( function( require ) {
         //Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
         var updateBounds = function() {
 
-          var local = rewardNode.globalToLocalBounds( scene.sceneBounds );
+          var local = rewardNode.globalToLocalBounds( window.simDisplay.bounds );
           rewardNode.setCanvasBounds( local );
 
           //Also, store the bounds in the options so the debug flag can render the bounds
