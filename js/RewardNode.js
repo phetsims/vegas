@@ -165,7 +165,7 @@ define( function( require ) {
         scene.addEventListener( 'resize', updateBounds );
 
         //When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
-        this.getScreenView().getTransform().addTransformListener( { before: function() {}, after: function() {updateBounds();} } );
+        this.getScreenView().on( 'transform', updateBounds );
 
         //Set the initial bounds
         updateBounds();
