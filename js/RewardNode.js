@@ -154,7 +154,7 @@ define( function( require ) {
         //Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
         var updateBounds = function() {
 
-          var local = rewardNode.globalToLocalBounds( window.simDisplay.bounds );
+          var local = rewardNode.globalToLocalBounds( phet.joist.sim.display.bounds );
           rewardNode.setCanvasBounds( local );
 
           //Also, store the bounds in the options so the debug flag can render the bounds
