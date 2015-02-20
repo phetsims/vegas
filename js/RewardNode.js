@@ -27,7 +27,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   //This debug flag shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
-  var debug = true;
+  var debug = false;
 
   //Constants
   //The maximum speed an image can fall in screen pixels per second.
