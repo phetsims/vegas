@@ -57,8 +57,8 @@ define( function( require ) {
         new StarNode()
       ], 150 ),
 
-      // If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source
-      //TODO: Make it so the client doesn't pass in the entire model, see #22
+      // If you pass in a stepSource, which conforms to the axon.Events interface, the RewardNode will register for events through that source
+      //TODO: axon.Events is unnecessarily broad. Make it so the client doesn't pass in the entire model, see #22
       stepSource: null
     }, options );
 
