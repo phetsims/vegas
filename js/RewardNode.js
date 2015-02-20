@@ -26,12 +26,9 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var Node = require( 'SCENERY/nodes/Node' );
 
-  //This debug flag shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
-  var debug = false;
-
-  //Constants
-  //The maximum speed an image can fall in screen pixels per second.
-  var MAX_SPEED = 200;
+  // Constants
+  var DEBUG = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
+  var MAX_SPEED = 200; // The maximum speed an image can fall in screen pixels per second.
 
   /**
    * @param {Object} [options]
@@ -40,50 +37,57 @@ define( function( require ) {
   function RewardNode( options ) {
     var rewardNode = this;
 
-    //Bounds in which to render the canvas, which represents the full window.  See below for how this is computed based on ScreenView bounds and relative transforms
+    /*
+     * Bounds in which to render the canvas, which represents the full window.
+     * See below for how this is computed based on ScreenView bounds and relative transforms
+     */
     this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
 
     this.options = options = _.extend( {
 
-      //Scale things up for rasterization and back down for rendering so they have nice resolution on retina
+      // Scale things up for rasterization and back down for rendering so they have nice resolution on retina
       scaleForResolution: 2,
 
-      //Nodes to appear in the reward node.  They will be cached as images to improve performance
-      //The simulation should override this array to provide images specific to the simulation.
+      /*
+       * Nodes to appear in the reward node.  They will be cached as images to improve performance.
+       * The simulation should override this array to provide images specific to the simulation.
+       */
       nodes: RewardNode.createRandomNodes( [
         new FaceNode( 40, { headStroke: 'black', headLineWidth: 1.5 } ),
         new StarNode()
       ], 150 ),
 
-      //If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source
+      // If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source
       //TODO: Make it so the client doesn't pass in the entire model, see #22
       stepSource: null
     }, options );
 
-    //If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source, see #22
+    // If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source, see #22
     if ( options.stepSource ) {
       this.stepCallback = function( dt ) {rewardNode.step( dt );};
       options.stepSource.on( 'step', this.stepCallback );
     }
 
-    //Cache each unique node as an image for faster rendering in canvas.  Use an intermediate imageWrapper since the images will be returned later asynchronously
-    //And we need a place to store them, and know when they have arrived
+    /*
+     * Cache each unique node as an image for faster rendering in canvas.  Use an intermediate imageWrapper since the images
+     * will be returned later asynchronously. And we need a place to store them, and know when they have arrived.
+     */
     this.imageWrappers = [];
 
-    //find the unique nodes in the array
+    // find the unique nodes in the array
     var uniqueNodes = _.uniq( this.options.nodes );
 
     uniqueNodes.forEach( function( node, i ) {
       rewardNode.imageWrappers.push(
         {
-          //The image to be rendered in the canvas, will be filled in by toImage callback
+          // The image to be rendered in the canvas, will be filled in by toImage callback
           image: null,
 
-          //Record the width and height so the nodes can be positioned before the toImage call has completed
+          // Record the width and height so the nodes can be positioned before the toImage call has completed
           width: node.width,
           height: node.height,
 
-          //The node itself is recorded in the imageWrapper so the imageWrapper can be looked up based on the original node
+          // The node itself is recorded in the imageWrapper so the imageWrapper can be looked up based on the original node
           node: node
         } );
       var parent = new Node( { children: [ node ], scale: options.scaleForResolution } );
@@ -94,19 +98,21 @@ define( function( require ) {
 
     CanvasNode.call( this, options );
 
-    //Some initialization must occur after this node is attached to the scene graph, see documentation for RewardNode.init below.
+    // Some initialization must occur after this node is attached to the scene graph, see documentation for RewardNode.init below.
     this.inited = false;
   }
 
   return inherit( CanvasNode, RewardNode, {
 
-      //Paint the rewards on the canvas
-      // @param {CanvasContextWrapper} wrapper
+      /**
+       * Paint the rewards on the canvas
+       * @param {CanvasContextWrapper} wrapper
+       */
       paintCanvas: function( wrapper ) {
         var context = wrapper.context;
 
-        //If the debugging flag is on, show the bounds of the canvas
-        if ( debug ) {
+        // If the debugging flag is on, show the bounds of the canvas
+        if ( DEBUG ) {
           var bounds = this.canvasDisplayBounds;
 
           //Fill the canvas with gray
@@ -120,7 +126,7 @@ define( function( require ) {
         }
         context.scale( 1 / this.options.scaleForResolution, 1 / this.options.scaleForResolution );
 
-        //Display the rewards, but check that they exist first.  They do not exist when attached to the timer with stepSource
+        // Display the rewards, but check that they exist first.  They do not exist when attached to the timer with stepSource
         if ( this.rewards ) {
           for ( var i = 0; i < this.rewards.length; i++ ) {
             var reward = this.rewards[ i ];
@@ -131,48 +137,53 @@ define( function( require ) {
         }
       },
 
-      //Find the root of the scene tree
+      // Find the root of the scene tree
       getScene: function() {
         return this.getUniqueTrail().nodes[ 0 ];
       },
 
-      //Find the first parent that is a ScreenView so we can listen for its transform, see https://github.com/phetsims/vegas/issues/4
+      // Find the first parent that is a ScreenView so we can listen for its transform, see https://github.com/phetsims/vegas/issues/4
       getScreenView: function() {
         return this.getUniqueTrail( function( node ) { return node instanceof ScreenView; } ).rootNode();
       },
 
-      //Only init after being attached to the scene graph, since we must ascertain the local bounds such that they take up the global screen.
-      // 1. listen to the size of the scene/display
-      // 2. record the trail between the scene and your CanvasNode, and
-      // 3. apply the inverse of that transform to the CanvasNode (whenever an ancestor's transform changes, or when the scene/display size changes).
-      //
-      // @jonathanolson said: for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on changes to be precise (since you need them anyways to draw)
+      /**
+       * Only init after being attached to the scene graph, since we must ascertain the local bounds such that they take up the global screen.
+       * 1. listen to the size of the scene/display
+       * 2. record the trail between the scene and your CanvasNode, and
+       * 3. apply the inverse of that transform to the CanvasNode (whenever an ancestor's transform changes, or when the scene/display size changes).
+       *
+       * @jonathanolson said: for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on changes to be precise
+       * (since you need them anyways to draw)
+       */
       init: function() {
         var rewardNode = this;
         var scene = this.getScene();
 
-        //Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
+        // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
         var updateBounds = function() {
 
           var local = rewardNode.globalToLocalBounds( phet.joist.sim.display.bounds );
           rewardNode.setCanvasBounds( local );
 
-          //Also, store the bounds in the options so the debug flag can render the bounds
+          // Also, store the bounds in the options so the debug flag can render the bounds
           rewardNode.canvasDisplayBounds = local;
         };
 
-        //When the scene is resized, update the bounds
+        // When the scene is resized, update the bounds
         scene.addEventListener( 'resize', updateBounds );
 
-        //When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
+        // When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
         this.getScreenView().on( 'transform', updateBounds );
 
-        //Set the initial bounds
+        // Set the initial bounds
         updateBounds();
 
-        //Store each reward, which has an imageWrapper (see above), x, y, speed
-        //It is not an image, it is not a node, but it is one of the things that animates as falling in the RewardNode and its associated data
-        //For Reviewer: should we create a separate class for this?
+        /*
+         * Store each reward, which has an imageWrapper (see above), x, y, speed.
+         * It is not an image, it is not a node, but it is one of the things that animates as falling in the RewardNode and its associated data.
+         */
+        //TODO should we create a separate class for this?
         this.rewards = [];
         for ( var i = 0; i < this.options.nodes.length; i++ ) {
 
@@ -210,21 +221,21 @@ define( function( require ) {
         return this.canvasDisplayBounds.top - Math.random() * this.canvasDisplayBounds.height * 2 - distanceOffTopOfScreen - imageWrapper.height;
       },
 
-      //Move the rewards down according to their speed
+      // Move the rewards down according to their speed
       step: function( dt ) {
         if ( !this.inited && this.getScene() !== null ) {
           this.init();
         }
 
-        //Update all of the rewards
+        // Update all of the rewards
         var maxY = this.canvasDisplayBounds.height * this.options.scaleForResolution;
         for ( var i = 0; i < this.rewards.length; i++ ) {
           var reward = this.rewards[ i ];
 
-          //Move each node straight down at constant speed
+          // Move each node straight down at constant speed
           reward.y += reward.speed * dt;
 
-          //Move back to the top after the node falls off the bottom
+          // Move back to the top after the node falls off the bottom
           if ( reward.y > maxY ) {
             reward.y = this.sampleImageYValue( reward.imageWrapper );
           }
