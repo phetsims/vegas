@@ -71,7 +71,9 @@ define( function( require ) {
       bestTimeVisibleProperty: null, // null || Property.<boolean>} controls visibility of best time
       bestTimeFill: 'black',
       bestTimeFont: new PhetFont( 24 ),
-      bestTimeYSpacing: 10  // vertical space between drop shadow and best time
+      bestTimeYSpacing: 10,  // vertical space between drop shadow and best time
+      // together.js
+      componentID: null
     }, options );
 
     assert && assert( options.progressIndicatorProportion > 0 && options.progressIndicatorProportion <= 0.5, 'progressIndicatorProportion value out of range' );
@@ -121,7 +123,8 @@ define( function( require ) {
       yMargin: options.buttonYMargin,
       baseColor: options.baseColor,
       cornerRadius: options.cornerRadius,
-      listener: fireFunction
+      listener: fireFunction,
+      componentID: options.componentID
     };
     var button = new RectangularPushButton( buttonOptions );
     this.addChild( button );

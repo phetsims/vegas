@@ -62,7 +62,10 @@ define( function( require ) {
       yMargin: 10,
       fill: 'rgb( 180, 205, 255 )',
       stroke: 'black',
-      lineWidth: 1
+      lineWidth: 1,
+
+      // Together.js
+      startOverButtonComponentID: null
     }, options );
 
     // Level
@@ -104,7 +107,8 @@ define( function( require ) {
       font: options.font,
       baseColor: options.startOverButtonBaseColor,
       xMargin: options.startOverButtonXMargin,
-      yMargin: options.startOverButtonYMargin
+      yMargin: options.startOverButtonYMargin,
+      componentID: options.startOverButtonComponentID
     } );
 
     // Content for the panel, one row.
