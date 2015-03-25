@@ -12,7 +12,6 @@ define( function( require ) {
   var Color = require( 'SCENERY/util/Color' );
   var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -63,6 +62,7 @@ define( function( require ) {
       fill: 'rgb( 180, 205, 255 )',
       stroke: 'black',
       lineWidth: 1,
+      align: 'center',
 
       // Together.js
       startOverButtonComponentID: null
@@ -112,27 +112,16 @@ define( function( require ) {
     } );
 
     // Content for the panel, one row.
-    var subContent = new Node();
+    var content = new Node();
     var nodes = [ levelNode, challengeNumberNode, scoreNode, timerNode, startOverButton ];
     if ( !options.levelVisible ) { nodes.splice( nodes.indexOf( levelNode ), 1 ); }
     if ( !options.challengeNumberVisible ) { nodes.splice( nodes.indexOf( challengeNumberNode ), 1 ); }
     for ( var i = 0; i < nodes.length; i++ ) {
-      subContent.addChild( nodes[ i ] );
+      content.addChild( nodes[ i ] );
       if ( i > 0 ) {
         nodes[ i ].left = nodes[ i - 1 ].right + options.xSpacing;
         nodes[ i ].centerY = nodes[ i - 1 ].centerY;
       }
-    }
-
-    //TODO sun.Panel should support this, instead of having to do it here
-    // ensure a minimum width, horizontally center the content.
-    var content = subContent;
-    if ( subContent.width < options.minWidth ) {
-      content = new Node();
-      var strut = new Line( 0, 0, options.minWidth, 0, { pickable: false } ); // horizontal strut
-      content.addChild( strut );
-      content.addChild( subContent );
-      subContent.centerX = strut.centerX;
     }
 
     Panel.call( thisNode, content, options );
