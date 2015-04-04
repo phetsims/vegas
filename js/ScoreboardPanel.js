@@ -108,7 +108,7 @@ define( function( require ) {
       baseColor: options.startOverButtonBaseColor,
       xMargin: options.startOverButtonXMargin,
       yMargin: options.startOverButtonYMargin,
-      componentID: options.startOverButtonComponentID
+      togetherID: options.startOverButtonComponentID
     } );
 
     // Content for the panel, one row.
