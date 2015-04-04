@@ -65,7 +65,7 @@ define( function( require ) {
       align: 'center',
 
       // Together.js
-      startOverButtonComponentID: null
+      startOverButtonTogetherID: null
     }, options );
 
     // Level
@@ -108,7 +108,7 @@ define( function( require ) {
       baseColor: options.startOverButtonBaseColor,
       xMargin: options.startOverButtonXMargin,
       yMargin: options.startOverButtonYMargin,
-      togetherID: options.startOverButtonComponentID
+      togetherID: options.startOverButtonTogetherID
     } );
 
     // Content for the panel, one row.
