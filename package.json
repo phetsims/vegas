@@ -3,21 +3,7 @@
   "version": "1.0.0-dev.3",
   "license": "MIT",
   "phetLibs": [
-    "vegas",
-    "assert",
-    "axon",
-    "babel",
-    "brand",
-    "chipper",
-    "dot",
-    "joist",
-    "kite",
-    "phet-core",
-    "phetcommon",
-    "scenery",
-    "scenery-phet",
-    "sherpa",
-    "sun"
+    "vegas"
   ],
   "repository": {
     "type": "git",
