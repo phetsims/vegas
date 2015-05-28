@@ -237,6 +237,7 @@ define( function( require ) {
 
           // Move back to the top after the node falls off the bottom
           if ( reward.y > maxY ) {
+            reward.x = this.sampleImageXValue( reward.imageWrapper );
             reward.y = this.sampleImageYValue( reward.imageWrapper );
           }
         }
