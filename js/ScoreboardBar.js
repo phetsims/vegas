@@ -105,17 +105,19 @@ define( function( require ) {
     } );
 
     // All of the stuff that's grouped together at the left end of the scoreboard
-    var leftParentNode = new Node();
-    var nodes = [ levelNode, challengeNumberNode, scoreNode, timerNode ];
+    var nodes = [ levelNode, challengeNumberNode, scoreNode, timerNode ]; // in left-to-right order
     if ( !options.levelVisible ) { nodes.splice( nodes.indexOf( levelNode ), 1 ); }
     if ( !options.challengeNumberVisible ) { nodes.splice( nodes.indexOf( challengeNumberNode ), 1 ); }
     for ( var i = 0; i < nodes.length; i++ ) {
-      leftParentNode.addChild( nodes[ i ] );
       if ( i > 0 ) {
         nodes[ i ].left = nodes[ i - 1 ].right + options.xSpacing;
         nodes[ i ].centerY = nodes[ i - 1 ].centerY;
       }
     }
+    var leftParentNode = new Node( {
+      children: nodes,
+      maxWidth: 0.85 * ( screenWidth - options.leftMargin - options.rightMargin ) // constrain width for i18n
+    } );
 
     // Start Over button
     var startOverButton = new TextPushButton( options.startOverButtonText, {
@@ -124,7 +126,8 @@ define( function( require ) {
       textFill: options.startOverButtonTextFill,
       baseColor: options.startOverButtonBaseColor,
       xMargin: options.startOverButtonXMargin,
-      yMargin: options.startOverButtonYMargin
+      yMargin: options.startOverButtonYMargin,
+      maxWidth: screenWidth - leftParentNode.maxWidth // constrain width for i18n
     } );
 
     // background
