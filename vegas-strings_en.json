@@ -1,4 +1,7 @@
 {
+  "vegas.name": {
+   "value": "vegas demo"
+  },
   "pattern.0challenge.1max": {
     "value": "Challenge {0} of {1}"
   },

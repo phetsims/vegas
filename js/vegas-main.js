@@ -17,7 +17,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // Strings
-  var simTitle = 'vegas';
+  var title = require( 'string!VEGAS/vegas.name' );
 
   var simOptions = {
     credits: {
@@ -28,7 +28,7 @@ define( function( require ) {
   SimLauncher.launch( function() {
     // Create and start the sim
     //Create and start the sim
-    new Sim( simTitle, [
+    new Sim( title, [
       new Screen( 'Vegas', new Rectangle( 0, 0, 548, 373, { fill: 'yellow' } ),
         function() {return {};},
         function( model ) {return new VegasScreenView();},
