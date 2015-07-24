@@ -1,8 +1,66 @@
-boing.mp3 source=freesound.org, Creative Commons 0 license, modified by John B
-boing.ogg source=freesound.org, Creative Commons 0 license, modified by John B
-cheer.mp3 source=PhET author=Sam Reid
-cheer.ogg source=PhET author=Sam Reid
-ding.mp3 source=PhET author=John B
-ding.ogg source=PhET author=John B
-trumpet.mp3 source=PhET author=John B
-trumpet.ogg source=PhET author=John B
+{
+  "boing.mp3": {
+    "text": [
+      "Public Domain"
+    ],
+    "projectURL": "freesound.org",
+    "license": "Public Domain",
+    "notes": ", Creative Commons 0 license, modified by John B"
+  },
+  "boing.ogg": {
+    "text": [
+      "Public Domain"
+    ],
+    "projectURL": "freesound.org",
+    "license": "Public Domain",
+    "notes": ", Creative Commons 0 license, modified by John B"
+  },
+  "cheer.mp3": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by the PhET Team"
+  },
+  "cheer.ogg": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by the PhET Team"
+  },
+  "ding.mp3": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by John Blanco"
+  },
+  "ding.ogg": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by John Blanco"
+  },
+  "trumpet.mp3": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by John Blanco"
+  },
+  "trumpet.ogg": {
+    "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by John Blanco"
+  }
+}
