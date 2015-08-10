@@ -2,6 +2,7 @@
   "name": "vegas",
   "version": "1.0.0-dev.3",
   "license": "MIT",
+  "requirejsNamespace": "VEGAS",
   "simTitleStringKey": "VEGAS/vegas.name",
   "phetLibs": [
     "vegas"
