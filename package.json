@@ -15,9 +15,6 @@
   },
   "phet": {
     "requirejsNamespace": "VEGAS",
-    "simTitleStringKey": "VEGAS/vegas.name",
-    "phetLibs": [
-      "vegas"
-    ]
+    "simTitleStringKey": "VEGAS/vegas.name"
   }
 }
