@@ -2,11 +2,6 @@
   "name": "vegas",
   "version": "1.0.0-dev.3",
   "license": "MIT",
-  "requirejsNamespace": "VEGAS",
-  "simTitleStringKey": "VEGAS/vegas.name",
-  "phetLibs": [
-    "vegas"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/phetsims/vegas.git"
@@ -17,5 +12,12 @@
     "grunt-contrib-jshint": "~0.6.4",
     "uglify-js": "~2.4.0",
     "requirejs": "~2.1.8"
+  },
+  "phet": {
+    "requirejsNamespace": "VEGAS",
+    "simTitleStringKey": "VEGAS/vegas.name",
+    "phetLibs": [
+      "vegas"
+    ]
   }
 }
