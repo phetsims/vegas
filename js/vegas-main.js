@@ -17,7 +17,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // Strings
-  var title = require( 'string!VEGAS/vegas.name' );
+  var title = require( 'string!VEGAS/vegas.title' );
 
   var simOptions = {
     credits: {
