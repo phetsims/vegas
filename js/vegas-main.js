@@ -16,7 +16,7 @@ define( function( require ) {
   var RewardNodeScreenView = require( 'VEGAS/demo/RewardNodeScreenView' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
-  // Strings
+  // strings
   var title = require( 'string!VEGAS/vegas.title' );
 
   var simOptions = {
