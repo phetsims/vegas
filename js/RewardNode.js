@@ -26,7 +26,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var Node = require( 'SCENERY/nodes/Node' );
 
-  // Constants
+  // constants
   var DEBUG = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
   var MAX_SPEED = 200; // The maximum speed an image can fall in screen pixels per second.
 
