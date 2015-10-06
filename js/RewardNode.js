@@ -120,7 +120,7 @@ define( function( require ) {
           context.fillRect( bounds.minX, bounds.minY, bounds.width, bounds.height );
 
           //Stroke the canvas border with blue
-          context.strokeStyle = "#0000ff";
+          context.strokeStyle = '#0000ff';
           context.lineWidth = 5;
           context.strokeRect( bounds.minX, bounds.minY, bounds.width, bounds.height );
         }
