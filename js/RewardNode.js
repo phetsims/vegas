@@ -106,10 +106,9 @@ define( function( require ) {
 
       /**
        * Paint the rewards on the canvas
-       * @param {CanvasContextWrapper} wrapper
+       * @param {CanvasRenderingContext2D} context
        */
-      paintCanvas: function( wrapper ) {
-        var context = wrapper.context;
+      paintCanvas: function( context ) {
 
         // If the debugging flag is on, show the bounds of the canvas
         if ( DEBUG ) {
