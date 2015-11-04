@@ -28,12 +28,12 @@ define( function( require ) {
   var goodString = require( 'string!VEGAS/good' );
   var greatString = require( 'string!VEGAS/great' );
   var excellentString = require( 'string!VEGAS/excellent' );
-  var scoreOutOfString = require( 'string!VEGAS/label.score.max' );
-  var timeString = require( 'string!VEGAS/label.time' );
+  var labelScoreMaxString = require( 'string!VEGAS/label.score.max' );
+  var labelTimeString = require( 'string!VEGAS/label.time' );
   var yourNewBestString = require( 'string!VEGAS/yourNewBest' );
   var pattern0YourBestString = require( 'string!VEGAS/pattern.0yourBest' );
   var continueString = require( 'string!VEGAS/continue' );
-  var levelString = require( 'string!VEGAS/label.level' );
+  var labelLevelString = require( 'string!VEGAS/label.level' );
 
   /**
    * @param {number} level starting from zero, 1 added to this when displayed
@@ -92,15 +92,15 @@ define( function( require ) {
 
     // Level (optional)
     if ( options.levelVisible ) {
-      children.push( new Text( StringUtils.format( levelString, level + 1 ), { font: options.infoFont } ) );
+      children.push( new Text( StringUtils.format( labelLevelString, level + 1 ), { font: options.infoFont } ) );
     }
 
     // Score
-    children.push( new Text( StringUtils.format( scoreOutOfString, score, perfectScore ), { font: options.infoFont } ) );
+    children.push( new Text( StringUtils.format( labelScoreMaxString, score, perfectScore ), { font: options.infoFont } ) );
 
     // Time (optional)
     if ( timerEnabled ) {
-      var time = new MultiLineText( StringUtils.format( timeString, GameTimer.formatTime( elapsedTime ) ), {
+      var time = new MultiLineText( StringUtils.format( labelTimeString, GameTimer.formatTime( elapsedTime ) ), {
         font: options.infoFont,
         align: 'center'
       } );

@@ -22,9 +22,9 @@ define( function( require ) {
 
   // strings
   var startOverString = require( 'string!VEGAS/startOver' );
-  var pattern_0level = require( 'string!VEGAS/label.level' );
-  var pattern_0score = require( 'string!VEGAS/label.score' );
-  var pattern_0challenge_1max = require( 'string!VEGAS/pattern.0challenge.1max' );
+  var labelLevelString = require( 'string!VEGAS/label.level' );
+  var labelScoreString = require( 'string!VEGAS/label.score' );
+  var pattern0Challenge1MaxString = require( 'string!VEGAS/pattern.0challenge.1max' );
 
   /**
    * @param {Property.<number>} challengeIndexProperty which challenge is the user current playing? (index starts at 0, displayed starting at 1)
@@ -71,19 +71,19 @@ define( function( require ) {
     // Level
     var levelNode = new Text( '', { font: options.font, pickable: false } );
     levelProperty.link( function( level ) {
-      levelNode.text = StringUtils.format( pattern_0level, level + 1 );
+      levelNode.text = StringUtils.format( labelLevelString, level + 1 );
     } );
 
     // Challenge number
     var challengeNumberNode = new Text( '', { font: options.font, pickable: false } );
     challengeIndexProperty.link( function( challengeIndex ) {
-      challengeNumberNode.text = StringUtils.format( pattern_0challenge_1max, challengeIndex + 1, challengesPerGameProperty.get() );
+      challengeNumberNode.text = StringUtils.format( pattern0Challenge1MaxString, challengeIndex + 1, challengesPerGameProperty.get() );
     } );
 
     // Score
     var scoreNode = new Text( '', { font: options.font, pickable: false } );
     scoreProperty.link( function( score ) {
-      scoreNode.text = StringUtils.format( pattern_0score, score );
+      scoreNode.text = StringUtils.format( labelScoreString, score );
     } );
 
     // Timer, always takes up space even when hidden.

@@ -17,8 +17,8 @@ define( function( require ) {
   var Timer = require( 'JOIST/Timer' );
 
   // strings
-  var pattern_0hours_1minutes_2seconds = require( 'string!VEGAS/pattern.0hours.1minutes.2seconds' );
-  var pattern_0minutes_1seconds = require( 'string!VEGAS/pattern.0minutes.1seconds' );
+  var pattern0Hours1Minutes2SecondsString = require( 'string!VEGAS/pattern.0hours.1minutes.2seconds' );
+  var pattern0Minutes1SecondsString = require( 'string!VEGAS/pattern.0minutes.1seconds' );
 
   function GameTimer() {
     PropertySet.call( this, {
@@ -43,10 +43,10 @@ define( function( require ) {
     var secondsString = ( seconds > 9 ) ? seconds : ( '0' + seconds );
 
     if ( hours > 0 ) {
-      return StringUtils.format( pattern_0hours_1minutes_2seconds, hours, minutesString, secondsString );
+      return StringUtils.format( pattern0Hours1Minutes2SecondsString, hours, minutesString, secondsString );
     }
     else {
-      return StringUtils.format( pattern_0minutes_1seconds, minutesString, secondsString );
+      return StringUtils.format( pattern0Minutes1SecondsString, minutesString, secondsString );
     }
   };
 
