@@ -1,7 +1,7 @@
 // Copyright 2013-2015, University of Colorado Boulder
 
 /**
- * When a level is completed, this node shows how you did.
+ * This node is used to display a user's results when they complete a level.
  *
  * @author John Blanco
  * @author Chris Malley (PixelZoom, Inc.)
@@ -105,10 +105,10 @@ define( function( require ) {
         align: 'center'
       } );
       if ( isNewBestTime ) {
-        time.text += '\n' + yourNewBestString;
+        time.text = time.text + '\n' + yourNewBestString;
       }
       else if ( bestTimeAtThisLevel !== null ) {
-        time.text += '\n' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( bestTimeAtThisLevel ) );
+        time.text = time.text + '\n' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( bestTimeAtThisLevel ) );
       }
       children.push( time );
     }

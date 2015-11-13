@@ -1,9 +1,8 @@
 // Copyright 2013-2015, University of Colorado Boulder
 
 /**
- * Game timer, keeps track of the elapsed time in the game using "wall clock" time.
- * The frame rate of this clock is sufficient for displaying a game timer in "seconds",
- * but not for driving smooth animation.
+ * Game timer, keeps track of the elapsed time in the game using "wall clock" time. The frame rate of this clock is
+ * sufficient for displaying a game timer in "seconds", but not for driving smooth animation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,6 +19,9 @@ define( function( require ) {
   var pattern0Hours1Minutes2SecondsString = require( 'string!VEGAS/pattern.0hours.1minutes.2seconds' );
   var pattern0Minutes1SecondsString = require( 'string!VEGAS/pattern.0minutes.1seconds' );
 
+  /**
+   * @constructor
+   */
   function GameTimer() {
     PropertySet.call( this, {
       elapsedTime: 0, // seconds since the timer was started
@@ -32,6 +34,7 @@ define( function( require ) {
    * Formats a value representing seconds into H:MM:SS (localized).
    * @param {number} time in seconds
    * @returns {string}
+   * @public
    */
   GameTimer.formatTime = function( time ) {
 
@@ -52,7 +55,10 @@ define( function( require ) {
 
   return inherit( PropertySet, GameTimer, {
 
-    // Starts the timer. This is a no-op if the timer is already running.
+    /**
+     * Starts the timer. This is a no-op if the timer is already running.
+     * @public
+     */
     start: function() {
       if ( !this.isRunning ) {
         var thisTimer = this;
@@ -65,7 +71,10 @@ define( function( require ) {
       }
     },
 
-    // Stops the timer. This is a no-op if the timer is already stopped.
+    /**
+     * Stops the timer. This is a no-op if the timer is already stopped.
+     * @public
+     */
     stop: function() {
       if ( this.isRunning ) {
         Timer.clearInterval( this._intervalId );
@@ -74,7 +83,10 @@ define( function( require ) {
       }
     },
 
-    // Convenience function for restarting the timer.
+    /**
+     * Convenience function for restarting the timer.
+     * @public
+     */
     restart: function() {
       this.stop();
       this.start();

@@ -23,39 +23,59 @@ define( function( require ) {
   var PERFECT_SCORE = new Sound( cheerSound );
 
   /**
-   * @param soundEnabledProperty
+   * @param {Property.<boolean>} soundEnabledProperty
    * @constructor
    */
   function GameAudioPlayer( soundEnabledProperty ) {
-    this.soundEnabledProperty = soundEnabledProperty;
+    this.soundEnabledProperty = soundEnabledProperty; // @private
   }
 
   return inherit( Object, GameAudioPlayer, {
 
+    /**
+     * play the sound that indicates a correct answer
+     * @public
+     */
     correctAnswer: function() {
       if ( this.soundEnabledProperty.value ) {
         CORRECT_ANSWER.play();
       }
     },
 
+    /**
+     * play the sound that indicates an incorrect answer
+     * @public
+     */
     wrongAnswer: function() {
       if ( this.soundEnabledProperty.value ) {
         WRONG_ANSWER.play();
       }
     },
 
+    /**
+     * play the sound that indicates that the user completed the game but didn't earn any points
+     * @public
+     */
     gameOverZeroScore: function() {
       if ( this.soundEnabledProperty.value ) {
         WRONG_ANSWER.play();
       }
     },
 
+    /**
+     * play the sound that indicates that the user finished the game and got some correct and some incorrect answers
+     * @public
+     */
     gameOverImperfectScore: function() {
       if ( this.soundEnabledProperty.value ) {
         IMPERFECT_SCORE.play();
       }
     },
 
+    /**
+     * play the sound that indicates that the user finished the game and got a perfact score
+     * @public
+     */
     gameOverPerfectScore: function() {
       if ( this.soundEnabledProperty.value ) {
         PERFECT_SCORE.play();

@@ -18,6 +18,9 @@ define( function( require ) {
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
 
+  /**
+   * @constructor
+   */
   function VegasScreenView() {
     var vegasScreenView = this;
     ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );

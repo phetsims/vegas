@@ -15,6 +15,9 @@ define( function( require ) {
   var OutsideBackgroundNode = require( 'SCENERY_PHET/OutsideBackgroundNode' );
   var RewardNode = require( 'VEGAS/RewardNode' );
 
+  /**
+   * @constructor
+   */
   function RewardNodeScreenView() {
     ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
 
@@ -26,6 +29,8 @@ define( function( require ) {
   }
 
   return inherit( ScreenView, RewardNodeScreenView, {
+
+    // @public
     step: function( timeElapsed ) {
       this.rewardNode.step( timeElapsed );
     }

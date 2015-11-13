@@ -38,11 +38,12 @@ define( function( require ) {
     var rewardNode = this;
 
     /*
-     * Bounds in which to render the canvas, which represents the full window.
-     * See below for how this is computed based on ScreenView bounds and relative transforms
+     * Bounds in which to render the canvas, which represents the full window. See below for how this is computed based
+     * on ScreenView bounds and relative transforms
      */
     this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
 
+    // @private
     this.options = options = _.extend( {
 
       // Scale things up for rasterization and back down for rendering so they have nice resolution on retina
@@ -69,36 +70,34 @@ define( function( require ) {
     }
 
     /*
-     * Cache each unique node as an image for faster rendering in canvas.  Use an intermediate imageWrapper since the images
-     * will be returned later asynchronously. And we need a place to store them, and know when they have arrived.
+     * Cache each unique node as an image for faster rendering in canvas.  Use an intermediate imageWrapper since the
+     * images will be returned later asynchronously. And we need a place to store them, and know when they have arrived.
      */
-    this.imageWrappers = [];
+    this.imageWrappers = []; // @private
 
     // find the unique nodes in the array
     var uniqueNodes = _.uniq( this.options.nodes );
 
     uniqueNodes.forEach( function( node, i ) {
-      rewardNode.imageWrappers.push(
-        {
-          // The image to be rendered in the canvas, will be filled in by toImage callback
-          image: null,
+      rewardNode.imageWrappers.push( {
+        // The image to be rendered in the canvas, will be filled in by toImage callback
+        image: null,
 
-          // Record the width and height so the nodes can be positioned before the toImage call has completed
-          width: node.width,
-          height: node.height,
+        // Record the width and height so the nodes can be positioned before the toImage call has completed
+        width: node.width,
+        height: node.height,
 
-          // The node itself is recorded in the imageWrapper so the imageWrapper can be looked up based on the original node
-          node: node
-        } );
-      var parent = new Node( { children: [ node ], scale: options.scaleForResolution } );
-      parent.toImage( function( image ) {
-        rewardNode.imageWrappers[ i ].image = image;
+        // The node itself is recorded in the imageWrapper so the imageWrapper can be looked up based on the original node
+        node: node
       } );
+      var parent = new Node( { children: [ node ], scale: options.scaleForResolution } );
+      parent.toImage( function( image ) { rewardNode.imageWrappers[ i ].image = image; } );
     } );
 
     CanvasNode.call( this, options );
 
-    // Some initialization must occur after this node is attached to the scene graph, see documentation for RewardNode.init below.
+    // @private - Some initialization must occur after this node is attached to the scene graph, see documentation for
+    // RewardNode.init below.
     this.inited = false;
   }
 
@@ -107,6 +106,7 @@ define( function( require ) {
       /**
        * Paint the rewards on the canvas
        * @param {CanvasRenderingContext2D} context
+       * @protected
        */
       paintCanvas: function( context ) {
 
@@ -147,13 +147,15 @@ define( function( require ) {
       },
 
       /**
-       * Only init after being attached to the scene graph, since we must ascertain the local bounds such that they take up the global screen.
+       * Only init after being attached to the scene graph, since we must ascertain the local bounds such that they take
+       * up the global screen.
        * 1. listen to the size of the scene/display
        * 2. record the trail between the scene and your CanvasNode, and
        * 3. apply the inverse of that transform to the CanvasNode (whenever an ancestor's transform changes, or when the scene/display size changes).
        *
-       * @jonathanolson said: for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on changes to be precise
-       * (since you need them anyways to draw)
+       * @jonathanolson said: for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on
+       * changes to be precise (since you need them anyways to draw).
+       * @public
        */
       init: function() {
         var rewardNode = this;
@@ -179,8 +181,9 @@ define( function( require ) {
         updateBounds();
 
         /*
-         * Store each reward, which has an imageWrapper (see above), x, y, speed.
-         * It is not an image, it is not a node, but it is one of the things that animates as falling in the RewardNode and its associated data.
+         * Store each reward, which has an imageWrapper (see above), x, y, speed. It is not an image, it is not a node,
+         * but it is one of the things that animates as falling in the RewardNode and its associated data.
+         * @private
          */
         //TODO should we create a separate class for this?
         this.rewards = [];
@@ -213,14 +216,13 @@ define( function( require ) {
         return (Math.random() * this.canvasDisplayBounds.width + this.canvasDisplayBounds.left) * this.options.scaleForResolution - imageWrapper.width / 2;
       },
 
-      // Select a random Y value for the image when it is created, or when it goes back to the top of the screen.
+      // @private - select a random Y value for the image when it is created, or when it goes back to the top of the screen
       sampleImageYValue: function( imageWrapper ) {
-        //Start things about 1 second off the top of the screen
-        var distanceOffTopOfScreen = MAX_SPEED;
-        return this.canvasDisplayBounds.top - Math.random() * this.canvasDisplayBounds.height * 2 - distanceOffTopOfScreen - imageWrapper.height;
+        // Start things about 1 second off the top of the screen
+        return this.canvasDisplayBounds.top - Math.random() * this.canvasDisplayBounds.height * 2 - MAX_SPEED - imageWrapper.height;
       },
 
-      // Move the rewards down according to their speed
+      // @public - move the rewards down according to their speed
       step: function( dt ) {
         if ( !this.inited && this.getScene() !== null ) {
           this.init();
@@ -251,6 +253,7 @@ define( function( require ) {
        * @param {Node[]} nodes array of nodes to use
        * @param {number} count
        * @returns {Node[]}
+       * @public
        */
       createRandomNodes: function( nodes, count ) {
         var array = [];
