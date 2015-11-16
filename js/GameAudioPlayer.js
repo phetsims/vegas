@@ -11,6 +11,9 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Sound = require( 'VIBE/Sound' );
+  var vegas = require( 'VEGAS/vegas' );
+
+  // audio
   var dingSound = require( 'audio!VEGAS/ding' );
   var boingSound = require( 'audio!VEGAS/boing' );
   var trumpetSound = require( 'audio!VEGAS/trumpet' );
@@ -29,6 +32,8 @@ define( function( require ) {
   function GameAudioPlayer( soundEnabledProperty ) {
     this.soundEnabledProperty = soundEnabledProperty; // @private
   }
+
+  vegas.register( 'GameAudioPlayer', GameAudioPlayer );
 
   return inherit( Object, GameAudioPlayer, {
 

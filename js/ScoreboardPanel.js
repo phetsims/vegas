@@ -19,6 +19,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  var vegas = require( 'VEGAS/vegas' );
 
   // strings
   var startOverString = require( 'string!VEGAS/startOver' );
@@ -126,6 +127,8 @@ define( function( require ) {
 
     Panel.call( thisNode, content, options );
   }
+
+  vegas.register( 'ScoreboardPanel', ScoreboardPanel );
 
   return inherit( Panel, ScoreboardPanel );
 } );

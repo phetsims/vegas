@@ -13,6 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var vegas = require( 'VEGAS/vegas' );
 
   /**
    * @param {number} numStars
@@ -68,6 +69,8 @@ define( function( require ) {
 
     this.mutate( options );
   }
+
+  vegas.register( 'ProgressIndicator', ProgressIndicator );
 
   return inherit( HBox, ProgressIndicator );
 } );

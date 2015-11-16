@@ -22,6 +22,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+  var vegas = require( 'VEGAS/vegas' );
 
   // strings
   var keepTryingString = require( 'string!VEGAS/keepTrying' );
@@ -124,6 +125,7 @@ define( function( require ) {
     Panel.call( this, new VBox( { children: children, spacing: options.ySpacing } ), options );
   }
 
-  // Inherit from Node.
+  vegas.register( 'LevelCompletedNode', LevelCompletedNode );
+
   return inherit( Panel, LevelCompletedNode );
 } );

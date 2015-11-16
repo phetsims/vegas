@@ -25,6 +25,7 @@ define( function( require ) {
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var vegas = require( 'VEGAS/vegas' );
 
   // constants
   var DEBUG = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
@@ -100,6 +101,8 @@ define( function( require ) {
     // RewardNode.init below.
     this.inited = false;
   }
+
+  vegas.register( 'RewardNode', RewardNode );
 
   return inherit( CanvasNode, RewardNode, {
 

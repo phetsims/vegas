@@ -14,6 +14,7 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var OutsideBackgroundNode = require( 'SCENERY_PHET/OutsideBackgroundNode' );
   var RewardNode = require( 'VEGAS/RewardNode' );
+  var vegas = require( 'VEGAS/vegas' );
 
   /**
    * @constructor
@@ -27,6 +28,8 @@ define( function( require ) {
     this.rewardNode = new RewardNode();
     this.addChild( this.rewardNode );
   }
+
+  vegas.register( 'RewardNodeScreenView', RewardNodeScreenView );
 
   return inherit( ScreenView, RewardNodeScreenView, {
 

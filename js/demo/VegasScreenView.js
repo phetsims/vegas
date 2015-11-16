@@ -17,6 +17,7 @@ define( function( require ) {
   var HSlider = require( 'SUN/HSlider' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
+  var vegas = require( 'VEGAS/vegas' );
 
   /**
    * @constructor
@@ -54,6 +55,8 @@ define( function( require ) {
 
     addLevelCompletedNode();
   }
+
+  vegas.register( 'VegasScreenView', VegasScreenView );
 
   return inherit( ScreenView, VegasScreenView, {
     step: function( timeElapsed ) {

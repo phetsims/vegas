@@ -14,6 +14,7 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Timer = require( 'JOIST/Timer' );
+  var vegas = require( 'VEGAS/vegas' );
 
   // strings
   var pattern0Hours1Minutes2SecondsString = require( 'string!VEGAS/pattern.0hours.1minutes.2seconds' );
@@ -29,6 +30,8 @@ define( function( require ) {
     } );
     this._intervalId = null; // private
   }
+
+  vegas.register( 'GameTimer', GameTimer );
 
   /**
    * Formats a value representing seconds into H:MM:SS (localized).
