@@ -73,8 +73,9 @@ define( function( require ) {
       bestTimeFill: 'black',
       bestTimeFont: new PhetFont( 24 ),
       bestTimeYSpacing: 10,  // vertical space between drop shadow and best time
-      // together.js
-      togetherID: null
+
+      // Tandem
+      tandem: null
     }, options );
 
     assert && assert( options.progressIndicatorProportion > 0 && options.progressIndicatorProportion <= 0.5, 'progressIndicatorProportion value out of range' );
@@ -125,7 +126,7 @@ define( function( require ) {
       baseColor: options.baseColor,
       cornerRadius: options.cornerRadius,
       listener: fireFunction,
-      togetherID: options.togetherID
+      tandem: options.tandem
     };
     var button = new RectangularPushButton( buttonOptions );
     this.addChild( button );
