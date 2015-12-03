@@ -101,9 +101,6 @@ define( function( require ) {
     elapsedTimeProperty.link( function( elapsedTime ) {
       timeValue.text = GameTimer.formatTime( elapsedTime );
     } );
-    timerEnabledProperty.link( function( timerEnabled ) {
-      timerNode.visible = timerEnabled;
-    } );
 
     // All of the stuff that's grouped together at the left end of the scoreboard
     var nodes = [ levelNode, challengeNumberNode, scoreNode, timerNode ]; // in left-to-right order
@@ -117,7 +114,7 @@ define( function( require ) {
     }
     var leftParentNode = new Node( {
       children: nodes,
-      maxWidth: 0.85 * ( screenWidth - options.leftMargin - options.rightMargin ) // constrain width for i18n
+      maxWidth: 0.75 * ( screenWidth - options.leftMargin - options.rightMargin ) // constrain width for i18n
     } );
 
     // Start Over button
@@ -128,7 +125,7 @@ define( function( require ) {
       baseColor: options.startOverButtonBaseColor,
       xMargin: options.startOverButtonXMargin,
       yMargin: options.startOverButtonYMargin,
-      maxWidth: screenWidth - leftParentNode.maxWidth // constrain width for i18n
+      maxWidth: screenWidth - leftParentNode.maxWidth - options.leftMargin - options.rightMargin - options.xSpacing // constrain width for i18n
     } );
 
     // background
@@ -143,6 +140,11 @@ define( function( require ) {
 
     options.children = [ backgroundNode, leftParentNode, startOverButton ];
     Node.call( thisNode, options );
+
+    // Do this after setting maxWidth of leftParentNode
+    timerEnabledProperty.link( function( timerEnabled ) {
+      timerNode.visible = timerEnabled;
+    } );
   }
 
   vegas.register( 'ScoreboardBar', ScoreboardBar );
