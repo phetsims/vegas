@@ -13,7 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Timer = require( 'JOIST/Timer' );
+  var Timer = require( 'PHET_CORE/Timer' );
   var vegas = require( 'VEGAS/vegas' );
 
   // strings
