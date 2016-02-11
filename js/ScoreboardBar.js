@@ -125,7 +125,8 @@ define( function( require ) {
       baseColor: options.startOverButtonBaseColor,
       xMargin: options.startOverButtonXMargin,
       yMargin: options.startOverButtonYMargin,
-      maxWidth: screenWidth - leftParentNode.maxWidth - options.leftMargin - options.rightMargin - options.xSpacing // constrain width for i18n
+      maxWidth: screenWidth - leftParentNode.maxWidth - options.leftMargin - options.rightMargin - options.xSpacing, // constrain width for i18n
+      tandem: options.tandem && options.tandem.createTandem( 'startOverButton' )
     } );
 
     // background
