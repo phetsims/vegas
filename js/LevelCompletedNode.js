@@ -64,7 +64,8 @@ define( function( require ) {
       infoFont: new PhetFont( { size: 22, weight: 'bold' } ),
       buttonFont: new PhetFont( 26 ),
       buttonFill: new Color( 255, 255, 0 ),
-      starDiameter: 62
+      starDiameter: 62,
+      tandem: null
     }, options );
 
     // nodes to be added to the panel
@@ -118,7 +119,8 @@ define( function( require ) {
     children.push( new TextPushButton( continueString, {
       listener: continueFunction,
       font: options.buttonFont,
-      baseColor: options.buttonFill
+      baseColor: options.buttonFill,
+      tandem: options.tandem && options.tandem.createTandem( 'continueButton' )
     } ) );
 
     // Panel
