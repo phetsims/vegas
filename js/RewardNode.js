@@ -165,7 +165,7 @@ define( function( require ) {
         var scene = this.getScene();
 
         // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
-        var updateBounds = function() {
+        this.updateBounds = function() {
 
           var local = rewardNode.globalToLocalBounds( phet.joist.sim.display.bounds );
           rewardNode.setCanvasBounds( local );
@@ -175,13 +175,13 @@ define( function( require ) {
         };
 
         // When the scene is resized, update the bounds
-        scene.addEventListener( 'resize', updateBounds );
+        scene.addEventListener( 'resize', this.updateBounds );
 
         // When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
-        this.getScreenView().on( 'transform', updateBounds );
+        this.getScreenView().on( 'transform', this.updateBounds );
 
         // Set the initial bounds
-        updateBounds();
+        this.updateBounds();
 
         /*
          * Store each reward, which has an imageWrapper (see above), x, y, speed. It is not an image, it is not a node,
@@ -246,6 +246,13 @@ define( function( require ) {
           }
         }
         this.invalidatePaint();
+      },
+
+      dispose: function() {
+        if ( this.options.stepSource ) {
+          this.stop();
+        }
+        this.getScene().removeEventListener( 'resize', this.updateBounds );
       }
     },
 
