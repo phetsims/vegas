@@ -162,7 +162,8 @@ define( function( require ) {
        */
       init: function() {
         var rewardNode = this;
-        var scene = this.getScene();
+        this.scene = this.getScene();
+        this.screenView = this.getScreenView();
 
         // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
         this.updateBounds = function() {
@@ -175,10 +176,10 @@ define( function( require ) {
         };
 
         // When the scene is resized, update the bounds
-        scene.addEventListener( 'resize', this.updateBounds );
+        this.scene.addEventListener( 'resize', this.updateBounds );
 
         // When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
-        this.getScreenView().on( 'transform', this.updateBounds );
+        this.screenView.on( 'transform', this.updateBounds );
 
         // Set the initial bounds
         this.updateBounds();
@@ -252,7 +253,8 @@ define( function( require ) {
         if ( this.options.stepSource ) {
           this.stop();
         }
-        this.getScene().removeEventListener( 'resize', this.updateBounds );
+        this.scene.removeEventListener( 'resize', this.updateBounds );
+        this.screenView.off( 'transform', this.updateBounds );
       }
     },
 
