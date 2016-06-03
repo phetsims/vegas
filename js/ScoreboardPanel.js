@@ -21,6 +21,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var vegas = require( 'VEGAS/vegas' );
+  var Tandem = require( 'TANDEM/Tandem' );
 
   // strings
   var startOverString = require( 'string!VEGAS/startOver' );
@@ -68,6 +69,8 @@ define( function( require ) {
 
       tandem: null
     }, options );
+
+    Tandem.validateOptions( options ); // The tandem is required when brand==='phet-io'
 
     // Level
     var levelNode = new Text( '', { font: options.font, pickable: false } );

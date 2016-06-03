@@ -23,6 +23,7 @@ define( function( require ) {
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var vegas = require( 'VEGAS/vegas' );
+  var Tandem = require( 'TANDEM/Tandem' );
 
   // strings
   var keepTryingString = require( 'string!VEGAS/keepTrying' );
@@ -67,6 +68,7 @@ define( function( require ) {
       starDiameter: 62,
       tandem: null
     }, options );
+    Tandem.validateOptions( options ); // The tandem is required when brand==='phet-io'
 
     // nodes to be added to the panel
     var children = [];
