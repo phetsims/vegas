@@ -25,19 +25,32 @@ define( function( require ) {
     }
   };
 
+  // Creates a rectangle filled with a specified color
+  var createScreenIcon = function( color ) {
+    return new Rectangle( 0, 0, Screen.HOME_SCREEN_ICON_SIZE.width, Screen.HOME_SCREEN_ICON_SIZE.height, { fill: color } );
+  };
+
   SimLauncher.launch( function() {
-    // Create and start the sim
-    //Create and start the sim
     new Sim( vegasTitleString, [
-      new Screen( 'Vegas', new Rectangle( 0, 0, 548, 373, { fill: 'yellow' } ),
+
+      new Screen(
         function() {return {};},
         function( model ) {return new VegasScreenView();},
-        { backgroundColor: '#fff' }
+        {
+          name: 'Vegas',
+          backgroundColor: '#fff',
+          homeScreenIcon: createScreenIcon( 'yellow' )
+        }
       ),
-      new Screen( 'Rewards', new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ),
+
+      new Screen(
         function() {return {};},
         function( model ) {return new RewardNodeScreenView();},
-        { backgroundColor: '#fff' }
+        {
+          name: 'Rewards',
+          backgroundColor: '#fff',
+          homeScreenIcon: createScreenIcon( 'blue' )
+        }
       )
     ], simOptions ).start();
   } );
