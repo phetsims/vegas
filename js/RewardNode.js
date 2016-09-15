@@ -36,7 +36,7 @@ define( function( require ) {
    * @constructor
    */
   function RewardNode( options ) {
-    var rewardNode = this;
+    var self = this;
 
     /*
      * Bounds in which to render the canvas, which represents the full window. See below for how this is computed based
@@ -66,7 +66,7 @@ define( function( require ) {
 
     // If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source, see #22
     if ( options.stepSource ) {
-      this.stepCallback = function( dt ) {rewardNode.step( dt );};
+      this.stepCallback = function( dt ) {self.step( dt );};
       options.stepSource.on( 'step', this.stepCallback );
     }
 
@@ -80,7 +80,7 @@ define( function( require ) {
     var uniqueNodes = _.uniq( this.options.nodes );
 
     uniqueNodes.forEach( function( node, i ) {
-      rewardNode.imageWrappers.push( {
+      self.imageWrappers.push( {
         // The image to be rendered in the canvas, will be filled in by toImage callback
         image: null,
 
@@ -92,7 +92,7 @@ define( function( require ) {
         node: node
       } );
       var parent = new Node( { children: [ node ], scale: options.scaleForResolution } );
-      parent.toImage( function( image ) { rewardNode.imageWrappers[ i ].image = image; } );
+      parent.toImage( function( image ) { self.imageWrappers[ i ].image = image; } );
     } );
 
     CanvasNode.call( this, options );
@@ -161,18 +161,18 @@ define( function( require ) {
        * @public
        */
       init: function() {
-        var rewardNode = this;
+        var self = this;
         this.scene = this.getScene();
         this.screenView = this.getScreenView();
 
         // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
         this.updateBounds = function() {
 
-          var local = rewardNode.globalToLocalBounds( phet.joist.sim.display.bounds );
-          rewardNode.setCanvasBounds( local );
+          var local = self.globalToLocalBounds( phet.joist.sim.display.bounds );
+          self.setCanvasBounds( local );
 
           // Also, store the bounds in the options so the debug flag can render the bounds
-          rewardNode.canvasDisplayBounds = local;
+          self.canvasDisplayBounds = local;
         };
 
         // When the scene is resized, update the bounds
@@ -197,11 +197,11 @@ define( function( require ) {
           (function( node ) {
 
             //find the image wrapper corresponding to the node
-            var imageWrapper = _.find( rewardNode.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node;} );
-            rewardNode.rewards.push( {
+            var imageWrapper = _.find( self.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node;} );
+            self.rewards.push( {
               imageWrapper: imageWrapper,
-              x: rewardNode.sampleImageXValue( imageWrapper ),
-              y: rewardNode.sampleImageYValue( imageWrapper ),
+              x: self.sampleImageXValue( imageWrapper ),
+              y: self.sampleImageYValue( imageWrapper ),
               speed: (Math.random() + 1) * MAX_SPEED
             } );
           })( node );

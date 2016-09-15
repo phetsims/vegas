@@ -42,8 +42,6 @@ define( function( require ) {
    */
   function ScoreboardBar( screenWidth, challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
 
-    var thisNode = this;
-
     options = _.extend( {
       // things that can be hidden
       levelVisible: true,
@@ -143,7 +141,7 @@ define( function( require ) {
     startOverButton.right = backgroundNode.centerX + ( screenWidth / 2 ) - options.rightMargin; // right end
 
     options.children = [ backgroundNode, leftParentNode, startOverButton ];
-    Node.call( thisNode, options );
+    Node.call( this, options );
 
     // Do this after setting maxWidth of leftParentNode
     timerEnabledProperty.link( function( timerEnabled ) {

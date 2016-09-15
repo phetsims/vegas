@@ -23,7 +23,7 @@ define( function( require ) {
    * @constructor
    */
   function VegasScreenView() {
-    var vegasScreenView = this;
+    var self = this;
     ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
 
     // background
@@ -47,10 +47,10 @@ define( function( require ) {
         levelCompletedNode.detach();
         addLevelCompletedNode();
       }, {
-        right: vegasScreenView.layoutBounds.right - 10,
-        top:   vegasScreenView.layoutBounds.top + 10
+        right: self.layoutBounds.right - 10,
+        top:   self.layoutBounds.top + 10
       } );
-      vegasScreenView.addChild( levelCompletedNode );
+      self.addChild( levelCompletedNode );
     };
 
     addLevelCompletedNode();

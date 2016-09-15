@@ -42,8 +42,6 @@ define( function( require ) {
    */
   function ScoreboardPanel( challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
 
-    var thisNode = this;
-
     options = _.extend( {
       // things that can be hidden
       levelVisible: true,
@@ -128,7 +126,7 @@ define( function( require ) {
       }
     }
 
-    Panel.call( thisNode, content, options );
+    Panel.call( this, content, options );
   }
 
   vegas.register( 'ScoreboardPanel', ScoreboardPanel );

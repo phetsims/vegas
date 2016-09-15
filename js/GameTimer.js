@@ -64,13 +64,13 @@ define( function( require ) {
      */
     start: function() {
       if ( !this.isRunning ) {
-        var thisTimer = this;
-        thisTimer.elapsedTime = 0;
-        thisTimer._intervalId = Timer.setInterval( function() {
+        var self = this;
+        self.elapsedTime = 0;
+        self._intervalId = Timer.setInterval( function() {
           //TODO will this be accurate, or should we compute elapsed time and potentially skip some time values?
-          thisTimer.elapsedTime += 1;
+          self.elapsedTime += 1;
         }, 1000 ); // fire once per second
-        thisTimer.isRunning = true;
+        self.isRunning = true;
       }
     },
 
