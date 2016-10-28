@@ -26,22 +26,6 @@ define( function( require ) {
   // constants
   var SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
 
-  // TODO: Consider making this commonly accessible (or finding a better way to do it).
-  // Create a node that is scaled and padded out to meet the size specification.
-  function createSizedImageNode( icon, size ) {
-    icon.scale( Math.min( size.width / icon.bounds.width, size.height / icon.bounds.height ) );
-    if ( Math.abs( icon.bounds.width - size.width ) < SCALING_TOLERANCE &&
-         Math.abs( icon.bounds.height - size.height ) < SCALING_TOLERANCE ) {
-      // The aspect ratio of the icon matched that of the specified size, so no padding is necessary.
-      return icon;
-    }
-    // else padding is needed in either the horizontal or vertical direction.
-    var background = new Rectangle( 0, 0, size.width, size.height, 0, 0, { fill: null } );
-    icon.center = background.center;
-    background.addChild( icon );
-    return background;
-  }
-
   /**
    * @param {Node} icon Scenery node that appears on the button above the progress indicator, scaled to fit
    * @param {number} numStars Number of stars to show in the progress indicator at the bottom of the button
@@ -102,7 +86,7 @@ define( function( require ) {
     // Icon, scaled and padded to fit and to make the button size correct.
     var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - progressIndicatorBackground.height -
                                                     2 * options.buttonYMargin - options.iconToProgressIndicatorYSpace );
-    var adjustedIcon = createSizedImageNode( icon, iconSize );
+    var adjustedIcon = LevelSelectionButton.createSizedImageNode( icon, iconSize );
     adjustedIcon.pickable = false; // TODO: is this needed?
 
     // Assemble the content.
@@ -130,7 +114,7 @@ define( function( require ) {
       tandem: options.tandem
     };
     Tandem.validateOptions( options ); // The tandem is required when brand==='phet-io'
-    
+
     var button = new RectangularPushButton( buttonOptions );
     this.addChild( button );
 
@@ -154,5 +138,28 @@ define( function( require ) {
 
   vegas.register( 'LevelSelectionButton', LevelSelectionButton );
 
-  return inherit( Node, LevelSelectionButton );
+  return inherit( Node, LevelSelectionButton, {}, {
+    /**
+     * Creates a new the same dimensions as size with the specified icon. The icon will be scaled to fit, and a
+     * background with the specified size may be added to ensure the bounds of the returned node are correct.
+     * @public
+     *
+     * @param {Node} icon
+     * @param {Dimension2} size
+     * @returns {Node}
+     */
+    createSizedImageNode: function( icon, size ) {
+      icon.scale( Math.min( size.width / icon.bounds.width, size.height / icon.bounds.height ) );
+      if ( Math.abs( icon.bounds.width - size.width ) < SCALING_TOLERANCE &&
+           Math.abs( icon.bounds.height - size.height ) < SCALING_TOLERANCE ) {
+        // The aspect ratio of the icon matched that of the specified size, so no padding is necessary.
+        return icon;
+      }
+      // else padding is needed in either the horizontal or vertical direction.
+      var background = Rectangle.dimension( size, { fill: null } );
+      icon.center = background.center;
+      background.addChild( icon );
+      return background;
+    }
+  } );
 } );
