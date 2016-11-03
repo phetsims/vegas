@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Timer = require( 'PHET_CORE/Timer' );
   var vegas = require( 'VEGAS/vegas' );
@@ -24,16 +24,23 @@ define( function( require ) {
    * @constructor
    */
   function GameTimer() {
-    PropertySet.call( this, {
-      elapsedTime: 0, // seconds since the timer was started
-      isRunning: false
-    } );
-    this._intervalId = null; // private
+    
+    // @public seconds since the timer was started
+    this.elapsedTimeProperty = new Property( 0 );
+    this.isRunningProperty = new Property( false );
+    
+    this.intervalId = null; // @private
   }
 
   vegas.register( 'GameTimer', GameTimer );
 
-  return inherit( PropertySet, GameTimer, {
+  return inherit( Object, GameTimer, {
+    
+    // @public
+    reset: function(){
+      this.elapsedTimeProperty.reset();
+      this.isRunningProperty.reset();
+    },
 
     /**
      * Starts the timer. This is a no-op if the timer is already running.
@@ -43,7 +50,7 @@ define( function( require ) {
       if ( !this.isRunning ) {
         var self = this;
         self.elapsedTime = 0;
-        self._intervalId = Timer.setInterval( function() {
+        self.intervalId = Timer.setInterval( function() {
           //TODO will this be accurate, or should we compute elapsed time and potentially skip some time values?
           self.elapsedTime += 1;
         }, 1000 ); // fire once per second
@@ -57,8 +64,8 @@ define( function( require ) {
      */
     stop: function() {
       if ( this.isRunning ) {
-        Timer.clearInterval( this._intervalId );
-        this._intervalId = null;
+        Timer.clearInterval( this.intervalId );
+        this.intervalId = null;
         this.isRunning = false;
       }
     },
