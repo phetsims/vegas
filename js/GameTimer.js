@@ -33,29 +33,6 @@ define( function( require ) {
 
   vegas.register( 'GameTimer', GameTimer );
 
-  /**
-   * Formats a value representing seconds into H:MM:SS (localized).
-   * @param {number} time in seconds
-   * @returns {string}
-   * @public
-   */
-  GameTimer.formatTime = function( time ) {
-
-    var hours = Math.floor( time / 3600 );
-    var minutes = Math.floor( (time - (hours * 3600)) / 60 );
-    var seconds = Math.floor( time - (hours * 3600) - (minutes * 60) );
-
-    var minutesString = ( minutes > 9 || hours === 0 ) ? minutes : ( '0' + minutes );
-    var secondsString = ( seconds > 9 ) ? seconds : ( '0' + seconds );
-
-    if ( hours > 0 ) {
-      return StringUtils.format( pattern0Hours1Minutes2SecondsString, hours, minutesString, secondsString );
-    }
-    else {
-      return StringUtils.format( pattern0Minutes1SecondsString, minutesString, secondsString );
-    }
-  };
-
   return inherit( PropertySet, GameTimer, {
 
     /**
@@ -93,6 +70,31 @@ define( function( require ) {
     restart: function() {
       this.stop();
       this.start();
+    }
+  }, {
+
+    /**
+     * Formats a value representing seconds into H:MM:SS (localized).
+     * @param {number} time in seconds
+     * @returns {string}
+     * @public
+     * @static
+     */
+    formatTime: function( time ) {
+
+      var hours = Math.floor( time / 3600 );
+      var minutes = Math.floor( (time - (hours * 3600)) / 60 );
+      var seconds = Math.floor( time - (hours * 3600) - (minutes * 60) );
+
+      var minutesString = ( minutes > 9 || hours === 0 ) ? minutes : ( '0' + minutes );
+      var secondsString = ( seconds > 9 ) ? seconds : ( '0' + seconds );
+
+      if ( hours > 0 ) {
+        return StringUtils.format( pattern0Hours1Minutes2SecondsString, hours, minutesString, secondsString );
+      }
+      else {
+        return StringUtils.format( pattern0Minutes1SecondsString, minutesString, secondsString );
+      }
     }
   } );
 } );
