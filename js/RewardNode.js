@@ -175,9 +175,6 @@ define( function( require ) {
           self.canvasDisplayBounds = local;
         };
 
-        // When the scene is resized, update the bounds
-        this.scene.addEventListener( 'resize', this.updateBounds );
-
         // When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
         this.screenView.on( 'transform', this.updateBounds );
 
@@ -253,7 +250,6 @@ define( function( require ) {
         if ( this.options.stepSource ) {
           this.stop();
         }
-        this.scene.removeEventListener( 'resize', this.updateBounds );
         this.screenView.off( 'transform', this.updateBounds );
       }
     },
