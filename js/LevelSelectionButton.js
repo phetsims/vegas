@@ -36,6 +36,8 @@ define( function( require ) {
    * @constructor
    */
   function LevelSelectionButton( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
+    assert && assert( icon instanceof Node );
+    assert && assert( typeof numStars === 'number' );
 
     Node.call( this );
 
