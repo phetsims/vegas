@@ -4,7 +4,7 @@
  * Scoreboard for a game.
  *
  * @author Chris Malley (PixelZoom, Inc.)
- * @deprectated use ScoreboardBar
+ * @deprecated use ScoreboardBar
  */
 define( function( require ) {
   'use strict';
