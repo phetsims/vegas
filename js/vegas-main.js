@@ -15,6 +15,8 @@ define( function( require ) {
   var VegasScreenView = require( 'VEGAS/demo/VegasScreenView' );
   var RewardNodeScreenView = require( 'VEGAS/demo/RewardNodeScreenView' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Property = require( 'AXON/Property' );
+  var Color = require( 'SCENERY/util/Color' );
 
   // strings
   var vegasTitleString = require( 'string!VEGAS/vegas.title' );
@@ -38,7 +40,7 @@ define( function( require ) {
         function( model ) {return new VegasScreenView();},
         {
           name: 'Vegas',
-          backgroundColor: '#fff',
+          backgroundColorProperty: new Property( Color.toColor( '#fff' ) ),
           homeScreenIcon: createScreenIcon( 'yellow' )
         }
       ),
@@ -48,7 +50,7 @@ define( function( require ) {
         function( model ) {return new RewardNodeScreenView();},
         {
           name: 'Rewards',
-          backgroundColor: '#fff',
+          backgroundColorProperty: new Property( Color.toColor( '#fff' ) ),
           homeScreenIcon: createScreenIcon( 'blue' )
         }
       )
