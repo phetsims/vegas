@@ -62,7 +62,7 @@ define( function( require ) {
       bestTimeYSpacing: 10,  // vertical space between drop shadow and best time
 
       // Tandem
-      tandem: null
+      tandem: Tandem.createDefaultTandem( 'levelSelectionButton' )
     }, options );
 
     assert && assert( options.progressIndicatorProportion > 0 && options.progressIndicatorProportion <= 0.5, 'progressIndicatorProportion value out of range' );
