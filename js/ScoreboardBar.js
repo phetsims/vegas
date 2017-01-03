@@ -64,7 +64,8 @@ define( function( require ) {
       yMargin: 10,
       backgroundFill: 'rgb( 49, 117, 202 )',
       backgroundStroke: null,
-      backgroundLineWidth: 1
+      backgroundLineWidth: 1,
+      tandem: Tandem.createDefaultTandem( 'scoreboardBar' )
     }, options );
 
     Tandem.validateOptions( options ); // The tandem is required when brand==='phet-io'
@@ -127,7 +128,7 @@ define( function( require ) {
       xMargin: options.startOverButtonXMargin,
       yMargin: options.startOverButtonYMargin,
       maxWidth: screenWidth - leftParentNode.maxWidth - options.leftMargin - options.rightMargin - options.xSpacing, // constrain width for i18n
-      tandem: options.tandem && options.tandem.createTandem( 'startOverButton' )
+      tandem: options.tandem.createTandem( 'startOverButton' )
     } );
 
     // background
