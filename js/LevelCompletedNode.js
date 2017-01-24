@@ -68,7 +68,6 @@ define( function( require ) {
       starDiameter: 62,
       tandem: Tandem.tandemRequired()
     }, options );
-    Tandem.validateOptions( options ); // The tandem is required when brand==='phet-io'
 
     // nodes to be added to the panel
     var children = [];

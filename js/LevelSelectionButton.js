@@ -115,7 +115,6 @@ define( function( require ) {
       listener: fireFunction,
       tandem: options.tandem
     };
-    Tandem.validateOptions( options ); // The tandem is required when brand==='phet-io'
 
     var button = new RectangularPushButton( buttonOptions );
     this.addChild( button );
