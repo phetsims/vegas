@@ -66,7 +66,7 @@ define( function( require ) {
       buttonFont: new PhetFont( 26 ),
       buttonFill: new Color( 255, 255, 0 ),
       starDiameter: 62,
-      tandem: Tandem.createDefaultTandem( 'levelCompletedNode' )
+      tandem: Tandem.tandemRequired()
     }, options );
     Tandem.validateOptions( options ); // The tandem is required when brand==='phet-io'
 

@@ -65,7 +65,7 @@ define( function( require ) {
       backgroundFill: 'rgb( 49, 117, 202 )',
       backgroundStroke: null,
       backgroundLineWidth: 1,
-      tandem: Tandem.createDefaultTandem( 'scoreboardBar' )
+      tandem: Tandem.tandemRequired()
     }, options );
 
     Tandem.validateOptions( options ); // The tandem is required when brand==='phet-io'
