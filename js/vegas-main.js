@@ -9,14 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Property = require( 'AXON/Property' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var RewardNodeScreenView = require( 'VEGAS/demo/RewardNodeScreenView' );
   var Screen = require( 'JOIST/Screen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
   var VegasScreenView = require( 'VEGAS/demo/VegasScreenView' );
-  var RewardNodeScreenView = require( 'VEGAS/demo/RewardNodeScreenView' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Property = require( 'AXON/Property' );
-  var Color = require( 'SCENERY/util/Color' );
 
   // strings
   var vegasTitleString = require( 'string!VEGAS/vegas.title' );
@@ -40,7 +39,7 @@ define( function( require ) {
         function( model ) {return new VegasScreenView();},
         {
           name: 'Vegas',
-          backgroundColorProperty: new Property( Color.toColor( '#fff' ) ),
+          backgroundColorProperty: new Property( '#fff' ),
           homeScreenIcon: createScreenIcon( 'yellow' )
         }
       ),
@@ -50,7 +49,7 @@ define( function( require ) {
         function( model ) {return new RewardNodeScreenView();},
         {
           name: 'Rewards',
-          backgroundColorProperty: new Property( Color.toColor( '#fff' ) ),
+          backgroundColorProperty: new Property( '#fff' ),
           homeScreenIcon: createScreenIcon( 'blue' )
         }
       )
