@@ -113,7 +113,9 @@ define( function( require ) {
       baseColor: options.baseColor,
       cornerRadius: options.cornerRadius,
       listener: fireFunction,
-      tandem: options.tandem
+
+      // TODO: if LevelSelectionButton changes to inheritance, this will have to change, see https://github.com/phetsims/vegas/issues/56
+      tandem: options.tandem.createTandem( 'button' )
     };
 
     var button = new RectangularPushButton( buttonOptions );
