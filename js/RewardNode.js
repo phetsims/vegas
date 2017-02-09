@@ -251,6 +251,7 @@ define( function( require ) {
           this.stop();
         }
         this.screenView.off( 'transform', this.updateBounds );
+        CanvasNode.prototype.dispose.call( this );
       }
     },
 
