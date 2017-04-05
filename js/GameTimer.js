@@ -47,14 +47,14 @@ define( function( require ) {
      * @public
      */
     start: function() {
-      if ( !this.isRunning ) {
+      if ( !this.isRunningProperty.value ) {
         var self = this;
-        self.elapsedTime = 0;
+        self.elapsedTimeProperty.value = 0;
         self.intervalId = Timer.setInterval( function() {
           //TODO will this be accurate, or should we compute elapsed time and potentially skip some time values?
-          self.elapsedTime += 1;
+          self.elapsedTimeProperty.value = self.elapsedTimeProperty.value + 1;
         }, 1000 ); // fire once per second
-        self.isRunning = true;
+        self.isRunningProperty.value = true;
       }
     },
 
@@ -63,10 +63,10 @@ define( function( require ) {
      * @public
      */
     stop: function() {
-      if ( this.isRunning ) {
+      if ( this.isRunningProperty.value ) {
         Timer.clearInterval( this.intervalId );
         this.intervalId = null;
-        this.isRunning = false;
+        this.isRunningProperty.value = false;
       }
     },
 
