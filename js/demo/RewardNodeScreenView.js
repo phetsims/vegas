@@ -27,6 +27,9 @@ define( function( require ) {
 
     this.rewardNode = new RewardNode();
     this.addChild( this.rewardNode );
+
+    // Workaround for https://github.com/phetsims/joist/issues/130
+    this.rewardNode.step( 0.01 );
   }
 
   vegas.register( 'RewardNodeScreenView', RewardNodeScreenView );
