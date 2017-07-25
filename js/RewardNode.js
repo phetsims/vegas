@@ -61,13 +61,22 @@ define( function( require ) {
 
       // If you pass in a stepSource, which conforms to the axon.Events interface, the RewardNode will register for events through that source
       //TODO: axon.Events is unnecessarily broad. Make it so the client doesn't pass in the entire model, see #22
-      stepSource: null
+      stepSource: null,
+
+      // If you pass in a stepEmitter {Emitter}, it will drive the animation
+      stepEmitter: null
     }, options );
+
+    assert && assert( !(options.stepSource && options.stepEmitter), 'cannot specify both step source and step emitter' );
 
     // If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source, see #22
     if ( options.stepSource ) {
       this.stepCallback = function( dt ) {self.step( dt );};
       options.stepSource.on( 'step', this.stepCallback );
+    }
+    if ( options.stepEmitter ) {
+      this.stepCallback = function( dt ) { self.step( dt );};
+      options.stepEmitter.addListener( this.stepCallback );
     }
 
     /*
@@ -209,7 +218,8 @@ define( function( require ) {
 
       // Cease the animation.  If there is a stepSource, remove the listener from the stepSource
       stop: function() {
-        this.options.stepSource.off( 'step', this.stepCallback );
+        this.options.stepSource && this.options.stepSource.off( 'step', this.stepCallback );
+        this.options.stepEmitter && this.options.stepEmitter.removeListener( this.stepCallback );
       },
 
       // Select a random X value for the image when it is created.
@@ -247,9 +257,7 @@ define( function( require ) {
       },
 
       dispose: function() {
-        if ( this.options.stepSource ) {
-          this.stop();
-        }
+        this.stop();
         this.screenView.off( 'transform', this.updateBounds );
         CanvasNode.prototype.dispose.call( this );
       }
