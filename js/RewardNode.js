@@ -59,21 +59,11 @@ define( function( require ) {
         new StarNode()
       ], 150 ),
 
-      // If you pass in a stepSource, which conforms to the axon.Events interface, the RewardNode will register for events through that source
-      //TODO: axon.Events is unnecessarily broad. Make it so the client doesn't pass in the entire model, see #22
-      stepSource: null,
-
       // If you pass in a stepEmitter {Emitter}, it will drive the animation
       stepEmitter: null
     }, options );
 
-    assert && assert( !(options.stepSource && options.stepEmitter), 'cannot specify both step source and step emitter' );
-
-    // If you pass in a stepSource, which conforms to the Events interface, the RewardNode will register for events through that source, see #22
-    if ( options.stepSource ) {
-      this.stepCallback = function( dt ) {self.step( dt );};
-      options.stepSource.on( 'step', this.stepCallback );
-    }
+    // If you pass in a stepEmitter, it will drive the animation
     if ( options.stepEmitter ) {
       this.stepCallback = function( dt ) { self.step( dt );};
       options.stepEmitter.addListener( this.stepCallback );
@@ -137,7 +127,7 @@ define( function( require ) {
         }
         context.scale( 1 / this.options.scaleForResolution, 1 / this.options.scaleForResolution );
 
-        // Display the rewards, but check that they exist first.  They do not exist when attached to the timer with stepSource
+        // Display the rewards, but check that they exist first.  They do not exist when attached to the timer with stepEmitter
         if ( this.rewards ) {
           for ( var i = 0; i < this.rewards.length; i++ ) {
             var reward = this.rewards[ i ];
@@ -216,9 +206,8 @@ define( function( require ) {
         this.inited = true;
       },
 
-      // Cease the animation.  If there is a stepSource, remove the listener from the stepSource
+      // Cease the animation.  If there is a stepEmitter, remove its listener
       stop: function() {
-        this.options.stepSource && this.options.stepSource.off( 'step', this.stepCallback );
         this.options.stepEmitter && this.options.stepEmitter.removeListener( this.stepCallback );
       },
 
