@@ -14,7 +14,7 @@ define( function( require ) {
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
@@ -103,15 +103,15 @@ define( function( require ) {
 
     // Time (optional)
     if ( timerEnabled ) {
-      var time = new MultiLineText( StringUtils.format( labelTimeString, GameTimer.formatTime( elapsedTime ) ), {
+      var time = new RichText( StringUtils.format( labelTimeString, GameTimer.formatTime( elapsedTime ) ), {
         font: options.infoFont,
         align: 'center'
       } );
       if ( isNewBestTime ) {
-        time.text = time.text + '\n' + yourNewBestString;
+        time.text = time.text + '<br>' + yourNewBestString;
       }
       else if ( bestTimeAtThisLevel !== null ) {
-        time.text = time.text + '\n' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( bestTimeAtThisLevel ) );
+        time.text = time.text + '<br>' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( bestTimeAtThisLevel ) );
       }
       children.push( time );
     }
