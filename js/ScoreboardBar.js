@@ -43,20 +43,25 @@ define( function( require ) {
   function ScoreboardBar( screenWidth, challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
 
     options = _.extend( {
+
       // things that can be hidden
       levelVisible: true,
       challengeNumberVisible: true,
+
       // all text
       font: new PhetFont( 20 ),
       textFill: 'white',
+
       // 'Start Over' button
       startOverButtonText: startOverString,
       startOverButtonTextFill: 'black',
       startOverButtonBaseColor: new Color( 229, 243, 255 ),
       startOverButtonXMargin: 10,
       startOverButtonYMargin: 5,
+
       // Timer
       clockIconRadius: 15,
+
       // Background
       xSpacing: 50,
       leftMargin: 20,
@@ -71,23 +76,23 @@ define( function( require ) {
     var textOptions = { fill: options.textFill, font: options.font };
 
     // Level
-    var levelNode = new Text( '', textOptions );
+    var levelText = new Text( '', _.extend( { tandem: options.tandem.createTandem( 'levelText' ) }, textOptions ) );
     levelProperty.link( function( level ) {
-      levelNode.text = StringUtils.format( labelLevelString, level + 1 );
+      levelText.text = StringUtils.format( labelLevelString, level + 1 );
     } );
 
     // Challenge number
-    var challengeNumberNode = new Text( '', textOptions );
+    var challengeNumberText = new Text( '', _.extend( { tandem: options.tandem.createTandem( 'challengeNumberText' ) }, textOptions ) );
     var updateChallengeString = function() {
-      challengeNumberNode.text = StringUtils.format( pattern0Challenge1MaxString, challengeIndexProperty.get() + 1, challengesPerGameProperty.get() );
+      challengeNumberText.text = StringUtils.format( pattern0Challenge1MaxString, challengeIndexProperty.get() + 1, challengesPerGameProperty.get() );
     };
     challengeIndexProperty.link( updateChallengeString );
     challengesPerGameProperty.link( updateChallengeString );
 
     // Score
-    var scoreNode = new Text( '', textOptions );
+    var scoreText = new Text( '', _.extend( { tandem: options.tandem.createTandem( 'scoreText' ) }, textOptions ) );
     scoreProperty.link( function( score ) {
-      scoreNode.text = StringUtils.format( labelScoreString, score );
+      scoreText.text = StringUtils.format( labelScoreString, score );
     } );
 
     // Timer, always takes up space even when hidden.
@@ -103,9 +108,9 @@ define( function( require ) {
     } );
 
     // All of the stuff that's grouped together at the left end of the scoreboard
-    var nodes = [ levelNode, challengeNumberNode, scoreNode, timerNode ]; // in left-to-right order
-    if ( !options.levelVisible ) { nodes.splice( nodes.indexOf( levelNode ), 1 ); }
-    if ( !options.challengeNumberVisible ) { nodes.splice( nodes.indexOf( challengeNumberNode ), 1 ); }
+    var nodes = [ levelText, challengeNumberText, scoreText, timerNode ]; // in left-to-right order
+    if ( !options.levelVisible ) { nodes.splice( nodes.indexOf( levelText ), 1 ); }
+    if ( !options.challengeNumberVisible ) { nodes.splice( nodes.indexOf( challengeNumberText ), 1 ); }
     for ( var i = 0; i < nodes.length; i++ ) {
       if ( i > 0 ) {
         nodes[ i ].left = nodes[ i - 1 ].right + options.xSpacing;
