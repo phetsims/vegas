@@ -17,16 +17,16 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Tandem = require( 'TANDEM/Tandem' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var vegas = require( 'VEGAS/vegas' );
-  var Tandem = require( 'TANDEM/Tandem' );
 
   // strings
-  var startOverString = require( 'string!VEGAS/startOver' );
   var labelLevelString = require( 'string!VEGAS/label.level' );
   var labelScoreString = require( 'string!VEGAS/label.score' );
   var pattern0Challenge1MaxString = require( 'string!VEGAS/pattern.0challenge.1max' );
+  var startOverString = require( 'string!VEGAS/startOver' );
 
   /**
    * @param {number} screenWidth

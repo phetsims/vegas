@@ -11,9 +11,9 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ScreenView = require( 'JOIST/ScreenView' );
   var OutsideBackgroundNode = require( 'SCENERY_PHET/OutsideBackgroundNode' );
   var RewardNode = require( 'VEGAS/RewardNode' );
+  var ScreenView = require( 'JOIST/ScreenView' );
   var vegas = require( 'VEGAS/vegas' );
 
   /**

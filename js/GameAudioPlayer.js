@@ -14,10 +14,10 @@ define( function( require ) {
   var vegas = require( 'VEGAS/vegas' );
 
   // audio
-  var dingSound = require( 'audio!VEGAS/ding' );
   var boingSound = require( 'audio!VEGAS/boing' );
-  var trumpetSound = require( 'audio!VEGAS/trumpet' );
   var cheerSound = require( 'audio!VEGAS/cheer' );
+  var dingSound = require( 'audio!VEGAS/ding' );
+  var trumpetSound = require( 'audio!VEGAS/trumpet' );
 
   // constants
   var CORRECT_ANSWER = new Sound( dingSound );

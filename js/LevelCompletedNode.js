@@ -11,31 +11,31 @@ define( function( require ) {
 
   // modules
   var Color = require( 'SCENERY/util/Color' );
-  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Property = require( 'AXON/Property' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Tandem = require( 'TANDEM/Tandem' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var vegas = require( 'VEGAS/vegas' );
-  var Tandem = require( 'TANDEM/Tandem' );
 
   // strings
-  var keepTryingString = require( 'string!VEGAS/keepTrying' );
+  var continueString = require( 'string!VEGAS/continue' );
+  var excellentString = require( 'string!VEGAS/excellent' );
   var goodString = require( 'string!VEGAS/good' );
   var greatString = require( 'string!VEGAS/great' );
-  var excellentString = require( 'string!VEGAS/excellent' );
+  var keepTryingString = require( 'string!VEGAS/keepTrying' );
+  var labelLevelString = require( 'string!VEGAS/label.level' );
   var labelScoreMaxString = require( 'string!VEGAS/label.score.max' );
   var labelTimeString = require( 'string!VEGAS/label.time' );
-  var yourNewBestString = require( 'string!VEGAS/yourNewBest' );
   var pattern0YourBestString = require( 'string!VEGAS/pattern.0yourBest' );
-  var continueString = require( 'string!VEGAS/continue' );
-  var labelLevelString = require( 'string!VEGAS/label.level' );
+  var yourNewBestString = require( 'string!VEGAS/yourNewBest' );
 
   /**
    * @param {number} level starting from zero, 1 added to this when displayed

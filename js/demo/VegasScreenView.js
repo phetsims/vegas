@@ -10,13 +10,13 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var OutsideBackgroundNode = require( 'SCENERY_PHET/OutsideBackgroundNode' );
-  var Property = require( 'AXON/Property' );
   var HSlider = require( 'SUN/HSlider' );
-  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
+  var OutsideBackgroundNode = require( 'SCENERY_PHET/OutsideBackgroundNode' );
+  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
+  var Property = require( 'AXON/Property' );
+  var ScreenView = require( 'JOIST/ScreenView' );
   var vegas = require( 'VEGAS/vegas' );
 
   /**

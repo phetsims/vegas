@@ -18,13 +18,13 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var CanvasNode = require( 'SCENERY/nodes/CanvasNode' );
+  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
-  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var vegas = require( 'VEGAS/vegas' );
 
   // constants

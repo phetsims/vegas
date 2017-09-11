@@ -19,9 +19,9 @@ define( function( require ) {
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var Tandem = require( 'TANDEM/Tandem' );
   var Text = require( 'SCENERY/nodes/Text' );
   var vegas = require( 'VEGAS/vegas' );
-  var Tandem = require( 'TANDEM/Tandem' );
 
   // constants
   var SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.

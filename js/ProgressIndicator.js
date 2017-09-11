@@ -10,9 +10,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
   var vegas = require( 'VEGAS/vegas' );
 
   /**
