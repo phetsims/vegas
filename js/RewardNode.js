@@ -1,4 +1,4 @@
-// Copyright 2014-2015, University of Colorado Boulder
+// Copyright 2014-2017, University of Colorado Boulder
 
 /**
  * Reward node that shows many nodes animating continuously, for fun!  Shown when a perfect score is achieved in a game.
