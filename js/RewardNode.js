@@ -99,6 +99,16 @@ define( function( require ) {
     // @private - Some initialization must occur after this node is attached to the scene graph, see documentation for
     // RewardNode.init below.
     this.inited = false;
+
+    // make sure this node is initialized when state is being set for PhET-iO
+    if ( phet.phetIo && phet.phetIo.phetio.setStateEmitter ){
+      this.initializationVerifier = function() {
+        if ( !self.inited ){
+          self.init();
+        }
+      };
+      phet.phetIo.phetio.setStateEmitter.addListener( this.initializationVerifier );
+    }
   }
 
   vegas.register( 'RewardNode', RewardNode );
@@ -247,7 +257,8 @@ define( function( require ) {
 
       dispose: function() {
         this.stop();
-        this.screenView.off( 'transform', this.updateBounds );
+        this.screenView && this.screenView.off( 'transform', this.updateBounds );
+        this.initializationVerifier && phet.phetIo.phetio.setStateEmitter.removeListener( this.initializationVerifier );
         CanvasNode.prototype.dispose.call( this );
       }
     },
