@@ -70,7 +70,7 @@ define( function( require ) {
       backgroundFill: 'rgb( 49, 117, 202 )',
       backgroundStroke: null,
       backgroundLineWidth: 1,
-      tandem: Tandem.tandemRequired()
+      tandem: Tandem.required
     }, options );
 
     var textOptions = { fill: options.textFill, font: options.font };

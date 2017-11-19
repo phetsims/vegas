@@ -66,7 +66,7 @@ define( function( require ) {
       buttonFont: new PhetFont( 26 ),
       buttonFill: new Color( 255, 255, 0 ),
       starDiameter: 62,
-      tandem: Tandem.tandemRequired()
+      tandem: Tandem.required
     }, options );
 
     // nodes to be added to the panel
