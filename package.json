@@ -13,7 +13,8 @@
     "requirejsNamespace": "VEGAS",
     "runnable": true,
     "supportedBrands": [
-      "phet"
+      "phet",
+      "adapted-from-phet"
     ]
   }
 }
