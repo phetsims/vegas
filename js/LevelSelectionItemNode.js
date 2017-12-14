@@ -14,7 +14,6 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var IOObject = require( 'TANDEM/IOObject' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
@@ -64,7 +63,7 @@ define( function( require ) {
       tandem: Tandem.required
     }, options );
 
-    Node.call( this, IOObject.getOptions( options ) );
+    Node.call( this );
 
     assert && assert( options.progressIndicatorProportion > 0 && options.progressIndicatorProportion <= 0.5, 'progressIndicatorProportion value out of range' );
 
