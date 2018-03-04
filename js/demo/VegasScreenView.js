@@ -15,6 +15,7 @@ define( function( require ) {
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
   var OutsideBackgroundNode = require( 'SCENERY_PHET/OutsideBackgroundNode' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
+  var ScoreDisplayNumber = require( 'VEGAS/ScoreDisplayNumber' );
   var Property = require( 'AXON/Property' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var vegas = require( 'VEGAS/vegas' );
@@ -32,6 +33,7 @@ define( function( require ) {
     var scoreProperty = new Property( 1 );
 
     this.addChild( new ProgressIndicator( 4, scoreProperty, 1, { left: 20, top: 20, scale: 2 } ) );
+    this.addChild( new ScoreDisplayNumber( scoreProperty, { left: 20, top: 20, scale: 2 } ) );
     this.addChild( new HSlider( scoreProperty, { min: 0, max: 1 } ).mutate( { left: 20, top: 80 } ) );
 
     //Show a sample LevelCompletedNode that cycles through score values when you press "continue"
