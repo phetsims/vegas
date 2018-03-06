@@ -40,25 +40,27 @@ define( function( require ) {
     HBox.call( this, { spacing: 3, children: [] } );
     var self = this;
 
-    var children = [];
-
-    var starOptions = {
-      outerRadius: options.starOuterRadius,
-      innerRadius: options.starInnerRadius,
-      filledLineWidth: options.starFilledLineWidth,
-      emptyLineWidth: options.starEmptyLineWidth
-    };
-
-    var scoreDisplay = new Text( '', { font: options.textFont, fill: options.textFill } );
-
-    children.push( scoreDisplay );
-    children.push( new StarNode( _.extend ( {value: 1 }, starOptions ) ) );
-
-    self.children = children;
 
     // Update number displayed based on score.
     scoreProperty.link( function( score ) {
-      scoreDisplay.setText( Util.toFixed( score, options.scoreDecimalPlaces ) );
+      var children = [];
+
+      var starOptions = {
+        outerRadius: options.starOuterRadius,
+        innerRadius: options.starInnerRadius,
+        filledLineWidth: options.starFilledLineWidth,
+        emptyLineWidth: options.starEmptyLineWidth
+      };
+
+      if ( score === 0 ) {
+        children.push( new StarNode( _.extend( { value: 0 }, starOptions ) ) );
+      }
+      else {
+        children.push( new Text( Util.toFixed( score, options.scoreDecimalPlaces ), { font: options.textFont, fill: options.textFill } ) );
+        children.push( new StarNode( _.extend ( { value: 1 }, starOptions ) ) );
+      }
+
+      self.children = children;
     } );
 
     this.mutate( options );
