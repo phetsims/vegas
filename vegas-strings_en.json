@@ -64,5 +64,8 @@
   },
   "startOver": {
     "value": "Start Over"
+  },
+  "pattern.score.number": {
+    "value": "Score: {{score}}"
   }
 }
