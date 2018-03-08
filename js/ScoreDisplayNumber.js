@@ -1,4 +1,4 @@
-// Copyright 2013-2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * Indicates a user's progress on a level by a number followed by a single star.
