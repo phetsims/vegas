@@ -71,7 +71,7 @@ define( function( require ) {
     scoreProperty.link( scorePropertyListener );
 
     // @private
-    this.disposeScoreDisplayNumber = function() {
+    this.disposeScoreDisplayNumberAndStar = function() {
       scoreProperty.unlink( scorePropertyListener );
     };
 
@@ -84,7 +84,7 @@ define( function( require ) {
 
     // @public 
     dispose: function() {
-      this.disposeScoreDisplayNumber();
+      this.disposeScoreDisplayNumberAndStar();
       HBox.prototype.dispose.call( this );
     }
   } );
