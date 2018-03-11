@@ -56,7 +56,10 @@ define( function( require ) {
         children.push( new StarNode( _.extend( { value: 0 }, starOptions ) ) );
       }
       else {
-        children.push( new Text( Util.toFixed( score, options.scoreDecimalPlaces ), { font: options.textFont, fill: options.textFill } ) );
+        children.push( new Text( Util.toFixed( score, options.scoreDecimalPlaces ), {
+          font: options.textFont,
+          fill: options.textFill
+        } ) );
         children.push( new StarNode( _.extend ( { value: 1 }, starOptions ) ) );
       }
 
