@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Indicates a user's progress on a level by a number followed by a single star.
+ * Indicates score in the format of "Score: " followed by the number.
  *
  * @author Andrea Lin
  */
