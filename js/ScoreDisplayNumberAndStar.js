@@ -66,7 +66,7 @@ define( function( require ) {
       }
 
       self.children = children;
-    }
+    };
 
     scoreProperty.link( scorePropertyListener );
 
