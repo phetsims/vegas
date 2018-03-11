@@ -28,13 +28,13 @@ define( function( require ) {
    */
   function ScoreDisplayTextAndNumber( scoreProperty, options ) {
 
-    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
-
     options = _.extend( {
       textFont: DEFAULT_TEXT_FONT,
       textFill: 'black',
       scoreDecimalPlaces: 0
     }, options );
+
+    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
 
     var scoreDisplayText = new Text( '', {
       font: options.textFont,

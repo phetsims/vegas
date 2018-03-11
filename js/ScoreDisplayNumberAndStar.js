@@ -27,8 +27,6 @@ define( function( require ) {
    */
   function ScoreDisplayNumberAndStar( scoreProperty, options ) {
 
-    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
-
     options = _.extend( {
       starOuterRadius: 10,
       starInnerRadius: 5,
@@ -39,6 +37,8 @@ define( function( require ) {
       scoreDecimalPlaces: 0,
       spacing: 3
     }, options );
+
+    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
 
     HBox.call( this );
     var self = this;
