@@ -51,7 +51,7 @@ define( function( require ) {
     };
 
     // Update number displayed based on score.
-    scoreProperty.link( function( score ) {
+    var scorePropertyListener = function( score ) {
       var children = [];
 
       if ( score === 0 ) {
@@ -66,12 +66,26 @@ define( function( require ) {
       }
 
       self.children = children;
-    } );
+    }
+
+    scoreProperty.link( scorePropertyListener );
+
+    // @private
+    this.disposeScoreDisplayNumber = function() {
+      scoreProperty.unlink( scorePropertyListener );
+    };
 
     this.mutate( options );
   }
 
   vegas.register( 'ScoreDisplayNumberAndStar', ScoreDisplayNumberAndStar );
 
-  return inherit( HBox, ScoreDisplayNumberAndStar );
+  return inherit( HBox, ScoreDisplayNumberAndStar, {
+
+    // @public 
+    dispose: function() {
+      this.disposeScoreDisplayNumber();
+      HBox.prototype.dispose.call( this );
+    }
+  } );
 } );
