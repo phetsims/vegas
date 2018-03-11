@@ -46,7 +46,7 @@ define( function( require ) {
       scoreProperty, {
         scoreDisplayType: 'numberAndStar',
         alwaysInsideLayoutBounds: false,
-        backButtonListener: function() { scoreProperty.reset() }
+        backButtonListener: function() { scoreProperty.reset(); }
     } ) );
 
     //Show a sample LevelCompletedNode that cycles through score values when you press "continue"
