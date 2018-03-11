@@ -41,10 +41,11 @@ define( function( require ) {
     this.addChild( new HSlider( scoreProperty, { min: 0, max: 4 } ).mutate( { left: 20, top: 260 } ) );
 
     this.addChild( new StatusBar(
-      400,
+      self.visibleBoundsProperty,
       new Text( 'User provided message' ),
       scoreProperty, {
-        scoreDisplayType: 'numberAndStar'
+        scoreDisplayType: 'numberAndStar',
+        alwaysInsideLayoutBounds: false
     } ) );
 
     //Show a sample LevelCompletedNode that cycles through score values when you press "continue"
