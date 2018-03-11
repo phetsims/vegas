@@ -34,7 +34,7 @@ define( function( require ) {
       starEmptyLineWidth: 1.5,
       textFont: DEFAULT_TEXT_FONT,
       textFill: 'black',
-      scoreDecimalPlaces: 2
+      scoreDecimalPlaces: 0
     }, options );
 
     HBox.call( this, { spacing: 3, children: [] } );
