@@ -36,11 +36,9 @@ define( function( require ) {
       scoreDecimalPlaces: 0
     }, options );
 
-    Node.call( this, { spacing: 3, children: [] } );
-
     var scoreDisplayText = new Text( '', { font: options.textFont, fill: options.textFill } );
 
-    this.children = [ scoreDisplayText ];
+    options.children = [ scoreDisplayText ];
 
     // Update number displayed based on score.
     var scorePropertyListener = function( score ) {
@@ -58,7 +56,7 @@ define( function( require ) {
 
     scoreProperty.link( scorePropertyListener );
 
-    this.mutate( options );
+    Node.call( this, options );
   }
 
   vegas.register( 'ScoreDisplayTextAndNumber', ScoreDisplayTextAndNumber );
