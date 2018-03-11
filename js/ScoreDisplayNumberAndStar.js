@@ -18,7 +18,7 @@ define( function( require ) {
   var vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+  var DEFAULT_TEXT_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
   /**
    * @param {Property.<number>} scoreProperty
@@ -32,7 +32,7 @@ define( function( require ) {
       starInnerRadius: 5,
       starFilledLineWidth: 1.5,
       starEmptyLineWidth: 1.5,
-      textFont: LABEL_FONT,
+      textFont: DEFAULT_TEXT_FONT,
       textFill: 'black',
       scoreDecimalPlaces: 2
     }, options );
