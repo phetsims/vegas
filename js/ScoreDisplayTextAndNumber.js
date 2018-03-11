@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var HBox = require( 'SCENERY/nodes/HBox' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -36,7 +36,7 @@ define( function( require ) {
       scoreDecimalPlaces: 0
     }, options );
 
-    HBox.call( this, { spacing: 3, children: [] } );
+    Node.call( this, { spacing: 3, children: [] } );
 
     var scoreDisplayText = new Text( '', { font: options.textFont, fill: options.textFill } );
 
@@ -63,12 +63,12 @@ define( function( require ) {
 
   vegas.register( 'ScoreDisplayTextAndNumber', ScoreDisplayTextAndNumber );
 
-  return inherit( HBox, ScoreDisplayTextAndNumber, {
+  return inherit( Node, ScoreDisplayTextAndNumber, {
 
     // @public 
     dispose: function() {
       this.disposeScoreDisplayTextAndNumber();
-      HBox.prototype.dispose.call( this );
+      Node.prototype.dispose.call( this );
     }
   } );
 } );
