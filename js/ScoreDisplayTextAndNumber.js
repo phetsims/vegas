@@ -52,12 +52,12 @@ define( function( require ) {
 
     };
 
+    scoreProperty.link( scorePropertyListener );
+
     // @private
     this.disposeScoreDisplayTextAndNumber = function() {
       scoreProperty.unlink( scorePropertyListener );
     };
-
-    scoreProperty.link( scorePropertyListener );
 
     Node.call( this, options );
   }
