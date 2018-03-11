@@ -36,7 +36,10 @@ define( function( require ) {
       scoreDecimalPlaces: 0
     }, options );
 
-    var scoreDisplayText = new Text( '', { font: options.textFont, fill: options.textFill } );
+    var scoreDisplayText = new Text( '', {
+      font: options.textFont,
+      fill: options.textFill
+    } );
 
     options.children = [ scoreDisplayText ];
 
