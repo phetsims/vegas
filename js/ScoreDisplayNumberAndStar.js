@@ -27,6 +27,8 @@ define( function( require ) {
    */
   function ScoreDisplayNumberAndStar( scoreProperty, options ) {
 
+    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
+
     options = _.extend( {
       starOuterRadius: 10,
       starInnerRadius: 5,
