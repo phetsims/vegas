@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ScoreDisplayNumber( scoreProperty, options ) {
+  function ScoreDisplayNumberAndStar( scoreProperty, options ) {
 
     options = _.extend( {
       starOuterRadius: 10,
@@ -66,7 +66,7 @@ define( function( require ) {
     this.mutate( options );
   }
 
-  vegas.register( 'ScoreDisplayNumber', ScoreDisplayNumber );
+  vegas.register( 'ScoreDisplayNumberAndStar', ScoreDisplayNumberAndStar );
 
-  return inherit( HBox, ScoreDisplayNumber );
+  return inherit( HBox, ScoreDisplayNumberAndStar );
 } );
