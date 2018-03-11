@@ -34,7 +34,7 @@ define( function( require ) {
     var scoreProperty = new Property( 1 );
 
     this.addChild( new ProgressIndicator( 4, scoreProperty, 4, { left: 20, top: 20, scale: 2 } ) );
-    this.addChild( new ScoreDisplayNumberAndStar( scoreProperty, { left: 20, top: 80, scale: 2 } ) );
+    this.addChild( new ScoreDisplayNumberAndStar( scoreProperty, { left: 20, top: 80, scale: 2, spacing: 14 } ) );
     this.addChild( new ScoreDisplayTextAndNumber( scoreProperty, { left: 20, top: 140, scale: 2 } ) );
     this.addChild( new HSlider( scoreProperty, { min: 0, max: 4 } ).mutate( { left: 20, top: 200 } ) );
 
