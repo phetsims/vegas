@@ -38,9 +38,8 @@ define( function( require ) {
       spacing: 3
     }, options );
 
-    HBox.call( this, { spacing: options.spacing } );
+    HBox.call( this );
     var self = this;
-
 
     // Update number displayed based on score.
     scoreProperty.link( function( score ) {
