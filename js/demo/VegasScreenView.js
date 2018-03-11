@@ -61,7 +61,7 @@ define( function( require ) {
         addLevelCompletedNode();
       }, {
         right: self.layoutBounds.right - 10,
-        top:   self.layoutBounds.top + 10
+        top:   self.layoutBounds.top + 80
       } );
       self.addChild( levelCompletedNode );
     };
