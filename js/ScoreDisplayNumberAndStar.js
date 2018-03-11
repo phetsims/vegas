@@ -41,16 +41,16 @@ define( function( require ) {
     HBox.call( this );
     var self = this;
 
+    var starOptions = {
+      outerRadius: options.starOuterRadius,
+      innerRadius: options.starInnerRadius,
+      filledLineWidth: options.starFilledLineWidth,
+      emptyLineWidth: options.starEmptyLineWidth
+    };
+
     // Update number displayed based on score.
     scoreProperty.link( function( score ) {
       var children = [];
-
-      var starOptions = {
-        outerRadius: options.starOuterRadius,
-        innerRadius: options.starInnerRadius,
-        filledLineWidth: options.starFilledLineWidth,
-        emptyLineWidth: options.starEmptyLineWidth
-      };
 
       if ( score === 0 ) {
         children.push( new StarNode( _.extend( { value: 0 }, starOptions ) ) );
