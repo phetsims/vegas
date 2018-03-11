@@ -45,7 +45,8 @@ define( function( require ) {
       new Text( 'User provided message' ),
       scoreProperty, {
         scoreDisplayType: 'numberAndStar',
-        alwaysInsideLayoutBounds: false
+        alwaysInsideLayoutBounds: false,
+        backButtonListener: function() { scoreProperty.reset() }
     } ) );
 
     //Show a sample LevelCompletedNode that cycles through score values when you press "continue"
