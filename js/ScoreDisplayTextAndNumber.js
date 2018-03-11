@@ -18,7 +18,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // constants
-  var LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+  var DEFAULT_TEXT_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   var patternScoreNumberString = require( 'string!VEGAS/pattern.score.number' );
 
   /**
@@ -28,10 +28,12 @@ define( function( require ) {
    */
   function ScoreDisplayTextAndNumber( scoreProperty, options ) {
 
+    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
+
     options = _.extend( {
-      textFont: LABEL_FONT,
+      textFont: DEFAULT_TEXT_FONT,
       textFill: 'black',
-      scoreDecimalPlaces: 2
+      scoreDecimalPlaces: 0
     }, options );
 
     HBox.call( this, { spacing: 3, children: [] } );
@@ -41,18 +43,32 @@ define( function( require ) {
     this.children = [ scoreDisplayText ];
 
     // Update number displayed based on score.
-    scoreProperty.link( function( score ) {
+    var scorePropertyListener = function( score ) {
 
       scoreDisplayText.setText( StringUtils.fillIn( patternScoreNumberString, {
         score: Util.toFixed( score, options.scoreDecimalPlaces )
       } ) );
 
-    } );
+    };
+
+    // @private
+    this.disposeScoreDisplayTextAndNumber = function() {
+      scoreProperty.unlink( scorePropertyListener );
+    };
+
+    scoreProperty.link( scorePropertyListener );
 
     this.mutate( options );
   }
 
   vegas.register( 'ScoreDisplayTextAndNumber', ScoreDisplayTextAndNumber );
 
-  return inherit( HBox, ScoreDisplayTextAndNumber );
+  return inherit( HBox, ScoreDisplayTextAndNumber, {
+
+    // @public 
+    dispose: function() {
+      this.disposeScoreDisplayTextAndNumber();
+      HBox.prototype.dispose.call( this );
+    }
+  } );
 } );
