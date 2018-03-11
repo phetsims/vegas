@@ -34,10 +34,11 @@ define( function( require ) {
       starEmptyLineWidth: 1.5,
       textFont: DEFAULT_TEXT_FONT,
       textFill: 'black',
-      scoreDecimalPlaces: 0
+      scoreDecimalPlaces: 0,
+      spacing: 3
     }, options );
 
-    HBox.call( this, { spacing: 3, children: [] } );
+    HBox.call( this, { spacing: options.spacing } );
     var self = this;
 
 
