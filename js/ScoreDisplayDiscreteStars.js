@@ -31,12 +31,21 @@ define( function( require ) {
       numStars: 1,
       perfectScore: 1
     }, options );
+    
+    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
 
     var numStars = options.numStars;
     var perfectScore = options.perfectScore;
 
     HBox.call( this, { spacing: 3, children: [] } );
     var self = this;
+
+    var starOptions = {
+      outerRadius: options.starOuterRadius,
+      innerRadius: options.starInnerRadius,
+      filledLineWidth: options.starFilledLineWidth,
+      emptyLineWidth: options.starEmptyLineWidth
+    };
 
     // Update visibility of filled and half-filled stars based on score.
     // TODO: Could be rewritten to use deltas if it needs to animate
@@ -48,13 +57,6 @@ define( function( require ) {
 
       var proportion = score / perfectScore;
       var numFilledStars = Math.floor( proportion * numStars );
-
-      var starOptions = {
-        outerRadius: options.starOuterRadius,
-        innerRadius: options.starInnerRadius,
-        filledLineWidth: options.starFilledLineWidth,
-        emptyLineWidth: options.starEmptyLineWidth
-      };
 
       for ( var i = 0; i < numFilledStars; i++ ) {
         children.push( new StarNode( _.extend( { value: 1 }, starOptions ) ) );
