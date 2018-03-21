@@ -44,7 +44,7 @@ define( function( require ) {
       self.visibleBoundsProperty,
       new Text( 'User provided message' ),
       scoreProperty, {
-        scoreDisplayType: 'numberAndStar',
+        scoreDisplayType: 'discreteStars',
         alwaysInsideLayoutBounds: false,
         backButtonListener: function() { scoreProperty.reset(); }
     } ) );
