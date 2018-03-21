@@ -49,7 +49,8 @@ define( function( require ) {
 
     // Update visibility of filled and half-filled stars based on score.
     // TODO: Could be rewritten to use deltas if it needs to animate
-    scoreProperty.link( function( score ) {
+    
+    var scorePropertyListener = function( score ) {
 
       assert && assert( score <= perfectScore );
 
@@ -71,12 +72,26 @@ define( function( require ) {
       }
 
       self.children = children;
-    } );
+    };
+
+    scoreProperty.link( scorePropertyListener );
+
+    // @private
+    this.disposeScoreDisplayDiscreteStars = function() {
+      scoreProperty.unlink( scorePropertyListener );
+    };
 
     this.mutate( options );
   }
 
   vegas.register( 'ScoreDisplayDiscreteStars', ScoreDisplayDiscreteStars );
 
-  return inherit( HBox, ScoreDisplayDiscreteStars );
+  return inherit( HBox, ScoreDisplayDiscreteStars, {
+
+    // @public 
+    dispose: function() {
+      this.disposeScoreDisplayDiscreteStars();
+      HBox.prototype.dispose.call( this );
+    }
+  } );
 } );
