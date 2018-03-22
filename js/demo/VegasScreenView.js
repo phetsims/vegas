@@ -23,6 +23,10 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var vegas = require( 'VEGAS/vegas' );
 
+  // constants
+  var NUM_STARS = 4;
+  var PERFECT_SCORE = 4;
+
   /**
    * @constructor
    */
@@ -35,16 +39,15 @@ define( function( require ) {
 
     var scoreProperty = new Property( 1 );
 
-    this.addChild( new ScoreDisplayDiscreteStars( scoreProperty, { left: 20, top: 80, scale: 2, numStars: 4, perfectScore: 4 } ) );
+    this.addChild( new ScoreDisplayDiscreteStars( scoreProperty, { left: 20, top: 80, scale: 2, numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ) );
     this.addChild( new ScoreDisplayNumberAndStar( scoreProperty, { left: 20, top: 140, scale: 2, spacing: 14 } ) );
     this.addChild( new ScoreDisplayTextAndNumber( scoreProperty, { left: 20, top: 200, scale: 2 } ) );
-    this.addChild( new HSlider( scoreProperty, { min: 0, max: 4 } ).mutate( { left: 20, top: 260 } ) );
+    this.addChild( new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } ).mutate( { left: 20, top: 260 } ) );
 
     this.addChild( new StatusBar(
       self.visibleBoundsProperty,
       new Text( 'User provided message' ),
-      scoreProperty, {
-        scoreDisplayType: 'discreteStars',
+      new ScoreDisplayDiscreteStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ), {
         alwaysInsideLayoutBounds: false,
         backButtonListener: function() { scoreProperty.reset(); }
     } ) );
