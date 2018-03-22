@@ -67,5 +67,11 @@
   },
   "pattern.score.number": {
     "value": "Score: {{score}}"
+  },
+  "keepGoing": {
+    "value": "Keep going"
+  },
+  "newLevel": {
+    "value": "New Level!"
   }
 }
