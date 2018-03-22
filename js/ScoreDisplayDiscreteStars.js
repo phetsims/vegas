@@ -52,6 +52,8 @@ define( function( require ) {
     
     var scorePropertyListener = function( score ) {
 
+      assert && assert( score <= perfectScore, 'Score ' + score + ' exceeds perfect score ' + perfectScore );
+
       var children = [];
 
       var proportion = score / perfectScore;
