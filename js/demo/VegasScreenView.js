@@ -18,6 +18,8 @@ define( function( require ) {
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
   var Property = require( 'AXON/Property' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var RewardDialog = require( 'VEGAS/RewardDialog' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -45,7 +47,7 @@ define( function( require ) {
     this.addChild( new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } ).mutate( { left: 20, top: 260 } ) );
 
     this.addChild( new StatusBar(
-      self.visibleBoundsProperty,
+      this.visibleBoundsProperty,
       new Text( 'User provided message' ),
       new ScoreDisplayDiscreteStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ), {
         alwaysInsideLayoutBounds: false,
@@ -72,6 +74,18 @@ define( function( require ) {
     };
 
     addLevelCompletedNode();
+
+    var openDialogButton = new RectangularPushButton( {
+      content: new Text( 'open dialog' ),
+      listener: function() {
+        var rewardDialog = new RewardDialog( 10,
+          function() { console.log( 'keep going' ); },
+          function() { console.log( 'new level' ); } );
+        rewardDialog.show();
+      },
+      center: this.layoutBounds.center
+    } );
+    this.addChild( openDialogButton );
   }
 
   vegas.register( 'VegasScreenView', VegasScreenView );
