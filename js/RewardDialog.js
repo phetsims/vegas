@@ -62,17 +62,22 @@ define( function( require ) {
       spacing: 6
     } );
 
-    var keepGoingButton = new RectangularPushButton( {
+    var buttonOptions = {
+      minWidth: 145, // determined empirically
+      maxWidth: 145
+    };
+
+    var keepGoingButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
       content: new Text( keepGoingString, { font: BUTTON_FONT } ),
       listener: function() { self.hide(); },
       baseColor: 'white'
-    } );
+    } ) );
 
-    var newLevelButton = new RectangularPushButton( {
+    var newLevelButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
       content: new Text( newLevelString, { font: BUTTON_FONT } ),
       listener: newLevelCallback,
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW
-    } );
+    } ) );
 
     var rightSideNode = new VBox( {
       children: [ scoreDisplay, new VStrut( 20 ), keepGoingButton, newLevelButton ],
