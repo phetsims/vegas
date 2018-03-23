@@ -17,6 +17,8 @@ define( function( require ) {
   var ScoreDisplayDiscreteStars = require( 'VEGAS/ScoreDisplayDiscreteStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
+  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RewardDialog = require( 'VEGAS/RewardDialog' );
@@ -76,7 +78,8 @@ define( function( require ) {
     addLevelCompletedNode();
 
     var openDialogButton = new RectangularPushButton( {
-      content: new Text( 'open dialog' ),
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+      content: new Text( 'open RewardDialog', { font: new PhetFont( 20 ) } ),
       listener: function() {
         var rewardDialog = new RewardDialog( 10,
           function() { console.log( 'keep going' ); },
