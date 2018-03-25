@@ -13,6 +13,7 @@ define( function( require ) {
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
+  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
   var OutsideBackgroundNode = require( 'SCENERY_PHET/OutsideBackgroundNode' );
   var ScoreDisplayDiscreteStars = require( 'VEGAS/ScoreDisplayDiscreteStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
@@ -87,8 +88,46 @@ define( function( require ) {
         rewardDialog.show();
       },
       center: this.layoutBounds.center
-    } );
+     } );
     this.addChild( openDialogButton );
+
+    var levelSelectionNodeDiscreteStars = new LevelSelectionItemNode(
+        new Text( 'icon' ),
+        NUM_STARS,
+        function() { console.log( 'level start' ); },
+        scoreProperty,
+        PERFECT_SCORE, {
+          centerX: 100,
+          centerY: 400,
+          buttonWidth: 100
+    } );
+    this.addChild( levelSelectionNodeDiscreteStars );
+
+    var levelSelectionNodeNumberAndStar = new LevelSelectionItemNode(
+        new Text( 'icon' ),
+        NUM_STARS,
+        function() { console.log( 'level start' ); },
+        scoreProperty,
+        PERFECT_SCORE, {
+          scoreDisplayType: 'numberAndStar',
+          centerX: 250,
+          centerY: 400,
+          buttonWidth: 100
+    } );
+    this.addChild( levelSelectionNodeNumberAndStar );
+
+    var levelSelectionNodeTextAndNumber = new LevelSelectionItemNode(
+        new Text( 'icon' ),
+        NUM_STARS,
+        function() { console.log( 'level start' ); },
+        scoreProperty,
+        PERFECT_SCORE, {
+          scoreDisplayType: 'textAndNumber',
+          centerX: 400,
+          centerY: 400,
+          buttonWidth: 100
+    } );
+    this.addChild( levelSelectionNodeTextAndNumber );
   }
 
   vegas.register( 'VegasScreenView', VegasScreenView );
