@@ -16,7 +16,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
+  var ScoreDisplayDiscreteStars = require( 'VEGAS/ScoreDisplayDiscreteStars' );
+  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
+  var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Tandem = require( 'TANDEM/Tandem' );
@@ -36,10 +38,16 @@ define( function( require ) {
    * @constructor
    */
   function LevelSelectionItemNode( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
+    // TODO: numStars and perfectScore not necessarily necessary
+
     assert && assert( icon instanceof Node );
     assert && assert( typeof numStars === 'number' );
 
     options = _.extend( {
+
+      // score display type
+      scoreDisplayType: 'discreteStars', // or 'numberAndStar' or 'textAndNumber'
+
       // button size and appearance
       buttonWidth: 150,
       buttonHeight: 150,
@@ -77,10 +85,23 @@ define( function( require ) {
         lineWidth: 1,
         pickable: false
       } );
-    var progressIndicator = new ProgressIndicator( numStars, scoreProperty, perfectScore, {
-      pickable: false,
-      starDiameter: options.buttonWidth / ( numStars + 1 )
-    } );
+
+    var scoreDisplayOptions = { pickable: false };
+
+    // TODO: assert options.scoreDisplayType provided is right
+    if ( options.scoreDisplayType === 'discreteStars' ) {
+      var progressIndicator = new ScoreDisplayDiscreteStars( scoreProperty, _.extend( {}, scoreDisplayOptions, {
+        numStars: numStars,
+        perfectScore: perfectScore,
+      } ) );
+    }
+    else if ( options.scoreDisplayType === 'numberAndStar' ) {
+      progressIndicator = new ScoreDisplayNumberAndStar( scoreProperty, scoreDisplayOptions );
+    }
+    else {
+      progressIndicator = new ScoreDisplayTextAndNumber( scoreProperty, scoreDisplayOptions );
+    }
+    
     progressIndicator.scale( Math.min(
       ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
       ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height ) );
