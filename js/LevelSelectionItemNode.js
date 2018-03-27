@@ -96,7 +96,7 @@ define( function( require ) {
     if ( options.scoreDisplayType === 'discreteStars' ) {
       var progressIndicator = new ScoreDisplayDiscreteStars( scoreProperty, _.extend( {}, scoreDisplayOptions, {
         numStars: numStars,
-        perfectScore: perfectScore,
+        perfectScore: perfectScore
       } ) );
     }
     else if ( options.scoreDisplayType === 'numberAndStar' ) {
