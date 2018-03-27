@@ -74,7 +74,10 @@ define( function( require ) {
 
     Node.call( this );
 
-    assert && assert( options.progressIndicatorProportion > 0 && options.progressIndicatorProportion <= 0.5, 'progressIndicatorProportion value out of range' );
+    assert && assert(
+      options.progressIndicatorProportion > 0 && options.progressIndicatorProportion <= 0.5,
+      'progressIndicatorProportion value out of range'
+    );
 
     var maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
 
@@ -136,7 +139,8 @@ define( function( require ) {
       cornerRadius: options.cornerRadius,
       listener: fireFunction,
 
-      // TODO: if LevelSelectionItemNode changes to inheritance, this will have to change, see https://github.com/phetsims/vegas/issues/56
+      // TODO: if LevelSelectionItemNode changes to inheritance, this will have to change,
+      // see https://github.com/phetsims/vegas/issues/56
       tandem: options.tandem.createTandem( 'button' )
     };
 
