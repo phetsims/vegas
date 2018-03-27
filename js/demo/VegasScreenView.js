@@ -85,7 +85,7 @@ define( function( require ) {
         var rewardDialog = new RewardDialog( 10, function() { console.log( 'new level' ); } );
         rewardDialog.show();
       },
-      center: this.layoutBounds.center
+      center: this.layoutBounds.center.plusXY( -20, 0 )
      } );
     this.addChild( openDialogButton );
 
@@ -97,7 +97,7 @@ define( function( require ) {
         PERFECT_SCORE, {
           centerX: 100,
           centerY: 400,
-          buttonWidth: 100
+          buttonWidth: 120
     } );
     this.addChild( levelSelectionNodeDiscreteStars );
 
@@ -108,9 +108,9 @@ define( function( require ) {
         scoreProperty,
         PERFECT_SCORE, {
           scoreDisplayType: 'numberAndStar',
-          centerX: 250,
+          centerX: 240,
           centerY: 400,
-          buttonWidth: 100
+          buttonWidth: 120
     } );
     this.addChild( levelSelectionNodeNumberAndStar );
 
@@ -121,9 +121,9 @@ define( function( require ) {
         scoreProperty,
         PERFECT_SCORE, {
           scoreDisplayType: 'textAndNumber',
-          centerX: 400,
+          centerX: 380,
           centerY: 400,
-          buttonWidth: 100
+          buttonWidth: 120
     } );
     this.addChild( levelSelectionNodeTextAndNumber );
   }
