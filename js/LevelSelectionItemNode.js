@@ -6,6 +6,7 @@
  *
  * @author John Blanco
  * @author Chris Malley
+ * @author Andrea Lin
  */
 define( function( require ) {
   'use strict';
