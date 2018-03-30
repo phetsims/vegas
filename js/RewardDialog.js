@@ -25,7 +25,7 @@ define( function( require ) {
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
 
   // images
-  var rewardDialogPhetGirlImage = require( 'image!VEGAS/reward-dialog-phet-girl.png' );
+  var phetGirlJugglingStarsImage = require( 'image!VEGAS/phet-girl-juggling-stars.png' );
 
   // strings
   var keepGoingString = require( 'string!VEGAS/keepGoing' );
@@ -51,7 +51,7 @@ define( function( require ) {
       xMargin: 40
     }, options );
 
-    var phetGirlNode = new Image( rewardDialogPhetGirlImage );
+    var phetGirlNode = new Image( phetGirlJugglingStarsImage );
 
     var scoreDisplay = new ScoreDisplayNumberAndStar( new NumberProperty( score ), {
       textFont: SCORE_FONT,
