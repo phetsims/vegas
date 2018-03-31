@@ -89,41 +89,37 @@ define( function( require ) {
      } );
     this.addChild( openDialogButton );
 
-    var levelSelectionNodeDiscreteStars = new LevelSelectionItemNode(
-        new Text( 'icon' ),
-        NUM_STARS,
-        function() { console.log( 'level start' ); },
-        scoreProperty,
-        PERFECT_SCORE, {
-          centerX: 100,
-          centerY: 400,
-          buttonWidth: 120
+    var levelSelectionNodeDiscreteStars = LevelSelectionItemNode.createWithScoreDisplayDiscreteStars( new Text( 'icon' ), scoreProperty, {
+      scoreDisplayOptions: {
+        numStars: NUM_STARS,
+        perfectScore: 4,
+      },
+      listener: function() {
+         console.log( 'level start' );
+      },
+      centerX: 100,
+      centerY: 400,
+      buttonWidth: 120
     } );
     this.addChild( levelSelectionNodeDiscreteStars );
 
-    var levelSelectionNodeNumberAndStar = new LevelSelectionItemNode(
-        new Text( 'icon' ),
-        NUM_STARS,
-        function() { console.log( 'level start' ); },
-        scoreProperty,
-        PERFECT_SCORE, {
-          scoreDisplayType: 'numberAndStar',
-          centerX: 240,
-          centerY: 400,
-          buttonWidth: 120
+    var levelSelectionNodeNumberAndStar = LevelSelectionItemNode.createWithScoreDisplayNumberAndStar( new Text( 'icon' ), scoreProperty, {
+      listener: function() {
+         console.log( 'level start' );
+      },
+      centerX: 240,
+      centerY: 400,
+      buttonWidth: 120
     } );
     this.addChild( levelSelectionNodeNumberAndStar );
 
-    var levelSelectionNodeTextAndNumber = new LevelSelectionItemNode(
-        new Text( 'icon' ),
-        NUM_STARS,
-        function() { console.log( 'level start' ); },
-        scoreProperty,
-        PERFECT_SCORE, {
-          scoreDisplayType: 'textAndNumber',
-          centerX: 380,
-          centerY: 400,
-          buttonWidth: 120
+    var levelSelectionNodeTextAndNumber = LevelSelectionItemNode.createWithScoreDisplayTextAndNumber( new Text( 'icon' ), scoreProperty, {
+      listener: function() {
+         console.log( 'level start' );
+      },
+      centerX: 380,
+      centerY: 400,
+      buttonWidth: 120
     } );
     this.addChild( levelSelectionNodeTextAndNumber );
   }

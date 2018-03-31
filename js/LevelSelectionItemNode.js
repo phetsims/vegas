@@ -31,23 +31,21 @@ define( function( require ) {
 
   /**
    * @param {Node} icon Scenery node that appears on the button above the progress indicator, scaled to fit
-   * @param {number} numStars Number of stars to show in the progress indicator at the bottom of the button
-   * @param {function} fireFunction Called when the button fires
-   * @param {Property.<number>} scoreProperty
-   * @param {number} perfectScore
+   * @param {Node} scoreDisplay - displays the score
    * @param {Object} [options]
    * @constructor
    */
-  function LevelSelectionItemNode( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
+  function LevelSelectionItemNode( icon, scoreDisplay, options ) {
     // TODO: numStars and perfectScore not necessarily necessary
 
     assert && assert( icon instanceof Node );
-    assert && assert( typeof numStars === 'number' );
 
     options = _.extend( {
 
       // score display type
-      scoreDisplayType: 'discreteStars', // or 'numberAndStar' or 'textAndNumber'
+      numStars: 1,
+
+      listener: null, // {function}
 
       // button size and appearance
       buttonWidth: 150,
@@ -56,11 +54,13 @@ define( function( require ) {
       baseColor: 'rgb( 242, 255, 204 )',
       buttonXMargin: 10,
       buttonYMargin: 10,
-      // progress indicator (stars)
-      progressIndicatorProportion: 0.2, // percentage of the button height occupied by the progress indicator, (0,0.5]
-      progressIndicatorMinXMargin: 10,
-      progressIndicatorMinYMargin: 5,
+
+      // scoreDisplay  (stars)
+      scoreDisplayProportion: 0.2, // percentage of the button height occupied by the progress indicator, (0,0.5]
+      scoreDisplayMinXMargin: 10,
+      scoreDisplayMinYMargin: 5,
       iconToProgressIndicatorYSpace: 10,
+
       // best time (optional)
       bestTimeProperty: null, // null if no best time || {Property.<number>} best time in seconds
       bestTimeVisibleProperty: null, // null || Property.<boolean>} controls visibility of best time
@@ -75,60 +75,40 @@ define( function( require ) {
     Node.call( this );
 
     assert && assert(
-      options.progressIndicatorProportion > 0 && options.progressIndicatorProportion <= 0.5,
-      'progressIndicatorProportion value out of range'
+      options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
+      'scoreDisplayProportion value out of range'
     );
 
     var maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
 
     // Progress indicator (stars), scaled to fit
-    var progressIndicatorBackground = new Rectangle( 0, 0, maxContentWidth,
-      options.buttonHeight * options.progressIndicatorProportion, options.cornerRadius, options.cornerRadius, {
+    var scoreDisplayBackground = new Rectangle( 0, 0, maxContentWidth,
+      options.buttonHeight * options.scoreDisplayProportion, options.cornerRadius, options.cornerRadius, {
         fill: 'white',
         stroke: 'black',
         lineWidth: 1,
         pickable: false
       } );
 
-    var scoreDisplayOptions = { pickable: false };
-
-    // TODO: assert options.scoreDisplayType provided is right
-    if ( options.scoreDisplayType === 'discreteStars' ) {
-      var progressIndicator = new ScoreDisplayDiscreteStars( scoreProperty, _.extend( {}, scoreDisplayOptions, {
-        numStars: numStars,
-        perfectScore: perfectScore
-      } ) );
-    }
-    else if ( options.scoreDisplayType === 'numberAndStar' ) {
-      progressIndicator = new ScoreDisplayNumberAndStar( scoreProperty, scoreDisplayOptions );
-    }
-    else {
-      progressIndicator = new ScoreDisplayTextAndNumber( scoreProperty, scoreDisplayOptions );
-    }
-    
-    progressIndicator.scale( Math.min(
-      ( progressIndicatorBackground.width - 2 * options.progressIndicatorMinXMargin ) / progressIndicator.width,
-      ( progressIndicatorBackground.height - 2 * options.progressIndicatorMinYMargin ) / progressIndicator.height ) );
-
     // Icon, scaled and padded to fit and to make the button size correct.
-    var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - progressIndicatorBackground.height -
+    var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - scoreDisplayBackground.height -
                                                     2 * options.buttonYMargin - options.iconToProgressIndicatorYSpace );
     var adjustedIcon = LevelSelectionItemNode.createSizedImageNode( icon, iconSize );
     adjustedIcon.pickable = false; // TODO: is this needed?
 
     // Assemble the content.
     var contentNode = new Node();
-    if ( progressIndicatorBackground.width > adjustedIcon.width ) {
-      adjustedIcon.centerX = progressIndicatorBackground.centerX;
+    if ( scoreDisplayBackground.width > adjustedIcon.width ) {
+      adjustedIcon.centerX = scoreDisplayBackground.centerX;
     }
     else {
-      progressIndicatorBackground.centerX = adjustedIcon.centerX;
+      scoreDisplayBackground.centerX = adjustedIcon.centerX;
     }
-    progressIndicatorBackground.top = adjustedIcon.bottom + options.iconToProgressIndicatorYSpace;
-    progressIndicator.center = progressIndicatorBackground.center;
+    scoreDisplayBackground.top = adjustedIcon.bottom + options.iconToProgressIndicatorYSpace;
+    scoreDisplay.center = scoreDisplayBackground.center;
     contentNode.addChild( adjustedIcon );
-    contentNode.addChild( progressIndicatorBackground );
-    contentNode.addChild( progressIndicator );
+    contentNode.addChild( scoreDisplayBackground );
+    contentNode.addChild( scoreDisplay );
 
     // Create the button
     var buttonOptions = {
@@ -137,7 +117,7 @@ define( function( require ) {
       yMargin: options.buttonYMargin,
       baseColor: options.baseColor,
       cornerRadius: options.cornerRadius,
-      listener: fireFunction,
+      listener: options.listener,
 
       // TODO: if LevelSelectionItemNode changes to inheritance, this will have to change,
       // see https://github.com/phetsims/vegas/issues/56
@@ -189,6 +169,66 @@ define( function( require ) {
       icon.center = background.center;
       background.addChild( icon );
       return background;
+    },
+
+    /**
+     * Convenience function to create a LevelSelectionItemNode with a ScoreDisplayDiscreteStars.
+     * @param {Node} icon
+     * @param {Property.<number>} scoreProperty
+     * @param {Object} [options] - see LevelSelectionItemNode and ScoreDisplayDiscreteStars
+     * @public
+     * @static
+     */
+    createWithScoreDisplayDiscreteStars: function( icon, scoreProperty, options ) {
+
+      options = _.extend( {
+        listener: null, // {function|null} called when the button is pressed
+        scoreDisplayOptions: null // see ScoreDisplayDiscreteStars options
+      }, options );
+
+      var scoreDisplay = new ScoreDisplayDiscreteStars( scoreProperty, options.scoreDisplayOptions );
+
+      return new LevelSelectionItemNode( icon, scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
+    },
+
+    /**
+     * Convenience function to create a LevelSelectionItemNode with a ScoreDisplayNumberAndStar.
+     * @param {Node} icon
+     * @param {Property.<number>} scoreProperty
+     * @param {Object} [options] - see LevelSelectionItemNode and ScoreDisplayNumberAndStar
+     * @public
+     * @static
+     */
+    createWithScoreDisplayNumberAndStar: function( icon, scoreProperty, options ) {
+
+      options = _.extend( {
+        listener: null, // {function|null} called when the button is pressed
+        scoreDisplayOptions: null // see ScoreDisplayNumberAndStar options
+      }, options );
+
+      var scoreDisplay = new ScoreDisplayNumberAndStar( scoreProperty, options.scoreDisplayOptions );
+
+      return new LevelSelectionItemNode( icon, scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
+    },
+
+    /**
+     * Convenience function to create a LevelSelectionItemNode with a ScoreDisplayTextAndNumber.
+     * @param {Node} icon
+     * @param {Property.<number>} scoreProperty
+     * @param {Object} [options] - see LevelSelectionItemNode and ScoreDisplayTextAndNumber
+     * @public
+     * @static
+     */
+    createWithScoreDisplayTextAndNumber: function( icon, scoreProperty, options ) {
+
+      options = _.extend( {
+        listener: null, // {function|null} called when the button is pressed
+        scoreDisplayOptions: null // see ScoreDisplayTextAndNumber options
+      }, options );
+
+      var scoreDisplay = new ScoreDisplayTextAndNumber( scoreProperty, options.scoreDisplayOptions );
+
+      return new LevelSelectionItemNode( icon, scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
     }
   } );
 } );
