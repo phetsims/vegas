@@ -30,13 +30,12 @@ define( function( require ) {
   var SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
 
   /**
-   * @param {Node} icon Scenery node that appears on the button above the progress indicator, scaled to fit
+   * @param {Node} icon Scenery node that appears on the button above the score display, scaled to fit
    * @param {Node} scoreDisplay - displays the score
    * @param {Object} [options]
    * @constructor
    */
   function LevelSelectionItemNode( icon, scoreDisplay, options ) {
-    // TODO: numStars and perfectScore not necessarily necessary
 
     assert && assert( icon instanceof Node );
 
@@ -56,10 +55,10 @@ define( function( require ) {
       buttonYMargin: 10,
 
       // scoreDisplay  (stars)
-      scoreDisplayProportion: 0.2, // percentage of the button height occupied by the progress indicator, (0,0.5]
+      scoreDisplayProportion: 0.2, // percentage of the button height occupied by the score display, (0,0.5]
       scoreDisplayMinXMargin: 10,
       scoreDisplayMinYMargin: 5,
-      iconToProgressIndicatorYSpace: 10,
+      iconToScoreDisplayYSpace: 10,
 
       // best time (optional)
       bestTimeProperty: null, // null if no best time || {Property.<number>} best time in seconds
@@ -81,7 +80,7 @@ define( function( require ) {
 
     var maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
 
-    // Progress indicator (stars), scaled to fit
+    // score display (stars), scaled to fit
     var scoreDisplayBackground = new Rectangle( 0, 0, maxContentWidth,
       options.buttonHeight * options.scoreDisplayProportion, options.cornerRadius, options.cornerRadius, {
         fill: 'white',
@@ -92,7 +91,7 @@ define( function( require ) {
 
     // Icon, scaled and padded to fit and to make the button size correct.
     var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - scoreDisplayBackground.height -
-                                                    2 * options.buttonYMargin - options.iconToProgressIndicatorYSpace );
+                                                    2 * options.buttonYMargin - options.iconToScoreDisplayYSpace );
     var adjustedIcon = LevelSelectionItemNode.createSizedImageNode( icon, iconSize );
     adjustedIcon.pickable = false; // TODO: is this needed?
 
@@ -104,7 +103,7 @@ define( function( require ) {
     else {
       scoreDisplayBackground.centerX = adjustedIcon.centerX;
     }
-    scoreDisplayBackground.top = adjustedIcon.bottom + options.iconToProgressIndicatorYSpace;
+    scoreDisplayBackground.top = adjustedIcon.bottom + options.iconToScoreDisplayYSpace;
     scoreDisplay.center = scoreDisplayBackground.center;
     contentNode.addChild( adjustedIcon );
     contentNode.addChild( scoreDisplayBackground );
