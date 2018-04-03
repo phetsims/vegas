@@ -53,7 +53,6 @@ define( function( require ) {
       this.visibleBoundsProperty,
       new Text( 'User provided message' ),
       new ScoreDisplayDiscreteStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ), {
-        alwaysInsideLayoutBounds: false,
         backButtonListener: function() { scoreProperty.reset(); }
     } ) );
 
