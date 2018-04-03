@@ -37,18 +37,17 @@ define( function( require ) {
 
   /**
    * @param {number} score
-   * @param {function} newLevelCallback
    * @param {Object} [options]
    * @constructor
    */
-  function RewardDialog( score, newLevelCallback, options ) {
+  function RewardDialog( score, options ) {
 
-    var self = this;
-    
     options = _.extend( {
       modal: true,
       hasCloseButton: false,
-      xMargin: 40
+      xMargin: 40,
+      keepGoingButtonListener: function() {},
+      newLevelButtonListener: function() {}
     }, options );
 
     var phetGirlNode = new Image( phetGirlJugglingStarsImage );
@@ -69,13 +68,13 @@ define( function( require ) {
 
     var keepGoingButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
       content: new Text( keepGoingString, { font: BUTTON_FONT } ),
-      listener: function() { self.hide(); },
+      listener: options.keepGoingButtonListener,
       baseColor: 'white'
     } ) );
 
     var newLevelButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
       content: new Text( newLevelString, { font: BUTTON_FONT } ),
-      listener: newLevelCallback,
+      listener: options.newLevelButtonListener,
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW
     } ) );
 

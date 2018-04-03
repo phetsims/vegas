@@ -81,7 +81,16 @@ define( function( require ) {
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       content: new Text( 'open RewardDialog', { font: new PhetFont( 20 ) } ),
       listener: function() {
-        var rewardDialog = new RewardDialog( 10, function() { console.log( 'new level' ); } );
+        var rewardDialog = new RewardDialog( 10, {
+          keepGoingButtonListener: function() {
+            console.log( 'Keep Going button' );
+            rewardDialog.dispose();
+          },
+          newLevelButtonListener: function() {
+            console.log( 'New Level button' );
+            rewardDialog.dispose();
+          }
+        } );
         rewardDialog.show();
       },
       center: this.layoutBounds.center.plusXY( -20, 0 )
