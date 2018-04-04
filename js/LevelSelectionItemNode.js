@@ -14,6 +14,8 @@ define( function( require ) {
   // modules
   var Dimension2 = require( 'DOT/Dimension2' );
   var GameTimer = require( 'VEGAS/GameTimer' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -104,10 +106,17 @@ define( function( require ) {
       scoreDisplayBackground.centerX = adjustedIcon.centerX;
     }
     scoreDisplayBackground.top = adjustedIcon.bottom + options.iconToScoreDisplayYSpace;
-    scoreDisplay.center = scoreDisplayBackground.center;
+
+    // align scoreDisplay in the center
+    var scoreDisplayContainer = new VBox( {
+      center: scoreDisplayBackground.center,
+      align: 'center',
+      children: [ scoreDisplay, new HStrut( scoreDisplayBackground.width ) ]
+    } );
+
     contentNode.addChild( adjustedIcon );
     contentNode.addChild( scoreDisplayBackground );
-    contentNode.addChild( scoreDisplay );
+    contentNode.addChild( scoreDisplayContainer );
 
     // Create the button
     var buttonOptions = {
