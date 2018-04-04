@@ -52,7 +52,7 @@ define( function( require ) {
     this.addChild( new StatusBar(
       this.visibleBoundsProperty,
       new Text( 'User provided message' ),
-      new ScoreDisplayDiscreteStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ), {
+      new ScoreDisplayNumberAndStar( scoreProperty ), {
         backButtonListener: function() { scoreProperty.reset(); }
     } ) );
 
