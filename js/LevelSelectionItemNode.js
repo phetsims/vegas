@@ -14,8 +14,6 @@ define( function( require ) {
   // modules
   var Dimension2 = require( 'DOT/Dimension2' );
   var GameTimer = require( 'VEGAS/GameTimer' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -76,7 +74,7 @@ define( function( require ) {
     Node.call( this );
 
     assert && assert(
-      options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
+    options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
       'scoreDisplayProportion value out of range'
     );
 
@@ -106,17 +104,16 @@ define( function( require ) {
       scoreDisplayBackground.centerX = adjustedIcon.centerX;
     }
     scoreDisplayBackground.top = adjustedIcon.bottom + options.iconToScoreDisplayYSpace;
-
-    // align scoreDisplay in the center
-    var scoreDisplayContainer = new VBox( {
-      center: scoreDisplayBackground.center,
-      align: 'center',
-      children: [ scoreDisplay, new HStrut( scoreDisplayBackground.width ) ]
-    } );
-
     contentNode.addChild( adjustedIcon );
     contentNode.addChild( scoreDisplayBackground );
-    contentNode.addChild( scoreDisplayContainer );
+    contentNode.addChild( scoreDisplay );
+
+    // Keep the score display centered when its bounds change
+    var scoreDisplayUpdateLayout = function() {
+      scoreDisplay.center = scoreDisplayBackground.center;
+    };
+    scoreDisplay.on( 'bounds', scoreDisplayUpdateLayout );
+    scoreDisplayUpdateLayout();
 
     // Create the button
     var buttonOptions = {
@@ -151,11 +148,25 @@ define( function( require ) {
 
     // Pass options to parent class
     this.mutate( options );
+
+    // @private
+    this.disposeLevelSelectionItemNode = function() {
+      if ( scoreDisplay.hasListener( 'bounds', scoreDisplayUpdateLayout ) ) {
+        scoreDisplay.off( 'bounds', scoreDisplayUpdateLayout );
+      }
+    };
   }
 
   vegas.register( 'LevelSelectionItemNode', LevelSelectionItemNode );
 
-  return inherit( Node, LevelSelectionItemNode, {}, {
+  return inherit( Node, LevelSelectionItemNode, {
+
+    // @public
+    dispose: function() {
+      this.disposeLevelSelectionItemNode();
+      Node.prototype.dispose.call( this );
+    }
+  }, {
     /**
      * Creates a new the same dimensions as size with the specified icon. The icon will be scaled to fit, and a
      * background with the specified size may be added to ensure the bounds of the returned node are correct.
