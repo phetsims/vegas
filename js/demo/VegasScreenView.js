@@ -53,7 +53,8 @@ define( function( require ) {
       this.visibleBoundsProperty,
       new Text( 'User provided message' ),
       new ScoreDisplayNumberAndStar( scoreProperty ), {
-        backButtonListener: function() { scoreProperty.reset(); }
+        backButtonListener: function() { scoreProperty.reset(); },
+        expandToFitBounds: false
     } ) );
 
     //Show a sample LevelCompletedNode that cycles through score values when you press "continue"
