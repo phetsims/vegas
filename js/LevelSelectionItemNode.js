@@ -98,7 +98,6 @@ define( function( require ) {
     var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - scoreDisplayBackground.height -
                                                     2 * options.buttonYMargin - options.iconToScoreDisplayYSpace );
     var adjustedIcon = LevelSelectionItemNode.createSizedImageNode( icon, iconSize );
-    adjustedIcon.pickable = false; // TODO: is this needed?
 
     // Assemble the content for the button.
     var buttonContent = new Node();
