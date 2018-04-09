@@ -100,8 +100,8 @@ define( function( require ) {
     var adjustedIcon = LevelSelectionItemNode.createSizedImageNode( icon, iconSize );
     adjustedIcon.pickable = false; // TODO: is this needed?
 
-    // Assemble the content.
-    var contentNode = new Node();
+    // Assemble the content for the button.
+    var buttonContent = new Node();
     if ( scoreDisplayBackground.width > adjustedIcon.width ) {
       adjustedIcon.centerX = scoreDisplayBackground.centerX;
     }
@@ -109,9 +109,9 @@ define( function( require ) {
       scoreDisplayBackground.centerX = adjustedIcon.centerX;
     }
     scoreDisplayBackground.top = adjustedIcon.bottom + options.iconToScoreDisplayYSpace;
-    contentNode.addChild( adjustedIcon );
-    contentNode.addChild( scoreDisplayBackground );
-    contentNode.addChild( scoreDisplay );
+    buttonContent.addChild( adjustedIcon );
+    buttonContent.addChild( scoreDisplayBackground );
+    buttonContent.addChild( scoreDisplay );
 
     // Keep the score display centered when its bounds change
     var scoreDisplayUpdateLayout = function() {
@@ -122,7 +122,7 @@ define( function( require ) {
 
     // Create the button
     var button = new RectangularPushButton( {
-      content: contentNode,
+      content: buttonContent,
       xMargin: options.buttonXMargin,
       yMargin: options.buttonYMargin,
       baseColor: options.baseColor,
