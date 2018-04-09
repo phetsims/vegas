@@ -32,8 +32,8 @@ define( function( require ) {
       numStars: 1,
       perfectScore: 1
     }, options );
-    
-    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
+
+    assert && assert( !options.children, 'ScoreDisplayDiscreteStars sets children' );
 
     var numStars = options.numStars;
     var perfectScore = options.perfectScore;
