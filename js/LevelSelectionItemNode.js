@@ -81,7 +81,7 @@ define( function( require ) {
 
     var maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
 
-    // score display (stars), scaled to fit
+    // Background behind scoreDisplay
     var scoreDisplayBackground = new Rectangle( 0, 0, maxContentWidth,
       options.buttonHeight * options.scoreDisplayProportion, options.cornerRadius, options.cornerRadius, {
         fill: 'white',
@@ -89,6 +89,10 @@ define( function( require ) {
         lineWidth: 1,
         pickable: false
       } );
+
+    // constrain scoreDisplay to fit in scoreDisplayBackground
+    scoreDisplay.maxWidth = scoreDisplayBackground.width - 2 * options.scoreDisplayMinXMargin;
+    scoreDisplay.maxHeight = scoreDisplayBackground.height - 2 * options.scoreDisplayMinYMargin;
 
     // Icon, scaled and padded to fit and to make the button size correct.
     var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - scoreDisplayBackground.height -
