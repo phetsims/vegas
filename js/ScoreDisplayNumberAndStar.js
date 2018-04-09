@@ -19,7 +19,7 @@ define( function( require ) {
   var vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var DEFAULT_TEXT_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+  var DEFAULT_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
   /**
    * @param {Property.<number>} scoreProperty
@@ -29,12 +29,12 @@ define( function( require ) {
   function ScoreDisplayNumberAndStar( scoreProperty, options ) {
 
     options = _.extend( {
+      font: DEFAULT_FONT,
+      textFill: 'black',
       starOuterRadius: 10,
       starInnerRadius: 5,
       starFilledLineWidth: 1.5,
       starEmptyLineWidth: 1.5,
-      textFont: DEFAULT_TEXT_FONT,
-      textFill: 'black',
       scoreDecimalPlaces: 0,
       spacing: 3
     }, options );
@@ -60,7 +60,7 @@ define( function( require ) {
       }
       else {
         children.push( new Text( Util.toFixed( score, options.scoreDecimalPlaces ), {
-          font: options.textFont,
+          font: options.font,
           fill: options.textFill
         } ) );
         children.push( new StarNode( _.extend ( { value: 1 }, starOptions ) ) );

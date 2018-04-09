@@ -54,7 +54,7 @@ define( function( require ) {
     var phetGirlNode = new Image( phetGirlJugglingStarsImage );
 
     var scoreDisplay = new ScoreDisplayNumberAndStar( new NumberProperty( score ), {
-      textFont: SCORE_FONT,
+      font: SCORE_FONT,
       starOuterRadius: 25,
       starInnerRadius: 12.5,
       starFilledLineWidth: 3,

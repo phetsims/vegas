@@ -19,7 +19,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // constants
-  var DEFAULT_TEXT_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+  var DEFAULT_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   var patternScoreNumberString = require( 'string!VEGAS/pattern.score.number' );
 
   /**
@@ -30,29 +30,25 @@ define( function( require ) {
   function ScoreDisplayTextAndNumber( scoreProperty, options ) {
 
     options = _.extend( {
-      textFont: DEFAULT_TEXT_FONT,
-      textFill: 'black',
+      font: DEFAULT_FONT,
+      fill: 'black',
       scoreDecimalPlaces: 0
     }, options );
 
-    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
-
     var scoreDisplayText = new Text( '', {
-      font: options.textFont,
-      fill: options.textFill
+      font: options.font,
+      fill: options.fill
     } );
 
+    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
     options.children = [ scoreDisplayText ];
 
     // Update number displayed based on score.
     var scorePropertyListener = function( score ) {
-
-      scoreDisplayText.setText( StringUtils.fillIn( patternScoreNumberString, {
+      scoreDisplayText.text = StringUtils.fillIn( patternScoreNumberString, {
         score: Util.toFixed( score, options.scoreDecimalPlaces )
-      } ) );
-
+      } );
     };
-
     scoreProperty.link( scorePropertyListener );
 
     // @private
