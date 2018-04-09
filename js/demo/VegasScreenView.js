@@ -35,7 +35,13 @@ define( function( require ) {
 
     var scoreProperty = new Property( 1 );
 
-    this.addChild( new ScoreDisplayDiscreteStars( scoreProperty, { left: 20, top: 80, scale: 2, numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ) );
+    this.addChild( new ScoreDisplayDiscreteStars( scoreProperty, {
+      left: 20,
+      top: 80,
+      scale: 2,
+      numStars: NUM_STARS,
+      perfectScore: PERFECT_SCORE
+    } ) );
     this.addChild( new ScoreDisplayNumberAndStar( scoreProperty, { left: 20, top: 140, scale: 2, spacing: 14 } ) );
     this.addChild( new ScoreDisplayTextAndNumber( scoreProperty, { left: 20, top: 200, scale: 2 } ) );
     this.addChild( new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } ).mutate( { left: 20, top: 260 } ) );
@@ -46,7 +52,7 @@ define( function( require ) {
       new Text( 'User provided message' ),
       new ScoreDisplayNumberAndStar( scoreProperty ), {
         backButtonListener: function() { scoreProperty.reset(); }
-    } ) );
+      } ) );
 
     //Show a sample LevelCompletedNode that cycles through score values when you press "continue"
     var score = 0;
@@ -62,7 +68,7 @@ define( function( require ) {
         addLevelCompletedNode();
       }, {
         right: self.layoutBounds.right - 10,
-        top:   self.layoutBounds.top + 80
+        top: self.layoutBounds.top + 80
       } );
       self.addChild( levelCompletedNode );
     };
@@ -75,7 +81,7 @@ define( function( require ) {
         perfectScore: PERFECT_SCORE
       },
       listener: function() {
-         console.log( 'level start' );
+        console.log( 'level start' );
       },
       centerX: 100,
       centerY: 400,
@@ -85,7 +91,7 @@ define( function( require ) {
 
     var levelSelectionNodeNumberAndStar = LevelSelectionItemNode.createWithScoreDisplayNumberAndStar( new Text( 'icon' ), scoreProperty, {
       listener: function() {
-         console.log( 'level start' );
+        console.log( 'level start' );
       },
       centerX: 240,
       centerY: 400,
@@ -95,7 +101,7 @@ define( function( require ) {
 
     var levelSelectionNodeTextAndNumber = LevelSelectionItemNode.createWithScoreDisplayTextAndNumber( new Text( 'icon' ), scoreProperty, {
       listener: function() {
-         console.log( 'level start' );
+        console.log( 'level start' );
       },
       centerX: 380,
       centerY: 400,
