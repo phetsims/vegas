@@ -216,7 +216,7 @@ define( function( require ) {
     }, options );
 
     assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
-      'invalid ScoreDisplayConstructor: ' + options.ScoreDisplayConstructor ) );
+      'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
 
     // @private all constructors must have the same signature!
     this.scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
