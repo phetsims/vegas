@@ -200,14 +200,14 @@ define( function( require ) {
   } );
 
   /**
-   * Convenience constructor for creating a LevelSelectionButton with a specific type of scoreDisplay.
+   * Convenience type for creating a LevelSelectionButton with a specific type of scoreDisplay.
    * Instantiation and disposal of the scoreDisplay instance is opaque to the client.
    * @param {Node} icon - appears on the button above the score display, scaled to fit
    * @param {Property.<number>} scoreProperty
    * @param {Object} [options]
    * @constructor
    */
-  LevelSelectionButton.ScoreDisplayCreator = function( icon, scoreProperty, options ) {
+  function ScoreDisplayCreator( icon, scoreProperty, options ) {
 
     options = _.extend( {
       listener: null, // {function|null} called when the button is pressed
@@ -215,18 +215,18 @@ define( function( require ) {
       scoreDisplayOptions: null // see scoreDisplay's constructor
     }, options );
 
-    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.ScoreDisplayConstructor,
+    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
       'invalid ScoreDisplayConstructor: ' + options.ScoreDisplayConstructor ) );
 
     // @private all constructors must have the same signature!
     this.scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
 
     LevelSelectionButton.call( this, icon, this.scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
-  };
+  }
 
-  // vegas.register( 'LevelSelectionButton.ScoreDisplayCreator', LevelSelectionButton.ScoreDisplayCreator );
+  vegas.register( 'LevelSelectionButton.ScoreDisplayCreator', ScoreDisplayCreator );
 
-  inherit( LevelSelectionButton, LevelSelectionButton.ScoreDisplayCreator, {
+  inherit( LevelSelectionButton, ScoreDisplayCreator, {
 
     // @public
     dispose: function() {
@@ -234,6 +234,8 @@ define( function( require ) {
       LevelSelectionButton.prototype.dispose.call( this );
     }
   } );
+
+  LevelSelectionButton.ScoreDisplayCreator = ScoreDisplayCreator;
 
   return LevelSelectionButton;
 } );
