@@ -47,8 +47,8 @@ define( function( require ) {
       modal: true,
       hasCloseButton: false,
       xMargin: 40,
-      keepGoingButtonListener: function() {},
-      newLevelButtonListener: function() {}
+      keepGoingButtonListener: function() {}, // called when 'Keep Going' button is pressed
+      newLevelButtonListener: function() {} // called when 'New Level' button is pressed
     }, options );
 
     var phetGirlNode = new Image( phetGirlJugglingStarsImage );
