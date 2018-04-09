@@ -11,11 +11,14 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var Checkbox = require( 'SUN/Checkbox' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
-  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
+  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ScoreDisplayDiscreteStars = require( 'VEGAS/ScoreDisplayDiscreteStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
@@ -29,6 +32,8 @@ define( function( require ) {
   // constants
   var NUM_STARS = 5;
   var PERFECT_SCORE = 1000;
+  var MAX_TIME = 10000;
+  var BUTTON_WIDTH = 120;
 
   /**
    * @constructor
@@ -38,6 +43,8 @@ define( function( require ) {
     ScreenView.call( this );
 
     var scoreProperty = new Property( 0 );
+    var bestTimeProperty = new Property( 1 );
+    var bestTimeVisibleProperty = new BooleanProperty( true );
 
     var statusBar = new StatusBar(
       this.layoutBounds,
@@ -48,23 +55,83 @@ define( function( require ) {
       } );
     this.addChild( statusBar );
 
-    // Various options for displaying score, with a slider to change the score
-    var vBox = new VBox( {
+    // Controls for Properties
+    var scoreSlider = new HBox( {
+      children: [
+        new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
+        new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } )
+      ]
+    } );
+
+    var bestTimeSlider = new HBox( {
+      children: [
+        new Text( 'Best Time: ', { font: new PhetFont( 20 ) } ),
+        new HSlider( bestTimeProperty, { min: 0, max: MAX_TIME } )
+      ]
+    } );
+
+    var bestTimeVisibleCheckbox = new Checkbox(
+      new Text( 'Best time visible', { font: new PhetFont( 20 ) } ),
+      bestTimeVisibleProperty );
+
+    var controls = new HBox( {
+      resize: false,
+      spacing: 30,
+      left: this.layoutBounds.minX + 20,
+      top: statusBar.bottom + 20,
+      children: [ scoreSlider, bestTimeSlider, bestTimeVisibleCheckbox ]
+    } );
+    this.addChild( controls );
+
+    // Various options for displaying score.
+    var scoreDisplays = new VBox( {
       resize: false,
       spacing: 20,
       align: 'left',
       left: this.layoutBounds.minX + 20,
-      top: statusBar.bottom + 25,
+      top: controls.bottom + 40,
       children: [
         new ScoreDisplayDiscreteStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ),
         new ScoreDisplayNumberAndStar( scoreProperty ),
-        new ScoreDisplayTextAndNumber( scoreProperty ),
-        new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } )
+        new ScoreDisplayTextAndNumber( scoreProperty )
       ]
     } );
-    this.addChild( vBox );
+    this.addChild( scoreDisplays );
 
-    // Show a sample LevelCompletedNode that cycles through score values when you press "continue"
+    // Level selection buttons
+    var buttonWithDiscreteStars = new LevelSelectionButton.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+      BUTTON_WIDTH: BUTTON_WIDTH,
+      scoreDisplayConstructor: ScoreDisplayDiscreteStars,
+      scoreDisplayOptions: {
+        numStars: NUM_STARS,
+        perfectScore: PERFECT_SCORE
+      },
+      listener: function() { console.log( 'level start' ); }
+    } );
+
+    var buttonWithNumberAndStar = new LevelSelectionButton.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+      BUTTON_WIDTH: BUTTON_WIDTH,
+      scoreDisplayConstructor: ScoreDisplayNumberAndStar,
+      listener: function() { console.log( 'level start' ); }
+    } );
+
+    var buttonWithTextAndNumber = new LevelSelectionButton.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+      BUTTON_WIDTH: BUTTON_WIDTH,
+      scoreDisplayConstructor: ScoreDisplayTextAndNumber,
+      listener: function() { console.log( 'level start' ); },
+      bestTimeProperty: bestTimeProperty,
+      bestTimeVisibleProperty: bestTimeVisibleProperty
+    } );
+
+    this.addChild( new HBox( {
+      spacing: 20,
+      align: 'top',
+      left: this.layoutBounds.minX + 20,
+      top: scoreDisplays.bottom + 40,
+      children: [ buttonWithDiscreteStars, buttonWithNumberAndStar, buttonWithTextAndNumber ]
+    } ) );
+
+    // LevelCompletedNode that cycles through score values when you press 'Continue' button
     var score = 0;
     var addLevelCompletedNode = function() {
       var maxScore = 12;
@@ -82,39 +149,7 @@ define( function( require ) {
       } );
       self.addChild( levelCompletedNode );
     };
-
     addLevelCompletedNode();
-
-    var buttonWidth = 120;
-
-    var levelSelectionNodeDiscreteStars = new LevelSelectionItemNode.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
-      buttonWidth: buttonWidth,
-      scoreDisplayConstructor: ScoreDisplayDiscreteStars,
-      scoreDisplayOptions: {
-        numStars: NUM_STARS,
-        perfectScore: PERFECT_SCORE
-      },
-      listener: function() { console.log( 'level start' ); }
-    } );
-
-    var levelSelectionNodeNumberAndStar = new LevelSelectionItemNode.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
-      buttonWidth: buttonWidth,
-      scoreDisplayConstructor: ScoreDisplayNumberAndStar,
-      listener: function() {console.log( 'level start' ); }
-    } );
-
-    var levelSelectionNodeTextAndNumber = new LevelSelectionItemNode.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
-      buttonWidth: buttonWidth,
-      scoreDisplayConstructor: ScoreDisplayTextAndNumber,
-      listener: function() {console.log( 'level start' ); }
-    } );
-
-    this.addChild( new HBox( {
-      spacing: 20,
-      left: vBox.left,
-      top: vBox.bottom + 20,
-      children: [ levelSelectionNodeDiscreteStars, levelSelectionNodeNumberAndStar, levelSelectionNodeTextAndNumber ]
-    } ) );
   }
 
   vegas.register( 'VegasScreenView', VegasScreenView );

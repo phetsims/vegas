@@ -40,7 +40,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function LevelSelectionItemNode( icon, scoreDisplay, options ) {
+  function LevelSelectionButton( icon, scoreDisplay, options ) {
 
     assert && assert( icon instanceof Node );
 
@@ -102,7 +102,7 @@ define( function( require ) {
     // Icon, scaled and padded to fit and to make the button size correct.
     var iconHeight = options.buttonHeight - scoreDisplayBackground.height - 2 * options.buttonYMargin - options.iconToScoreDisplayYSpace;
     var iconSize = new Dimension2( maxContentWidth, iconHeight );
-    var adjustedIcon = LevelSelectionItemNode.createSizedImageNode( icon, iconSize );
+    var adjustedIcon = LevelSelectionButton.createSizedImageNode( icon, iconSize );
     adjustedIcon.centerX = scoreDisplayBackground.centerX;
     adjustedIcon.bottom = scoreDisplayBackground.top - options.iconToScoreDisplayYSpace;
 
@@ -113,8 +113,7 @@ define( function( require ) {
     scoreDisplay.on( 'bounds', scoreDisplayUpdateLayout );
     scoreDisplayUpdateLayout();
 
-    // Create the button
-    var button = new RectangularPushButton( {
+    RectangularPushButton.call( this, {
       content: new Node( { children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ] } ),
       xMargin: options.buttonXMargin,
       yMargin: options.buttonYMargin,
@@ -122,44 +121,57 @@ define( function( require ) {
       cornerRadius: options.cornerRadius,
       listener: options.listener,
 
-      // TODO: if LevelSelectionItemNode changes to inheritance, this will have to change,
+      // TODO: if LevelSelectionButton changes to inheritance, this will have to change,
       // see https://github.com/phetsims/vegas/issues/56
       tandem: options.tandem.createTandem( 'button' )
     } );
-    this.addChild( button );
 
-    // Best time (optional), centered below the button, does not move when button is pressed
+    // Best time decoration (optional), centered below the button, does not move when button is pressed
     if ( options.bestTimeProperty ) {
+
       var bestTimeNode = new Text( '', { font: options.bestTimeFont, fill: options.bestTimeFill } );
+      var centerX = this.centerX;
+      bestTimeNode.top = this.bottom + options.bestTimeYSpacing;
       this.addChild( bestTimeNode );
-      options.bestTimeProperty.link( function( bestTime ) {
+
+      var bestTimeListener = function( bestTime ) {
         bestTimeNode.text = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
-        bestTimeNode.centerX = button.centerX;
-        bestTimeNode.top = button.bottom + options.bestTimeYSpacing;
-      } );
+        bestTimeNode.centerX = centerX;
+      };
+      options.bestTimeProperty.link( bestTimeListener );
+
       if ( options.bestTimeVisibleProperty ) {
-        options.bestTimeVisibleProperty.linkAttribute( bestTimeNode, 'visible' );
+        var bestTimeVisibleListener = function( visible ) {
+          bestTimeNode.visible = visible;
+        };
+        options.bestTimeVisibleProperty.link( bestTimeVisibleListener );
       }
     }
 
-    // Pass options to parent class
-    this.mutate( options );
-
     // @private
-    this.disposeLevelSelectionItemNode = function() {
+    this.disposeLevelSelectionButton = function() {
+
       if ( scoreDisplay.hasListener( 'bounds', scoreDisplayUpdateLayout ) ) {
         scoreDisplay.off( 'bounds', scoreDisplayUpdateLayout );
+      }
+
+      if ( bestTimeListener && options.bestTimeProperty.hasListener( bestTimeListener ) ) {
+        options.bestTimeProperty.unlink( bestTimeListener );
+      }
+
+      if ( bestTimeVisibleListener && options.bestTimeVisibleProperty.hasListener( bestTimeVisibleListener ) ) {
+        options.bestTimeVisibleProperty.unlink( bestTimeVisibleListener );
       }
     };
   }
 
-  vegas.register( 'LevelSelectionItemNode', LevelSelectionItemNode );
+  vegas.register( 'LevelSelectionButton', LevelSelectionButton );
 
-  inherit( Node, LevelSelectionItemNode, {
+  inherit( RectangularPushButton, LevelSelectionButton, {
 
     // @public
     dispose: function() {
-      this.disposeLevelSelectionItemNode();
+      this.disposeLevelSelectionButton();
       Node.prototype.dispose.call( this );
     }
   }, {
@@ -188,14 +200,14 @@ define( function( require ) {
   } );
 
   /**
-   * Convenience constructor for creating a LevelSelectionItemNode with a specific type of scoreDisplay.
+   * Convenience constructor for creating a LevelSelectionButton with a specific type of scoreDisplay.
    * Instantiation and disposal of the scoreDisplay instance is opaque to the client.
    * @param {Node} icon - appears on the button above the score display, scaled to fit
    * @param {Property.<number>} scoreProperty
    * @param {Object} [options]
    * @constructor
    */
-  LevelSelectionItemNode.ScoreDisplayCreator = function( icon, scoreProperty, options ) {
+  LevelSelectionButton.ScoreDisplayCreator = function( icon, scoreProperty, options ) {
 
     options = _.extend( {
       listener: null, // {function|null} called when the button is pressed
@@ -209,19 +221,19 @@ define( function( require ) {
     // @private all constructors must have the same signature!
     this.scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
 
-    LevelSelectionItemNode.call( this, icon, this.scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
+    LevelSelectionButton.call( this, icon, this.scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
   };
 
-  vegas.register( 'LevelSelectionItemNode.ScoreDisplayCreator', LevelSelectionItemNode.ScoreDisplayCreator );
+  // vegas.register( 'LevelSelectionButton.ScoreDisplayCreator', LevelSelectionButton.ScoreDisplayCreator );
 
-  inherit( LevelSelectionItemNode, LevelSelectionItemNode.ScoreDisplayCreator, {
+  inherit( LevelSelectionButton, LevelSelectionButton.ScoreDisplayCreator, {
 
     // @public
     dispose: function() {
       this.scoreDisplay.dispose();
-      LevelSelectionItemNode.prototype.dispose.call( this );
+      LevelSelectionButton.prototype.dispose.call( this );
     }
   } );
 
-  return LevelSelectionItemNode;
+  return LevelSelectionButton;
 } );
