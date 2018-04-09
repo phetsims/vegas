@@ -2,6 +2,7 @@
 
 /**
  * Indicates score in the format of "Score: " followed by the number.
+ * See specification in https://github.com/phetsims/vegas/issues/59.
  *
  * @author Andrea Lin
  */

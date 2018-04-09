@@ -2,6 +2,7 @@
 
 /**
  * Indicates score followed by a single star.
+ * See specification in https://github.com/phetsims/vegas/issues/59.
  *
  * @author Andrea Lin
  */

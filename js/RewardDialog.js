@@ -1,7 +1,8 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * TODO
+ * A dialog that the client displays when the user gets a specific number of stars.
+ * See specification in https://github.com/phetsims/vegas/issues/59.
  *
  * @author Andrea Lin
  * @author Chris Malley (PixelZoom, Inc.)

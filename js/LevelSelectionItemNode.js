@@ -3,6 +3,7 @@
 /**
  * Button for selecting a game level.
  * Also depicts the progress made on each level.
+ * See specification in https://github.com/phetsims/vegas/issues/59.
  *
  * @author John Blanco
  * @author Chris Malley
