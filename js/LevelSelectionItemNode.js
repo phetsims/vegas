@@ -55,7 +55,7 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 10,
 
-      // scoreDisplay  (stars)
+      // scoreDisplay (stars)
       scoreDisplayProportion: 0.2, // percentage of the button height occupied by the score display, (0,0.5]
       scoreDisplayMinXMargin: 10,
       scoreDisplayMinYMargin: 5,
