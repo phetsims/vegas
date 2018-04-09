@@ -85,11 +85,11 @@ define( function( require ) {
     var scoreDisplayBackgroundHeight = options.buttonHeight * options.scoreDisplayProportion;
     var scoreDisplayBackground = new Rectangle( 0, 0, maxContentWidth, scoreDisplayBackgroundHeight, {
       cornerRadius: options.cornerRadius,
-        fill: 'white',
-        stroke: 'black',
-        lineWidth: 1,
-        pickable: false
-      } );
+      fill: 'white',
+      stroke: 'black',
+      lineWidth: 1,
+      pickable: false
+    } );
 
     // constrain scoreDisplay to fit in scoreDisplayBackground
     scoreDisplay.maxWidth = scoreDisplayBackground.width - ( 2 * options.scoreDisplayMinXMargin );
