@@ -4,6 +4,8 @@
  * Main ScreenView container for Buttons portion of the UI component demo.
  *
  * @author Sam Reid
+ * @author Andrea Lin
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';
@@ -20,11 +22,12 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
   var vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var NUM_STARS = 4;
-  var PERFECT_SCORE = 4;
+  var NUM_STARS = 5;
+  var PERFECT_SCORE = 10;
 
   /**
    * @constructor
@@ -35,24 +38,30 @@ define( function( require ) {
 
     var scoreProperty = new Property( 1 );
 
-    this.addChild( new ScoreDisplayDiscreteStars( scoreProperty, {
-      left: 20,
-      top: 80,
-      scale: 2,
-      numStars: NUM_STARS,
-      perfectScore: PERFECT_SCORE
-    } ) );
-    this.addChild( new ScoreDisplayNumberAndStar( scoreProperty, { left: 20, top: 140, scale: 2, spacing: 14 } ) );
-    this.addChild( new ScoreDisplayTextAndNumber( scoreProperty, { left: 20, top: 200, scale: 2 } ) );
-    this.addChild( new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } ).mutate( { left: 20, top: 260 } ) );
-
-    this.addChild( new StatusBar(
+    var statusBar = new StatusBar(
       this.layoutBounds,
       this.visibleBoundsProperty,
       new Text( 'User provided message' ),
       new ScoreDisplayNumberAndStar( scoreProperty ), {
         backButtonListener: function() { scoreProperty.reset(); }
-      } ) );
+      } );
+    this.addChild( statusBar );
+
+    // Various options for displaying score, with a slider to change the score
+    var vBox = new VBox( {
+      resize: false,
+      spacing: 20,
+      align: 'left',
+      left: this.layoutBounds.minX + 20,
+      top: statusBar.bottom + 25,
+      children: [
+        new ScoreDisplayDiscreteStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ),
+        new ScoreDisplayNumberAndStar( scoreProperty ),
+        new ScoreDisplayTextAndNumber( scoreProperty ),
+        new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } )
+      ]
+    } );
+    this.addChild( vBox );
 
     //Show a sample LevelCompletedNode that cycles through score values when you press "continue"
     var score = 0;
