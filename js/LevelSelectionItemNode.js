@@ -57,9 +57,9 @@ define( function( require ) {
 
       // layout of scoreDisplay
       scoreDisplayProportion: 0.2, // percentage of the button height occupied by scoreDisplay, (0,0.5]
-      scoreDisplayMinXMargin: 10,
-      scoreDisplayMinYMargin: 5,
-      iconToScoreDisplayYSpace: 10,
+      scoreDisplayMinXMargin: 10, // horizontal margin between scoreDisplay and its background
+      scoreDisplayMinYMargin: 5,  // vertical margin between scoreDisplay and its background
+      iconToScoreDisplayYSpace: 10, // vertical space between icon and score display
 
       // best time (optional)
       bestTimeProperty: null, // null if no best time || {Property.<number>} best time in seconds
