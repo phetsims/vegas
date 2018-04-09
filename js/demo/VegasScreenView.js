@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
@@ -63,7 +64,7 @@ define( function( require ) {
     } );
     this.addChild( vBox );
 
-    //Show a sample LevelCompletedNode that cycles through score values when you press "continue"
+    // Show a sample LevelCompletedNode that cycles through score values when you press "continue"
     var score = 0;
     var addLevelCompletedNode = function() {
       var maxScore = 12;
@@ -84,49 +85,39 @@ define( function( require ) {
 
     addLevelCompletedNode();
 
+    var buttonWidth = 120;
+
     var levelSelectionNodeDiscreteStars = new LevelSelectionItemNode.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+      buttonWidth: buttonWidth,
       scoreDisplayConstructor: ScoreDisplayDiscreteStars,
       scoreDisplayOptions: {
         numStars: NUM_STARS,
         perfectScore: PERFECT_SCORE
       },
-      listener: function() {
-        console.log( 'level start' );
-      },
-      centerX: 100,
-      centerY: 400,
-      buttonWidth: 120
+      listener: function() { console.log( 'level start' ); }
     } );
-    this.addChild( levelSelectionNodeDiscreteStars );
 
     var levelSelectionNodeNumberAndStar = new LevelSelectionItemNode.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+      buttonWidth: buttonWidth,
       scoreDisplayConstructor: ScoreDisplayNumberAndStar,
-      listener: function() {
-        console.log( 'level start' );
-      },
-      centerX: 240,
-      centerY: 400,
-      buttonWidth: 120
+      listener: function() {console.log( 'level start' ); }
     } );
-    this.addChild( levelSelectionNodeNumberAndStar );
 
     var levelSelectionNodeTextAndNumber = new LevelSelectionItemNode.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+      buttonWidth: buttonWidth,
       scoreDisplayConstructor: ScoreDisplayTextAndNumber,
-      listener: function() {
-        console.log( 'level start' );
-      },
-      centerX: 380,
-      centerY: 400,
-      buttonWidth: 120
+      listener: function() {console.log( 'level start' ); }
     } );
-    this.addChild( levelSelectionNodeTextAndNumber );
+
+    this.addChild( new HBox( {
+      spacing: 20,
+      left: vBox.left,
+      top: vBox.bottom + 20,
+      children: [ levelSelectionNodeDiscreteStars, levelSelectionNodeNumberAndStar, levelSelectionNodeTextAndNumber ]
+    } ) );
   }
 
   vegas.register( 'VegasScreenView', VegasScreenView );
 
-  return inherit( ScreenView, VegasScreenView, {
-    step: function( timeElapsed ) {
-      // Does nothing for now.
-    }
-  } );
+  return inherit( ScreenView, VegasScreenView );
 } );
