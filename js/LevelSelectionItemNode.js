@@ -169,8 +169,8 @@ define( function( require ) {
     }
   }, {
     /**
-     * Creates a new the same dimensions as size with the specified icon. The icon will be scaled to fit, and a
-     * background with the specified size may be added to ensure the bounds of the returned node are correct.
+     * Creates a new icon with the same dimensions as size with the specified icon. The new icon will be scaled to fit,
+     * and a background with the specified size may be added to ensure that the bounds of the returned node are correct.
      * @public
      *
      * @param {Node} icon
