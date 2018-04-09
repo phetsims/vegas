@@ -94,6 +94,7 @@ define( function( require ) {
     var scoreDisplayOptions = { pickable: false };
 
     // TODO: assert options.scoreDisplayType provided is right
+    //TODO memory leak, progressIndicator links to scoreProperty and is not disposed
     if ( options.scoreDisplayType === 'discreteStars' ) {
       var progressIndicator = new ScoreDisplayDiscreteStars( scoreProperty, _.extend( {}, scoreDisplayOptions, {
         numStars: numStars,
@@ -152,12 +153,16 @@ define( function( require ) {
     if ( options.bestTimeProperty ) {
       var bestTimeNode = new Text( '', { font: options.bestTimeFont, fill: options.bestTimeFill } );
       this.addChild( bestTimeNode );
+
+      //TODO memory leak, missing unlink
       options.bestTimeProperty.link( function( bestTime ) {
         bestTimeNode.text = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
         bestTimeNode.centerX = button.centerX;
         bestTimeNode.top = button.bottom + options.bestTimeYSpacing;
       } );
+
       if ( options.bestTimeVisibleProperty ) {
+        // TODO memory leak, missing unlinkAttribute
         options.bestTimeVisibleProperty.linkAttribute( bestTimeNode, 'visible' );
       }
     }
