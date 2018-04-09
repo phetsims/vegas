@@ -19,10 +19,10 @@ define( function( require ) {
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
   var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Property = require( 'AXON/Property' );
   var ScoreDisplayDiscreteStars = require( 'VEGAS/ScoreDisplayDiscreteStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
-  var Property = require( 'AXON/Property' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );
