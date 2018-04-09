@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RewardNode = require( 'VEGAS/RewardNode' );
@@ -24,7 +23,7 @@ define( function( require ) {
    * @constructor
    */
   function RewardScreenView() {
-    ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
+    ScreenView.call( this );
 
     // RewardNode
     this.rewardNode = new RewardNode();
