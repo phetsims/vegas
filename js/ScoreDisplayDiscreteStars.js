@@ -24,33 +24,30 @@ define( function( require ) {
    */
   function ScoreDisplayDiscreteStars( scoreProperty, options ) {
 
+    var self = this;
+
     options = _.extend( {
-      starOuterRadius: 10,
-      starInnerRadius: 5,
-      starFilledLineWidth: 1.5,
-      starEmptyLineWidth: 1.5,
+      starNodeOptions: null, // options to StarNode
       numStars: 1,
-      perfectScore: 1
+      perfectScore: 1,
+      spacing: 3
     }, options );
 
-    assert && assert( !options.children, 'ScoreDisplayDiscreteStars sets children' );
+    // fill in defaults for starNodeOptions
+    options.starNodeOptions = _.extend( {
+      outerRadius: 10,
+      innerRadius: 5,
+      filledLineWidth: 1.5,
+      emptyLineWidth: 1.5
+    }, options.starNodeOptions );
 
     var numStars = options.numStars;
     var perfectScore = options.perfectScore;
 
-    HBox.call( this, { spacing: 3, children: [] } );
-    var self = this;
-
-    var starOptions = {
-      outerRadius: options.starOuterRadius,
-      innerRadius: options.starInnerRadius,
-      filledLineWidth: options.starFilledLineWidth,
-      emptyLineWidth: options.starEmptyLineWidth
-    };
+    assert && assert( !options.children, 'ScoreDisplayDiscreteStars sets children' );
+    HBox.call( this, { children: [] } );
 
     // Update visibility of filled and half-filled stars based on score.
-    // TODO: Could be rewritten to use deltas if it needs to animate
-    
     var scorePropertyListener = function( score ) {
 
       assert && assert( score <= perfectScore, 'Score ' + score + ' exceeds perfect score ' + perfectScore );
@@ -61,20 +58,21 @@ define( function( require ) {
       var numFilledStars = Math.floor( proportion * numStars );
 
       for ( var i = 0; i < numFilledStars; i++ ) {
-        children.push( new StarNode( _.extend( { value: 1 }, starOptions ) ) );
+        children.push( new StarNode( _.extend( { value: 1 }, options.starNodeOptions ) ) );
       }
+
       var remainder = proportion * numStars - numFilledStars;
       if ( remainder > 1E-6 ) {
-        children.push( new StarNode( _.extend( { value: remainder }, starOptions ) ) );
+        children.push( new StarNode( _.extend( { value: remainder }, options.starNodeOptions ) ) );
       }
+
       var numEmptyStars = numStars - children.length;
       for ( i = 0; i < numEmptyStars; i++ ) {
-        children.push( new StarNode( _.extend( { value: 0 }, starOptions ) ) );
+        children.push( new StarNode( _.extend( { value: 0 }, options.starNodeOptions ) ) );
       }
 
       self.children = children;
     };
-
     scoreProperty.link( scorePropertyListener );
 
     // @private

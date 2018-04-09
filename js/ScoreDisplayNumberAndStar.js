@@ -28,47 +28,45 @@ define( function( require ) {
    */
   function ScoreDisplayNumberAndStar( scoreProperty, options ) {
 
+    var self = this;
+
     options = _.extend( {
+      starNodeOptions: null, // options to StarNode
       font: DEFAULT_FONT,
       textFill: 'black',
-      starOuterRadius: 10,
-      starInnerRadius: 5,
-      starFilledLineWidth: 1.5,
-      starEmptyLineWidth: 1.5,
       scoreDecimalPlaces: 0,
       spacing: 3
     }, options );
 
+    // fill in defaults for starNodeOptions
+    options.starNodeOptions = _.extend( {
+      outerRadius: 10,
+      innerRadius: 5,
+      filledLineWidth: 1.5,
+      emptyLineWidth: 1.5
+    }, options.starNodeOptions );
+
     assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
 
     HBox.call( this );
-    var self = this;
-
-    var starOptions = {
-      outerRadius: options.starOuterRadius,
-      innerRadius: options.starInnerRadius,
-      filledLineWidth: options.starFilledLineWidth,
-      emptyLineWidth: options.starEmptyLineWidth
-    };
 
     // Update number displayed based on score.
     var scorePropertyListener = function( score ) {
       var children = [];
 
       if ( score === 0 ) {
-        children.push( new StarNode( _.extend( { value: 0 }, starOptions ) ) );
+        children.push( new StarNode( _.extend( { value: 0 }, options.starNodeOptions ) ) );
       }
       else {
         children.push( new Text( Util.toFixed( score, options.scoreDecimalPlaces ), {
           font: options.font,
           fill: options.textFill
         } ) );
-        children.push( new StarNode( _.extend ( { value: 1 }, starOptions ) ) );
+        children.push( new StarNode( _.extend( { value: 1 }, options.starNodeOptions ) ) );
       }
 
       self.children = children;
     };
-
     scoreProperty.link( scorePropertyListener );
 
     // @private
