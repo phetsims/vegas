@@ -56,7 +56,7 @@ define( function( require ) {
       buttonYMargin: 10,
 
       // layout of scoreDisplay
-      scoreDisplayProportion: 0.2, // percentage of the button height occupied by the score display, (0,0.5]
+      scoreDisplayProportion: 0.2, // percentage of the button height occupied by scoreDisplay, (0,0.5]
       scoreDisplayMinXMargin: 10,
       scoreDisplayMinYMargin: 5,
       iconToScoreDisplayYSpace: 10,
