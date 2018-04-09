@@ -29,14 +29,14 @@ define( function( require ) {
     new Sim( vegasTitleString, [
 
       new Screen(
-        function() {return {};},
+        function() { return {}; },
         function( model ) { return new VegasScreenView(); }, {
           name: 'Vegas',
           backgroundColorProperty: new Property( 'rgb( 214, 233, 254 )' )
         } ),
 
       new Screen(
-        function() {return {};},
+        function() { return {}; },
         function( model ) { return new RewardScreenView(); }, {
           name: 'Reward',
           backgroundColorProperty: new Property( 'rgb( 248, 227, 226 )' )
