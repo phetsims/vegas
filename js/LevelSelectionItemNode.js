@@ -82,8 +82,9 @@ define( function( require ) {
     var maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
 
     // Background behind scoreDisplay
-    var scoreDisplayBackground = new Rectangle( 0, 0, maxContentWidth,
-      options.buttonHeight * options.scoreDisplayProportion, options.cornerRadius, options.cornerRadius, {
+    var scoreDisplayBackgroundHeight = options.buttonHeight * options.scoreDisplayProportion;
+    var scoreDisplayBackground = new Rectangle( 0, 0, maxContentWidth, scoreDisplayBackgroundHeight, {
+      cornerRadius: options.cornerRadius,
         fill: 'white',
         stroke: 'black',
         lineWidth: 1,
@@ -91,28 +92,17 @@ define( function( require ) {
       } );
 
     // constrain scoreDisplay to fit in scoreDisplayBackground
-    scoreDisplay.maxWidth = scoreDisplayBackground.width - 2 * options.scoreDisplayMinXMargin;
-    scoreDisplay.maxHeight = scoreDisplayBackground.height - 2 * options.scoreDisplayMinYMargin;
+    scoreDisplay.maxWidth = scoreDisplayBackground.width - ( 2 * options.scoreDisplayMinXMargin );
+    scoreDisplay.maxHeight = scoreDisplayBackground.height - ( 2 * options.scoreDisplayMinYMargin );
 
     // Icon, scaled and padded to fit and to make the button size correct.
-    var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - scoreDisplayBackground.height -
-                                                    2 * options.buttonYMargin - options.iconToScoreDisplayYSpace );
+    var iconHeight = options.buttonHeight - scoreDisplayBackground.height - 2 * options.buttonYMargin - options.iconToScoreDisplayYSpace;
+    var iconSize = new Dimension2( maxContentWidth, iconHeight );
     var adjustedIcon = LevelSelectionItemNode.createSizedImageNode( icon, iconSize );
+    adjustedIcon.centerX = scoreDisplayBackground.centerX;
+    adjustedIcon.bottom = scoreDisplayBackground.top - options.iconToScoreDisplayYSpace;
 
-    // Assemble the content for the button.
-    var buttonContent = new Node();
-    if ( scoreDisplayBackground.width > adjustedIcon.width ) {
-      adjustedIcon.centerX = scoreDisplayBackground.centerX;
-    }
-    else {
-      scoreDisplayBackground.centerX = adjustedIcon.centerX;
-    }
-    scoreDisplayBackground.top = adjustedIcon.bottom + options.iconToScoreDisplayYSpace;
-    buttonContent.addChild( adjustedIcon );
-    buttonContent.addChild( scoreDisplayBackground );
-    buttonContent.addChild( scoreDisplay );
-
-    // Keep the score display centered when its bounds change
+    // Keep scoreDisplay centered in its background when its bounds change
     var scoreDisplayUpdateLayout = function() {
       scoreDisplay.center = scoreDisplayBackground.center;
     };
@@ -121,7 +111,7 @@ define( function( require ) {
 
     // Create the button
     var button = new RectangularPushButton( {
-      content: buttonContent,
+      content: new Node( { children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ] } ),
       xMargin: options.buttonXMargin,
       yMargin: options.buttonYMargin,
       baseColor: options.baseColor,
