@@ -36,7 +36,7 @@ define( function( require ) {
     var self = this;
     ScreenView.call( this );
 
-    var scoreProperty = new Property( 1 );
+    var scoreProperty = new Property( 0 );
 
     var statusBar = new StatusBar(
       this.layoutBounds,
@@ -84,7 +84,8 @@ define( function( require ) {
 
     addLevelCompletedNode();
 
-    var levelSelectionNodeDiscreteStars = LevelSelectionItemNode.createWithScoreDisplayDiscreteStars( new Text( 'icon' ), scoreProperty, {
+    var levelSelectionNodeDiscreteStars = new LevelSelectionItemNode.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+      scoreDisplayConstructor: ScoreDisplayDiscreteStars,
       scoreDisplayOptions: {
         numStars: NUM_STARS,
         perfectScore: PERFECT_SCORE
@@ -98,7 +99,8 @@ define( function( require ) {
     } );
     this.addChild( levelSelectionNodeDiscreteStars );
 
-    var levelSelectionNodeNumberAndStar = LevelSelectionItemNode.createWithScoreDisplayNumberAndStar( new Text( 'icon' ), scoreProperty, {
+    var levelSelectionNodeNumberAndStar = new LevelSelectionItemNode.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+      scoreDisplayConstructor: ScoreDisplayNumberAndStar,
       listener: function() {
         console.log( 'level start' );
       },
@@ -108,7 +110,8 @@ define( function( require ) {
     } );
     this.addChild( levelSelectionNodeNumberAndStar );
 
-    var levelSelectionNodeTextAndNumber = LevelSelectionItemNode.createWithScoreDisplayTextAndNumber( new Text( 'icon' ), scoreProperty, {
+    var levelSelectionNodeTextAndNumber = new LevelSelectionItemNode.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+      scoreDisplayConstructor: ScoreDisplayTextAndNumber,
       listener: function() {
         console.log( 'level start' );
       },

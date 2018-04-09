@@ -29,9 +29,13 @@ define( function( require ) {
 
   // constants
   var SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
+  var VALID_SCORE_DISPLAY_CONSTRUCTORS = [
+    // all constructors must have the same signature!
+    ScoreDisplayDiscreteStars, ScoreDisplayNumberAndStar, ScoreDisplayTextAndNumber
+  ];
 
   /**
-   * @param {Node} icon Scenery node that appears on the button above the score display, scaled to fit
+   * @param {Node} icon - appears on the button above the score display, scaled to fit
    * @param {Node} scoreDisplay - displays the score
    * @param {Object} [options]
    * @constructor
@@ -151,7 +155,7 @@ define( function( require ) {
 
   vegas.register( 'LevelSelectionItemNode', LevelSelectionItemNode );
 
-  return inherit( Node, LevelSelectionItemNode, {
+  inherit( Node, LevelSelectionItemNode, {
 
     // @public
     dispose: function() {
@@ -180,66 +184,44 @@ define( function( require ) {
       icon.center = background.center;
       background.addChild( icon );
       return background;
-    },
-
-    /**
-     * Convenience function to create a LevelSelectionItemNode with a ScoreDisplayDiscreteStars.
-     * @param {Node} icon
-     * @param {Property.<number>} scoreProperty
-     * @param {Object} [options] - see LevelSelectionItemNode and ScoreDisplayDiscreteStars
-     * @public
-     * @static
-     */
-    createWithScoreDisplayDiscreteStars: function( icon, scoreProperty, options ) {
-
-      options = _.extend( {
-        listener: null, // {function|null} called when the button is pressed
-        scoreDisplayOptions: null // see ScoreDisplayDiscreteStars options
-      }, options );
-
-      var scoreDisplay = new ScoreDisplayDiscreteStars( scoreProperty, options.scoreDisplayOptions );
-
-      return new LevelSelectionItemNode( icon, scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
-    },
-
-    /**
-     * Convenience function to create a LevelSelectionItemNode with a ScoreDisplayNumberAndStar.
-     * @param {Node} icon
-     * @param {Property.<number>} scoreProperty
-     * @param {Object} [options] - see LevelSelectionItemNode and ScoreDisplayNumberAndStar
-     * @public
-     * @static
-     */
-    createWithScoreDisplayNumberAndStar: function( icon, scoreProperty, options ) {
-
-      options = _.extend( {
-        listener: null, // {function|null} called when the button is pressed
-        scoreDisplayOptions: null // see ScoreDisplayNumberAndStar options
-      }, options );
-
-      var scoreDisplay = new ScoreDisplayNumberAndStar( scoreProperty, options.scoreDisplayOptions );
-
-      return new LevelSelectionItemNode( icon, scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
-    },
-
-    /**
-     * Convenience function to create a LevelSelectionItemNode with a ScoreDisplayTextAndNumber.
-     * @param {Node} icon
-     * @param {Property.<number>} scoreProperty
-     * @param {Object} [options] - see LevelSelectionItemNode and ScoreDisplayTextAndNumber
-     * @public
-     * @static
-     */
-    createWithScoreDisplayTextAndNumber: function( icon, scoreProperty, options ) {
-
-      options = _.extend( {
-        listener: null, // {function|null} called when the button is pressed
-        scoreDisplayOptions: null // see ScoreDisplayTextAndNumber options
-      }, options );
-
-      var scoreDisplay = new ScoreDisplayTextAndNumber( scoreProperty, options.scoreDisplayOptions );
-
-      return new LevelSelectionItemNode( icon, scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
     }
   } );
+
+  /**
+   * Convenience constructor for creating a LevelSelectionItemNode with a specific type of scoreDisplay.
+   * Instantiation and disposal of the scoreDisplay instance is opaque to the client.
+   * @param {Node} icon - appears on the button above the score display, scaled to fit
+   * @param {Property.<number>} scoreProperty
+   * @param {Object} [options]
+   * @constructor
+   */
+  LevelSelectionItemNode.ScoreDisplayCreator = function( icon, scoreProperty, options ) {
+
+    options = _.extend( {
+      listener: null, // {function|null} called when the button is pressed
+      scoreDisplayConstructor: ScoreDisplayDiscreteStars, // {constructor} for creating scoreDisplay
+      scoreDisplayOptions: null // see scoreDisplay's constructor
+    }, options );
+
+    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.ScoreDisplayConstructor,
+      'invalid ScoreDisplayConstructor: ' + options.ScoreDisplayConstructor ) );
+
+    // @private all constructors must have the same signature!
+    this.scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
+
+    LevelSelectionItemNode.call( this, icon, this.scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
+  };
+
+  vegas.register( 'LevelSelectionItemNode.ScoreDisplayCreator', LevelSelectionItemNode.ScoreDisplayCreator );
+
+  inherit( LevelSelectionItemNode, LevelSelectionItemNode.ScoreDisplayCreator, {
+
+    // @public
+    dispose: function() {
+      this.scoreDisplay.dispose();
+      LevelSelectionItemNode.prototype.dispose.call( this );
+    }
+  } );
+
+  return LevelSelectionItemNode;
 } );
