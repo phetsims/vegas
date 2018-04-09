@@ -17,11 +17,7 @@ define( function( require ) {
   var ScoreDisplayDiscreteStars = require( 'VEGAS/ScoreDisplayDiscreteStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var RewardDialog = require( 'VEGAS/RewardDialog' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -73,26 +69,6 @@ define( function( require ) {
     };
 
     addLevelCompletedNode();
-
-    var openDialogButton = new RectangularPushButton( {
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
-      content: new Text( 'open RewardDialog', { font: new PhetFont( 20 ) } ),
-      listener: function() {
-        var rewardDialog = new RewardDialog( 10, {
-          keepGoingButtonListener: function() {
-            console.log( 'Keep Going button' );
-            rewardDialog.dispose();
-          },
-          newLevelButtonListener: function() {
-            console.log( 'New Level button' );
-            rewardDialog.dispose();
-          }
-        } );
-        rewardDialog.show();
-      },
-      center: this.layoutBounds.center.plusXY( -20, 0 )
-     } );
-    this.addChild( openDialogButton );
 
     var levelSelectionNodeDiscreteStars = LevelSelectionItemNode.createWithScoreDisplayDiscreteStars( new Text( 'icon' ), scoreProperty, {
       scoreDisplayOptions: {

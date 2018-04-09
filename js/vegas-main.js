@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RewardNodeScreenView = require( 'VEGAS/demo/RewardNodeScreenView' );
+  var RewardScreenView = require( 'VEGAS/demo/RewardScreenView' );
   var Screen = require( 'JOIST/Screen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
@@ -46,9 +46,9 @@ define( function( require ) {
 
       new Screen(
         function() {return {};},
-        function( model ) {return new RewardNodeScreenView();},
+        function( model ) {return new RewardScreenView();},
         {
-          name: 'Rewards',
+          name: 'Reward',
           backgroundColorProperty: new Property( '#fff' ),
           homeScreenIcon: createScreenIcon( 'blue' )
         }
