@@ -27,7 +27,7 @@ define( function( require ) {
 
   // constants
   var NUM_STARS = 5;
-  var PERFECT_SCORE = 10;
+  var PERFECT_SCORE = 1000;
 
   /**
    * @constructor
