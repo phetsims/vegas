@@ -55,11 +55,13 @@ define( function( require ) {
 
     var scoreDisplay = new ScoreDisplayNumberAndStar( new NumberProperty( score ), {
       font: SCORE_FONT,
-      starOuterRadius: 25,
-      starInnerRadius: 12.5,
-      starFilledLineWidth: 3,
-      starEmptyLineWidth: 3,
-      spacing: 6
+      spacing: 6,
+      starNodeOptions: {
+        outerRadius: 25,
+        innerRadius: 12.5,
+        filledLineWidth: 3,
+        emptyLineWidth: 3
+      }
     } );
 
     var buttonOptions = {
