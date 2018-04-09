@@ -14,7 +14,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
   var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
-  var OutsideBackgroundNode = require( 'SCENERY_PHET/OutsideBackgroundNode' );
   var ScoreDisplayDiscreteStars = require( 'VEGAS/ScoreDisplayDiscreteStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
@@ -38,9 +37,6 @@ define( function( require ) {
   function VegasScreenView() {
     var self = this;
     ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
-
-    // background
-    this.addChild( new OutsideBackgroundNode( this.layoutBounds.centerX, this.layoutBounds.centerY + 20, this.layoutBounds.width * 3, this.layoutBounds.height, this.layoutBounds.height ) );
 
     var scoreProperty = new Property( 1 );
 
