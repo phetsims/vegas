@@ -1,7 +1,7 @@
 // Copyright 2014-2018, University of Colorado Boulder
 
 /**
- * Main ScreenView container for Buttons portion of the UI component demo.
+ * Demonstrates vegas UI components.
  *
  * @author Sam Reid
  * @author Andrea Lin
