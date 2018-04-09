@@ -50,6 +50,7 @@ define( function( require ) {
     this.addChild( new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } ).mutate( { left: 20, top: 260 } ) );
 
     this.addChild( new StatusBar(
+      this.layoutBounds,
       this.visibleBoundsProperty,
       new Text( 'User provided message' ),
       new ScoreDisplayNumberAndStar( scoreProperty ), {
