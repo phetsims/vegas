@@ -121,7 +121,7 @@ define( function( require ) {
     scoreDisplayUpdateLayout();
 
     // Create the button
-    var buttonOptions = {
+    var button = new RectangularPushButton( {
       content: contentNode,
       xMargin: options.buttonXMargin,
       yMargin: options.buttonYMargin,
@@ -132,9 +132,7 @@ define( function( require ) {
       // TODO: if LevelSelectionItemNode changes to inheritance, this will have to change,
       // see https://github.com/phetsims/vegas/issues/56
       tandem: options.tandem.createTandem( 'button' )
-    };
-
-    var button = new RectangularPushButton( buttonOptions );
+    } );
     this.addChild( button );
 
     // Best time (optional), centered below the button, does not move when button is pressed
