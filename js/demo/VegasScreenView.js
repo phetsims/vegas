@@ -100,7 +100,7 @@ define( function( require ) {
     var levelSelectionNodeDiscreteStars = LevelSelectionItemNode.createWithScoreDisplayDiscreteStars( new Text( 'icon' ), scoreProperty, {
       scoreDisplayOptions: {
         numStars: NUM_STARS,
-        perfectScore: PERFECT_SCORE,
+        perfectScore: PERFECT_SCORE
       },
       listener: function() {
          console.log( 'level start' );
