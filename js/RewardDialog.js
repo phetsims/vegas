@@ -18,7 +18,7 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var VStrut = require( 'SCENERY/nodes/VStrut' );
-  var Dialog = require( 'JOIST/Dialog' );
+  var Dialog = require( 'SUN/Dialog' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var Text = require( 'SCENERY/nodes/Text' );
