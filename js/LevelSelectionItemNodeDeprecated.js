@@ -1,13 +1,13 @@
 // Copyright 2014-2018, University of Colorado Boulder
 
 /**
- * Deprecated.
  * Button for selecting a game level.
  * Also depicts the progress made on each level.
  *
  * @author John Blanco
  * @author Chris Malley
  * @author Andrea Lin
+ * @deprecated use LevelSelectionButton
  */
 define( function( require ) {
   'use strict';
