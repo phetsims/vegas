@@ -5,6 +5,7 @@
  *
  * @author John Blanco
  * @author Sam Reid
+ * @deprecated use ScoreDisplayDiscreteStars
  */
 define( function( require ) {
   'use strict';
