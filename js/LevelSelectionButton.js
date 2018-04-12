@@ -2,8 +2,9 @@
 
 /**
  * Button for selecting a game level.
- * Also depicts the progress made on each level.
+ * Includes an icon, score display, and (optional) 'best time' display.
  * See specification in https://github.com/phetsims/vegas/issues/59.
+ * Originally named LevelSelectionItemNode, renamed to LevelSelectionButton on 4/10/2018.
  *
  * @author John Blanco
  * @author Chris Malley
