@@ -39,7 +39,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function LevelSelectionItemNodeDeprecated( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
+  function LevelSelectionItemNode( icon, numStars, fireFunction, scoreProperty, perfectScore, options ) {
     // TODO: numStars and perfectScore not necessarily necessary
 
     assert && assert( icon instanceof Node );
@@ -115,7 +115,7 @@ define( function( require ) {
     // Icon, scaled and padded to fit and to make the button size correct.
     var iconSize = new Dimension2( maxContentWidth, options.buttonHeight - progressIndicatorBackground.height -
                                                     2 * options.buttonYMargin - options.iconToProgressIndicatorYSpace );
-    var adjustedIcon = LevelSelectionItemNodeDeprecated.createSizedImageNode( icon, iconSize );
+    var adjustedIcon = LevelSelectionItemNode.createSizedImageNode( icon, iconSize );
     adjustedIcon.pickable = false; // TODO: is this needed?
 
     // Assemble the content.
@@ -141,7 +141,7 @@ define( function( require ) {
       cornerRadius: options.cornerRadius,
       listener: fireFunction,
 
-      // TODO: if LevelSelectionItemNodeDeprecated changes to inheritance, this will have to change,
+      // TODO: if LevelSelectionItemNode changes to inheritance, this will have to change,
       // see https://github.com/phetsims/vegas/issues/56
       tandem: options.tandem.createTandem( 'button' )
     };
@@ -171,9 +171,9 @@ define( function( require ) {
     this.mutate( options );
   }
 
-  vegas.register( 'LevelSelectionItemNodeDeprecated', LevelSelectionItemNodeDeprecated );
+  vegas.register( 'LevelSelectionItemNode', LevelSelectionItemNode );
 
-  return inherit( Node, LevelSelectionItemNodeDeprecated, {}, {
+  return inherit( Node, LevelSelectionItemNode, {}, {
     /**
      * Creates a new the same dimensions as size with the specified icon. The icon will be scaled to fit, and a
      * background with the specified size may be added to ensure the bounds of the returned node are correct.
