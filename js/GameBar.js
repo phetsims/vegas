@@ -38,7 +38,7 @@ define( function( require ) {
       stroke: options.barStroke
     } );
 
-    // Support decoration, but put the bar behind everything else
+    // Support decoration, with the bar behind everything else
     options.children = [ this.barNode ].concat( options.children || [] );
 
     Node.call( this, options );
