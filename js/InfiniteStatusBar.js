@@ -12,9 +12,9 @@ define( function( require ) {
 
   // modules
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
-  var GameBar = require( 'VEGAS/GameBar' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var StatusBar = require( 'VEGAS/StatusBar' );
   var vegas = require( 'VEGAS/vegas' );
 
   /**
@@ -53,7 +53,7 @@ define( function( require ) {
     assert && assert( !options.children, 'InfiniteStatusBar sets children' );
     options.children = [ backButton, messageNodeParent, scoreDisplayParent ];
 
-    GameBar.call( this, backgroundHeight, layoutBounds, visibleBoundsProperty, options );
+    StatusBar.call( this, backgroundHeight, layoutBounds, visibleBoundsProperty, options );
 
     // Update the layout of things on the status bar.
     // Some of this may be unnecessary depending on what changed, but it simplifies to do all layout here.
@@ -95,12 +95,12 @@ define( function( require ) {
 
   vegas.register( 'InfiniteStatusBar', InfiniteStatusBar );
 
-  return inherit( GameBar, InfiniteStatusBar, {
+  return inherit( StatusBar, InfiniteStatusBar, {
 
     // @public
     dispose: function() {
       this.disposeInfiniteStatusBar();
-      GameBar.prototype.dispose.call( this );
+      StatusBar.prototype.dispose.call( this );
     }
   } );
 } );

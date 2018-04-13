@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Base type for the bar that appears at the top of the screen.
+ * Base type for the status bar that appears at the top of games.
  * The base type is primarily responsible for resizing and 'floating' the bar.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function GameBar( barHeight, layoutBounds, visibleBoundsProperty, options ) {
+  function StatusBar( barHeight, layoutBounds, visibleBoundsProperty, options ) {
 
     var self = this;
 
@@ -51,23 +51,23 @@ define( function( require ) {
     visibleBoundsProperty.link( visibleBoundsListener );
 
     // @private
-    this.disposeGameBar = function() {
+    this.disposeStatusBar = function() {
       if ( visibleBoundsProperty.hasListener( visibleBoundsListener ) ) {
         visibleBoundsProperty.unlink( visibleBoundsListener );
       }
     };
   }
 
-  vegas.register( 'GameBar', GameBar );
+  vegas.register( 'StatusBar', StatusBar );
 
-  return inherit( Node, GameBar, {
+  return inherit( Node, StatusBar, {
 
     /**
      * @public
      * @override
      */
     dispose: function() {
-      this.disposeGameBar();
+      this.disposeStatusBar();
       Node.prototype.dispose.call( this );
     }
   } );
