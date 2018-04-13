@@ -20,9 +20,11 @@ define( function( require ) {
   var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
-  var ScoreDisplayDiscreteStars = require( 'VEGAS/ScoreDisplayDiscreteStars' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
+  var ScoreDisplayTextAndStars = require( 'VEGAS/ScoreDisplayTextAndStars' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -43,7 +45,7 @@ define( function( require ) {
     ScreenView.call( this );
 
     var scoreProperty = new Property( 0 );
-    var bestTimeProperty = new Property( 1 );
+    var bestTimeProperty = new Property( 0 );
     var bestTimeVisibleProperty = new BooleanProperty( true );
 
     var statusBar = new StatusBar(
@@ -91,7 +93,8 @@ define( function( require ) {
       left: this.layoutBounds.minX + 20,
       top: controls.bottom + 40,
       children: [
-        new ScoreDisplayDiscreteStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ),
+        new ScoreDisplayStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ),
+        new ScoreDisplayTextAndStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ),
         new ScoreDisplayNumberAndStar( scoreProperty ),
         new ScoreDisplayTextAndNumber( scoreProperty )
       ]
@@ -99,9 +102,11 @@ define( function( require ) {
     this.addChild( scoreDisplays );
 
     // Level selection buttons
-    var buttonWithDiscreteStars = new LevelSelectionButton.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+    var buttonIcon = new Rectangle( 0, 0, 100, 100, { fill: 'red', stroke: 'black' } );
+
+    var buttonWithStars = new LevelSelectionButton.ScoreDisplayCreator( buttonIcon, scoreProperty, {
       BUTTON_WIDTH: BUTTON_WIDTH,
-      scoreDisplayConstructor: ScoreDisplayDiscreteStars,
+      scoreDisplayConstructor: ScoreDisplayStars,
       scoreDisplayOptions: {
         numStars: NUM_STARS,
         perfectScore: PERFECT_SCORE
@@ -109,13 +114,23 @@ define( function( require ) {
       listener: function() { console.log( 'level start' ); }
     } );
 
-    var buttonWithNumberAndStar = new LevelSelectionButton.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+    var buttonWithTextAndStars = new LevelSelectionButton.ScoreDisplayCreator( buttonIcon, scoreProperty, {
+      BUTTON_WIDTH: BUTTON_WIDTH,
+      scoreDisplayConstructor: ScoreDisplayTextAndStars,
+      scoreDisplayOptions: {
+        numStars: NUM_STARS,
+        perfectScore: PERFECT_SCORE
+      },
+      listener: function() { console.log( 'level start' ); }
+    } );
+
+    var buttonWithNumberAndStar = new LevelSelectionButton.ScoreDisplayCreator( buttonIcon, scoreProperty, {
       BUTTON_WIDTH: BUTTON_WIDTH,
       scoreDisplayConstructor: ScoreDisplayNumberAndStar,
       listener: function() { console.log( 'level start' ); }
     } );
 
-    var buttonWithTextAndNumber = new LevelSelectionButton.ScoreDisplayCreator( new Text( 'icon' ), scoreProperty, {
+    var buttonWithTextAndNumber = new LevelSelectionButton.ScoreDisplayCreator( buttonIcon, scoreProperty, {
       BUTTON_WIDTH: BUTTON_WIDTH,
       scoreDisplayConstructor: ScoreDisplayTextAndNumber,
       listener: function() { console.log( 'level start' ); },
@@ -128,7 +143,7 @@ define( function( require ) {
       align: 'top',
       left: this.layoutBounds.minX + 20,
       top: scoreDisplays.bottom + 40,
-      children: [ buttonWithDiscreteStars, buttonWithNumberAndStar, buttonWithTextAndNumber ]
+      children: [ buttonWithStars, buttonWithTextAndStars, buttonWithNumberAndStar, buttonWithTextAndNumber ]
     } ) );
 
     // LevelCompletedNode that cycles through score values when you press 'Continue' button

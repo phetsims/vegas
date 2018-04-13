@@ -19,9 +19,10 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ScoreDisplayDiscreteStars = require( 'VEGAS/ScoreDisplayDiscreteStars' );
+  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
+  var ScoreDisplayTextAndStars = require( 'VEGAS/ScoreDisplayTextAndStars' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Tandem = require( 'TANDEM/Tandem' );
@@ -32,7 +33,7 @@ define( function( require ) {
   var SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
   var VALID_SCORE_DISPLAY_CONSTRUCTORS = [
     // all constructors must have the same signature!
-    ScoreDisplayDiscreteStars, ScoreDisplayNumberAndStar, ScoreDisplayTextAndNumber
+    ScoreDisplayStars, ScoreDisplayNumberAndStar, ScoreDisplayTextAndNumber, ScoreDisplayTextAndStars
   ];
 
   /**
@@ -212,7 +213,7 @@ define( function( require ) {
 
     options = _.extend( {
       listener: null, // {function|null} called when the button is pressed
-      scoreDisplayConstructor: ScoreDisplayDiscreteStars, // {constructor} for creating scoreDisplay
+      scoreDisplayConstructor: ScoreDisplayStars, // {constructor} for creating scoreDisplay
       scoreDisplayOptions: null // see scoreDisplay's constructor
     }, options );
 

@@ -18,7 +18,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ScoreDisplayDiscreteStars = require( 'VEGAS/ScoreDisplayDiscreteStars' );
+  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -96,7 +96,7 @@ define( function( require ) {
     // TODO: assert options.scoreDisplayType provided is right
     //TODO memory leak, progressIndicator links to scoreProperty and is not disposed
     if ( options.scoreDisplayType === 'discreteStars' ) {
-      var progressIndicator = new ScoreDisplayDiscreteStars( scoreProperty, _.extend( {}, scoreDisplayOptions, {
+      var progressIndicator = new ScoreDisplayStars( scoreProperty, _.extend( {}, scoreDisplayOptions, {
         numStars: numStars,
         perfectScore: perfectScore
       } ) );

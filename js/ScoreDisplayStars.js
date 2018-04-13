@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ScoreDisplayDiscreteStars( scoreProperty, options ) {
+  function ScoreDisplayStars( scoreProperty, options ) {
 
     var self = this;
 
@@ -44,7 +44,7 @@ define( function( require ) {
     var numStars = options.numStars;
     var perfectScore = options.perfectScore;
 
-    assert && assert( !options.children, 'ScoreDisplayDiscreteStars sets children' );
+    assert && assert( !options.children, 'ScoreDisplayStars sets children' );
     HBox.call( this, { children: [] } );
 
     // Update visibility of filled and half-filled stars based on score.
@@ -76,20 +76,20 @@ define( function( require ) {
     scoreProperty.link( scorePropertyListener );
 
     // @private
-    this.disposeScoreDisplayDiscreteStars = function() {
+    this.disposeScoreDisplayStars = function() {
       scoreProperty.unlink( scorePropertyListener );
     };
 
     this.mutate( options );
   }
 
-  vegas.register( 'ScoreDisplayDiscreteStars', ScoreDisplayDiscreteStars );
+  vegas.register( 'ScoreDisplayStars', ScoreDisplayStars );
 
-  return inherit( HBox, ScoreDisplayDiscreteStars, {
+  return inherit( HBox, ScoreDisplayStars, {
 
     // @public 
     dispose: function() {
-      this.disposeScoreDisplayDiscreteStars();
+      this.disposeScoreDisplayStars();
       HBox.prototype.dispose.call( this );
     }
   } );

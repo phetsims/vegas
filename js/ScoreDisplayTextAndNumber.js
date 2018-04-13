@@ -20,6 +20,8 @@ define( function( require ) {
 
   // constants
   var DEFAULT_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+
+  // strings
   var patternScoreNumberString = require( 'string!VEGAS/pattern.score.number' );
 
   /**
