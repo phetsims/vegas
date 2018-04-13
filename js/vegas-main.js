@@ -15,7 +15,8 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
-  var VegasScreenView = require( 'VEGAS/demo/VegasScreenView' );
+  var InfiniteChallengesScreenView = require( 'VEGAS/demo/InfiniteChallengesScreenView' );
+  var FiniteChallengesScreenView = require( 'VEGAS/demo/FiniteChallengesScreenView' );
 
   // strings
   var vegasTitleString = require( 'string!VEGAS/vegas.title' );
@@ -38,8 +39,15 @@ define( function( require ) {
 
       new Screen(
         function() { return {}; },
-        function( model ) { return new VegasScreenView(); }, {
-          name: 'Vegas',
+        function( model ) { return new FiniteChallengesScreenView(); }, {
+          name: 'Finite Challenges',
+          backgroundColorProperty: new Property( 'rgb( 214, 233, 254 )' )
+        } ),
+
+      new Screen(
+        function() { return {}; },
+        function( model ) { return new InfiniteChallengesScreenView(); }, {
+          name: 'Infinite Challenges',
           backgroundColorProperty: new Property( 'rgb( 214, 233, 254 )' )
         } ),
 

@@ -1,10 +1,8 @@
-// Copyright 2014-2018, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
- * Demonstrates vegas UI components.
+ * Demonstrates the challenge UI for a game that has an infinite number of challenges per level.
  *
- * @author Sam Reid
- * @author Andrea Lin
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
@@ -14,7 +12,6 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
@@ -29,8 +26,8 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function VegasScreenView() {
-    var self = this;
+  function InfiniteChallengesScreenView() {
+
     ScreenView.call( this );
 
     var scoreProperty = new Property( 0 );
@@ -57,28 +54,9 @@ define( function( require ) {
     } );
 
     this.addChild( scoreSlider );
-
-    // LevelCompletedNode that cycles through score values when you press 'Continue' button
-    var score = 0;
-    var addLevelCompletedNode = function() {
-      var maxScore = 12;
-      var levelCompletedNode = new LevelCompletedNode( 7, score, maxScore, 4, true, 77, 74, true, function() {
-        console.log( 'continue' );
-        score++;
-        if ( score > maxScore ) {
-          score = 0;
-        }
-        levelCompletedNode.detach();
-        addLevelCompletedNode();
-      }, {
-        center: self.layoutBounds.center
-      } );
-      self.addChild( levelCompletedNode );
-    };
-    addLevelCompletedNode();
   }
 
-  vegas.register( 'VegasScreenView', VegasScreenView );
+  vegas.register( 'InfiniteChallengesScreenView', InfiniteChallengesScreenView );
 
-  return inherit( ScreenView, VegasScreenView );
+  return inherit( ScreenView, InfiniteChallengesScreenView );
 } );
