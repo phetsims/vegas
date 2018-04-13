@@ -12,11 +12,11 @@ define( function( require ) {
   var Color = require( 'SCENERY/util/Color' );
   var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
   var SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
+  var StatusBar = require( 'VEGAS/StatusBar' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Tandem = require( 'TANDEM/Tandem' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -28,69 +28,97 @@ define( function( require ) {
   var pattern0Challenge1MaxString = require( 'string!VEGAS/pattern.0challenge.1max' );
   var startOverString = require( 'string!VEGAS/startOver' );
 
+  // constants
+  var DEFAULT_FONT = new PhetFont( 20 );
+
   /**
    * @param {Bounds2} layoutBounds
    * @param {Property.<Bounds2>} visibleBoundsProperty
-   * @param {Property.<number>} challengeIndexProperty which challenge is the user current playing? (index starts at 0, displayed starting at 1)
-   * @param {Property.<number>} challengesPerGameProperty how many challenges are in the current game
-   * @param {Property.<number>} levelProperty
    * @param {Property.<number>} scoreProperty
-   * @param {Property.<number>} elapsedTimeProperty elapsed time in seconds
-   * @param {Property.<number>} timerEnabledProperty is the timer enabled?
-   * @param {function} startOverCallback
    * @param {Object} [options]
    * @constructor
    */
-  function FiniteStatusBar( layoutBounds, visibleBoundsProperty, challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
+  function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, options ) {
+
+    var self = this;
 
     options = _.extend( {
+
+      // optional Properties
+      challengeIndexProperty: null, // {Property.<number>|null}
+      challengesPerLevelProperty: null, // {Property.<number>|null}
+      levelProperty: null, // {Property.<number>|null}
+      elapsedTimeProperty: null, // {Property.<number>|null} 
+      timerEnabledProperty: null, // {Property.<boolean>|null} 
 
       // things that can be hidden
       levelVisible: true,
       challengeNumberVisible: true,
 
       // all text
-      font: new PhetFont( 20 ),
+      font: DEFAULT_FONT,
       textFill: 'white',
 
-      // 'Start Over' button
+      // nested options for 'Start Over' button, filled in below
+      startOverButtonOptions: null,
       startOverButtonText: startOverString,
-      startOverButtonTextFill: 'black',
-      startOverButtonBaseColor: new Color( 229, 243, 255 ),
-      startOverButtonXMargin: 10,
-      startOverButtonYMargin: 5,
 
       // Timer
       clockIconRadius: 15,
 
-      // Background
+      // spacing and margin for things in the bar
       xSpacing: 50,
-      leftMargin: 20,
-      rightMargin: 20,
+      xMargin: 20,
       yMargin: 10,
-      backgroundFill: 'rgb( 49, 117, 202 )',
-      backgroundStroke: null,
-      backgroundLineWidth: 1,
+
+      // phet-io
       tandem: Tandem.required
     }, options );
 
-    var screenWidth = layoutBounds.width;
+    // nested options for 'Start Over' button
+    options.startOverButtonOptions = _.extend( {
+      font: options.font,
+      textFill: 'black',
+      baseColor: new Color( 229, 243, 255 ), //TODO what is a good default?
+      xMargin: 10,
+      yMargin: 5,
+      listener: function() {},
+      tandem: options.tandem.createTandem( 'startOverButton' )
+      //TODO maxWidth
+    }, options.startOverButtonOptions );
+
+    var leftHBoxChildren = [];
 
     var textOptions = { fill: options.textFill, font: options.font };
 
-    // Level
-    var levelText = new Text( '', _.extend( { tandem: options.tandem.createTandem( 'levelText' ) }, textOptions ) );
-    levelProperty.link( function( level ) {
-      levelText.text = StringUtils.format( labelLevelString, level + 1 );
-    } );
+    // Level N
+    if ( options.levelProperty ) {
+      var levelText = new Text( '', _.extend( {
+        tandem: options.tandem.createTandem( 'levelText' )
+      }, textOptions ) );
+      leftHBoxChildren.push( levelText );
 
-    // Challenge number
-    var challengeNumberText = new Text( '', _.extend( { tandem: options.tandem.createTandem( 'challengeNumberText' ) }, textOptions ) );
-    var updateChallengeString = function() {
-      challengeNumberText.text = StringUtils.format( pattern0Challenge1MaxString, challengeIndexProperty.get() + 1, challengesPerGameProperty.get() );
-    };
-    challengeIndexProperty.link( updateChallengeString );
-    challengesPerGameProperty.link( updateChallengeString );
+      var levelListener = function( level ) {
+        levelText.text = StringUtils.format( labelLevelString, level + 1 );
+      };
+      options.levelProperty.link( levelListener );
+    }
+
+    // Challenge N of M
+    if ( options.challengeIndexProperty && options.challengesPerLevelProperty ) {
+      var challengeNumberText = new Text( '', _.extend( {
+        tandem: options.tandem.createTandem( 'challengeNumberText' )
+      }, textOptions ) );
+      leftHBoxChildren.push( challengeNumberText );
+
+      var updateChallengeString = function() {
+        //TODO #66 change to StringUtils.fillIn ?
+        challengeNumberText.text = StringUtils.format( pattern0Challenge1MaxString,
+          options.challengeIndexProperty.get() + 1, options.challengesPerLevelProperty.get() );
+      };
+      options.challengeIndexProperty.link( updateChallengeString );
+      options.challengesPerLevelProperty.link( updateChallengeString );
+    }
 
     // Score
     var scoreDisplay = new ScoreDisplayLabeledNumber( scoreProperty, {
@@ -98,66 +126,90 @@ define( function( require ) {
       fill: options.textFill,
       font: options.font
     } );
+    leftHBoxChildren.push( scoreDisplay );
 
-    // Timer, always takes up space even when hidden.
-    var timerNode = new Node( { pickable: false } );
-    var clockIcon = new SimpleClockIcon( options.clockIconRadius );
-    var timeValue = new Text( '', textOptions );
-    timerNode.addChild( clockIcon );
-    timerNode.addChild( timeValue );
-    timeValue.left = clockIcon.right + 8;
-    timeValue.centerY = clockIcon.centerY;
-    elapsedTimeProperty.link( function( elapsedTime ) {
-      timeValue.text = GameTimer.formatTime( elapsedTime );
-    } );
+    // Timer
+    if ( options.elapsedTimeProperty && options.timerEnabledProperty ) {
 
-    // All of the stuff that's grouped together at the left end of the scoreboard
-    var nodes = [ levelText, challengeNumberText, scoreDisplay, timerNode ]; // in left-to-right order
-    if ( !options.levelVisible ) { nodes.splice( nodes.indexOf( levelText ), 1 ); }
-    if ( !options.challengeNumberVisible ) { nodes.splice( nodes.indexOf( challengeNumberText ), 1 ); }
-    for ( var i = 0; i < nodes.length; i++ ) {
-      if ( i > 0 ) {
-        nodes[ i ].left = nodes[ i - 1 ].right + options.xSpacing;
-        nodes[ i ].centerY = nodes[ i - 1 ].centerY;
-      }
+      var clockIcon = new SimpleClockIcon( options.clockIconRadius );
+      var timeValue = new Text( '', textOptions );
+      var timerNode = new HBox( {
+        spacing: 8,
+        children: [ clockIcon, timeValue ]
+      } );
+      leftHBoxChildren.push( timerNode );
+
+      var elapsedTimeListener = function( elapsedTime ) {
+        timeValue.text = GameTimer.formatTime( elapsedTime );
+      };
+      options.elapsedTimeProperty.link( elapsedTimeListener );
+
+      var timerEnabledListener = function( timerEnabled ) {
+        timerNode.visible = ( options.timerEnabledProperty && timerEnabled );
+      };
+      options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
     }
-    var leftParentNode = new Node( {
-      children: nodes,
-      maxWidth: 0.75 * ( screenWidth - options.leftMargin - options.rightMargin ) // constrain width for i18n
+
+    // All of the stuff that's grouped together at the left end of the status bar
+    var leftHBox = new HBox( {
+      resize: false,
+      spacing: options.xSpacing,
+      children: leftHBoxChildren
+      //TODO maxWidth
     } );
 
     // Start Over button
-    var startOverButton = new TextPushButton( options.startOverButtonText, {
-      listener: startOverCallback,
-      font: options.font,
-      textFill: options.startOverButtonTextFill,
-      baseColor: options.startOverButtonBaseColor,
-      xMargin: options.startOverButtonXMargin,
-      yMargin: options.startOverButtonYMargin,
-      maxWidth: screenWidth - leftParentNode.maxWidth - options.leftMargin - options.rightMargin - options.xSpacing, // constrain width for i18n
-      tandem: options.tandem.createTandem( 'startOverButton' )
-    } );
+    var startOverButton = new TextPushButton( options.startOverButtonText, options.startOverButtonOptions );
 
-    // background
-    var backgroundHeight = Math.max( leftParentNode.height, startOverButton.height ) + ( 2 * options.yMargin );
-    var backgroundNode = new Rectangle( 0, 0, 4 * screenWidth, backgroundHeight,
-      { fill: options.backgroundFill, stroke: options.backgroundStroke, lineWidth: options.backgroundLineWidth } );
+    assert && assert( !options.children, 'FiniteStatusBar sets children' );
+    options.children = [ leftHBox, startOverButton ];
 
-    // layout
-    leftParentNode.centerY = startOverButton.centerY = backgroundNode.centerY; // vertically aligned
-    leftParentNode.left = backgroundNode.centerX - ( screenWidth / 2 ) + options.leftMargin; // left end
-    startOverButton.right = backgroundNode.centerX + ( screenWidth / 2 ) - options.rightMargin; // right end
+    var barHeight = Math.max( leftHBox.height, startOverButton.height ) + ( 2 * options.yMargin );
 
-    options.children = [ backgroundNode, leftParentNode, startOverButton ];
-    Node.call( this, options );
+    StatusBar.call( this, barHeight, layoutBounds, visibleBoundsProperty, options );
 
-    // Do this after setting maxWidth of leftParentNode
-    timerEnabledProperty.link( function( timerEnabled ) {
-      timerNode.visible = timerEnabled;
-    } );
+    // When the bar changes...
+    var updateLayout = function() {
+      leftHBox.left = self.barNode.left + options.xMargin;
+      leftHBox.centerY = self.barNode.centerY;
+      startOverButton.right = self.barNode.right - options.xMargin;
+      startOverButton.centerY = self.barNode.centerY;
+    };
+    this.barNode.on( 'bounds', updateLayout );
+    updateLayout();
+
+    // @private
+    this.disposeFiniteStatusBar = function() {
+      if ( options.levelProperty && options.levelProperty.hasListener( levelListener ) ) {
+        options.levelProperty.unlink( levelListener );
+      }
+      if ( options.challengeIndexProperty && options.challengeIndexProperty.hasListener( updateChallengeString ) ) {
+        options.challengeIndexProperty.unlink( updateChallengeString );
+      }
+      if ( options.challengesPerLevelProperty && options.challengesPerLevelProperty.hasListener( updateChallengeString ) ) {
+        options.challengesPerLevelProperty.link( updateChallengeString );
+      }
+      if ( options.elapsedTimeProperty && options.elapsedTimeProperty.hasListener( elapsedTimeListener ) ) {
+        options.elapsedTimeProperty.unlink( elapsedTimeListener );
+      }
+      if ( options.timerEnabledProperty && options.timerEnabledProperty.hasListener( timerEnabledListener ) ) {
+        options.timerEnabledProperty.unlink( timerEnabledListener );
+      }
+      scoreDisplay.dispose(); //TODO #66 don't do this when it's passed in to constructor
+    };
   }
 
   vegas.register( 'FiniteStatusBar', FiniteStatusBar );
 
-  return inherit( Node, FiniteStatusBar );
+  return inherit( StatusBar, FiniteStatusBar, {
+
+    /**
+     * @public
+     * @override
+     */
+    dispose: function() {
+      this.disposeFiniteStatusBar();
+      StatusBar.prototype.dispose.call( this );
+    }
+  } );
 } );
