@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var LevelSelectionScreenView = require( 'VEGAS/demo/LevelSelectionScreenView' );
   var Property = require( 'AXON/Property' );
   var RewardScreenView = require( 'VEGAS/demo/RewardScreenView' );
   var Screen = require( 'JOIST/Screen' );
@@ -27,6 +28,13 @@ define( function( require ) {
 
   SimLauncher.launch( function() {
     new Sim( vegasTitleString, [
+
+      new Screen(
+        function() { return {}; },
+        function( model ) { return new LevelSelectionScreenView(); }, {
+          name: 'Level Selection',
+          backgroundColorProperty: new Property( 'white' )
+        } ),
 
       new Screen(
         function() { return {}; },
