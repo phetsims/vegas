@@ -73,5 +73,8 @@
   },
   "newLevel": {
     "value": "New Level"
+  },
+  "score": {
+    "value": "Score:"
   }
 }
