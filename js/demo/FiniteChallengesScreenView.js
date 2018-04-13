@@ -11,13 +11,19 @@ define( function( require ) {
 
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
+  var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var ScoreboardBar = require( 'VEGAS/ScoreboardBar' );
   var ScreenView = require( 'JOIST/ScreenView' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var vegas = require( 'VEGAS/vegas' );
+
+  // constants
+  var PERFECT_SCORE = 1000;
 
   /**
    * @constructor
@@ -27,13 +33,15 @@ define( function( require ) {
     var self = this;
     ScreenView.call( this );
 
+    var scoreProperty = new Property( 0 );
+
     // bar across the top
-    var scoreboardNode = new ScoreboardBar(
+    var scoreboardBar = new ScoreboardBar(
       this.layoutBounds.width,
       new Property( 0 ), // challenge index
       new Property( 6 ), // challenges per level
       new Property( 0 ), // level
-      new Property( 0 ), // score
+      scoreProperty, // score
       new Property( 0 ), // elapse time
       new BooleanProperty( true ), // timer enabled
       function() { console.log( 'Start Over' ); }, // callback for 'Start Over' button
@@ -44,7 +52,18 @@ define( function( require ) {
         centerX: this.layoutBounds.centerX,
         top: this.layoutBounds.top
       } );
-    this.addChild( scoreboardNode );
+    this.addChild( scoreboardBar );
+
+    // score slider
+    var scoreSlider = new HBox( {
+      left: this.layoutBounds.left + 20,
+      top: scoreboardBar.bottom + 30,
+      children: [
+        new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
+        new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } )
+      ]
+    } );
+    this.addChild( scoreSlider );
 
     // LevelCompletedNode that cycles through score values when you press 'Continue' button
     var score = 0;
