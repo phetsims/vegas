@@ -11,6 +11,7 @@ define( function( require ) {
 
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var FiniteStatusBar = require( 'VEGAS/FiniteStatusBar' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -19,7 +20,6 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var ScoreboardBar = require( 'VEGAS/ScoreboardBar' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
@@ -39,7 +39,7 @@ define( function( require ) {
     var scoreProperty = new Property( 0 );
 
     // bar across the top
-    var scoreboardBar = new ScoreboardBar(
+    var statusBar = new FiniteStatusBar(
       this.layoutBounds.width,
       new Property( 0 ), // challenge index
       new Property( 6 ), // challenges per level
@@ -55,17 +55,17 @@ define( function( require ) {
         centerX: this.layoutBounds.centerX,
         top: this.layoutBounds.top
       } );
-    this.addChild( scoreboardBar );
+    this.addChild( statusBar );
 
     // slider for testing score changes
     var scoreSlider = new HBox( {
       left: this.layoutBounds.left + 20,
-      top: scoreboardBar.bottom + 30,
+      top: statusBar.bottom + 30,
       children: [
         new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
         new HSlider( scoreProperty, new Range( 0, PERFECT_SCORE ), {
 
-          //TODO #66 remove this when scoreDisplay option is added to ScoreboardBar
+          //TODO #66 remove this when scoreDisplay option is added to FiniteStatusBar
           constrainValue: function( value ) {
             return Util.roundSymmetric( value );
           }

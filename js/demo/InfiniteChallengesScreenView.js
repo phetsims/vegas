@@ -11,13 +11,13 @@ define( function( require ) {
   // modules
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
+  var InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );
   var vegas = require( 'VEGAS/vegas' );
 
@@ -34,7 +34,7 @@ define( function( require ) {
     var scoreProperty = new Property( 0 );
 
     // bar across the top
-    var statusBar = new StatusBar(
+    var statusBar = new InfiniteStatusBar(
       this.layoutBounds,
       this.visibleBoundsProperty,
       new Text( 'Your Node goes here', {

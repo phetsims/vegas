@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Status bar that runs along the top of a game.
+ * Status bar for games with levels that have an infinite (open-ended) number of challenges.
  * See specification in https://github.com/phetsims/vegas/issues/59.
  *
  * @author Andrea Lin
@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function StatusBar( layoutBounds, visibleBoundsProperty, messageNode, scoreDisplay, options ) {
+  function InfiniteStatusBar( layoutBounds, visibleBoundsProperty, messageNode, scoreDisplay, options ) {
 
     var self = this;
 
@@ -50,7 +50,7 @@ define( function( require ) {
 
     var backgroundHeight = _.max( [ backButton.height, messageNode.height, scoreDisplay.height ] ) + 2 * options.yMargin;
 
-    assert && assert( !options.children, 'StatusBar sets children' );
+    assert && assert( !options.children, 'InfiniteStatusBar sets children' );
     options.children = [ backButton, messageNodeParent, scoreDisplayParent ];
 
     GameBar.call( this, backgroundHeight, layoutBounds, visibleBoundsProperty, options );
@@ -79,7 +79,7 @@ define( function( require ) {
     this.barNode.on( 'bounds', updateLayout );
 
     // @private
-    this.disposeStatusBar = function() {
+    this.disposeInfiniteStatusBar = function() {
       backButton.dispose();
       if ( messageNode.hasListener( 'bounds', updateLayout ) ) {
         messageNode.off( 'bounds', updateLayout );
@@ -93,13 +93,13 @@ define( function( require ) {
     };
   }
 
-  vegas.register( 'StatusBar', StatusBar );
+  vegas.register( 'InfiniteStatusBar', InfiniteStatusBar );
 
-  return inherit( GameBar, StatusBar, {
+  return inherit( GameBar, InfiniteStatusBar, {
 
     // @public
     dispose: function() {
-      this.disposeStatusBar();
+      this.disposeInfiniteStatusBar();
       GameBar.prototype.dispose.call( this );
     }
   } );

@@ -1,10 +1,9 @@
-// Copyright 2013-2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * A horizontal scoreboard 'bar'.
  *
  * @author Chris Malley (PixelZoom, Inc.)
- * @deprecated use FiniteStatusBar
  */
 define( function( require ) {
   'use strict';
@@ -41,7 +40,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ScoreboardBar( screenWidth, challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
+  function FiniteStatusBar( screenWidth, challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
 
     options = _.extend( {
 
@@ -154,7 +153,7 @@ define( function( require ) {
     } );
   }
 
-  vegas.register( 'ScoreboardBar', ScoreboardBar );
+  vegas.register( 'FiniteStatusBar', FiniteStatusBar );
 
-  return inherit( Node, ScoreboardBar );
+  return inherit( Node, FiniteStatusBar );
 } );
