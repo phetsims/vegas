@@ -15,6 +15,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
   var SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Tandem = require( 'TANDEM/Tandem' );
@@ -24,12 +25,12 @@ define( function( require ) {
 
   // strings
   var labelLevelString = require( 'string!VEGAS/label.level' );
-  var labelScoreString = require( 'string!VEGAS/label.score' );
   var pattern0Challenge1MaxString = require( 'string!VEGAS/pattern.0challenge.1max' );
   var startOverString = require( 'string!VEGAS/startOver' );
 
   /**
-   * @param {number} screenWidth
+   * @param {Bounds2} layoutBounds
+   * @param {Property.<Bounds2>} visibleBoundsProperty
    * @param {Property.<number>} challengeIndexProperty which challenge is the user current playing? (index starts at 0, displayed starting at 1)
    * @param {Property.<number>} challengesPerGameProperty how many challenges are in the current game
    * @param {Property.<number>} levelProperty
@@ -40,7 +41,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function FiniteStatusBar( screenWidth, challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
+  function FiniteStatusBar( layoutBounds, visibleBoundsProperty, challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
 
     options = _.extend( {
 
@@ -73,6 +74,8 @@ define( function( require ) {
       tandem: Tandem.required
     }, options );
 
+    var screenWidth = layoutBounds.width;
+
     var textOptions = { fill: options.textFill, font: options.font };
 
     // Level
@@ -90,9 +93,10 @@ define( function( require ) {
     challengesPerGameProperty.link( updateChallengeString );
 
     // Score
-    var scoreText = new Text( '', _.extend( { tandem: options.tandem.createTandem( 'scoreText' ) }, textOptions ) );
-    scoreProperty.link( function( score ) {
-      scoreText.text = StringUtils.format( labelScoreString, score );
+    var scoreDisplay = new ScoreDisplayLabeledNumber( scoreProperty, {
+      scoreDecimalPlaces: 0,
+      fill: options.textFill,
+      font: options.font
     } );
 
     // Timer, always takes up space even when hidden.
@@ -108,7 +112,7 @@ define( function( require ) {
     } );
 
     // All of the stuff that's grouped together at the left end of the scoreboard
-    var nodes = [ levelText, challengeNumberText, scoreText, timerNode ]; // in left-to-right order
+    var nodes = [ levelText, challengeNumberText, scoreDisplay, timerNode ]; // in left-to-right order
     if ( !options.levelVisible ) { nodes.splice( nodes.indexOf( levelText ), 1 ); }
     if ( !options.challengeNumberVisible ) { nodes.splice( nodes.indexOf( challengeNumberText ), 1 ); }
     for ( var i = 0; i < nodes.length; i++ ) {

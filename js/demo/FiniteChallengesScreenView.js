@@ -40,7 +40,8 @@ define( function( require ) {
 
     // bar across the top
     var statusBar = new FiniteStatusBar(
-      this.layoutBounds.width,
+      this.layoutBounds,
+      this.visibleBoundsProperty,
       new Property( 0 ), // challenge index
       new Property( 6 ), // challenges per level
       new Property( 0 ), // level
