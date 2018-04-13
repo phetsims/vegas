@@ -51,7 +51,7 @@ define( function( require ) {
     var statusBar = new StatusBar(
       this.layoutBounds,
       this.visibleBoundsProperty,
-      new Text( 'User provided message' ),
+      new Text( 'Your Node goes here', { font: new PhetFont( 20 ) } ),
       new ScoreDisplayNumberAndStar( scoreProperty ), {
         backButtonListener: function() { scoreProperty.reset(); }
       } );
