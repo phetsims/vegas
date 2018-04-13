@@ -21,10 +21,10 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
+  var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
   var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
-  var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
-  var ScoreDisplayTextAndStars = require( 'VEGAS/ScoreDisplayTextAndStars' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -94,9 +94,9 @@ define( function( require ) {
       top: controls.bottom + 40,
       children: [
         new ScoreDisplayStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ),
-        new ScoreDisplayTextAndStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ),
+        new ScoreDisplayLabeledStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ),
         new ScoreDisplayNumberAndStar( scoreProperty ),
-        new ScoreDisplayTextAndNumber( scoreProperty )
+        new ScoreDisplayLabeledNumber( scoreProperty )
       ]
     } );
     this.addChild( scoreDisplays );
@@ -116,7 +116,7 @@ define( function( require ) {
 
     var buttonWithTextAndStars = new LevelSelectionButton.ScoreDisplayCreator( buttonIcon, scoreProperty, {
       BUTTON_WIDTH: BUTTON_WIDTH,
-      scoreDisplayConstructor: ScoreDisplayTextAndStars,
+      scoreDisplayConstructor: ScoreDisplayLabeledStars,
       scoreDisplayOptions: {
         numStars: NUM_STARS,
         perfectScore: PERFECT_SCORE
@@ -132,7 +132,7 @@ define( function( require ) {
 
     var buttonWithTextAndNumber = new LevelSelectionButton.ScoreDisplayCreator( buttonIcon, scoreProperty, {
       BUTTON_WIDTH: BUTTON_WIDTH,
-      scoreDisplayConstructor: ScoreDisplayTextAndNumber,
+      scoreDisplayConstructor: ScoreDisplayLabeledNumber,
       listener: function() { console.log( 'level start' ); },
       bestTimeProperty: bestTimeProperty,
       bestTimeVisibleProperty: bestTimeVisibleProperty

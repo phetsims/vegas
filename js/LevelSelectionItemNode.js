@@ -20,7 +20,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
-  var ScoreDisplayTextAndNumber = require( 'VEGAS/ScoreDisplayTextAndNumber' );
+  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Tandem = require( 'TANDEM/Tandem' );
@@ -105,7 +105,7 @@ define( function( require ) {
       progressIndicator = new ScoreDisplayNumberAndStar( scoreProperty, scoreDisplayOptions );
     }
     else {
-      progressIndicator = new ScoreDisplayTextAndNumber( scoreProperty, scoreDisplayOptions );
+      progressIndicator = new ScoreDisplayLabeledNumber( scoreProperty, scoreDisplayOptions );
     }
     
     progressIndicator.scale( Math.min(

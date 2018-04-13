@@ -29,7 +29,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ScoreDisplayTextAndNumber( scoreProperty, options ) {
+  function ScoreDisplayLabeledNumber( scoreProperty, options ) {
 
     options = _.extend( {
       font: DEFAULT_FONT,
@@ -54,20 +54,20 @@ define( function( require ) {
     scoreProperty.link( scorePropertyListener );
 
     // @private
-    this.disposeScoreDisplayTextAndNumber = function() {
+    this.disposeScoreDisplayLabeledNumber = function() {
       scoreProperty.unlink( scorePropertyListener );
     };
 
     Node.call( this, options );
   }
 
-  vegas.register( 'ScoreDisplayTextAndNumber', ScoreDisplayTextAndNumber );
+  vegas.register( 'ScoreDisplayLabeledNumber', ScoreDisplayLabeledNumber );
 
-  return inherit( Node, ScoreDisplayTextAndNumber, {
+  return inherit( Node, ScoreDisplayLabeledNumber, {
 
     // @public 
     dispose: function() {
-      this.disposeScoreDisplayTextAndNumber();
+      this.disposeScoreDisplayLabeledNumber();
       Node.prototype.dispose.call( this );
     }
   } );

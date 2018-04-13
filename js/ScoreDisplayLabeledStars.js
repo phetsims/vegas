@@ -28,7 +28,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ScoreDisplayTextAndStars( scoreProperty, options ) {
+  function ScoreDisplayLabeledStars( scoreProperty, options ) {
 
     options = _.extend( {
       font: DEFAULT_FONT,
@@ -43,19 +43,19 @@ define( function( require ) {
 
     var scoreDisplay = new ScoreDisplayStars( scoreProperty, options );
 
-    assert && assert( !options.children, 'ScoreDisplayTextAndStars sets children' );
+    assert && assert( !options.children, 'ScoreDisplayLabeledStars sets children' );
     options.children = [ textNode, scoreDisplay ];
 
     HBox.call( this, options );
   }
 
-  vegas.register( 'ScoreDisplayTextAndStars', ScoreDisplayTextAndStars );
+  vegas.register( 'ScoreDisplayLabeledStars', ScoreDisplayLabeledStars );
 
-  return inherit( HBox, ScoreDisplayTextAndStars, {
+  return inherit( HBox, ScoreDisplayLabeledStars, {
 
     // @public 
     dispose: function() {
-      this.disposeScoreDisplayTextAndStars();
+      this.disposeScoreDisplayLabeledStars();
       HBox.prototype.dispose.call( this );
     }
   } );
