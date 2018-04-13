@@ -17,9 +17,11 @@ define( function( require ) {
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var ScoreboardBar = require( 'VEGAS/ScoreboardBar' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
   var vegas = require( 'VEGAS/vegas' );
 
   // constants
@@ -60,7 +62,13 @@ define( function( require ) {
       top: scoreboardBar.bottom + 30,
       children: [
         new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
-        new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } )
+        new HSlider( scoreProperty, new Range( 0, PERFECT_SCORE ), {
+
+          //TODO #66 remove this when scoreDisplay option is added to ScoreboardBar
+          constrainValue: function( value ) {
+            return Util.roundSymmetric( value );
+          }
+        } )
       ]
     } );
     this.addChild( scoreSlider );
