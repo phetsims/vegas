@@ -48,12 +48,12 @@ define( function( require ) {
     var messageNodeParent = new Node( { children: [ messageNode ] } );
     var scoreDisplayParent = new Node( { children: [ scoreDisplay ] } );
 
-    var backgroundHeight = _.max( [ backButton.height, messageNode.height, scoreDisplay.height ] ) + 2 * options.yMargin;
+    var barHeight = _.max( [ backButton.height, messageNode.height, scoreDisplay.height ] ) + 2 * options.yMargin;
 
     assert && assert( !options.children, 'InfiniteStatusBar sets children' );
     options.children = [ backButton, messageNodeParent, scoreDisplayParent ];
 
-    StatusBar.call( this, backgroundHeight, layoutBounds, visibleBoundsProperty, options );
+    StatusBar.call( this, barHeight, layoutBounds, visibleBoundsProperty, options );
 
     // Update the layout of things on the status bar.
     // Some of this may be unnecessary depending on what changed, but it simplifies to do all layout here.
@@ -77,6 +77,7 @@ define( function( require ) {
     messageNode.on( 'bounds', updateLayout );
     scoreDisplay.on( 'bounds', updateLayout );
     this.barNode.on( 'bounds', updateLayout );
+    updateLayout();
 
     // @private
     this.disposeInfiniteStatusBar = function() {
