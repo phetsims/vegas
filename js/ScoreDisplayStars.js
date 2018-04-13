@@ -1,7 +1,7 @@
 // Copyright 2013-2017, University of Colorado Boulder
 
 /**
- * Indicates score by illuminating stars.
+ * Display a score as '* * * *', where '*' are stars, which may be fully or partially filled in.
  * See specification in https://github.com/phetsims/vegas/issues/59.
  *
  * @author John Blanco

@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Indicates score in the format of "Score: " followed by the number.
+ * Display a score as 'Score: N', where N is a number.
  * See specification in https://github.com/phetsims/vegas/issues/59.
  *
  * @author Andrea Lin
