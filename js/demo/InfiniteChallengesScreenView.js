@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StatusBar = require( 'VEGAS/StatusBar' );
@@ -21,7 +22,7 @@ define( function( require ) {
   var vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var PERFECT_SCORE = 1000;
+  var SCORE_RANGE = new Range( 0, 1000 );
 
   /**
    * @constructor
@@ -32,6 +33,7 @@ define( function( require ) {
 
     var scoreProperty = new Property( 0 );
 
+    // bar across the top
     var statusBar = new StatusBar(
       this.layoutBounds,
       this.visibleBoundsProperty,
@@ -44,12 +46,13 @@ define( function( require ) {
       } );
     this.addChild( statusBar );
 
+    // slider for testing score changes
     var scoreSlider = new HBox( {
       right: this.layoutBounds.right - 20,
       top: statusBar.bottom + 30,
       children: [
         new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
-        new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } )
+        new HSlider( scoreProperty, SCORE_RANGE )
       ]
     } );
 

@@ -19,6 +19,7 @@ define( function( require ) {
   var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
   var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
@@ -30,10 +31,10 @@ define( function( require ) {
   var vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var NUM_STARS = 5;
-  var PERFECT_SCORE = 1000;
-  var MAX_TIME = 10000;
   var BUTTON_WIDTH = 120;
+  var NUM_STARS = 5;
+  var SCORE_RANGE = new Range( 0, 1000 );
+  var BEST_TIME_RANGE = new Range( 0, 10000 );
 
   /**
    * @constructor
@@ -54,8 +55,8 @@ define( function( require ) {
       centerX: this.layoutBounds.centerX,
       top: this.layoutBounds.top + 20,
       children: [
-        new ScoreDisplayStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ),
-        new ScoreDisplayLabeledStars( scoreProperty, { numStars: NUM_STARS, perfectScore: PERFECT_SCORE } ),
+        new ScoreDisplayStars( scoreProperty, { numStars: NUM_STARS, perfectScore: SCORE_RANGE.max } ),
+        new ScoreDisplayLabeledStars( scoreProperty, { numStars: NUM_STARS, perfectScore: SCORE_RANGE.max } ),
         new ScoreDisplayNumberAndStar( scoreProperty ),
         new ScoreDisplayLabeledNumber( scoreProperty )
       ]
@@ -70,7 +71,7 @@ define( function( require ) {
       scoreDisplayConstructor: ScoreDisplayStars,
       scoreDisplayOptions: {
         numStars: NUM_STARS,
-        perfectScore: PERFECT_SCORE
+        perfectScore: SCORE_RANGE.max
       },
       listener: function() { console.log( 'level start' ); }
     } );
@@ -80,7 +81,7 @@ define( function( require ) {
       scoreDisplayConstructor: ScoreDisplayLabeledStars,
       scoreDisplayOptions: {
         numStars: NUM_STARS,
-        perfectScore: PERFECT_SCORE
+        perfectScore: SCORE_RANGE.max
       },
       listener: function() { console.log( 'level start' ); }
     } );
@@ -112,14 +113,14 @@ define( function( require ) {
     var scoreSlider = new HBox( {
       children: [
         new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
-        new HSlider( scoreProperty, { min: 0, max: PERFECT_SCORE } )
+        new HSlider( scoreProperty, SCORE_RANGE )
       ]
     } );
 
     var bestTimeSlider = new HBox( {
       children: [
         new Text( 'Best Time: ', { font: new PhetFont( 20 ) } ),
-        new HSlider( bestTimeProperty, { min: 0, max: MAX_TIME } )
+        new HSlider( bestTimeProperty, BEST_TIME_RANGE )
       ]
     } );
 

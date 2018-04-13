@@ -56,7 +56,7 @@ define( function( require ) {
       } );
     this.addChild( scoreboardBar );
 
-    // score slider
+    // slider for testing score changes
     var scoreSlider = new HBox( {
       left: this.layoutBounds.left + 20,
       top: scoreboardBar.bottom + 30,
