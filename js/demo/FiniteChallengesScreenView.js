@@ -18,6 +18,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ScoreboardBar = require( 'VEGAS/ScoreboardBar' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -25,7 +26,7 @@ define( function( require ) {
   var vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var PERFECT_SCORE = 1000;
+  var PERFECT_SCORE = 10;
 
   /**
    * @constructor
@@ -73,24 +74,29 @@ define( function( require ) {
     } );
     this.addChild( scoreSlider );
 
-    // LevelCompletedNode that cycles through score values when you press 'Continue' button
-    var score = 0;
-    var addLevelCompletedNode = function() {
-      var maxScore = 12;
-      var levelCompletedNode = new LevelCompletedNode( 7, score, maxScore, 4, true, 77, 74, true, function() {
-        console.log( 'continue' );
-        score++;
-        if ( score > maxScore ) {
-          score = 0;
-        }
-        levelCompletedNode.detach();
-        addLevelCompletedNode();
-      }, {
-        center: self.layoutBounds.center
-      } );
-      self.addChild( levelCompletedNode );
-    };
-    addLevelCompletedNode();
+    // button to open LevelCompleteNode
+    var levelCompletedButton = new RectangularPushButton( {
+      content: new Text( 'show LevelCompletedNode', { font: new PhetFont( 20 ) } ),
+      centerX: this.layoutBounds.centerX,
+      bottom: this.layoutBounds.bottom - 20,
+      listener: function() {
+        var levelCompletedNode = new LevelCompletedNode(
+          7, // level
+          scoreProperty.value, // score
+          PERFECT_SCORE, // maxScore
+          4, // numberOfStars 
+          true, // timerEnabled
+          77, // elapsedTime
+          74, // bestTimeAtThisLevel
+          true, // isNewBestTime
+          function() { levelCompletedNode.detach(); }, // Continue button callback
+          {
+            center: self.layoutBounds.center
+          } );
+        self.addChild( levelCompletedNode );
+      }
+    } );
+    this.addChild( levelCompletedButton );
   }
 
   vegas.register( 'FiniteChallengesScreenView', FiniteChallengesScreenView );
