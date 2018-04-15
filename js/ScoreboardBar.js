@@ -40,6 +40,7 @@ define( function( require ) {
    * @param {function} startOverCallback
    * @param {Object} [options]
    * @constructor
+   * @deprecated
    */
   function ScoreboardBar( screenWidth, challengeIndexProperty, challengesPerGameProperty, levelProperty, scoreProperty, elapsedTimeProperty, timerEnabledProperty, startOverCallback, options ) {
 
