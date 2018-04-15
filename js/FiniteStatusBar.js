@@ -14,7 +14,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
   var SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -30,15 +29,16 @@ define( function( require ) {
 
   // constants
   var DEFAULT_FONT = new PhetFont( 20 );
+  var DEFAULT_TEXT_FILL = 'white';
 
   /**
    * @param {Bounds2} layoutBounds
    * @param {Property.<Bounds2>} visibleBoundsProperty
-   * @param {Property.<number>} scoreProperty
+   * @param {Node} scoreDisplay - intended to be one of the ScoreDisplay* nodes but can be any Node
    * @param {Object} [options]
    * @constructor
    */
-  function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, options ) {
+  function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreDisplay, options ) {
 
     var self = this;
 
@@ -57,7 +57,7 @@ define( function( require ) {
 
       // all text
       font: DEFAULT_FONT,
-      textFill: 'white',
+      textFill: DEFAULT_TEXT_FILL,
 
       // nested options for 'Start Over' button, filled in below
       startOverButtonOptions: null,
@@ -121,11 +121,6 @@ define( function( require ) {
     }
 
     // Score
-    var scoreDisplay = new ScoreDisplayLabeledNumber( scoreProperty, {
-      scoreDecimalPlaces: 0,
-      fill: options.textFill,
-      font: options.font
-    } );
     leftHBoxChildren.push( scoreDisplay );
 
     // Timer
@@ -211,5 +206,9 @@ define( function( require ) {
       this.disposeFiniteStatusBar();
       StatusBar.prototype.dispose.call( this );
     }
+  }, {
+
+    DEFAULT_FONT: DEFAULT_FONT,
+    DEFAULT_TEXT_FILL: DEFAULT_TEXT_FILL
   } );
 } );
