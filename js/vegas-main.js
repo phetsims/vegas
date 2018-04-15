@@ -41,21 +41,21 @@ define( function( require ) {
         function() { return {}; },
         function( model ) { return new FiniteChallengesScreenView(); }, {
           name: 'Finite Challenges',
-          backgroundColorProperty: new Property( 'rgb( 214, 233, 254 )' )
+          backgroundColorProperty: new Property( 'white' )
         } ),
 
       new Screen(
         function() { return {}; },
         function( model ) { return new InfiniteChallengesScreenView(); }, {
           name: 'Infinite Challenges',
-          backgroundColorProperty: new Property( 'rgb( 214, 233, 254 )' )
+          backgroundColorProperty: new Property( 'white' )
         } ),
 
       new Screen(
         function() { return {}; },
         function( model ) { return new RewardScreenView(); }, {
           name: 'Reward',
-          backgroundColorProperty: new Property( 'rgb( 248, 227, 226 )' )
+          backgroundColorProperty: new Property( 'white' )
         } )
     ], simOptions ).start();
   } );
