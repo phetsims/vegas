@@ -41,7 +41,7 @@ define( function( require ) {
 
       // optional Properties
       challengeIndexProperty: null, // {Property.<number>|null}
-      challengesPerLevelProperty: null, // {Property.<number>|null}
+      numberOfChallengesProperty: null, // {Property.<number>|null}
       levelProperty: null, // {Property.<number>|null}
       elapsedTimeProperty: null, // {Property.<number>|null} 
       timerEnabledProperty: null, // {Property.<boolean>|null} 
@@ -100,7 +100,7 @@ define( function( require ) {
     }
 
     // Challenge N of M
-    if ( options.challengeIndexProperty && options.challengesPerLevelProperty ) {
+    if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
       var challengeNumberText = new Text( '', _.extend( {
         tandem: options.tandem.createTandem( 'challengeNumberText' )
       }, textOptions ) );
@@ -109,10 +109,10 @@ define( function( require ) {
       var updateChallengeString = function() {
         //TODO #66 change to StringUtils.fillIn ?
         challengeNumberText.text = StringUtils.format( pattern0Challenge1MaxString,
-          options.challengeIndexProperty.get() + 1, options.challengesPerLevelProperty.get() );
+          options.challengeIndexProperty.get() + 1, options.numberOfChallengesProperty.get() );
       };
       options.challengeIndexProperty.link( updateChallengeString );
-      options.challengesPerLevelProperty.link( updateChallengeString );
+      options.numberOfChallengesProperty.link( updateChallengeString );
     }
 
     // Score
@@ -176,8 +176,8 @@ define( function( require ) {
       if ( options.challengeIndexProperty && options.challengeIndexProperty.hasListener( updateChallengeString ) ) {
         options.challengeIndexProperty.unlink( updateChallengeString );
       }
-      if ( options.challengesPerLevelProperty && options.challengesPerLevelProperty.hasListener( updateChallengeString ) ) {
-        options.challengesPerLevelProperty.link( updateChallengeString );
+      if ( options.numberOfChallengesProperty && options.numberOfChallengesProperty.hasListener( updateChallengeString ) ) {
+        options.numberOfChallengesProperty.link( updateChallengeString );
       }
       if ( options.elapsedTimeProperty && options.elapsedTimeProperty.hasListener( elapsedTimeListener ) ) {
         options.elapsedTimeProperty.unlink( elapsedTimeListener );
