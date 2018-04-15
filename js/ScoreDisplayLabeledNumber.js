@@ -12,14 +12,11 @@ define( function( require ) {
   // modules
   var Node = require( 'SCENERY/nodes/Node' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
   var vegas = require( 'VEGAS/vegas' );
+  var StatusBar = require( 'VEGAS/StatusBar' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-
-  // constants
-  var DEFAULT_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
   // strings
   var patternScoreNumberString = require( 'string!VEGAS/pattern.score.number' );
@@ -32,7 +29,7 @@ define( function( require ) {
   function ScoreDisplayLabeledNumber( scoreProperty, options ) {
 
     options = _.extend( {
-      font: DEFAULT_FONT,
+      font: StatusBar.DEFAULT_FONT,
       fill: 'black',
       scoreDecimalPlaces: 0
     }, options );

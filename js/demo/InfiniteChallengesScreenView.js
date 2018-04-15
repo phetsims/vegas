@@ -18,6 +18,7 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScreenView = require( 'JOIST/ScreenView' );
+  var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );
   var vegas = require( 'VEGAS/vegas' );
 
@@ -38,8 +39,7 @@ define( function( require ) {
       this.layoutBounds,
       this.visibleBoundsProperty,
       new Text( 'Your Node goes here', {
-        font: new PhetFont( 20 ),
-        fill: 'white'
+        font: StatusBar.DEFAULT_FONT
       } ),
       new ScoreDisplayNumberAndStar( scoreProperty ), {
         backButtonListener: function() { scoreProperty.reset(); }

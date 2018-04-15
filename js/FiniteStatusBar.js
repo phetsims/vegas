@@ -9,11 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Color = require( 'SCENERY/util/Color' );
   var GameTimer = require( 'VEGAS/GameTimer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -26,10 +25,6 @@ define( function( require ) {
   var labelLevelString = require( 'string!VEGAS/label.level' );
   var pattern0Challenge1MaxString = require( 'string!VEGAS/pattern.0challenge.1max' );
   var startOverString = require( 'string!VEGAS/startOver' );
-
-  // constants
-  var DEFAULT_FONT = new PhetFont( 20 );
-  var DEFAULT_TEXT_FILL = 'white';
 
   /**
    * @param {Bounds2} layoutBounds
@@ -56,8 +51,8 @@ define( function( require ) {
       challengeNumberVisible: true,
 
       // all text
-      font: DEFAULT_FONT,
-      textFill: DEFAULT_TEXT_FILL,
+      font: StatusBar.DEFAULT_FONT,
+      textFill: 'black',
 
       // nested options for 'Start Over' button, filled in below
       startOverButtonOptions: null,
@@ -78,10 +73,10 @@ define( function( require ) {
     // nested options for 'Start Over' button
     options.startOverButtonOptions = _.extend( {
       font: options.font,
-      textFill: 'black',
-      baseColor: new Color( 229, 243, 255 ), //TODO what is a good default?
+      textFill: options.textFill,
+      baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 10,
-      yMargin: 5,
+      yMargin: 8,
       listener: function() {},
       tandem: options.tandem.createTandem( 'startOverButton' )
       //TODO maxWidth
@@ -206,9 +201,5 @@ define( function( require ) {
       this.disposeFiniteStatusBar();
       StatusBar.prototype.dispose.call( this );
     }
-  }, {
-
-    DEFAULT_FONT: DEFAULT_FONT,
-    DEFAULT_TEXT_FILL: DEFAULT_TEXT_FILL
   } );
 } );

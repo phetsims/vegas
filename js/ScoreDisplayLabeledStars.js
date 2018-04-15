@@ -12,16 +12,13 @@ define( function( require ) {
   // modules
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
+  var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );
   var vegas = require( 'VEGAS/vegas' );
 
   // strings
   var scoreString = require( 'string!VEGAS/score' );
-
-  // constants
-  var DEFAULT_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
   /**
    * @param {Property.<number>} scoreProperty
@@ -31,7 +28,7 @@ define( function( require ) {
   function ScoreDisplayLabeledStars( scoreProperty, options ) {
 
     options = _.extend( {
-      font: DEFAULT_FONT,
+      font: StatusBar.DEFAULT_FONT,
       fill: 'black',
       spacing: 5
     }, options );

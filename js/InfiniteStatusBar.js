@@ -41,7 +41,9 @@ define( function( require ) {
     }, options );
 
     var backButton = new BackButton( {
-      listener: options.backButtonListener
+      listener: options.backButtonListener,
+      xMargin: 8,
+      yMargin: 10
     } );
 
     // Wrap these nodes. We will listen for bounds changes on the child, and position the parent nodes accordingly.

@@ -47,10 +47,7 @@ define( function( require ) {
     var timerEnabledProperty = new BooleanProperty( true );
 
     // score display for status bar
-    var scoreDisplay = new ScoreDisplayLabeledNumber( scoreProperty, {
-      font: FiniteStatusBar.DEFAULT_FONT,
-      fill: FiniteStatusBar.DEFAULT_TEXT_FILL
-    } );
+    var scoreDisplay = new ScoreDisplayLabeledNumber( scoreProperty );
 
     // bar across the top
     var statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreDisplay, {
