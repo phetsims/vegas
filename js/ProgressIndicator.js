@@ -5,7 +5,7 @@
  *
  * @author John Blanco
  * @author Sam Reid
- * @deprecated use ScoreDisplayDiscreteStars
+ * @deprecated use ScoreDisplayStars
  */
 define( function( require ) {
   'use strict';
@@ -22,6 +22,7 @@ define( function( require ) {
    * @param {number} perfectScore
    * @param {Object} [options]
    * @constructor
+   * @deprecated use ScoreDisplayStars
    */
   function ProgressIndicator( numStars, scoreProperty, perfectScore, options ) {
 
