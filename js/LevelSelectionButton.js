@@ -193,7 +193,7 @@ define( function( require ) {
         return icon;
       }
       // else padding is needed in either the horizontal or vertical direction.
-      var background = Rectangle.dimension( size, { fill: null } );
+      var background = Rectangle.dimension( size );
       icon.center = background.center;
       background.addChild( icon );
       return background;
