@@ -107,8 +107,8 @@ define( function( require ) {
       backButton.dispose();
       scoreDisplay.dispose();
 
-      if ( self.bar.hasListener( 'bounds', updateLayout ) ) {
-        self.bar.off( 'bounds', updateLayout );
+      if ( self.barNode.hasListener( 'bounds', updateLayout ) ) {
+        self.barNode.off( 'bounds', updateLayout );
       }
     };
   }
