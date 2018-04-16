@@ -36,8 +36,6 @@ define( function( require ) {
    */
   function InfiniteStatusBar( layoutBounds, visibleBoundsProperty, messageNode, scoreProperty, options ) {
 
-    var self = this;
-
     options = _.extend( {
       backButtonListener: null,
       xMargin: 20,
@@ -46,70 +44,47 @@ define( function( require ) {
 
       // score display
       scoreDisplayConstructor: ScoreDisplayNumberAndStar,
-      scoreDisplayOptions: null, // passed to scoreDisplayConstructor
-
-      // true: keeps things on the status bar aligned with left and right edges of window bounds
-      // false: align things on status bar with left and right edges of static layoutBounds
-      dynamicAlignment: true
+      scoreDisplayOptions: null // passed to scoreDisplayConstructor
     }, options );
 
     assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
       'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
 
+    // button that typically takes us back to the level-selection UI
     var backButton = new BackButton( {
       listener: options.backButtonListener,
       xMargin: 8,
       yMargin: 10
     } );
 
-    // Nodes on the left end of the bar
-    var leftNodes = new HBox( {
+    // @private Nodes on the left end of the bar
+    this.leftNodes = new HBox( {
       spacing: options.spacing,
       align: 'center',
       children: [ backButton, messageNode ],
       maxWidth: 0.7 * layoutBounds.width
     } );
 
-    // Wrap scoreDisplay, since we will listen for bounds changes to reposition it.
     var scoreDisplay = new options.scoreDisplayConstructor( scoreProperty,
       _.extend( { maxWidth: 0.2 * layoutBounds.width }, options.scoreDisplayOptions ) );
-    var scoreDisplayParent = new Node( { children: [ scoreDisplay ] } );
 
-    assert && assert( !options.barHeight, 'InfiniteStatusBar sets barHeight' );
-    options.barHeight = _.max( [ backButton.height, messageNode.height, scoreDisplay.height ] ) + 2 * options.yMargin;
+    // Wrap scoreDisplay, since we are listening for bounds changes to reposition it.
+    this.scoreDisplayParent = new Node( { children: [ scoreDisplay ] } );
 
     assert && assert( !options.children, 'InfiniteStatusBar sets children' );
-    options.children = [ leftNodes, scoreDisplayParent ];
+    options.children = [ this.leftNodes, this.scoreDisplayParent ];
+
+    assert && assert( !options.barHeight, 'InfiniteStatusBar sets barHeight' );
+    options.barHeight = Math.max( this.leftNodes.height, this.scoreDisplayParent.height ) + ( 2 * options.yMargin );
 
     StatusBar.call( this, layoutBounds, visibleBoundsProperty, options );
 
-    // Update the layout of things on the status bar.
-    // Some of this may be unnecessary depending on what changed, but it simplifies to do all layout here.
-    var updateLayout = function() {
-
-      var leftEdge = (options.dynamicAlignment) ? self.barNode.left : layoutBounds.minX;
-      var rightEdge = (options.dynamicAlignment) ? self.barNode.right : layoutBounds.maxX;
-
-      // stuff on left end of bar
-      leftNodes.left = leftEdge + options.xMargin;
-      leftNodes.centerY = self.barNode.centerY;
-
-      // Score display on the right end
-      scoreDisplayParent.right = rightEdge - options.xMargin;
-      scoreDisplayParent.centerY = self.barNode.centerY;
-    };
-    scoreDisplay.on( 'bounds', updateLayout );
-    this.barNode.on( 'bounds', updateLayout );
-    updateLayout();
+    // When the score display's bounds change, update the layout.
+    scoreDisplay.on( 'bounds', this.updateLayout.bind( this ) );
 
     // @private
     this.disposeInfiniteStatusBar = function() {
-
       scoreDisplay.dispose();
-
-      if ( self.barNode.hasListener( 'bounds', updateLayout ) ) {
-        self.barNode.off( 'bounds', updateLayout );
-      }
     };
   }
 
@@ -117,10 +92,32 @@ define( function( require ) {
 
   return inherit( StatusBar, InfiniteStatusBar, {
 
-    // @public
+    /**
+     * @public
+     * @override
+     */
     dispose: function() {
       this.disposeInfiniteStatusBar();
       StatusBar.prototype.dispose.call( this );
+    },
+
+    /**
+     * Handles layout when the bar changes.
+     * @param {number} leftEdge - the bar's left edge, compensated for xMargin
+     * @param {number} rightEdge - the bar's right edge, compensated for xMargin
+     * @param {number} centerY - the bar's vertical center
+     * @protected
+     * @override
+     */
+    updateLayoutProtected: function( leftEdge, rightEdge, centerY ) {
+
+      // stuff on left end of bar
+      this.leftNodes.left = leftEdge;
+      this.leftNodes.centerY = centerY;
+
+      // Score display on the right end
+      this.scoreDisplayParent.right = rightEdge;
+      this.scoreDisplayParent.centerY = centerY;
     }
   } );
 } );

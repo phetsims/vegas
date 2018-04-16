@@ -44,8 +44,6 @@ define( function( require ) {
    */
   function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, options ) {
 
-    var self = this;
-
     options = _.extend( {
 
       // optional Properties
@@ -79,10 +77,6 @@ define( function( require ) {
       xMargin: 20,
       yMargin: 10,
 
-      // true: keeps things on the status bar aligned with left and right edges of window bounds
-      // false: align things on status bar with left and right edges of static layoutBounds
-      dynamicAlignment: true,
-
       // phet-io
       tandem: Tandem.required
     }, options );
@@ -111,16 +105,18 @@ define( function( require ) {
                       ( !options.challengeIndexProperty && !options.numberOfChallengesProperty ),
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
 
-    var leftHBoxChildren = [];
-
+    // Options shared by Text nodes
     var textOptions = { fill: options.textFill, font: options.font };
+
+    // Nodes on the left end of the bar
+    var leftChildren = [];
 
     // Level N
     if ( options.levelProperty ) {
       var levelText = new Text( '', _.extend( {
         tandem: options.tandem.createTandem( 'levelText' )
       }, textOptions ) );
-      leftHBoxChildren.push( levelText );
+      leftChildren.push( levelText );
 
       var levelListener = function( level ) {
         levelText.text = StringUtils.format( labelLevelString, level + 1 );
@@ -133,7 +129,7 @@ define( function( require ) {
       var challengeNumberText = new Text( '', _.extend( {
         tandem: options.tandem.createTandem( 'challengeNumberText' )
       }, textOptions ) );
-      leftHBoxChildren.push( challengeNumberText );
+      leftChildren.push( challengeNumberText );
 
       var updateChallengeString = function() {
         challengeNumberText.text = StringUtils.format( pattern0Challenge1MaxString,
@@ -145,7 +141,7 @@ define( function( require ) {
 
     // Score
     var scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
-    leftHBoxChildren.push( scoreDisplay );
+    leftChildren.push( scoreDisplay );
 
     // Timer
     if ( options.elapsedTimeProperty && options.timerEnabledProperty ) {
@@ -155,7 +151,7 @@ define( function( require ) {
         font: options.font,
         textFill: options.textFill
       } );
-      leftHBoxChildren.push( elapsedTimeNode );
+      leftChildren.push( elapsedTimeNode );
 
       var timerEnabledListener = function( timerEnabled ) {
         elapsedTimeNode.visible = ( options.timerEnabledProperty && timerEnabled );
@@ -163,41 +159,24 @@ define( function( require ) {
       options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
     }
 
-    // All of the stuff that's grouped together at the left end of the status bar
-    var leftHBox = new HBox( {
+    // @private Nodes on the left end of the bar
+    this.leftNodes = new HBox( {
       resize: false,
       spacing: options.xSpacing,
-      children: leftHBoxChildren,
+      children: leftChildren,
       maxWidth: 0.7 * layoutBounds.width
     } );
 
-    // Start Over button
-    var startOverButton = new TextPushButton( options.startOverButtonText, options.startOverButtonOptions );
+    // @private Start Over button
+    this.startOverButton = new TextPushButton( options.startOverButtonText, options.startOverButtonOptions );
 
     assert && assert( !options.children, 'FiniteStatusBar sets children' );
-    options.children = [ leftHBox, startOverButton ];
+    options.children = [ this.leftNodes, this.startOverButton ];
 
     assert && assert( !options.barHeight, 'FiniteStatusBar sets barHeight' );
-    options.barHeight = Math.max( leftHBox.height, startOverButton.height ) + ( 2 * options.yMargin );
+    options.barHeight = Math.max( this.leftNodes.height, this.startOverButton.height ) + ( 2 * options.yMargin );
 
     StatusBar.call( this, layoutBounds, visibleBoundsProperty, options );
-
-    // When the bar changes...
-    var updateLayout = function() {
-
-      var leftEdge = ( options.dynamicAlignment ) ? self.barNode.left : layoutBounds.minX;
-      var rightEdge = ( options.dynamicAlignment ) ? self.barNode.right : layoutBounds.maxX;
-
-      // stuff on left end of bar
-      leftHBox.left = leftEdge + options.xMargin;
-      leftHBox.centerY = self.barNode.centerY;
-
-      // start over button on right end of bar
-      startOverButton.right = rightEdge - options.xMargin;
-      startOverButton.centerY = self.barNode.centerY;
-    };
-    this.barNode.on( 'bounds', updateLayout );
-    updateLayout();
 
     // @private
     this.disposeFiniteStatusBar = function() {
@@ -234,6 +213,25 @@ define( function( require ) {
     dispose: function() {
       this.disposeFiniteStatusBar();
       StatusBar.prototype.dispose.call( this );
+    },
+
+    /**
+     * Handles layout when the bar changes.
+     * @param {number} leftEdge - the bar's left edge, compensated for xMargin
+     * @param {number} rightEdge - the bar's right edge, compensated for xMargin
+     * @param {number} centerY - the bar's vertical center
+     * @protected
+     * @override
+     */
+    updateLayoutProtected: function( leftEdge, rightEdge, centerY ) {
+
+      // stuff on left end of bar
+      this.leftNodes.left = leftEdge;
+      this.leftNodes.centerY = centerY;
+
+      // start over button on right end of bar
+      this.startOverButton.right = rightEdge;
+      this.startOverButton.centerY = centerY;
     }
   } );
 } );
