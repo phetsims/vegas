@@ -55,8 +55,8 @@ define( function( require ) {
       centerX: this.layoutBounds.centerX,
       top: this.layoutBounds.top + 20,
       children: [
-        new ScoreDisplayStars( scoreProperty, { numStars: NUM_STARS, perfectScore: SCORE_RANGE.max } ),
-        new ScoreDisplayLabeledStars( scoreProperty, { numStars: NUM_STARS, perfectScore: SCORE_RANGE.max } ),
+        new ScoreDisplayStars( scoreProperty, { numberOfStars: NUM_STARS, perfectScore: SCORE_RANGE.max } ),
+        new ScoreDisplayLabeledStars( scoreProperty, { numberOfStars: NUM_STARS, perfectScore: SCORE_RANGE.max } ),
         new ScoreDisplayNumberAndStar( scoreProperty ),
         new ScoreDisplayLabeledNumber( scoreProperty )
       ]
@@ -70,7 +70,7 @@ define( function( require ) {
       BUTTON_WIDTH: BUTTON_WIDTH,
       scoreDisplayConstructor: ScoreDisplayStars,
       scoreDisplayOptions: {
-        numStars: NUM_STARS,
+        numberOfStars: NUM_STARS,
         perfectScore: SCORE_RANGE.max
       },
       listener: function() { console.log( 'level start' ); }
@@ -80,7 +80,7 @@ define( function( require ) {
       BUTTON_WIDTH: BUTTON_WIDTH,
       scoreDisplayConstructor: ScoreDisplayLabeledStars,
       scoreDisplayOptions: {
-        numStars: NUM_STARS,
+        numberOfStars: NUM_STARS,
         perfectScore: SCORE_RANGE.max
       },
       listener: function() { console.log( 'level start' ); }

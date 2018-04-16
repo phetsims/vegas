@@ -28,7 +28,7 @@ define( function( require ) {
 
     options = _.extend( {
       starNodeOptions: null, // options to StarNode
-      numStars: 1,
+      numberOfStars: 1,
       perfectScore: 1,
       spacing: 3
     }, options );
@@ -41,7 +41,7 @@ define( function( require ) {
       emptyLineWidth: 1.5
     }, options.starNodeOptions );
 
-    var numStars = options.numStars;
+    var numberOfStars = options.numberOfStars;
     var perfectScore = options.perfectScore;
 
     assert && assert( !options.children, 'ScoreDisplayStars sets children' );
@@ -55,18 +55,18 @@ define( function( require ) {
       var children = [];
 
       var proportion = score / perfectScore;
-      var numFilledStars = Math.floor( proportion * numStars );
+      var numFilledStars = Math.floor( proportion * numberOfStars );
 
       for ( var i = 0; i < numFilledStars; i++ ) {
         children.push( new StarNode( _.extend( { value: 1 }, options.starNodeOptions ) ) );
       }
 
-      var remainder = proportion * numStars - numFilledStars;
+      var remainder = proportion * numberOfStars - numFilledStars;
       if ( remainder > 1E-6 ) {
         children.push( new StarNode( _.extend( { value: remainder }, options.starNodeOptions ) ) );
       }
 
-      var numEmptyStars = numStars - children.length;
+      var numEmptyStars = numberOfStars - children.length;
       for ( i = 0; i < numEmptyStars; i++ ) {
         children.push( new StarNode( _.extend( { value: 0 }, options.starNodeOptions ) ) );
       }

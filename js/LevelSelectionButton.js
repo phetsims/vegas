@@ -48,9 +48,6 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // score display type
-      numStars: 1,
-
       listener: null, // {function}
 
       // button size and appearance
