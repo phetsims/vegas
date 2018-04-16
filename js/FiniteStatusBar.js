@@ -177,9 +177,10 @@ define( function( require ) {
     assert && assert( !options.children, 'FiniteStatusBar sets children' );
     options.children = [ leftHBox, startOverButton ];
 
-    var barHeight = Math.max( leftHBox.height, startOverButton.height ) + ( 2 * options.yMargin );
+    assert && assert( !options.barHeight, 'FiniteStatusBar sets barHeight' );
+    options.barHeight = Math.max( leftHBox.height, startOverButton.height ) + ( 2 * options.yMargin );
 
-    StatusBar.call( this, barHeight, layoutBounds, visibleBoundsProperty, options );
+    StatusBar.call( this, layoutBounds, visibleBoundsProperty, options );
 
     // When the bar changes...
     var updateLayout = function() {

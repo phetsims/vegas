@@ -75,12 +75,13 @@ define( function( require ) {
       _.extend( { maxWidth: 0.2 * layoutBounds.width }, options.scoreDisplayOptions ) );
     var scoreDisplayParent = new Node( { children: [ scoreDisplay ] } );
 
-    var barHeight = _.max( [ backButton.height, messageNode.height, scoreDisplay.height ] ) + 2 * options.yMargin;
+    assert && assert( !options.barHeight, 'InfiniteStatusBar sets barHeight' );
+    options.barHeight = _.max( [ backButton.height, messageNode.height, scoreDisplay.height ] ) + 2 * options.yMargin;
 
     assert && assert( !options.children, 'InfiniteStatusBar sets children' );
     options.children = [ leftNodes, scoreDisplayParent ];
 
-    StatusBar.call( this, barHeight, layoutBounds, visibleBoundsProperty, options );
+    StatusBar.call( this, layoutBounds, visibleBoundsProperty, options );
 
     // Update the layout of things on the status bar.
     // Some of this may be unnecessary depending on what changed, but it simplifies to do all layout here.
