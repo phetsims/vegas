@@ -105,7 +105,6 @@ define( function( require ) {
     // @private
     this.disposeInfiniteStatusBar = function() {
 
-      backButton.dispose();
       scoreDisplay.dispose();
 
       if ( self.barNode.hasListener( 'bounds', updateLayout ) ) {
