@@ -77,6 +77,9 @@ define( function( require ) {
       xMargin: 20,
       yMargin: 10,
 
+      levelTextOptions: null, // passed to the "Level N" text
+      challengeTextOptions: null, // passed to the "Challenge N of M" text
+
       // phet-io
       tandem: Tandem.required
     }, options );
@@ -105,8 +108,17 @@ define( function( require ) {
                       ( !options.challengeIndexProperty && !options.numberOfChallengesProperty ),
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
 
-    // Options shared by Text nodes
-    var textOptions = { fill: options.textFill, font: options.font };
+    // nested options for 'Level N' text
+    options.levelTextOptions = _.extend( {
+      fill: options.textFill,
+      font: options.font
+    }, options.levelTextOptions );
+
+    // nested options for 'Challenge N of M' text
+    options.challengeTextOptions = _.extend( {
+      fill: options.textFill,
+      font: options.font
+    }, options.challengeTextOptions );
 
     // Nodes on the left end of the bar
     var leftChildren = [];
@@ -115,7 +127,7 @@ define( function( require ) {
     if ( options.levelProperty ) {
       var levelText = new Text( '', _.extend( {
         tandem: options.tandem.createTandem( 'levelText' )
-      }, textOptions ) );
+      }, options.levelTextOptions ) );
       leftChildren.push( levelText );
 
       var levelListener = function( level ) {
@@ -128,7 +140,7 @@ define( function( require ) {
     if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
       var challengeNumberText = new Text( '', _.extend( {
         tandem: options.tandem.createTandem( 'challengeNumberText' )
-      }, textOptions ) );
+      }, options.challengeTextOptions ) );
       leftChildren.push( challengeNumberText );
 
       var updateChallengeString = function() {
