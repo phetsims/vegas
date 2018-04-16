@@ -42,7 +42,7 @@ define( function( require ) {
         font: StatusBar.DEFAULT_FONT
       } ),
       new ScoreDisplayNumberAndStar( scoreProperty ), {
-        backButtonListener: function() { scoreProperty.reset(); }
+        backButtonListener: function() { console.log( 'back' ); }
       } );
     this.addChild( statusBar );
 
