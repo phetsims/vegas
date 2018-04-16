@@ -31,7 +31,6 @@ define( function( require ) {
   var vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var BUTTON_WIDTH = 120;
   var NUM_STARS = 5;
   var SCORE_RANGE = new Range( 0, 1000 );
   var BEST_TIME_RANGE = new Range( 0, 10000 );
@@ -66,8 +65,7 @@ define( function( require ) {
     // Level selection buttons
     var buttonIcon = new Rectangle( 0, 0, 100, 100, { fill: 'red', stroke: 'black' } );
 
-    var buttonWithStars = new LevelSelectionButton.ScoreDisplayCreator( buttonIcon, scoreProperty, {
-      BUTTON_WIDTH: BUTTON_WIDTH,
+    var buttonWithStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
       scoreDisplayConstructor: ScoreDisplayStars,
       scoreDisplayOptions: {
         numberOfStars: NUM_STARS,
@@ -76,8 +74,7 @@ define( function( require ) {
       listener: function() { console.log( 'level start' ); }
     } );
 
-    var buttonWithTextAndStars = new LevelSelectionButton.ScoreDisplayCreator( buttonIcon, scoreProperty, {
-      BUTTON_WIDTH: BUTTON_WIDTH,
+    var buttonWithTextAndStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
       scoreDisplayConstructor: ScoreDisplayLabeledStars,
       scoreDisplayOptions: {
         numberOfStars: NUM_STARS,
@@ -86,14 +83,12 @@ define( function( require ) {
       listener: function() { console.log( 'level start' ); }
     } );
 
-    var buttonWithNumberAndStar = new LevelSelectionButton.ScoreDisplayCreator( buttonIcon, scoreProperty, {
-      BUTTON_WIDTH: BUTTON_WIDTH,
+    var buttonWithNumberAndStar = new LevelSelectionButton( buttonIcon, scoreProperty, {
       scoreDisplayConstructor: ScoreDisplayNumberAndStar,
       listener: function() { console.log( 'level start' ); }
     } );
 
-    var buttonWithTextAndNumber = new LevelSelectionButton.ScoreDisplayCreator( buttonIcon, scoreProperty, {
-      BUTTON_WIDTH: BUTTON_WIDTH,
+    var buttonWithTextAndNumber = new LevelSelectionButton( buttonIcon, scoreProperty, {
       scoreDisplayConstructor: ScoreDisplayLabeledNumber,
       listener: function() { console.log( 'level start' ); },
       bestTimeProperty: bestTimeProperty,

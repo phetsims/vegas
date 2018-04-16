@@ -38,11 +38,11 @@ define( function( require ) {
 
   /**
    * @param {Node} icon - appears on the button above the score display, scaled to fit
-   * @param {Node} scoreDisplay - displays the score
+   * @param {Property.<number>} scoreProperty
    * @param {Object} [options]
    * @constructor
    */
-  function LevelSelectionButton( icon, scoreDisplay, options ) {
+  function LevelSelectionButton( icon, scoreProperty, options ) {
 
     assert && assert( icon instanceof Node );
 
@@ -58,7 +58,9 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 10,
 
-      // layout of scoreDisplay
+      // score display
+      scoreDisplayConstructor: ScoreDisplayStars,
+      scoreDisplayOptions: null, // passed to scoreDisplayConstructor
       scoreDisplayProportion: 0.2, // percentage of the button height occupied by scoreDisplay, (0,0.5]
       scoreDisplayMinXMargin: 10, // horizontal margin between scoreDisplay and its background
       scoreDisplayMinYMargin: 5,  // vertical margin between scoreDisplay and its background
@@ -77,12 +79,15 @@ define( function( require ) {
 
     Node.call( this );
 
-    assert && assert(
-    options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
+    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
+      'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
+    assert && assert( options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
       'scoreDisplayProportion value out of range'
     );
 
     var maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
+
+    var scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
 
     // Background behind scoreDisplay
     var scoreDisplayBackgroundHeight = options.buttonHeight * options.scoreDisplayProportion;
@@ -150,9 +155,7 @@ define( function( require ) {
     // @private
     this.disposeLevelSelectionButton = function() {
 
-      if ( scoreDisplay.hasListener( 'bounds', scoreDisplayUpdateLayout ) ) {
-        scoreDisplay.off( 'bounds', scoreDisplayUpdateLayout );
-      }
+      scoreDisplay.dispose();
 
       if ( bestTimeListener && options.bestTimeProperty.hasListener( bestTimeListener ) ) {
         options.bestTimeProperty.unlink( bestTimeListener );
@@ -197,44 +200,6 @@ define( function( require ) {
       return background;
     }
   } );
-
-  /**
-   * Convenience type for creating a LevelSelectionButton with a specific type of scoreDisplay.
-   * Instantiation and disposal of the scoreDisplay instance is opaque to the client.
-   * @param {Node} icon - appears on the button above the score display, scaled to fit
-   * @param {Property.<number>} scoreProperty
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ScoreDisplayCreator( icon, scoreProperty, options ) {
-
-    options = _.extend( {
-      listener: null, // {function|null} called when the button is pressed
-      scoreDisplayConstructor: ScoreDisplayStars, // {constructor} for creating scoreDisplay
-      scoreDisplayOptions: null // see scoreDisplay's constructor
-    }, options );
-
-    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
-      'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
-
-    // @private all constructors must have the same signature!
-    this.scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
-
-    LevelSelectionButton.call( this, icon, this.scoreDisplay, _.omit( options, [ 'scoreDisplayOptions' ] ) );
-  }
-
-  vegas.register( 'LevelSelectionButton.ScoreDisplayCreator', ScoreDisplayCreator );
-
-  inherit( LevelSelectionButton, ScoreDisplayCreator, {
-
-    // @public
-    dispose: function() {
-      this.scoreDisplay.dispose();
-      LevelSelectionButton.prototype.dispose.call( this );
-    }
-  } );
-
-  LevelSelectionButton.ScoreDisplayCreator = ScoreDisplayCreator;
 
   return LevelSelectionButton;
 } );
