@@ -55,7 +55,10 @@ define( function( require ) {
 
   return inherit( HBox, ScoreDisplayLabeledStars, {
 
-    // @public 
+    /**
+     * @public
+     * @override
+     */
     dispose: function() {
       this.disposeScoreDisplayLabeledStars();
       HBox.prototype.dispose.call( this );
