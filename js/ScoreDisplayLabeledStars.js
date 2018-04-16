@@ -29,13 +29,13 @@ define( function( require ) {
 
     options = _.extend( {
       font: StatusBar.DEFAULT_FONT,
-      fill: 'black',
+      textFill: 'black',
       spacing: 5
     }, options );
 
     var textNode = new Text( scoreString, {
       font: options.font,
-      fill: options.fill
+      fill: options.textFill
     } );
 
     var scoreDisplay = new ScoreDisplayStars( scoreProperty, options );

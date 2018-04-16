@@ -15,18 +15,26 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
+  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var vegas = require( 'VEGAS/vegas' );
+
+  // constants
+  var VALID_SCORE_DISPLAY_CONSTRUCTORS = [
+    // Types that are relevant for this status bar. All constructors must have the same signature!
+    ScoreDisplayLabeledNumber, ScoreDisplayNumberAndStar
+  ];
 
   /**
    * @param {Bounds2} layoutBounds - static 'safe' bounds of the parent ScreenView
    * @param {Property.<Bounds2>} visibleBoundsProperty - dynamic bounds of the browser window
    * @param {Node} messageNode - to the right of the back button, typically Text
-   * @param {Node} scoreDisplay - intended to be one of the ScoreDisplay* nodes but can be any Node
+   * @param {Property.<number>} scoreProperty
    * @param {Object} [options]
    * @constructor
    */
-  function InfiniteStatusBar( layoutBounds, visibleBoundsProperty, messageNode, scoreDisplay, options ) {
+  function InfiniteStatusBar( layoutBounds, visibleBoundsProperty, messageNode, scoreProperty, options ) {
 
     var self = this;
 
@@ -36,10 +44,17 @@ define( function( require ) {
       yMargin: 10,
       spacing: 10,
 
+      // score display
+      scoreDisplayConstructor: ScoreDisplayNumberAndStar,
+      scoreDisplayOptions: null, // passed to scoreDisplayConstructor
+
       // true: keeps things on the status bar aligned with left and right edges of window bounds
       // false: align things on status bar with left and right edges of static layoutBounds
       dynamicAlignment: true
     }, options );
+
+    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
+      'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
 
     var backButton = new BackButton( {
       listener: options.backButtonListener,
@@ -55,6 +70,7 @@ define( function( require ) {
     } );
 
     // Wrap scoreDisplay, since we will listen for bounds changes to reposition it.
+    var scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
     var scoreDisplayParent = new Node( { children: [ scoreDisplay ] } );
 
     var barHeight = _.max( [ backButton.height, messageNode.height, scoreDisplay.height ] ) + 2 * options.yMargin;
@@ -85,10 +101,10 @@ define( function( require ) {
 
     // @private
     this.disposeInfiniteStatusBar = function() {
+
       backButton.dispose();
-      if ( scoreDisplay.hasListener( 'bounds', updateLayout ) ) {
-        scoreDisplay.off( 'bounds', updateLayout );
-      }
+      scoreDisplay.dispose();
+
       if ( self.bar.hasListener( 'bounds', updateLayout ) ) {
         self.bar.off( 'bounds', updateLayout );
       }

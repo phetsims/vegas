@@ -30,13 +30,13 @@ define( function( require ) {
 
     options = _.extend( {
       font: StatusBar.DEFAULT_FONT,
-      fill: 'black',
+      textFill: 'black',
       scoreDecimalPlaces: 0
     }, options );
 
     var scoreDisplayText = new Text( '', {
       font: options.font,
-      fill: options.fill
+      fill: options.textFill
     } );
 
     assert && assert( !options.children, 'ScoreDisplayNumber sets children' );

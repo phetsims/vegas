@@ -16,7 +16,6 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
-  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -35,15 +34,12 @@ define( function( require ) {
     var scoreProperty = new Property( 0 );
 
     // bar across the top
-    var statusBar = new InfiniteStatusBar(
-      this.layoutBounds,
-      this.visibleBoundsProperty,
-      new Text( 'Your Node goes here', {
-        font: StatusBar.DEFAULT_FONT
-      } ),
-      new ScoreDisplayNumberAndStar( scoreProperty ), {
-        backButtonListener: function() { console.log( 'back' ); }
-      } );
+    var messageNode = new Text( 'Your Node goes here', {
+      font: StatusBar.DEFAULT_FONT
+    } );
+    var statusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, messageNode, scoreProperty, {
+      backButtonListener: function() { console.log( 'back' ); }
+    } );
     this.addChild( statusBar );
 
     // slider for testing score changes

@@ -22,7 +22,6 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -48,11 +47,8 @@ define( function( require ) {
     var elapsedTimeProperty = new Property( 0 );
     var timerEnabledProperty = new BooleanProperty( true );
 
-    // score display for status bar
-    var scoreDisplay = new ScoreDisplayLabeledNumber( scoreProperty );
-
-    // bar across the top
-    var statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreDisplay, {
+    // status bar across the top
+    var statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreProperty, {
       font: new PhetFont( 20 ),
       levelProperty: levelProperty,
       challengeIndexProperty: challengeIndexProperty,

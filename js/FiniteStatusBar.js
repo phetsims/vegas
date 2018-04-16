@@ -13,6 +13,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
+  var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Tandem = require( 'TANDEM/Tandem' );
@@ -25,14 +27,20 @@ define( function( require ) {
   var pattern0Challenge1MaxString = require( 'string!VEGAS/pattern.0challenge.1max' );
   var startOverString = require( 'string!VEGAS/startOver' );
 
+  // constants
+  var VALID_SCORE_DISPLAY_CONSTRUCTORS = [
+    // Types that are relevant for this status bar. All constructors must have the same signature!
+    ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars
+  ];
+
   /**
    * @param {Bounds2} layoutBounds
    * @param {Property.<Bounds2>} visibleBoundsProperty
-   * @param {Node} scoreDisplay - intended to be one of the ScoreDisplay* nodes but can be any Node
+   * @param {Property.<number>} scoreProperty
    * @param {Object} [options]
    * @constructor
    */
-  function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreDisplay, options ) {
+  function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, options ) {
 
     var self = this;
 
@@ -53,6 +61,10 @@ define( function( require ) {
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
 
+      // score display
+      scoreDisplayConstructor: ScoreDisplayLabeledNumber,
+      scoreDisplayOptions: null, // passed to scoreDisplayConstructor
+
       // nested options for 'Start Over' button, filled in below
       startOverButtonOptions: null,
       startOverButtonText: startOverString,
@@ -69,6 +81,12 @@ define( function( require ) {
       tandem: Tandem.required
     }, options );
 
+    // nested options for score display
+    options.scoreDisplayOptions = _.extend( {
+      font: options.font,
+      textFill: options.textFill
+    }, options.scoreDisplayOptions );
+
     // nested options for 'Start Over' button
     options.startOverButtonOptions = _.extend( {
       font: options.font,
@@ -81,6 +99,8 @@ define( function( require ) {
       //TODO maxWidth
     }, options.startOverButtonOptions );
 
+    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
+      'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
     assert && assert( ( options.challengeIndexProperty && options.numberOfChallengesProperty ) ||
                       ( !options.challengeIndexProperty && !options.numberOfChallengesProperty ),
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
@@ -118,6 +138,7 @@ define( function( require ) {
     }
 
     // Score
+    var scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
     leftHBoxChildren.push( scoreDisplay );
 
     // Timer
@@ -166,19 +187,25 @@ define( function( require ) {
 
     // @private
     this.disposeFiniteStatusBar = function() {
+
+      scoreDisplay.dispose();
+      elapsedTimeNode && elapsedTimeNode.dispose();
+
       if ( options.levelProperty && options.levelProperty.hasListener( levelListener ) ) {
         options.levelProperty.unlink( levelListener );
       }
+
       if ( options.challengeIndexProperty && options.challengeIndexProperty.hasListener( updateChallengeString ) ) {
         options.challengeIndexProperty.unlink( updateChallengeString );
       }
+
       if ( options.numberOfChallengesProperty && options.numberOfChallengesProperty.hasListener( updateChallengeString ) ) {
         options.numberOfChallengesProperty.link( updateChallengeString );
       }
+
       if ( options.timerEnabledProperty && options.timerEnabledProperty.hasListener( timerEnabledListener ) ) {
         options.timerEnabledProperty.unlink( timerEnabledListener );
       }
-      elapsedTimeNode && elapsedTimeNode.dispose();
     };
   }
 
