@@ -66,11 +66,13 @@ define( function( require ) {
     var leftNodes = new HBox( {
       spacing: options.spacing,
       align: 'center',
-      children: [ backButton, messageNode ]
+      children: [ backButton, messageNode ],
+      maxWidth: 0.7 * layoutBounds.width
     } );
 
     // Wrap scoreDisplay, since we will listen for bounds changes to reposition it.
-    var scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
+    var scoreDisplay = new options.scoreDisplayConstructor( scoreProperty,
+      _.extend( { maxWidth: 0.2 * layoutBounds.width }, options.scoreDisplayOptions ) );
     var scoreDisplayParent = new Node( { children: [ scoreDisplay ] } );
 
     var barHeight = _.max( [ backButton.height, messageNode.height, scoreDisplay.height ] ) + 2 * options.yMargin;

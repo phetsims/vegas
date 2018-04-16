@@ -99,8 +99,8 @@ define( function( require ) {
       xMargin: 10,
       yMargin: 8,
       listener: function() {},
-      tandem: options.tandem.createTandem( 'startOverButton' )
-      //TODO maxWidth
+      tandem: options.tandem.createTandem( 'startOverButton' ),
+      maxWidth: 0.2 * layoutBounds.width
     }, options.startOverButtonOptions );
 
     assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
@@ -165,8 +165,8 @@ define( function( require ) {
     var leftHBox = new HBox( {
       resize: false,
       spacing: options.xSpacing,
-      children: leftHBoxChildren
-      //TODO maxWidth
+      children: leftHBoxChildren,
+      maxWidth: 0.7 * layoutBounds.width
     } );
 
     // Start Over button
