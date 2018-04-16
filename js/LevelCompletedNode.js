@@ -15,9 +15,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Property = require( 'AXON/Property' );
   var RichText = require( 'SCENERY/nodes/RichText' );
+  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Tandem = require( 'TANDEM/Tandem' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -88,9 +88,13 @@ define( function( require ) {
     children.push( title );
 
     // Progress indicator
-    children.push( new ProgressIndicator( numStars, new Property( score ), perfectScore, {
-      starInnerRadius: options.starDiameter / 4,
-      starOuterRadius: options.starDiameter / 2
+    children.push( new ScoreDisplayStars( new Property( score ), {
+      numberOfStars: numStars,
+      perfectScore: perfectScore,
+      starNodeOptions: {
+        innerRadius: options.starDiameter / 4,
+        outerRadius: options.starDiameter / 2
+      }
     } ) );
 
     // Level (optional)
