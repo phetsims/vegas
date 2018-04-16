@@ -95,7 +95,6 @@ define( function( require ) {
       cornerRadius: options.cornerRadius,
       fill: 'white',
       stroke: 'black',
-      lineWidth: 1,
       pickable: false
     } );
 
