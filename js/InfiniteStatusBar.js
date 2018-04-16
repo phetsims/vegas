@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Status bar for games with levels that have an infinite (open-ended) number of challenges.
+ * Status bar for games with levels that have an infinite (open-ended) number of challenges per level.
  * See specification in https://github.com/phetsims/vegas/issues/59.
  *
  * @author Andrea Lin

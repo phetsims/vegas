@@ -1,7 +1,9 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * A horizontal scoreboard 'bar'.
+ * Status bar for games that have a finite number of challenges per level.
+ * This was adapted from and replaces ScoreboardBar.
+ * See https://github.com/phetsims/vegas/issues/66.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
