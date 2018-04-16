@@ -158,7 +158,7 @@ define( function( require ) {
       leftHBoxChildren.push( elapsedTimeNode );
 
       var timerEnabledListener = function( timerEnabled ) {
-        elapsedTimeNode.visible = (options.timerEnabledProperty && timerEnabled);
+        elapsedTimeNode.visible = ( options.timerEnabledProperty && timerEnabled );
       };
       options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
     }
@@ -177,7 +177,7 @@ define( function( require ) {
     assert && assert( !options.children, 'FiniteStatusBar sets children' );
     options.children = [ leftHBox, startOverButton ];
 
-    var barHeight = Math.max( leftHBox.height, startOverButton.height ) + (2 * options.yMargin);
+    var barHeight = Math.max( leftHBox.height, startOverButton.height ) + ( 2 * options.yMargin );
 
     StatusBar.call( this, barHeight, layoutBounds, visibleBoundsProperty, options );
 
