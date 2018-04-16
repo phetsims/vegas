@@ -44,6 +44,11 @@ define( function( require ) {
     options.children = [ textNode, scoreDisplay ];
 
     HBox.call( this, options );
+
+    // @private
+    this.disposeScoreDisplayLabeledStars = function() {
+      scoreDisplay.dispose();
+    };
   }
 
   vegas.register( 'ScoreDisplayLabeledStars', ScoreDisplayLabeledStars );
