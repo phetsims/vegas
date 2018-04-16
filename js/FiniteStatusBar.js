@@ -9,11 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var GameTimer = require( 'VEGAS/GameTimer' );
+  var ElapsedTimeNode = require( 'VEGAS/ElapsedTimeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  var SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Tandem = require( 'TANDEM/Tandem' );
@@ -111,7 +110,6 @@ define( function( require ) {
       leftHBoxChildren.push( challengeNumberText );
 
       var updateChallengeString = function() {
-        //TODO #66 change to StringUtils.fillIn ?
         challengeNumberText.text = StringUtils.format( pattern0Challenge1MaxString,
           options.challengeIndexProperty.get() + 1, options.numberOfChallengesProperty.get() );
       };
@@ -125,21 +123,15 @@ define( function( require ) {
     // Timer
     if ( options.elapsedTimeProperty && options.timerEnabledProperty ) {
 
-      var clockIcon = new SimpleClockIcon( options.clockIconRadius );
-      var timeValue = new Text( '', textOptions );
-      var timerNode = new HBox( {
-        spacing: 8,
-        children: [ clockIcon, timeValue ]
+      var elapsedTimeNode = new ElapsedTimeNode( options.elapsedTimeProperty, {
+        clockRadius: options.clockRadius,
+        font: options.font,
+        textFill: options.textFill
       } );
-      leftHBoxChildren.push( timerNode );
-
-      var elapsedTimeListener = function( elapsedTime ) {
-        timeValue.text = GameTimer.formatTime( elapsedTime );
-      };
-      options.elapsedTimeProperty.link( elapsedTimeListener );
+      leftHBoxChildren.push( elapsedTimeNode );
 
       var timerEnabledListener = function( timerEnabled ) {
-        timerNode.visible = (options.timerEnabledProperty && timerEnabled);
+        elapsedTimeNode.visible = (options.timerEnabledProperty && timerEnabled);
       };
       options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
     }
@@ -183,13 +175,10 @@ define( function( require ) {
       if ( options.numberOfChallengesProperty && options.numberOfChallengesProperty.hasListener( updateChallengeString ) ) {
         options.numberOfChallengesProperty.link( updateChallengeString );
       }
-      if ( options.elapsedTimeProperty && options.elapsedTimeProperty.hasListener( elapsedTimeListener ) ) {
-        options.elapsedTimeProperty.unlink( elapsedTimeListener );
-      }
       if ( options.timerEnabledProperty && options.timerEnabledProperty.hasListener( timerEnabledListener ) ) {
         options.timerEnabledProperty.unlink( timerEnabledListener );
       }
-      scoreDisplay.dispose(); //TODO #66 don't do this when it's passed in to constructor
+      elapsedTimeNode && elapsedTimeNode.dispose();
     };
   }
 

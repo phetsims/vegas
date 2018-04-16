@@ -110,7 +110,7 @@ define( function( require ) {
 
     var elapsedTimeSlider = new HBox( {
       children: [
-        new Text( 'Time: ', { font: DEFAULT_FONT } ),
+        new Text( 'Elapsed time: ', { font: DEFAULT_FONT } ),
         new HSlider( elapsedTimeProperty, new Range( 0, 1000 ), {
           constrainValue: function( value ) {
             return Util.roundSymmetric( value );
