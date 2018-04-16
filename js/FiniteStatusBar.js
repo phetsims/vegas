@@ -77,6 +77,10 @@ define( function( require ) {
       xMargin: 20,
       yMargin: 10,
 
+      // true: keeps things on the status bar aligned with left and right edges of window bounds
+      // false: align things on status bar with left and right edges of static layoutBounds
+      dynamicAlignment: true,
+
       // phet-io
       tandem: Tandem.required
     }, options );
@@ -177,9 +181,16 @@ define( function( require ) {
 
     // When the bar changes...
     var updateLayout = function() {
-      leftHBox.left = self.barNode.left + options.xMargin;
+
+      var leftEdge = ( options.dynamicAlignment ) ? self.barNode.left : layoutBounds.minX;
+      var rightEdge = ( options.dynamicAlignment ) ? self.barNode.right : layoutBounds.maxX;
+
+      // stuff on left end of bar
+      leftHBox.left = leftEdge + options.xMargin;
       leftHBox.centerY = self.barNode.centerY;
-      startOverButton.right = self.barNode.right - options.xMargin;
+
+      // start over button on right end of bar
+      startOverButton.right = rightEdge - options.xMargin;
       startOverButton.centerY = self.barNode.centerY;
     };
     this.barNode.on( 'bounds', updateLayout );
