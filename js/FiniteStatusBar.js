@@ -82,6 +82,10 @@ define( function( require ) {
       //TODO maxWidth
     }, options.startOverButtonOptions );
 
+    assert && assert( ( options.challengeIndexProperty && options.numberOfChallengesProperty ) ||
+                      ( !options.challengeIndexProperty && !options.numberOfChallengesProperty ),
+      'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
+
     var leftHBoxChildren = [];
 
     var textOptions = { fill: options.textFill, font: options.font };
@@ -135,7 +139,7 @@ define( function( require ) {
       options.elapsedTimeProperty.link( elapsedTimeListener );
 
       var timerEnabledListener = function( timerEnabled ) {
-        timerNode.visible = ( options.timerEnabledProperty && timerEnabled );
+        timerNode.visible = (options.timerEnabledProperty && timerEnabled);
       };
       options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
     }
@@ -154,7 +158,7 @@ define( function( require ) {
     assert && assert( !options.children, 'FiniteStatusBar sets children' );
     options.children = [ leftHBox, startOverButton ];
 
-    var barHeight = Math.max( leftHBox.height, startOverButton.height ) + ( 2 * options.yMargin );
+    var barHeight = Math.max( leftHBox.height, startOverButton.height ) + (2 * options.yMargin);
 
     StatusBar.call( this, barHeight, layoutBounds, visibleBoundsProperty, options );
 
