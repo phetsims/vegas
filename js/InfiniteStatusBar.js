@@ -12,6 +12,7 @@ define( function( require ) {
 
   // modules
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var StatusBar = require( 'VEGAS/StatusBar' );
@@ -46,14 +47,20 @@ define( function( require ) {
       yMargin: 10
     } );
 
-    // Wrap these nodes. We will listen for bounds changes on the child, and position the parent nodes accordingly.
-    var messageNodeParent = new Node( { children: [ messageNode ] } );
+    // Nodes on the left end of the bar
+    var leftNodes = new HBox( {
+      spacing: options.spacing,
+      align: 'center',
+      children: [ backButton, messageNode ]
+    } );
+
+    // Wrap scoreDisplay, since we will listen for bounds changes to reposition it.
     var scoreDisplayParent = new Node( { children: [ scoreDisplay ] } );
 
     var barHeight = _.max( [ backButton.height, messageNode.height, scoreDisplay.height ] ) + 2 * options.yMargin;
 
     assert && assert( !options.children, 'InfiniteStatusBar sets children' );
-    options.children = [ backButton, messageNodeParent, scoreDisplayParent ];
+    options.children = [ leftNodes, scoreDisplayParent ];
 
     StatusBar.call( this, barHeight, layoutBounds, visibleBoundsProperty, options );
 
@@ -61,22 +68,17 @@ define( function( require ) {
     // Some of this may be unnecessary depending on what changed, but it simplifies to do all layout here.
     var updateLayout = function() {
 
-      var leftEdge = ( options.dynamicAlignment ) ? self.barNode.left : layoutBounds.minX;
-      var rightEdge = ( options.dynamicAlignment ) ? self.barNode.right : layoutBounds.maxX;
+      var leftEdge = (options.dynamicAlignment) ? self.barNode.left : layoutBounds.minX;
+      var rightEdge = (options.dynamicAlignment) ? self.barNode.right : layoutBounds.maxX;
 
-      // Back button on left end
-      backButton.left = leftEdge + options.xMargin;
-      backButton.centerY = self.barNode.centerY;
-
-      // Message to the right of back button
-      messageNodeParent.left = backButton.right + options.spacing;
-      messageNodeParent.centerY = self.barNode.centerY;
+      // stuff on left end of bar
+      leftNodes.left = leftEdge + options.xMargin;
+      leftNodes.centerY = self.barNode.centerY;
 
       // Score display on the right end
       scoreDisplayParent.right = rightEdge - options.xMargin;
       scoreDisplayParent.centerY = self.barNode.centerY;
     };
-    messageNode.on( 'bounds', updateLayout );
     scoreDisplay.on( 'bounds', updateLayout );
     this.barNode.on( 'bounds', updateLayout );
     updateLayout();
@@ -84,9 +86,6 @@ define( function( require ) {
     // @private
     this.disposeInfiniteStatusBar = function() {
       backButton.dispose();
-      if ( messageNode.hasListener( 'bounds', updateLayout ) ) {
-        messageNode.off( 'bounds', updateLayout );
-      }
       if ( scoreDisplay.hasListener( 'bounds', updateLayout ) ) {
         scoreDisplay.off( 'bounds', updateLayout );
       }
