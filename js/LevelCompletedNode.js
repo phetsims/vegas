@@ -66,6 +66,7 @@ define( function( require ) {
       buttonFont: new PhetFont( 26 ),
       buttonFill: new Color( 255, 255, 0 ),
       starDiameter: 62,
+      contentMaxWidth: null, // {number|null} - Will apply as maxWidth to every interior component individually.
       tandem: Tandem.required
     }, options );
 
@@ -84,7 +85,10 @@ define( function( require ) {
     else if ( proportionCorrect >= 0.5 ) {
       titleText = goodString;
     }
-    var title = new Text( titleText, { font: options.titleFont } );
+    var title = new Text( titleText, {
+      font: options.titleFont,
+      maxWidth: options.contentMaxWidth
+    } );
     children.push( title );
 
     // Progress indicator
@@ -94,22 +98,30 @@ define( function( require ) {
       starNodeOptions: {
         innerRadius: options.starDiameter / 4,
         outerRadius: options.starDiameter / 2
-      }
+      },
+      maxWidth: options.contentMaxWidth
     } ) );
 
     // Level (optional)
     if ( options.levelVisible ) {
-      children.push( new Text( StringUtils.format( labelLevelString, level + 1 ), { font: options.infoFont } ) );
+      children.push( new Text( StringUtils.format( labelLevelString, level + 1 ), {
+        font: options.infoFont,
+        maxWidth: options.contentMaxWidth
+      } ) );
     }
 
     // Score
-    children.push( new Text( StringUtils.format( labelScoreMaxString, score, perfectScore ), { font: options.infoFont } ) );
+    children.push( new Text( StringUtils.format( labelScoreMaxString, score, perfectScore ), {
+      font: options.infoFont,
+      maxWidth: options.contentMaxWidth
+    } ) );
 
     // Time (optional)
     if ( timerEnabled ) {
       var time = new RichText( StringUtils.format( labelTimeString, GameTimer.formatTime( elapsedTime ) ), {
         font: options.infoFont,
-        align: 'center'
+        align: 'center',
+        maxWidth: options.contentMaxWidth
       } );
       if ( isNewBestTime ) {
         time.text = time.text + '<br>' + yourNewBestString;
@@ -125,7 +137,8 @@ define( function( require ) {
       listener: continueFunction,
       font: options.buttonFont,
       baseColor: options.buttonFill,
-      tandem: options.tandem.createTandem( 'continueButton' )
+      tandem: options.tandem.createTandem( 'continueButton' ),
+      maxWidth: options.contentMaxWidth
     } ) );
 
     // Panel
