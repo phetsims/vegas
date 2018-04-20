@@ -91,7 +91,10 @@ define( function( require ) {
         node: node
       } );
       var parent = new Node( { children: [ node ], scale: options.scaleForResolution } );
-      parent.toImage( function( image ) { self.imageWrappers[ i ].image = image; } );
+      parent.toImage( function( image ) {
+        self.imageWrappers[ i ].image = image;
+        parent.dispose(); // not needed anymore, see https://github.com/phetsims/area-model-common/issues/128
+      } );
     } );
 
     CanvasNode.call( this, options );
