@@ -44,8 +44,6 @@ define( function( require ) {
   function RewardDialog( score, options ) {
 
     options = _.extend( {
-      modal: true,
-      hasCloseButton: false,
       xMargin: 40,
       keepGoingButtonListener: function() {}, // called when 'Keep Going' button is pressed
       newLevelButtonListener: function() {} // called when 'New Level' button is pressed
