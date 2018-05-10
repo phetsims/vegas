@@ -124,7 +124,7 @@ define( function( require ) {
     var leftChildren = [];
 
     // Level N
-    if ( options.levelProperty ) {
+    if ( options.levelProperty && options.levelVisible ) {
       var levelText = new Text( '', _.extend( {
         tandem: options.tandem.createTandem( 'levelText' )
       }, options.levelTextOptions ) );
