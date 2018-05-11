@@ -34,7 +34,7 @@ define( function( require ) {
   // constants
   var DEFAULT_BUTTONS_FONT = new PhetFont( 16 );
   var DEFAULT_SCORE_DISPLAY_OPTIONS = {
-    font: new PhetFont( { size: 22, weight: 'bold' } ),
+    font: new PhetFont( { size: 30, weight: 'bold' } ),
     spacing: 6,
     starNodeOptions: {
       outerRadius: 20,
