@@ -11,19 +11,18 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var vegas = require( 'VEGAS/vegas' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var VStrut = require( 'SCENERY/nodes/VStrut' );
   var Dialog = require( 'SUN/Dialog' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
+  var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
+  var vegas = require( 'VEGAS/vegas' );
 
   // images
   var phetGirlJugglingStarsImage = require( 'image!VEGAS/phet-girl-juggling-stars.png' );
@@ -33,8 +32,16 @@ define( function( require ) {
   var newLevelString = require( 'string!VEGAS/newLevel' );
 
   // constants
-  var SCORE_FONT = new PhetFont( { size: 40, weight: 'bold' } );
-  var BUTTON_FONT = new PhetFont( 24 );
+  var DEFAULT_BUTTONS_FONT = new PhetFont( 16 );
+  var DEFAULT_SCORE_DISPLAY_OPTIONS = {
+    font: new PhetFont( { size: 22, weight: 'bold' } ),
+    spacing: 6,
+    starNodeOptions: {
+      outerRadius: 20,
+      innerRadius: 10,
+      filledLineWidth: 2
+    }
+  };
 
   /**
    * @param {number} score
@@ -44,47 +51,64 @@ define( function( require ) {
   function RewardDialog( score, options ) {
 
     options = _.extend( {
-      xMargin: 40,
+
+      // RewardDialog options
+      phetGirlScale: 0.6,
+      scoreDisplayOptions: null, // {Object|null} options passed to ScoreDisplayNumberAndStar
+      buttonsFont: DEFAULT_BUTTONS_FONT,
+      buttonsWidth: 110, // {number} fixed width for both buttons
+      buttonsYSpacing: 15,
       keepGoingButtonListener: function() {}, // called when 'Keep Going' button is pressed
-      newLevelButtonListener: function() {} // called when 'New Level' button is pressed
+      newLevelButtonListener: function() {}, // called when 'New Level' button is pressed
+
+      // Dialog options
+      xMargin: 30,
+      yMargin: 20
     }, options );
 
-    var phetGirlNode = new Image( phetGirlJugglingStarsImage );
+    options.scoreDisplayOptions = _.extend( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
 
-    var scoreDisplay = new ScoreDisplayNumberAndStar( new NumberProperty( score ), {
-      font: SCORE_FONT,
-      spacing: 6,
-      starNodeOptions: {
-        outerRadius: 25,
-        innerRadius: 12.5,
-        filledLineWidth: 3,
-        emptyLineWidth: 3
-      }
+    var phetGirlNode = new Image( phetGirlJugglingStarsImage, {
+      scale: options.phetGirlScale
     } );
 
+    var scoreDisplay = new ScoreDisplayNumberAndStar( new NumberProperty( score ), options.scoreDisplayOptions );
+
     var buttonOptions = {
-      minWidth: 145, // determined empirically
-      maxWidth: 145
+      font: options.buttonsFont,
+      minWidth: options.buttonsWidth,
+      maxWidth: options.buttonsWidth
     };
 
     var keepGoingButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
-      content: new Text( keepGoingString, { font: BUTTON_FONT } ),
+      content: new Text( keepGoingString, { font: DEFAULT_BUTTONS_FONT } ),
       listener: options.keepGoingButtonListener,
       baseColor: 'white'
     } ) );
 
     var newLevelButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
-      content: new Text( newLevelString, { font: BUTTON_FONT } ),
+      content: new Text( newLevelString, { font: DEFAULT_BUTTONS_FONT } ),
       listener: options.newLevelButtonListener,
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW
     } ) );
 
+    var buttons = new VBox( {
+      children: [ keepGoingButton, newLevelButton ],
+      spacing: options.buttonsYSpacing
+    } );
+
+    // half the remaining height, so that scoreDisplay will be centered in the negative space above the buttons.
+    var scoreSpacing = ( phetGirlNode.height - scoreDisplay.height - buttons.height ) / 2;
+    assert && assert( scoreSpacing > 0, 'phetGirlNode is scaled down too much' );
+
     var rightSideNode = new VBox( {
-      children: [ scoreDisplay, new VStrut( 20 ), keepGoingButton, newLevelButton ],
-      spacing: 25
+      children: [ scoreDisplay, buttons ],
+      align: 'center',
+      spacing: scoreSpacing
     } );
 
     var content = new HBox( {
+      align: 'bottom',
       children: [ phetGirlNode, rightSideNode ],
       spacing: 40
     } );
