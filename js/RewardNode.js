@@ -211,7 +211,7 @@ define( function( require ) {
               imageWrapper: imageWrapper,
               x: self.sampleImageXValue( imageWrapper ),
               y: self.sampleImageYValue( imageWrapper ),
-              speed: (Math.random() + 1) * MAX_SPEED
+              speed: (phet.joist.random.nextDouble() + 1) * MAX_SPEED
             } );
           })( node );
         }
@@ -226,13 +226,13 @@ define( function( require ) {
 
       // Select a random X value for the image when it is created.
       sampleImageXValue: function( imageWrapper ) {
-        return (Math.random() * this.canvasDisplayBounds.width + this.canvasDisplayBounds.left) * this.options.scaleForResolution - imageWrapper.width / 2;
+        return (phet.joist.random.nextDouble() * this.canvasDisplayBounds.width + this.canvasDisplayBounds.left) * this.options.scaleForResolution - imageWrapper.width / 2;
       },
 
       // @private - select a random Y value for the image when it is created, or when it goes back to the top of the screen
       sampleImageYValue: function( imageWrapper ) {
         // Start things about 1 second off the top of the screen
-        return this.canvasDisplayBounds.top - Math.random() * this.canvasDisplayBounds.height * 2 - MAX_SPEED - imageWrapper.height;
+        return this.canvasDisplayBounds.top - phet.joist.random.nextDouble() * this.canvasDisplayBounds.height * 2 - MAX_SPEED - imageWrapper.height;
       },
 
       // @public - move the rewards down according to their speed
