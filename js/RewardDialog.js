@@ -59,11 +59,7 @@ define( function( require ) {
       buttonsWidth: 110, // {number} fixed width for both buttons
       buttonsYSpacing: 15,
       keepGoingButtonListener: function() {}, // called when 'Keep Going' button is pressed
-      newLevelButtonListener: function() {}, // called when 'New Level' button is pressed
-
-      // Dialog options
-      xMargin: 30,
-      yMargin: 20
+      newLevelButtonListener: function() {} // called when 'New Level' button is pressed
     }, options );
 
     options.scoreDisplayOptions = _.extend( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
