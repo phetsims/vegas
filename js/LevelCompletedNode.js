@@ -38,7 +38,7 @@ define( function( require ) {
   var yourNewBestString = require( 'string!VEGAS/yourNewBest' );
 
   /**
-   * @param {number} level starting from zero, 1 added to this when displayed
+   * @param {number} level - numerical value representing game level completed
    * @param {number} score
    * @param {number} perfectScore
    * @param {number} numStars
@@ -46,11 +46,20 @@ define( function( require ) {
    * @param {number} elapsedTime (in seconds)
    * @param {number} bestTimeAtThisLevel (in seconds), null indicates no best time
    * @param {boolean} isNewBestTime
-   * @param {function} continueFunction Function to call when the user presses the 'Continue' button.
+   * @param {function} continueFunction - function to call when the user presses the 'Continue' button
    * @param {Object} [options]
    * @constructor
    */
-  function LevelCompletedNode( level, score, perfectScore, numStars, timerEnabled, elapsedTime, bestTimeAtThisLevel, isNewBestTime, continueFunction, options ) {
+  function LevelCompletedNode( level,
+                               score,
+                               perfectScore,
+                               numStars,
+                               timerEnabled,
+                               elapsedTime,
+                               bestTimeAtThisLevel,
+                               isNewBestTime,
+                               continueFunction,
+                               options ) {
 
     options = _.extend( {
       levelVisible: true, // display the level number?
@@ -104,7 +113,7 @@ define( function( require ) {
 
     // Level (optional)
     if ( options.levelVisible ) {
-      children.push( new Text( StringUtils.format( labelLevelString, level + 1 ), {
+      children.push( new Text( StringUtils.format( labelLevelString, level ), {
         font: options.infoFont,
         maxWidth: options.contentMaxWidth
       } ) );

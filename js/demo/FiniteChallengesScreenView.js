@@ -135,7 +135,7 @@ define( function( require ) {
       bottom: this.layoutBounds.bottom - 20,
       listener: function() {
         var levelCompletedNode = new LevelCompletedNode(
-          7, // level
+          levelProperty.get() + 1, // level
           scoreProperty.value, // score
           PERFECT_SCORE, // maxScore
           4, // numberOfStars 
