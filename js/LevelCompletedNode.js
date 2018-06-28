@@ -100,8 +100,8 @@ define( function( require ) {
     } );
     children.push( title );
 
-    // Progress indicator
-    children.push( new ScoreDisplayStars( new Property( score ), {
+    // @private {Node} Progress indicator
+    this.scoreDisplayStars = new ScoreDisplayStars( new Property( score ), {
       numberOfStars: numStars,
       perfectScore: perfectScore,
       starNodeOptions: {
@@ -109,7 +109,8 @@ define( function( require ) {
         outerRadius: options.starDiameter / 2
       },
       maxWidth: options.contentMaxWidth
-    } ) );
+    } );
+    children.push( this.scoreDisplayStars );
 
     // Level (optional)
     if ( options.levelVisible ) {
@@ -127,28 +128,32 @@ define( function( require ) {
 
     // Time (optional)
     if ( timerEnabled ) {
-      var time = new RichText( StringUtils.format( labelTimeString, GameTimer.formatTime( elapsedTime ) ), {
+      // @private {Node}
+      this.timeRichText = new RichText( StringUtils.format( labelTimeString, GameTimer.formatTime( elapsedTime ) ), {
         font: options.infoFont,
         align: 'center',
         maxWidth: options.contentMaxWidth
       } );
       if ( isNewBestTime ) {
-        time.text = time.text + '<br>' + yourNewBestString;
+        this.timeRichText.text = this.timeRichText.text + '<br>' + yourNewBestString;
       }
       else if ( bestTimeAtThisLevel !== null ) {
-        time.text = time.text + '<br>' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( bestTimeAtThisLevel ) );
+        this.timeRichText.text = this.timeRichText.text + '<br>' + StringUtils.format( pattern0YourBestString, GameTimer.formatTime( bestTimeAtThisLevel ) );
       }
-      children.push( time );
+      children.push( this.timeRichText );
     }
 
-    // Continue button
-    children.push( new TextPushButton( continueString, {
+    // @private {Node}
+    this.continueButton = new TextPushButton( continueString, {
       listener: continueFunction,
       font: options.buttonFont,
       baseColor: options.buttonFill,
       tandem: options.tandem.createTandem( 'continueButton' ),
       maxWidth: options.contentMaxWidth
-    } ) );
+    } );
+
+    // Continue button
+    children.push( this.continueButton );
 
     // Panel
     Panel.call( this, new VBox( { children: children, spacing: options.ySpacing } ), options );
@@ -156,5 +161,18 @@ define( function( require ) {
 
   vegas.register( 'LevelCompletedNode', LevelCompletedNode );
 
-  return inherit( Panel, LevelCompletedNode );
+  return inherit( Panel, LevelCompletedNode, {
+    /**
+     * Releases references.
+     * @public
+     * @override
+     */
+    dispose: function() {
+      this.timeRichText && this.timeRichText.dispose();
+      this.continueButton.dispose();
+      this.scoreDisplayStars.dispose();
+
+      Panel.prototype.dispose.call( this );
+    }
+  } );
 } );
