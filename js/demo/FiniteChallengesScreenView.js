@@ -40,7 +40,7 @@ define( function( require ) {
     var self = this;
     ScreenView.call( this );
 
-    var levelProperty = new Property( 0 );
+    var levelProperty = new Property( 1 ); // 1-based
     var challengeIndexProperty = new Property( 0 );
     var numberOfChallengesProperty = new Property( NUMBER_OF_CHALLENGES );
     var scoreProperty = new Property( 0 );
@@ -65,7 +65,7 @@ define( function( require ) {
     var levelSlider = new HBox( {
       children: [
         new Text( 'Level: ', { font: DEFAULT_FONT } ),
-        new HSlider( levelProperty, new Range( 0, 4 ), {
+        new HSlider( levelProperty, new Range( 1, 5 ), {
           constrainValue: function( value ) {
             return Util.roundSymmetric( value );
           }
@@ -135,7 +135,7 @@ define( function( require ) {
       bottom: this.layoutBounds.bottom - 20,
       listener: function() {
         var levelCompletedNode = new LevelCompletedNode(
-          levelProperty.get() + 1, // level
+          levelProperty.get(), // level
           scoreProperty.value, // score
           PERFECT_SCORE, // maxScore
           4, // numberOfStars 

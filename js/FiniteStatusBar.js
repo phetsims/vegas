@@ -131,7 +131,7 @@ define( function( require ) {
       leftChildren.push( levelText );
 
       var levelListener = function( level ) {
-        levelText.text = StringUtils.format( labelLevelString, level + 1 );
+        levelText.text = StringUtils.format( labelLevelString, level );
       };
       options.levelProperty.link( levelListener );
     }
