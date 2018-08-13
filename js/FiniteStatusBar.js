@@ -99,7 +99,7 @@ define( function( require ) {
       yMargin: 8,
       listener: function() {},
       tandem: options.tandem.createTandem( 'startOverButton' ),
-      maxWidth: 0.2 * layoutBounds.width
+      maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ) // use 20% of available width
     }, options.startOverButtonOptions );
 
     assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
@@ -171,16 +171,16 @@ define( function( require ) {
       options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
     }
 
+    // @private Start Over button
+    this.startOverButton = new TextPushButton( options.startOverButtonText, options.startOverButtonOptions );
+
     // @private Nodes on the left end of the bar
     this.leftNodes = new HBox( {
       resize: false,
       spacing: options.xSpacing,
       children: leftChildren,
-      maxWidth: 0.7 * layoutBounds.width
+      maxWidth: ( layoutBounds.width - ( 2 * options.xMargin ) - this.startOverButton.width - options.xSpacing )
     } );
-
-    // @private Start Over button
-    this.startOverButton = new TextPushButton( options.startOverButtonText, options.startOverButtonOptions );
 
     assert && assert( !options.children, 'FiniteStatusBar sets children' );
     options.children = [ this.leftNodes, this.startOverButton ];
