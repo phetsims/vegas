@@ -132,7 +132,11 @@ define( function( require ) {
     // Best time decoration (optional), centered below the button, does not move when button is pressed
     if ( options.bestTimeProperty ) {
 
-      var bestTimeNode = new Text( '', { font: options.bestTimeFont, fill: options.bestTimeFill } );
+      var bestTimeNode = new Text( '', {
+        font: options.bestTimeFont,
+        fill: options.bestTimeFill,
+        maxWidth: this.width // constrain to width of the push button
+      } );
       var centerX = this.centerX;
       bestTimeNode.top = this.bottom + options.bestTimeYSpacing;
       this.addChild( bestTimeNode );
