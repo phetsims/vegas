@@ -7,7 +7,7 @@
  * Originally named LevelSelectionItemNode, renamed to LevelSelectionButton on 4/10/2018.
  *
  * @author John Blanco
- * @author Chris Malley
+ * @author Chris Malley (PixelZoom, Inc.)
  * @author Andrea Lin
  */
 define( function( require ) {
