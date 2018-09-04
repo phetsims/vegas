@@ -13,7 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Timer = require( 'PHET_CORE/Timer' );
+  var timer = require( 'PHET_CORE/timer' );
   var vegas = require( 'VEGAS/vegas' );
 
   // strings
@@ -50,7 +50,7 @@ define( function( require ) {
       if ( !this.isRunningProperty.value ) {
         var self = this;
         self.elapsedTimeProperty.value = 0;
-        self.intervalId = Timer.setInterval( function() {
+        self.intervalId = timer.setInterval( function() {
           //TODO will this be accurate, or should we compute elapsed time and potentially skip some time values?
           self.elapsedTimeProperty.value = self.elapsedTimeProperty.value + 1;
         }, 1000 ); // fire once per second
@@ -64,7 +64,7 @@ define( function( require ) {
      */
     stop: function() {
       if ( this.isRunningProperty.value ) {
-        Timer.clearInterval( this.intervalId );
+        timer.clearInterval( this.intervalId );
         this.intervalId = null;
         this.isRunningProperty.value = false;
       }
