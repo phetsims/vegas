@@ -13,7 +13,7 @@ define( function( require ) {
   var Sound = require( 'VIBE/Sound' );
   var vegas = require( 'VEGAS/vegas' );
 
-  // audio
+  // sounds
   var boingSound = require( 'sound!VEGAS/boing.mp3' );
   var cheerSound = require( 'sound!VEGAS/cheer.mp3' );
   var dingSound = require( 'sound!VEGAS/ding.mp3' );
