@@ -76,5 +76,11 @@
   },
   "score": {
     "value": "Score:"
+  },
+  "done": {
+    "value": "Done"
+  },
+  "youCompletedAllLevels": {
+    "value": "You completed all levels!"
   }
 }
