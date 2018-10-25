@@ -10,13 +10,13 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Node = require( 'SCENERY/nodes/Node' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var StatusBar = require( 'VEGAS/StatusBar' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
   var vegas = require( 'VEGAS/vegas' );
-  var StatusBar = require( 'VEGAS/StatusBar' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings
   var patternScoreNumberString = require( 'string!VEGAS/pattern.score.number' );

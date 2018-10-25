@@ -12,8 +12,8 @@ define( function( require ) {
 
   // modules
   var ElapsedTimeNode = require( 'VEGAS/ElapsedTimeNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
   var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );

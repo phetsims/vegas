@@ -9,14 +9,14 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var FiniteChallengesScreenView = require( 'VEGAS/demo/FiniteChallengesScreenView' );
+  var InfiniteChallengesScreenView = require( 'VEGAS/demo/InfiniteChallengesScreenView' );
   var LevelSelectionScreenView = require( 'VEGAS/demo/LevelSelectionScreenView' );
   var Property = require( 'AXON/Property' );
   var RewardScreenView = require( 'VEGAS/demo/RewardScreenView' );
   var Screen = require( 'JOIST/Screen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
-  var InfiniteChallengesScreenView = require( 'VEGAS/demo/InfiniteChallengesScreenView' );
-  var FiniteChallengesScreenView = require( 'VEGAS/demo/FiniteChallengesScreenView' );
 
   // strings
   var vegasTitleString = require( 'string!VEGAS/vegas.title' );

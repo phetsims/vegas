@@ -10,8 +10,8 @@ define( function( require ) {
 
   // modules
   var GameTimer = require( 'VEGAS/GameTimer' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var Text = require( 'SCENERY/nodes/Text' );

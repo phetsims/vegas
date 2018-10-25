@@ -19,12 +19,12 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
-  var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
-  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
-  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
+  var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
+  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
+  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var Tandem = require( 'TANDEM/Tandem' );
   var Text = require( 'SCENERY/nodes/Text' );
   var vegas = require( 'VEGAS/vegas' );

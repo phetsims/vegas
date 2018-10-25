@@ -12,9 +12,9 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RewardNode = require( 'VEGAS/RewardNode' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RewardDialog = require( 'VEGAS/RewardDialog' );
+  var RewardNode = require( 'VEGAS/RewardNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
   var vegas = require( 'VEGAS/vegas' );

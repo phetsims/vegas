@@ -23,8 +23,8 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
   var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
-  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
+  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
