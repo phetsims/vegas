@@ -104,13 +104,14 @@ define( function( require ) {
     this.inited = false;
 
     // make sure this node is initialized when state is being set for PhET-iO
-    if ( phet.phetIo && phet.phetIo.phetio.setStateEmitter ){
+    // TODO: can we use requirejs for this?
+    if ( phet.phetIo && phet.phetIo.phetioEngine.setStateEmitter ){
       this.initializationVerifier = function() {
         if ( !self.inited ){
           self.init();
         }
       };
-      phet.phetIo.phetio.setStateEmitter.addListener( this.initializationVerifier );
+      phet.phetIo.phetioEngine.setStateEmitter.addListener( this.initializationVerifier );
     }
   }
 
@@ -261,7 +262,7 @@ define( function( require ) {
       dispose: function() {
         this.stop();
         this.screenView && this.screenView.off( 'transform', this.updateBounds );
-        this.initializationVerifier && phet.phetIo.phetio.setStateEmitter.removeListener( this.initializationVerifier );
+        this.initializationVerifier && phet.phetIo.phetioEngine.setStateEmitter.removeListener( this.initializationVerifier );
         CanvasNode.prototype.dispose.call( this );
       }
     },
