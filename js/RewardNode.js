@@ -27,6 +27,9 @@ define( function( require ) {
   var StarNode = require( 'SCENERY_PHET/StarNode' );
   var vegas = require( 'VEGAS/vegas' );
 
+  // ifphetio
+  var phetioEngine = require( 'ifphetio!PHET_IO/phetioEngine' );
+
   // constants
   var DEBUG = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
   var MAX_SPEED = 200; // The maximum speed an image can fall in screen pixels per second.
@@ -104,14 +107,15 @@ define( function( require ) {
     this.inited = false;
 
     // make sure this node is initialized when state is being set for PhET-iO
-    // TODO: can we use requirejs for this?
-    if ( phet.phetIo && phet.phetIo.phetioEngine.setStateEmitter ){
+    if ( phetioEngine.setStateEmitter ) {
+
+      // @private
       this.initializationVerifier = function() {
-        if ( !self.inited ){
+        if ( !self.inited ) {
           self.init();
         }
       };
-      phet.phetIo.phetioEngine.setStateEmitter.addListener( this.initializationVerifier );
+      phetioEngine.setStateEmitter.addListener( this.initializationVerifier );
     }
   }
 
@@ -204,7 +208,7 @@ define( function( require ) {
         for ( var i = 0; i < this.options.nodes.length; i++ ) {
 
           var node = this.options.nodes[ i ];
-          (function( node ) {
+          ( function( node ) {
 
             //find the image wrapper corresponding to the node
             var imageWrapper = _.find( self.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node;} );
@@ -212,9 +216,9 @@ define( function( require ) {
               imageWrapper: imageWrapper,
               x: self.sampleImageXValue( imageWrapper ),
               y: self.sampleImageYValue( imageWrapper ),
-              speed: (phet.joist.random.nextDouble() + 1) * MAX_SPEED
+              speed: ( phet.joist.random.nextDouble() + 1 ) * MAX_SPEED
             } );
-          })( node );
+          } )( node );
         }
 
         this.inited = true;
@@ -227,7 +231,7 @@ define( function( require ) {
 
       // Select a random X value for the image when it is created.
       sampleImageXValue: function( imageWrapper ) {
-        return (phet.joist.random.nextDouble() * this.canvasDisplayBounds.width + this.canvasDisplayBounds.left) * this.options.scaleForResolution - imageWrapper.width / 2;
+        return ( phet.joist.random.nextDouble() * this.canvasDisplayBounds.width + this.canvasDisplayBounds.left ) * this.options.scaleForResolution - imageWrapper.width / 2;
       },
 
       // @private - select a random Y value for the image when it is created, or when it goes back to the top of the screen
@@ -262,7 +266,7 @@ define( function( require ) {
       dispose: function() {
         this.stop();
         this.screenView && this.screenView.off( 'transform', this.updateBounds );
-        this.initializationVerifier && phet.phetIo.phetioEngine.setStateEmitter.removeListener( this.initializationVerifier );
+        this.initializationVerifier && phetioEngine.setStateEmitter.removeListener( this.initializationVerifier );
         CanvasNode.prototype.dispose.call( this );
       }
     },
