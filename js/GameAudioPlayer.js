@@ -1,4 +1,4 @@
-// Copyright 2013-2017, University of Colorado Boulder
+// Copyright 2013-2018, University of Colorado Boulder
 
 /**
  * Audio player for the various sounds that are commonly used in PhET games.
