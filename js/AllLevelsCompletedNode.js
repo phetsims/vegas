@@ -33,6 +33,11 @@ define( function( require ) {
   function AllLevelsCompletedNode( listener, options ) {
     Node.call( this );
 
+    options = _.extend( {
+      // {number} - Controls the width of the main message and the text in the button
+      maxTextWidth: 300
+    }, options );
+
     // create the smiley face
     var faceNode = new FaceNode( FACE_DIAMETER );
 
@@ -40,13 +45,16 @@ define( function( require ) {
     var textMessage = new RichText( youCompletedAllLevelsString, {
       font: new PhetFont( 25 ),
       lineWrap: 300,
-      maxWidth: 300,
+      maxWidth: options.maxTextWidth,
       maxHeight: 300
     } );
 
     // create the button
     var button = new RectangularPushButton( {
-      content: new Text( doneString, { font: new PhetFont( 30 ) } ),
+      content: new Text( doneString, {
+        font: new PhetFont( 30 ),
+        maxWidth: options.maxTextWidth
+      } ),
       listener: listener,
       baseColor: 'yellow'
     } );
