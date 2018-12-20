@@ -18,12 +18,14 @@ define( function( require ) {
   var cheerSound = require( 'sound!VEGAS/cheer.mp3' );
   var dingSound = require( 'sound!VEGAS/ding.mp3' );
   var trumpetSound = require( 'sound!VEGAS/trumpet.mp3' );
+  var organSound = require( 'sound!VEGAS/organ.mp3' );
 
   // constants
   var CORRECT_ANSWER = new Sound( dingSound );
   var WRONG_ANSWER = new Sound( boingSound );
   var IMPERFECT_SCORE = new Sound( trumpetSound );
   var PERFECT_SCORE = new Sound( cheerSound );
+  var CHALLENGE_SCORE = new Sound( organSound );
 
   /**
    * @param {Property.<boolean>} soundEnabledProperty
@@ -54,6 +56,16 @@ define( function( require ) {
     wrongAnswer: function() {
       if ( this.soundEnabledProperty.value ) {
         WRONG_ANSWER.play();
+      }
+    },
+
+    /**
+     * play the sound that indicates a challenge has been completed
+     * @public
+     */
+    challengeComplete: function() {
+      if ( this.soundEnabledProperty.value ) {
+        CHALLENGE_SCORE.play();
       }
     },
 
