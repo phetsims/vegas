@@ -107,7 +107,7 @@ define( function( require ) {
     this.inited = false;
 
     // make sure this node is initialized when state is being set for PhET-iO
-    if ( phetioEngine.setStateEmitter ) {
+    if ( phetioEngine.phetioStateEngine.setStateEmitter ) {
 
       // @private
       this.initializationVerifier = function() {
@@ -115,7 +115,7 @@ define( function( require ) {
           self.init();
         }
       };
-      phetioEngine.setStateEmitter.addListener( this.initializationVerifier );
+      phetioEngine.phetioState.setStateEmitter.addListener( this.initializationVerifier );
     }
   }
 
@@ -266,7 +266,7 @@ define( function( require ) {
       dispose: function() {
         this.stop();
         this.screenView && this.screenView.off( 'transform', this.updateBounds );
-        this.initializationVerifier && phetioEngine.setStateEmitter.removeListener( this.initializationVerifier );
+        this.initializationVerifier && phetioEngine.phetioStateEngine.setStateEmitter.removeListener( this.initializationVerifier );
         CanvasNode.prototype.dispose.call( this );
       }
     },
