@@ -107,7 +107,7 @@ define( function( require ) {
     this.inited = false;
 
     // make sure this node is initialized when state is being set for PhET-iO
-    if ( phetioEngine.phetioStateEngine.setStateEmitter ) {
+    if ( phetioEngine.phetioStateEngine ) {
 
       // @private
       this.initializationVerifier = function() {
@@ -115,7 +115,7 @@ define( function( require ) {
           self.init();
         }
       };
-      phetioEngine.phetioState.setStateEmitter.addListener( this.initializationVerifier );
+      phetioEngine.phetioStateEngine.setStateEmitter.addListener( this.initializationVerifier );
     }
   }
 
