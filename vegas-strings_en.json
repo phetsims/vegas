@@ -82,5 +82,8 @@
   },
   "youCompletedAllLevels": {
     "value": "You completed all levels!"
+  },
+  "chooseYourLevel": {
+    "value": "Choose Your Level!"
   }
 }
