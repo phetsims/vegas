@@ -1,102 +1,93 @@
 // Copyright 2013-2018, University of Colorado Boulder
 
 /**
- * Audio player for the various sounds that are commonly used in PhET games.
+ * audio player for the various sounds that are commonly used in PhET games
  *
  * @author John Blanco
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Sound = require( 'VIBE/Sound' );
-  var vegas = require( 'VEGAS/vegas' );
+  const SoundClip = require( 'TAMBO/sound-generators/SoundClip' );
+  const soundManager = require( 'TAMBO/soundManager' );
+  const vegas = require( 'VEGAS/vegas' );
 
   // sounds
-  var boingSound = require( 'sound!VEGAS/boing.mp3' );
-  var cheerSound = require( 'sound!VEGAS/cheer.mp3' );
-  var dingSound = require( 'sound!VEGAS/ding.mp3' );
-  var trumpetSound = require( 'sound!VEGAS/trumpet.mp3' );
-  var organSound = require( 'sound!VEGAS/organ.mp3' );
-
-  // constants
-  var CORRECT_ANSWER = new Sound( dingSound );
-  var WRONG_ANSWER = new Sound( boingSound );
-  var IMPERFECT_SCORE = new Sound( trumpetSound );
-  var PERFECT_SCORE = new Sound( cheerSound );
-  var CHALLENGE_SCORE = new Sound( organSound );
+  const boingSound = require( 'sound!VEGAS/boing.mp3' );
+  const cheerSound = require( 'sound!VEGAS/cheer.mp3' );
+  const dingSound = require( 'sound!VEGAS/ding.mp3' );
+  const trumpetSound = require( 'sound!VEGAS/trumpet.mp3' );
+  const organSound = require( 'sound!VEGAS/organ.mp3' );
 
   /**
-   * @param {Property.<boolean>} soundEnabledProperty
    * @constructor
    */
-  function GameAudioPlayer( soundEnabledProperty ) {
-    this.soundEnabledProperty = soundEnabledProperty; // @private
-  }
+  class GameAudioPlayer {
 
-  vegas.register( 'GameAudioPlayer', GameAudioPlayer );
+    constructor() {
 
-  return inherit( Object, GameAudioPlayer, {
+      // create and register the sound clips
+      this.ding = new SoundClip( dingSound );
+      soundManager.addSoundGenerator( this.ding );
+      this.boing = new SoundClip( boingSound );
+      soundManager.addSoundGenerator( this.boing );
+      this.trumpet = new SoundClip( trumpetSound );
+      soundManager.addSoundGenerator( this.trumpet );
+      this.cheer = new SoundClip( cheerSound );
+      soundManager.addSoundGenerator( this.cheer );
+      this.organ = new SoundClip( organSound );
+      soundManager.addSoundGenerator( this.organ );
+    }
 
     /**
      * play the sound that indicates a correct answer
      * @public
      */
-    correctAnswer: function() {
-      if ( this.soundEnabledProperty.value ) {
-        CORRECT_ANSWER.play();
-      }
-    },
+    correctAnswer() {
+      this.ding.play();
+    }
 
     /**
      * play the sound that indicates an incorrect answer
      * @public
      */
-    wrongAnswer: function() {
-      if ( this.soundEnabledProperty.value ) {
-        WRONG_ANSWER.play();
-      }
-    },
+    wrongAnswer() {
+      this.boing.play();
+    }
 
     /**
      * play the sound that indicates a challenge has been completed
      * @public
      */
-    challengeComplete: function() {
-      if ( this.soundEnabledProperty.value ) {
-        CHALLENGE_SCORE.play();
-      }
-    },
+    challengeComplete() {
+      this.organ.play();
+    }
 
     /**
      * play the sound that indicates that the user completed the game but didn't earn any points
      * @public
      */
-    gameOverZeroScore: function() {
-      if ( this.soundEnabledProperty.value ) {
-        WRONG_ANSWER.play();
-      }
-    },
+    gameOverZeroScore() {
+      this.boing.play();
+    }
 
     /**
      * play the sound that indicates that the user finished the game and got some correct and some incorrect answers
      * @public
      */
-    gameOverImperfectScore: function() {
-      if ( this.soundEnabledProperty.value ) {
-        IMPERFECT_SCORE.play();
-      }
-    },
+    gameOverImperfectScore() {
+      this.trumpet.play();
+    }
 
     /**
      * play the sound that indicates that the user finished the game and got a perfact score
      * @public
      */
-    gameOverPerfectScore: function() {
-      if ( this.soundEnabledProperty.value ) {
-        PERFECT_SCORE.play();
-      }
+    gameOverPerfectScore() {
+      this.cheer.play();
     }
-  } );
+  }
+
+  return vegas.register( 'GameAudioPlayer', GameAudioPlayer );
 } );
