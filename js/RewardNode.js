@@ -115,7 +115,7 @@ define( function( require ) {
           self.init();
         }
       };
-      phetioEngine.phetioStateEngine.setStateEmitter.addListener( this.initializationVerifier );
+      phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
     }
   }
 
@@ -266,7 +266,7 @@ define( function( require ) {
       dispose: function() {
         this.stop();
         this.screenView && this.screenView.off( 'transform', this.updateBounds );
-        this.initializationVerifier && phetioEngine.phetioStateEngine.setStateEmitter.removeListener( this.initializationVerifier );
+        this.initializationVerifier && phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializationVerifier );
         CanvasNode.prototype.dispose.call( this );
       }
     },
