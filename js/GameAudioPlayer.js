@@ -20,24 +20,38 @@ define( require => {
   const trumpetSound = require( 'sound!VEGAS/trumpet.mp3' );
   const organSound = require( 'sound!VEGAS/organ.mp3' );
 
+  // constants
+  const ding = new SoundClip( dingSound );
+  const boing = new SoundClip( boingSound );
+  const trumpet = new SoundClip( trumpetSound );
+  const cheer = new SoundClip( cheerSound );
+  const organ = new SoundClip( organSound );
+
+  let isInitialized = false;
+
+  /**
+   * A function that adds all the sounds to the sound manager
+   * Only does anything on the first time it is called
+   */
+  function addSoundsToSoundGenerator() {
+    if ( isInitialized ) {
+      return;
+    }
+    soundManager.addSoundGenerator( ding );
+    soundManager.addSoundGenerator( boing );
+    soundManager.addSoundGenerator( trumpet );
+    soundManager.addSoundGenerator( cheer );
+    soundManager.addSoundGenerator( organ );
+    isInitialized = true;
+  }
+
   /**
    * @constructor
    */
   class GameAudioPlayer {
 
     constructor() {
-
-      // create and register the sound clips
-      this.ding = new SoundClip( dingSound );
-      soundManager.addSoundGenerator( this.ding );
-      this.boing = new SoundClip( boingSound );
-      soundManager.addSoundGenerator( this.boing );
-      this.trumpet = new SoundClip( trumpetSound );
-      soundManager.addSoundGenerator( this.trumpet );
-      this.cheer = new SoundClip( cheerSound );
-      soundManager.addSoundGenerator( this.cheer );
-      this.organ = new SoundClip( organSound );
-      soundManager.addSoundGenerator( this.organ );
+      addSoundsToSoundGenerator();
     }
 
     /**
@@ -45,7 +59,7 @@ define( require => {
      * @public
      */
     correctAnswer() {
-      this.ding.play();
+      ding.play();
     }
 
     /**
@@ -53,7 +67,7 @@ define( require => {
      * @public
      */
     wrongAnswer() {
-      this.boing.play();
+      boing.play();
     }
 
     /**
@@ -61,7 +75,7 @@ define( require => {
      * @public
      */
     challengeComplete() {
-      this.organ.play();
+      organ.play();
     }
 
     /**
@@ -69,7 +83,7 @@ define( require => {
      * @public
      */
     gameOverZeroScore() {
-      this.boing.play();
+      boing.play();
     }
 
     /**
@@ -77,7 +91,7 @@ define( require => {
      * @public
      */
     gameOverImperfectScore() {
-      this.trumpet.play();
+      trumpet.play();
     }
 
     /**
@@ -85,7 +99,7 @@ define( require => {
      * @public
      */
     gameOverPerfectScore() {
-      this.cheer.play();
+      cheer.play();
     }
   }
 
