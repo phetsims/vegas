@@ -3,27 +3,27 @@
 /**
  * model dialog shown when all levels have been completed
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var vegas = require( 'VEGAS/vegas' );
+  const FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
+  const vegas = require( 'VEGAS/vegas' );
 
   // constants
   var FACE_DIAMETER = 160; // empirically determined
 
   // strings
-  var doneString = require( 'string!VEGAS/done' );
-  var youCompletedAllLevelsString = require( 'string!VEGAS/youCompletedAllLevels' );
+  const doneString = require( 'string!VEGAS/done' );
+  const youCompletedAllLevelsString = require( 'string!VEGAS/youCompletedAllLevels' );
 
   /**
    * @param {Function} listener - function that gets called when 'next' button is pressed

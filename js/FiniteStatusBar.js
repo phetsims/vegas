@@ -7,27 +7,27 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ElapsedTimeNode = require( 'VEGAS/ElapsedTimeNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
-  var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
-  var StatusBar = require( 'VEGAS/StatusBar' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Tandem = require( 'TANDEM/Tandem' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  var vegas = require( 'VEGAS/vegas' );
+  const ElapsedTimeNode = require( 'VEGAS/ElapsedTimeNode' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  const ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
+  const ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
+  const StatusBar = require( 'VEGAS/StatusBar' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Tandem = require( 'TANDEM/Tandem' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  const vegas = require( 'VEGAS/vegas' );
 
   // strings
-  var labelLevelString = require( 'string!VEGAS/label.level' );
-  var pattern0Challenge1MaxString = require( 'string!VEGAS/pattern.0challenge.1max' );
-  var startOverString = require( 'string!VEGAS/startOver' );
+  const labelLevelString = require( 'string!VEGAS/label.level' );
+  const pattern0Challenge1MaxString = require( 'string!VEGAS/pattern.0challenge.1max' );
+  const startOverString = require( 'string!VEGAS/startOver' );
 
   // constants
   var VALID_SCORE_DISPLAY_CONSTRUCTORS = [

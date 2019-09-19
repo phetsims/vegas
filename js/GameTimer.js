@@ -6,19 +6,19 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var timer = require( 'AXON/timer' );
-  var vegas = require( 'VEGAS/vegas' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const timer = require( 'AXON/timer' );
+  const vegas = require( 'VEGAS/vegas' );
 
   // strings
-  var pattern0Hours1Minutes2SecondsString = require( 'string!VEGAS/pattern.0hours.1minutes.2seconds' );
-  var pattern0Minutes1SecondsString = require( 'string!VEGAS/pattern.0minutes.1seconds' );
+  const pattern0Hours1Minutes2SecondsString = require( 'string!VEGAS/pattern.0hours.1minutes.2seconds' );
+  const pattern0Minutes1SecondsString = require( 'string!VEGAS/pattern.0minutes.1seconds' );
 
   /**
    * @constructor

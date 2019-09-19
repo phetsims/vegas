@@ -6,36 +6,36 @@
  * @author John Blanco
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Color = require( 'SCENERY/util/Color' );
-  var GameTimer = require( 'VEGAS/GameTimer' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Tandem = require( 'TANDEM/Tandem' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var vegas = require( 'VEGAS/vegas' );
+  const Color = require( 'SCENERY/util/Color' );
+  const GameTimer = require( 'VEGAS/GameTimer' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Property = require( 'AXON/Property' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Tandem = require( 'TANDEM/Tandem' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
+  const vegas = require( 'VEGAS/vegas' );
 
   // strings
-  var continueString = require( 'string!VEGAS/continue' );
-  var excellentString = require( 'string!VEGAS/excellent' );
-  var goodString = require( 'string!VEGAS/good' );
-  var greatString = require( 'string!VEGAS/great' );
-  var keepTryingString = require( 'string!VEGAS/keepTrying' );
-  var labelLevelString = require( 'string!VEGAS/label.level' );
-  var labelScoreMaxString = require( 'string!VEGAS/label.score.max' );
-  var labelTimeString = require( 'string!VEGAS/label.time' );
-  var pattern0YourBestString = require( 'string!VEGAS/pattern.0yourBest' );
-  var yourNewBestString = require( 'string!VEGAS/yourNewBest' );
+  const continueString = require( 'string!VEGAS/continue' );
+  const excellentString = require( 'string!VEGAS/excellent' );
+  const goodString = require( 'string!VEGAS/good' );
+  const greatString = require( 'string!VEGAS/great' );
+  const keepTryingString = require( 'string!VEGAS/keepTrying' );
+  const labelLevelString = require( 'string!VEGAS/label.level' );
+  const labelScoreMaxString = require( 'string!VEGAS/label.score.max' );
+  const labelTimeString = require( 'string!VEGAS/label.time' );
+  const pattern0YourBestString = require( 'string!VEGAS/pattern.0yourBest' );
+  const yourNewBestString = require( 'string!VEGAS/yourNewBest' );
 
   /**
    * @param {number} level - numerical value representing game level completed

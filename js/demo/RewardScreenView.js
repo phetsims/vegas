@@ -6,18 +6,18 @@
  * @author Sam Reid
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var RewardDialog = require( 'VEGAS/RewardDialog' );
-  var RewardNode = require( 'VEGAS/RewardNode' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var vegas = require( 'VEGAS/vegas' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const RewardDialog = require( 'VEGAS/RewardDialog' );
+  const RewardNode = require( 'VEGAS/RewardNode' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const vegas = require( 'VEGAS/vegas' );
 
   /**
    * @constructor

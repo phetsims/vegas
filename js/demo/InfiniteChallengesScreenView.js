@@ -5,21 +5,21 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var HSlider = require( 'SUN/HSlider' );
-  var InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var StatusBar = require( 'VEGAS/StatusBar' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var vegas = require( 'VEGAS/vegas' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const HSlider = require( 'SUN/HSlider' );
+  const InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const StatusBar = require( 'VEGAS/StatusBar' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const vegas = require( 'VEGAS/vegas' );
 
   // constants
   var SCORE_RANGE = new Range( 0, 1000 );

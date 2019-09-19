@@ -7,17 +7,17 @@
  *
  * @author Andrea Lin
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var StarNode = require( 'SCENERY_PHET/StarNode' );
-  var StatusBar = require( 'VEGAS/StatusBar' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
-  var vegas = require( 'VEGAS/vegas' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const StarNode = require( 'SCENERY_PHET/StarNode' );
+  const StatusBar = require( 'VEGAS/StatusBar' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const Util = require( 'DOT/Util' );
+  const vegas = require( 'VEGAS/vegas' );
 
   /**
    * @param {Property.<number>} scoreProperty

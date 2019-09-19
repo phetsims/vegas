@@ -5,21 +5,21 @@
  *
  * @author Sam Reid
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var FiniteChallengesScreenView = require( 'VEGAS/demo/FiniteChallengesScreenView' );
-  var InfiniteChallengesScreenView = require( 'VEGAS/demo/InfiniteChallengesScreenView' );
-  var LevelSelectionScreenView = require( 'VEGAS/demo/LevelSelectionScreenView' );
-  var Property = require( 'AXON/Property' );
-  var RewardScreenView = require( 'VEGAS/demo/RewardScreenView' );
-  var Screen = require( 'JOIST/Screen' );
-  var Sim = require( 'JOIST/Sim' );
-  var SimLauncher = require( 'JOIST/SimLauncher' );
+  const FiniteChallengesScreenView = require( 'VEGAS/demo/FiniteChallengesScreenView' );
+  const InfiniteChallengesScreenView = require( 'VEGAS/demo/InfiniteChallengesScreenView' );
+  const LevelSelectionScreenView = require( 'VEGAS/demo/LevelSelectionScreenView' );
+  const Property = require( 'AXON/Property' );
+  const RewardScreenView = require( 'VEGAS/demo/RewardScreenView' );
+  const Screen = require( 'JOIST/Screen' );
+  const Sim = require( 'JOIST/Sim' );
+  const SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
-  var vegasTitleString = require( 'string!VEGAS/vegas.title' );
+  const vegasTitleString = require( 'string!VEGAS/vegas.title' );
 
   var simOptions = {
     credits: {

@@ -7,18 +7,18 @@
  * @author Andrea Lin
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
-  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
-  var StatusBar = require( 'VEGAS/StatusBar' );
-  var vegas = require( 'VEGAS/vegas' );
+  const BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
+  const ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
+  const StatusBar = require( 'VEGAS/StatusBar' );
+  const vegas = require( 'VEGAS/vegas' );
 
   // constants
   var VALID_SCORE_DISPLAY_CONSTRUCTORS = [

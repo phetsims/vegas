@@ -6,20 +6,20 @@
  *
  * @author Andrea Lin
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var StatusBar = require( 'VEGAS/StatusBar' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
-  var vegas = require( 'VEGAS/vegas' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const StatusBar = require( 'VEGAS/StatusBar' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const Util = require( 'DOT/Util' );
+  const vegas = require( 'VEGAS/vegas' );
 
   // strings
-  var patternScoreNumberString = require( 'string!VEGAS/pattern.score.number' );
+  const patternScoreNumberString = require( 'string!VEGAS/pattern.score.number' );
 
   /**
    * @param {Property.<number>} scoreProperty

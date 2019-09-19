@@ -6,19 +6,19 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
-  var StatusBar = require( 'VEGAS/StatusBar' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var vegas = require( 'VEGAS/vegas' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
+  const StatusBar = require( 'VEGAS/StatusBar' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const vegas = require( 'VEGAS/vegas' );
 
   // strings
-  var scoreString = require( 'string!VEGAS/score' );
+  const scoreString = require( 'string!VEGAS/score' );
 
   /**
    * @param {Property.<number>} scoreProperty

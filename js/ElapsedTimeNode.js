@@ -5,17 +5,17 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var GameTimer = require( 'VEGAS/GameTimer' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
-  var StatusBar = require( 'VEGAS/StatusBar' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var vegas = require( 'VEGAS/vegas' );
+  const GameTimer = require( 'VEGAS/GameTimer' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
+  const StatusBar = require( 'VEGAS/StatusBar' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const vegas = require( 'VEGAS/vegas' );
 
   /**
    * @param {Property.<number>} elapsedTimeProperty
