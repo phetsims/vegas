@@ -31,9 +31,9 @@ define( require => {
   const vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var NUM_STARS = 5;
-  var SCORE_RANGE = new Range( 0, 1000 );
-  var BEST_TIME_RANGE = new Range( 0, 10000 );
+  const NUM_STARS = 5;
+  const SCORE_RANGE = new Range( 0, 1000 );
+  const BEST_TIME_RANGE = new Range( 0, 10000 );
 
   /**
    * @constructor
@@ -42,12 +42,12 @@ define( require => {
 
     ScreenView.call( this );
 
-    var scoreProperty = new Property( 0 );
-    var bestTimeProperty = new Property( 0 );
-    var bestTimeVisibleProperty = new BooleanProperty( true );
+    const scoreProperty = new Property( 0 );
+    const bestTimeProperty = new Property( 0 );
+    const bestTimeVisibleProperty = new BooleanProperty( true );
 
     // Various options for displaying score.
-    var scoreDisplays = new VBox( {
+    const scoreDisplays = new VBox( {
       resize: false,
       spacing: 20,
       align: 'left',
@@ -63,9 +63,9 @@ define( require => {
     this.addChild( scoreDisplays );
 
     // Level selection buttons
-    var buttonIcon = new Rectangle( 0, 0, 100, 100, { fill: 'red', stroke: 'black' } );
+    const buttonIcon = new Rectangle( 0, 0, 100, 100, { fill: 'red', stroke: 'black' } );
 
-    var buttonWithStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
+    const buttonWithStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
       scoreDisplayConstructor: ScoreDisplayStars,
       scoreDisplayOptions: {
         numberOfStars: NUM_STARS,
@@ -74,7 +74,7 @@ define( require => {
       listener: function() { console.log( 'level start' ); }
     } );
 
-    var buttonWithTextAndStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
+    const buttonWithTextAndStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
       scoreDisplayConstructor: ScoreDisplayLabeledStars,
       scoreDisplayOptions: {
         numberOfStars: NUM_STARS,
@@ -83,19 +83,19 @@ define( require => {
       listener: function() { console.log( 'level start' ); }
     } );
 
-    var buttonWithNumberAndStar = new LevelSelectionButton( buttonIcon, scoreProperty, {
+    const buttonWithNumberAndStar = new LevelSelectionButton( buttonIcon, scoreProperty, {
       scoreDisplayConstructor: ScoreDisplayNumberAndStar,
       listener: function() { console.log( 'level start' ); }
     } );
 
-    var buttonWithTextAndNumber = new LevelSelectionButton( buttonIcon, scoreProperty, {
+    const buttonWithTextAndNumber = new LevelSelectionButton( buttonIcon, scoreProperty, {
       scoreDisplayConstructor: ScoreDisplayLabeledNumber,
       listener: function() { console.log( 'level start' ); },
       bestTimeProperty: bestTimeProperty,
       bestTimeVisibleProperty: bestTimeVisibleProperty
     } );
 
-    var levelSelectionButtons = new HBox( {
+    const levelSelectionButtons = new HBox( {
       spacing: 20,
       align: 'top',
       centerX: this.layoutBounds.centerX,
@@ -105,25 +105,25 @@ define( require => {
     this.addChild( levelSelectionButtons );
 
     // Controls for Properties
-    var scoreSlider = new HBox( {
+    const scoreSlider = new HBox( {
       children: [
         new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
         new HSlider( scoreProperty, SCORE_RANGE )
       ]
     } );
 
-    var bestTimeSlider = new HBox( {
+    const bestTimeSlider = new HBox( {
       children: [
         new Text( 'Best Time: ', { font: new PhetFont( 20 ) } ),
         new HSlider( bestTimeProperty, BEST_TIME_RANGE )
       ]
     } );
 
-    var bestTimeVisibleCheckbox = new Checkbox(
+    const bestTimeVisibleCheckbox = new Checkbox(
       new Text( 'Best time visible', { font: new PhetFont( 20 ) } ),
       bestTimeVisibleProperty );
 
-    var controls = new HBox( {
+    const controls = new HBox( {
       resize: false,
       spacing: 30,
       centerX: this.layoutBounds.centerX,

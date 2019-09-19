@@ -34,7 +34,7 @@ define( require => {
       scoreDecimalPlaces: 0
     }, options );
 
-    var scoreDisplayText = new Text( '', {
+    const scoreDisplayText = new Text( '', {
       font: options.font,
       fill: options.textFill
     } );
@@ -43,7 +43,7 @@ define( require => {
     options.children = [ scoreDisplayText ];
 
     // Update number displayed based on score.
-    var scorePropertyListener = function( score ) {
+    const scorePropertyListener = function( score ) {
       scoreDisplayText.text = StringUtils.fillIn( patternScoreNumberString, {
         score: Util.toFixed( score, options.scoreDecimalPlaces )
       } );

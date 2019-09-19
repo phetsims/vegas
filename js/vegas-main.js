@@ -21,7 +21,7 @@ define( require => {
   // strings
   const vegasTitleString = require( 'string!VEGAS/vegas.title' );
 
-  var simOptions = {
+  const simOptions = {
     credits: {
       leadDesign: 'PhET'
     }

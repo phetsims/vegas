@@ -26,7 +26,7 @@ define( require => {
    */
   function ScoreDisplayNumberAndStar( scoreProperty, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       starNodeOptions: null, // options to StarNode
@@ -49,8 +49,8 @@ define( require => {
     HBox.call( this );
 
     // Update number displayed based on score.
-    var scorePropertyListener = function( score ) {
-      var children = [];
+    const scorePropertyListener = function( score ) {
+      const children = [];
 
       if ( score === 0 ) {
         children.push( new StarNode( _.extend( { value: 0 }, options.starNodeOptions ) ) );

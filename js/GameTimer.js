@@ -48,7 +48,7 @@ define( require => {
      */
     start: function() {
       if ( !this.isRunningProperty.value ) {
-        var self = this;
+        const self = this;
         self.elapsedTimeProperty.value = 0;
         self.intervalId = timer.setInterval( function() {
           //TODO will this be accurate, or should we compute elapsed time and potentially skip some time values?
@@ -89,12 +89,12 @@ define( require => {
      */
     formatTime: function( time ) {
 
-      var hours = Math.floor( time / 3600 );
-      var minutes = Math.floor( (time - (hours * 3600)) / 60 );
-      var seconds = Math.floor( time - (hours * 3600) - (minutes * 60) );
+      const hours = Math.floor( time / 3600 );
+      const minutes = Math.floor( (time - (hours * 3600)) / 60 );
+      const seconds = Math.floor( time - (hours * 3600) - (minutes * 60) );
 
-      var minutesString = ( minutes > 9 || hours === 0 ) ? minutes : ( '0' + minutes );
-      var secondsString = ( seconds > 9 ) ? seconds : ( '0' + seconds );
+      const minutesString = ( minutes > 9 || hours === 0 ) ? minutes : ( '0' + minutes );
+      const secondsString = ( seconds > 9 ) ? seconds : ( '0' + seconds );
 
       if ( hours > 0 ) {
         return StringUtils.format( pattern0Hours1Minutes2SecondsString, hours, minutesString, secondsString );

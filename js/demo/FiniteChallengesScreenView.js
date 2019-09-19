@@ -28,27 +28,27 @@ define( require => {
   const vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var PERFECT_SCORE = 10;
-  var NUMBER_OF_CHALLENGES = 10;
-  var DEFAULT_FONT = new PhetFont( 20 );
+  const PERFECT_SCORE = 10;
+  const NUMBER_OF_CHALLENGES = 10;
+  const DEFAULT_FONT = new PhetFont( 20 );
 
   /**
    * @constructor
    */
   function FiniteChallengesScreenView() {
 
-    var self = this;
+    const self = this;
     ScreenView.call( this );
 
-    var levelProperty = new Property( 1 ); // 1-based
-    var challengeIndexProperty = new Property( 0 );
-    var numberOfChallengesProperty = new Property( NUMBER_OF_CHALLENGES );
-    var scoreProperty = new Property( 0 );
-    var elapsedTimeProperty = new Property( 0 );
-    var timerEnabledProperty = new BooleanProperty( true );
+    const levelProperty = new Property( 1 ); // 1-based
+    const challengeIndexProperty = new Property( 0 );
+    const numberOfChallengesProperty = new Property( NUMBER_OF_CHALLENGES );
+    const scoreProperty = new Property( 0 );
+    const elapsedTimeProperty = new Property( 0 );
+    const timerEnabledProperty = new BooleanProperty( true );
 
     // status bar across the top
-    var statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreProperty, {
+    const statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreProperty, {
       font: new PhetFont( 20 ),
       levelProperty: levelProperty,
       challengeIndexProperty: challengeIndexProperty,
@@ -62,7 +62,7 @@ define( require => {
     this.addChild( statusBar );
 
     // Controls for changing Properties
-    var levelSlider = new HBox( {
+    const levelSlider = new HBox( {
       children: [
         new Text( 'Level: ', { font: DEFAULT_FONT } ),
         new HSlider( levelProperty, new Range( 1, 5 ), {
@@ -73,7 +73,7 @@ define( require => {
       ]
     } );
 
-    var challengeIndexSlider = new HBox( {
+    const challengeIndexSlider = new HBox( {
       children: [
         new Text( 'Challenge: ', { font: DEFAULT_FONT } ),
         new HSlider( challengeIndexProperty, new Range( 0, NUMBER_OF_CHALLENGES - 1 ), {
@@ -84,7 +84,7 @@ define( require => {
       ]
     } );
 
-    var numberOfChallengesSlider = new HBox( {
+    const numberOfChallengesSlider = new HBox( {
       children: [
         new Text( 'Number of challenges: ', { font: DEFAULT_FONT } ),
         new HSlider( numberOfChallengesProperty, new Range( 1, NUMBER_OF_CHALLENGES ), {
@@ -95,7 +95,7 @@ define( require => {
       ]
     } );
 
-    var scoreSlider = new HBox( {
+    const scoreSlider = new HBox( {
       left: this.layoutBounds.left + 20,
       top: statusBar.bottom + 30,
       children: [
@@ -104,7 +104,7 @@ define( require => {
       ]
     } );
 
-    var elapsedTimeSlider = new HBox( {
+    const elapsedTimeSlider = new HBox( {
       children: [
         new Text( 'Elapsed time: ', { font: DEFAULT_FONT } ),
         new HSlider( elapsedTimeProperty, new Range( 0, 1000 ), {
@@ -115,11 +115,11 @@ define( require => {
       ]
     } );
 
-    var timerEnabledCheckbox = new Checkbox(
+    const timerEnabledCheckbox = new Checkbox(
       new Text( 'Timer enabled', { font: DEFAULT_FONT } ),
       timerEnabledProperty );
 
-    var controls = new VBox( {
+    const controls = new VBox( {
       align: 'left',
       spacing: 15,
       left: this.layoutBounds.left + 20,
@@ -129,7 +129,7 @@ define( require => {
     this.addChild( controls );
 
     // button to open LevelCompleteNode
-    var levelCompletedButton = new RectangularPushButton( {
+    const levelCompletedButton = new RectangularPushButton( {
       content: new Text( 'show LevelCompletedNode', { font: new PhetFont( 20 ) } ),
       centerX: this.layoutBounds.centerX,
       bottom: this.layoutBounds.bottom - 20,

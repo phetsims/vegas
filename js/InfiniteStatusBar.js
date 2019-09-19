@@ -21,7 +21,7 @@ define( require => {
   const vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var VALID_SCORE_DISPLAY_CONSTRUCTORS = [
+  const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
     // Types that are relevant for this status bar. All constructors must have the same signature!
     ScoreDisplayLabeledNumber, ScoreDisplayNumberAndStar
   ];
@@ -51,7 +51,7 @@ define( require => {
       'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
 
     // button that typically takes us back to the level-selection UI
-    var backButton = new BackButton( {
+    const backButton = new BackButton( {
       listener: options.backButtonListener,
       xMargin: 8,
       yMargin: 10
@@ -65,7 +65,7 @@ define( require => {
       maxWidth: 0.7 * layoutBounds.width
     } );
 
-    var scoreDisplay = new options.scoreDisplayConstructor( scoreProperty,
+    const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty,
       _.extend( { maxWidth: 0.2 * layoutBounds.width }, options.scoreDisplayOptions ) );
 
     // Wrap scoreDisplay, since we are listening for bounds changes to reposition it.

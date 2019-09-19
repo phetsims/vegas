@@ -80,11 +80,11 @@ define( require => {
     }, options );
 
     // nodes to be added to the panel
-    var children = [];
+    const children = [];
 
     // Title, which changes based on how the user did.
-    var proportionCorrect = score / perfectScore;
-    var titleText = keepTryingString;
+    const proportionCorrect = score / perfectScore;
+    let titleText = keepTryingString;
     if ( proportionCorrect > 0.95 ) {
       titleText = excellentString;
     }
@@ -94,7 +94,7 @@ define( require => {
     else if ( proportionCorrect >= 0.5 ) {
       titleText = goodString;
     }
-    var title = new Text( titleText, {
+    const title = new Text( titleText, {
       font: options.titleFont,
       maxWidth: options.contentMaxWidth
     } );

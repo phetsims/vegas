@@ -19,7 +19,7 @@ define( require => {
   const vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var FACE_DIAMETER = 160; // empirically determined
+  const FACE_DIAMETER = 160; // empirically determined
 
   // strings
   const doneString = require( 'string!VEGAS/done' );
@@ -39,10 +39,10 @@ define( require => {
     }, options );
 
     // create the smiley face
-    var faceNode = new FaceNode( FACE_DIAMETER );
+    const faceNode = new FaceNode( FACE_DIAMETER );
 
     // create the dialog text
-    var textMessage = new RichText( youCompletedAllLevelsString, {
+    const textMessage = new RichText( youCompletedAllLevelsString, {
       font: new PhetFont( 25 ),
       lineWrap: 300,
       maxWidth: options.maxTextWidth,
@@ -50,7 +50,7 @@ define( require => {
     } );
 
     // create the button
-    var button = new RectangularPushButton( {
+    const button = new RectangularPushButton( {
       content: new Text( doneString, {
         font: new PhetFont( 30 ),
         maxWidth: options.maxTextWidth

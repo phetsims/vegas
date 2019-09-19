@@ -30,7 +30,7 @@ define( require => {
     this.addChild( this.rewardNode );
 
     // RewardDialog
-    var rewardDialogButton = new RectangularPushButton( {
+    const rewardDialogButton = new RectangularPushButton( {
       content: new Text( 'open RewardDialog', { font: new PhetFont( 20 ) } ),
       listener: function() {
         var rewardDialog = new RewardDialog( 10, {

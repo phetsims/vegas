@@ -31,9 +31,9 @@ define( require => {
       textFill: 'black'
     }, options );
 
-    var clockIcon = new SimpleClockIcon( options.clockIconRadius );
+    const clockIcon = new SimpleClockIcon( options.clockIconRadius );
 
-    var timeValue = new Text( '', {
+    const timeValue = new Text( '', {
       font: options.font,
       fill: options.textFill
     } );
@@ -44,7 +44,7 @@ define( require => {
     HBox.call( this, options );
 
     // Update the time display
-    var elapsedTimeListener = function( elapsedTime ) {
+    const elapsedTimeListener = function( elapsedTime ) {
       timeValue.text = GameTimer.formatTime( elapsedTime );
     };
     elapsedTimeProperty.link( elapsedTimeListener );

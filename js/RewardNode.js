@@ -31,15 +31,15 @@ define( require => {
   const phetioEngine = require( 'ifphetio!PHET_IO/phetioEngine' );
 
   // constants
-  var DEBUG = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
-  var MAX_SPEED = 200; // The maximum speed an image can fall in screen pixels per second.
+  const DEBUG = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
+  const MAX_SPEED = 200; // The maximum speed an image can fall in screen pixels per second.
 
   /**
    * @param {Object} [options]
    * @constructor
    */
   function RewardNode( options ) {
-    var self = this;
+    const self = this;
 
     /*
      * Bounds in which to render the canvas, which represents the full window. See below for how this is computed based
@@ -79,7 +79,7 @@ define( require => {
     this.imageWrappers = []; // @private
 
     // find the unique nodes in the array
-    var uniqueNodes = _.uniq( this.options.nodes );
+    const uniqueNodes = _.uniq( this.options.nodes );
 
     uniqueNodes.forEach( function( node, i ) {
       self.imageWrappers.push( {
@@ -93,7 +93,7 @@ define( require => {
         // The node itself is recorded in the imageWrapper so the imageWrapper can be looked up based on the original node
         node: node
       } );
-      var parent = new Node( { children: [ node ], scale: options.scaleForResolution } );
+      const parent = new Node( { children: [ node ], scale: options.scaleForResolution } );
       parent.toImage( function( image ) {
         self.imageWrappers[ i ].image = image;
         parent.dispose(); // not needed anymore, see https://github.com/phetsims/area-model-common/issues/128
@@ -132,7 +132,7 @@ define( require => {
 
         // If the debugging flag is on, show the bounds of the canvas
         if ( DEBUG ) {
-          var bounds = this.canvasDisplayBounds;
+          const bounds = this.canvasDisplayBounds;
 
           //Fill the canvas with gray
           context.fillStyle = 'rgba(50,50,50,0.5)';
@@ -147,8 +147,8 @@ define( require => {
 
         // Display the rewards, but check that they exist first.  They do not exist when attached to the timer with stepEmitter
         if ( this.rewards ) {
-          for ( var i = 0; i < this.rewards.length; i++ ) {
-            var reward = this.rewards[ i ];
+          for ( let i = 0; i < this.rewards.length; i++ ) {
+            const reward = this.rewards[ i ];
             if ( reward.imageWrapper.image ) {
               context.drawImage( reward.imageWrapper.image, reward.x, reward.y );
             }
@@ -178,14 +178,14 @@ define( require => {
        * @public
        */
       init: function() {
-        var self = this;
+        const self = this;
         this.scene = this.getScene();
         this.screenView = this.getScreenView();
 
         // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
         this.updateBounds = function() {
 
-          var local = self.globalToLocalBounds( phet.joist.sim.display.bounds );
+          const local = self.globalToLocalBounds( phet.joist.sim.display.bounds );
           self.setCanvasBounds( local );
 
           // Also, store the bounds in the options so the debug flag can render the bounds
@@ -205,13 +205,13 @@ define( require => {
          */
         //TODO should we create a separate class for this?
         this.rewards = [];
-        for ( var i = 0; i < this.options.nodes.length; i++ ) {
+        for ( let i = 0; i < this.options.nodes.length; i++ ) {
 
-          var node = this.options.nodes[ i ];
+          const node = this.options.nodes[ i ];
           ( function( node ) {
 
             //find the image wrapper corresponding to the node
-            var imageWrapper = _.find( self.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node;} );
+            const imageWrapper = _.find( self.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node;} );
             self.rewards.push( {
               imageWrapper: imageWrapper,
               x: self.sampleImageXValue( imageWrapper ),
@@ -247,9 +247,9 @@ define( require => {
         }
 
         // Update all of the rewards
-        var maxY = this.canvasDisplayBounds.height * this.options.scaleForResolution;
-        for ( var i = 0; i < this.rewards.length; i++ ) {
-          var reward = this.rewards[ i ];
+        const maxY = this.canvasDisplayBounds.height * this.options.scaleForResolution;
+        for ( let i = 0; i < this.rewards.length; i++ ) {
+          const reward = this.rewards[ i ];
 
           // Move each node straight down at constant speed
           reward.y += reward.speed * dt;
@@ -281,8 +281,8 @@ define( require => {
        * @public
        */
       createRandomNodes: function( nodes, count ) {
-        var array = [];
-        for ( var i = 0; i < count; i++ ) {
+        const array = [];
+        for ( let i = 0; i < count; i++ ) {
           array.push( nodes[ i % nodes.length ] );
         }
         return array;

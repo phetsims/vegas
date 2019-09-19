@@ -30,8 +30,8 @@ define( require => {
   const vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
-  var VALID_SCORE_DISPLAY_CONSTRUCTORS = [
+  const SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
+  const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
     // all constructors must have the same signature!
     ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars, ScoreDisplayStars, ScoreDisplayNumberAndStar
   ];
@@ -85,13 +85,13 @@ define( require => {
       'scoreDisplayProportion value out of range'
     );
 
-    var maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
+    const maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
 
-    var scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
+    const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
 
     // Background behind scoreDisplay
-    var scoreDisplayBackgroundHeight = options.buttonHeight * options.scoreDisplayProportion;
-    var scoreDisplayBackground = new Rectangle( 0, 0, maxContentWidth, scoreDisplayBackgroundHeight, {
+    const scoreDisplayBackgroundHeight = options.buttonHeight * options.scoreDisplayProportion;
+    const scoreDisplayBackground = new Rectangle( 0, 0, maxContentWidth, scoreDisplayBackgroundHeight, {
       cornerRadius: options.cornerRadius,
       fill: 'white',
       stroke: 'black',
@@ -103,14 +103,14 @@ define( require => {
     scoreDisplay.maxHeight = scoreDisplayBackground.height - ( 2 * options.scoreDisplayMinYMargin );
 
     // Icon, scaled and padded to fit and to make the button size correct.
-    var iconHeight = options.buttonHeight - scoreDisplayBackground.height - 2 * options.buttonYMargin - options.iconToScoreDisplayYSpace;
-    var iconSize = new Dimension2( maxContentWidth, iconHeight );
-    var adjustedIcon = LevelSelectionButton.createSizedImageNode( icon, iconSize );
+    const iconHeight = options.buttonHeight - scoreDisplayBackground.height - 2 * options.buttonYMargin - options.iconToScoreDisplayYSpace;
+    const iconSize = new Dimension2( maxContentWidth, iconHeight );
+    const adjustedIcon = LevelSelectionButton.createSizedImageNode( icon, iconSize );
     adjustedIcon.centerX = scoreDisplayBackground.centerX;
     adjustedIcon.bottom = scoreDisplayBackground.top - options.iconToScoreDisplayYSpace;
 
     // Keep scoreDisplay centered in its background when its bounds change
-    var scoreDisplayUpdateLayout = function() {
+    const scoreDisplayUpdateLayout = function() {
       scoreDisplay.center = scoreDisplayBackground.center;
     };
     scoreDisplay.on( 'bounds', scoreDisplayUpdateLayout );
@@ -132,12 +132,12 @@ define( require => {
     // Best time decoration (optional), centered below the button, does not move when button is pressed
     if ( options.bestTimeProperty ) {
 
-      var bestTimeNode = new Text( '', {
+      const bestTimeNode = new Text( '', {
         font: options.bestTimeFont,
         fill: options.bestTimeFill,
         maxWidth: this.width // constrain to width of the push button
       } );
-      var centerX = this.centerX;
+      const centerX = this.centerX;
       bestTimeNode.top = this.bottom + options.bestTimeYSpacing;
       this.addChild( bestTimeNode );
 
@@ -197,7 +197,7 @@ define( require => {
         return icon;
       }
       // else padding is needed in either the horizontal or vertical direction.
-      var background = Rectangle.dimension( size );
+      const background = Rectangle.dimension( size );
       icon.center = background.center;
       background.addChild( icon );
       return background;

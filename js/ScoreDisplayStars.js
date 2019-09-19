@@ -24,7 +24,7 @@ define( require => {
    */
   function ScoreDisplayStars( scoreProperty, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       starNodeOptions: null, // options to StarNode
@@ -41,32 +41,32 @@ define( require => {
       emptyLineWidth: 1.5
     }, options.starNodeOptions );
 
-    var numberOfStars = options.numberOfStars;
-    var perfectScore = options.perfectScore;
+    const numberOfStars = options.numberOfStars;
+    const perfectScore = options.perfectScore;
 
     assert && assert( !options.children, 'ScoreDisplayStars sets children' );
     HBox.call( this, { children: [] } );
 
     // Update visibility of filled and half-filled stars based on score.
-    var scorePropertyListener = function( score ) {
+    const scorePropertyListener = function( score ) {
 
       assert && assert( score <= perfectScore, 'Score ' + score + ' exceeds perfect score ' + perfectScore );
 
-      var children = [];
+      const children = [];
 
-      var proportion = score / perfectScore;
-      var numFilledStars = Math.floor( proportion * numberOfStars );
+      const proportion = score / perfectScore;
+      const numFilledStars = Math.floor( proportion * numberOfStars );
 
       for ( var i = 0; i < numFilledStars; i++ ) {
         children.push( new StarNode( _.extend( { value: 1 }, options.starNodeOptions ) ) );
       }
 
-      var remainder = proportion * numberOfStars - numFilledStars;
+      const remainder = proportion * numberOfStars - numFilledStars;
       if ( remainder > 1E-6 ) {
         children.push( new StarNode( _.extend( { value: remainder }, options.starNodeOptions ) ) );
       }
 
-      var numEmptyStars = numberOfStars - children.length;
+      const numEmptyStars = numberOfStars - children.length;
       for ( i = 0; i < numEmptyStars; i++ ) {
         children.push( new StarNode( _.extend( { value: 0 }, options.starNodeOptions ) ) );
       }

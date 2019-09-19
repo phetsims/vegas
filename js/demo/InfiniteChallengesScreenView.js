@@ -22,7 +22,7 @@ define( require => {
   const vegas = require( 'VEGAS/vegas' );
 
   // constants
-  var SCORE_RANGE = new Range( 0, 1000 );
+  const SCORE_RANGE = new Range( 0, 1000 );
 
   /**
    * @constructor
@@ -31,19 +31,19 @@ define( require => {
 
     ScreenView.call( this );
 
-    var scoreProperty = new Property( 0 );
+    const scoreProperty = new Property( 0 );
 
     // bar across the top
-    var messageNode = new Text( 'Your Node goes here', {
+    const messageNode = new Text( 'Your Node goes here', {
       font: StatusBar.DEFAULT_FONT
     } );
-    var statusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, messageNode, scoreProperty, {
+    const statusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, messageNode, scoreProperty, {
       backButtonListener: function() { console.log( 'back' ); }
     } );
     this.addChild( statusBar );
 
     // slider for testing score changes
-    var scoreSlider = new HBox( {
+    const scoreSlider = new HBox( {
       right: this.layoutBounds.right - 20,
       top: statusBar.bottom + 30,
       children: [

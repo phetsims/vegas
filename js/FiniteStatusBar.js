@@ -30,7 +30,7 @@ define( require => {
   const startOverString = require( 'string!VEGAS/startOver' );
 
   // constants
-  var VALID_SCORE_DISPLAY_CONSTRUCTORS = [
+  const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
     // Types that are relevant for this status bar. All constructors must have the same signature!
     ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars
   ];
@@ -121,11 +121,11 @@ define( require => {
     }, options.challengeTextOptions );
 
     // Nodes on the left end of the bar
-    var leftChildren = [];
+    const leftChildren = [];
 
     // Level N
     if ( options.levelProperty && options.levelVisible ) {
-      var levelText = new Text( '', _.extend( {
+      const levelText = new Text( '', _.extend( {
         tandem: options.tandem.createTandem( 'levelText' )
       }, options.levelTextOptions ) );
       leftChildren.push( levelText );
@@ -138,7 +138,7 @@ define( require => {
 
     // Challenge N of M
     if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
-      var challengeNumberText = new Text( '', _.extend( {
+      const challengeNumberText = new Text( '', _.extend( {
         tandem: options.tandem.createTandem( 'challengeNumberText' )
       }, options.challengeTextOptions ) );
       leftChildren.push( challengeNumberText );
@@ -152,7 +152,7 @@ define( require => {
     }
 
     // Score
-    var scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
+    const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
     leftChildren.push( scoreDisplay );
 
     // Timer

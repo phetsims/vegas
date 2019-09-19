@@ -33,12 +33,12 @@ define( require => {
       spacing: 5
     }, options );
 
-    var textNode = new Text( scoreString, {
+    const textNode = new Text( scoreString, {
       font: options.font,
       fill: options.textFill
     } );
 
-    var scoreDisplay = new ScoreDisplayStars( scoreProperty, options );
+    const scoreDisplay = new ScoreDisplayStars( scoreProperty, options );
 
     assert && assert( !options.children, 'ScoreDisplayLabeledStars sets children' );
     options.children = [ textNode, scoreDisplay ];

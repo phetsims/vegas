@@ -32,8 +32,8 @@ define( require => {
   const newLevelString = require( 'string!VEGAS/newLevel' );
 
   // constants
-  var DEFAULT_BUTTONS_FONT = new PhetFont( 16 );
-  var DEFAULT_SCORE_DISPLAY_OPTIONS = {
+  const DEFAULT_BUTTONS_FONT = new PhetFont( 16 );
+  const DEFAULT_SCORE_DISPLAY_OPTIONS = {
     font: new PhetFont( { size: 30, weight: 'bold' } ),
     spacing: 6,
     starNodeOptions: {
@@ -64,46 +64,46 @@ define( require => {
 
     options.scoreDisplayOptions = _.extend( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
 
-    var phetGirlNode = new Image( phetGirlJugglingStarsImage, {
+    const phetGirlNode = new Image( phetGirlJugglingStarsImage, {
       scale: options.phetGirlScale
     } );
 
-    var scoreDisplay = new ScoreDisplayNumberAndStar( new NumberProperty( score ), options.scoreDisplayOptions );
+    const scoreDisplay = new ScoreDisplayNumberAndStar( new NumberProperty( score ), options.scoreDisplayOptions );
 
-    var buttonOptions = {
+    const buttonOptions = {
       font: options.buttonsFont,
       minWidth: options.buttonsWidth,
       maxWidth: options.buttonsWidth
     };
 
-    var keepGoingButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
+    const keepGoingButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
       content: new Text( keepGoingString, { font: DEFAULT_BUTTONS_FONT } ),
       listener: options.keepGoingButtonListener,
       baseColor: 'white'
     } ) );
 
-    var newLevelButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
+    const newLevelButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
       content: new Text( newLevelString, { font: DEFAULT_BUTTONS_FONT } ),
       listener: options.newLevelButtonListener,
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW
     } ) );
 
-    var buttons = new VBox( {
+    const buttons = new VBox( {
       children: [ keepGoingButton, newLevelButton ],
       spacing: options.buttonsYSpacing
     } );
 
     // half the remaining height, so that scoreDisplay will be centered in the negative space above the buttons.
-    var scoreSpacing = ( phetGirlNode.height - scoreDisplay.height - buttons.height ) / 2;
+    const scoreSpacing = ( phetGirlNode.height - scoreDisplay.height - buttons.height ) / 2;
     assert && assert( scoreSpacing > 0, 'phetGirlNode is scaled down too much' );
 
-    var rightSideNode = new VBox( {
+    const rightSideNode = new VBox( {
       children: [ scoreDisplay, buttons ],
       align: 'center',
       spacing: scoreSpacing
     } );
 
-    var content = new HBox( {
+    const content = new HBox( {
       align: 'bottom',
       children: [ phetGirlNode, rightSideNode ],
       spacing: 40
