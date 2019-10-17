@@ -11,6 +11,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const StatusBar = require( 'VEGAS/StatusBar' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -28,7 +29,7 @@ define( require => {
    */
   function ScoreDisplayLabeledNumber( scoreProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
       scoreDecimalPlaces: 0

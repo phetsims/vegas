@@ -14,6 +14,7 @@ define( require => {
   const ElapsedTimeNode = require( 'VEGAS/ElapsedTimeNode' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   const ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
   const ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
@@ -44,7 +45,7 @@ define( require => {
    */
   function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // optional Properties
       challengeIndexProperty: null, // {Property.<number>|null}
@@ -85,13 +86,13 @@ define( require => {
     }, options );
 
     // nested options for score display
-    options.scoreDisplayOptions = _.extend( {
+    options.scoreDisplayOptions = merge( {
       font: options.font,
       textFill: options.textFill
     }, options.scoreDisplayOptions );
 
     // nested options for 'Start Over' button
-    options.startOverButtonOptions = _.extend( {
+    options.startOverButtonOptions = merge( {
       font: options.font,
       textFill: options.textFill,
       baseColor: PhetColorScheme.BUTTON_YELLOW,
@@ -109,13 +110,13 @@ define( require => {
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
 
     // nested options for 'Level N' text
-    options.levelTextOptions = _.extend( {
+    options.levelTextOptions = merge( {
       fill: options.textFill,
       font: options.font
     }, options.levelTextOptions );
 
     // nested options for 'Challenge N of M' text
-    options.challengeTextOptions = _.extend( {
+    options.challengeTextOptions = merge( {
       fill: options.textFill,
       font: options.font
     }, options.challengeTextOptions );
@@ -125,7 +126,7 @@ define( require => {
 
     // Level N
     if ( options.levelProperty && options.levelVisible ) {
-      const levelText = new Text( '', _.extend( {
+      const levelText = new Text( '', merge( {
         tandem: options.tandem.createTandem( 'levelText' )
       }, options.levelTextOptions ) );
       leftChildren.push( levelText );
@@ -138,7 +139,7 @@ define( require => {
 
     // Challenge N of M
     if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
-      const challengeNumberText = new Text( '', _.extend( {
+      const challengeNumberText = new Text( '', merge( {
         tandem: options.tandem.createTandem( 'challengeNumberText' )
       }, options.challengeTextOptions ) );
       leftChildren.push( challengeNumberText );

@@ -14,6 +14,7 @@ define( require => {
   // modules
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const StarNode = require( 'SCENERY_PHET/StarNode' );
   const vegas = require( 'VEGAS/vegas' );
 
@@ -26,7 +27,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       starNodeOptions: null, // options to StarNode
       numberOfStars: 1,
       perfectScore: 1,
@@ -34,7 +35,7 @@ define( require => {
     }, options );
 
     // fill in defaults for starNodeOptions
-    options.starNodeOptions = _.extend( {
+    options.starNodeOptions = merge( {
       outerRadius: 10,
       innerRadius: 5,
       filledLineWidth: 1.5,
@@ -58,17 +59,17 @@ define( require => {
       const numFilledStars = Math.floor( proportion * numberOfStars );
 
       for ( var i = 0; i < numFilledStars; i++ ) {
-        children.push( new StarNode( _.extend( { value: 1 }, options.starNodeOptions ) ) );
+        children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
       }
 
       const remainder = proportion * numberOfStars - numFilledStars;
       if ( remainder > 1E-6 ) {
-        children.push( new StarNode( _.extend( { value: remainder }, options.starNodeOptions ) ) );
+        children.push( new StarNode( merge( { value: remainder }, options.starNodeOptions ) ) );
       }
 
       const numEmptyStars = numberOfStars - children.length;
       for ( i = 0; i < numEmptyStars; i++ ) {
-        children.push( new StarNode( _.extend( { value: 0 }, options.starNodeOptions ) ) );
+        children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
       }
 
       self.children = children;

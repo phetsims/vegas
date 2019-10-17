@@ -22,6 +22,7 @@ define( require => {
   const CanvasNode = require( 'SCENERY/nodes/CanvasNode' );
   const FaceNode = require( 'SCENERY_PHET/FaceNode' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const ScreenView = require( 'JOIST/ScreenView' );
   const StarNode = require( 'SCENERY_PHET/StarNode' );
@@ -48,7 +49,7 @@ define( require => {
     this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
 
     // @private
-    this.options = options = _.extend( {
+    this.options = options = merge( {
 
       // Scale things up for rasterization and back down for rendering so they have nice resolution on retina
       scaleForResolution: 2,

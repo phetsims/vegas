@@ -12,6 +12,7 @@ define( require => {
   // modules
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   const StatusBar = require( 'VEGAS/StatusBar' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -27,7 +28,7 @@ define( require => {
    */
   function ScoreDisplayLabeledStars( scoreProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
       spacing: 5

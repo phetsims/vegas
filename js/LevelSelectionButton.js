@@ -17,6 +17,7 @@ define( require => {
   const Dimension2 = require( 'DOT/Dimension2' );
   const GameTimer = require( 'VEGAS/GameTimer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -46,7 +47,7 @@ define( require => {
 
     assert && assert( icon instanceof Node );
 
-    options = _.extend( {
+    options = merge( {
 
       listener: null, // {function}
 

@@ -13,6 +13,7 @@ define( require => {
   // modules
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const StarNode = require( 'SCENERY_PHET/StarNode' );
   const StatusBar = require( 'VEGAS/StatusBar' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -28,7 +29,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       starNodeOptions: null, // options to StarNode
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
@@ -37,7 +38,7 @@ define( require => {
     }, options );
 
     // fill in defaults for starNodeOptions
-    options.starNodeOptions = _.extend( {
+    options.starNodeOptions = merge( {
       outerRadius: 10,
       innerRadius: 5,
       filledLineWidth: 1.5,
@@ -53,14 +54,14 @@ define( require => {
       const children = [];
 
       if ( score === 0 ) {
-        children.push( new StarNode( _.extend( { value: 0 }, options.starNodeOptions ) ) );
+        children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
       }
       else {
         children.push( new Text( Util.toFixed( score, options.scoreDecimalPlaces ), {
           font: options.font,
           fill: options.textFill
         } ) );
-        children.push( new StarNode( _.extend( { value: 1 }, options.starNodeOptions ) ) );
+        children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
       }
 
       self.children = children;

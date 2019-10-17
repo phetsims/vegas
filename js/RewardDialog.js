@@ -15,6 +15,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -50,7 +51,7 @@ define( require => {
    */
   function RewardDialog( score, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // RewardDialog options
       phetGirlScale: 0.6,
@@ -62,7 +63,7 @@ define( require => {
       newLevelButtonListener: function() {} // called when 'New Level' button is pressed
     }, options );
 
-    options.scoreDisplayOptions = _.extend( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
+    options.scoreDisplayOptions = merge( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
 
     const phetGirlNode = new Image( phetGirlJugglingStarsImage, {
       scale: options.phetGirlScale
@@ -76,13 +77,13 @@ define( require => {
       maxWidth: options.buttonsWidth
     };
 
-    const keepGoingButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
+    const keepGoingButton = new RectangularPushButton( merge( {}, buttonOptions, {
       content: new Text( keepGoingString, { font: DEFAULT_BUTTONS_FONT } ),
       listener: options.keepGoingButtonListener,
       baseColor: 'white'
     } ) );
 
-    const newLevelButton = new RectangularPushButton( _.extend( {}, buttonOptions, {
+    const newLevelButton = new RectangularPushButton( merge( {}, buttonOptions, {
       content: new Text( newLevelString, { font: DEFAULT_BUTTONS_FONT } ),
       listener: options.newLevelButtonListener,
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW

@@ -9,6 +9,7 @@ define( require => {
   // modules
   const FaceNode = require( 'SCENERY_PHET/FaceNode' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -33,7 +34,7 @@ define( require => {
   function AllLevelsCompletedNode( listener, options ) {
     Node.call( this );
 
-    options = _.extend( {
+    options = merge( {
       // {number} - Controls the width of the main message and the text in the button
       maxTextWidth: 300
     }, options );

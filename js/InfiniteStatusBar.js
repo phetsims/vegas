@@ -14,6 +14,7 @@ define( require => {
   const BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const ScoreDisplayLabeledNumber = require( 'VEGAS/ScoreDisplayLabeledNumber' );
   const ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
@@ -36,7 +37,7 @@ define( require => {
    */
   function InfiniteStatusBar( layoutBounds, visibleBoundsProperty, messageNode, scoreProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
       backButtonListener: null,
       xMargin: 20,
       yMargin: 10,
@@ -66,7 +67,7 @@ define( require => {
     } );
 
     const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty,
-      _.extend( { maxWidth: 0.2 * layoutBounds.width }, options.scoreDisplayOptions ) );
+      merge( { maxWidth: 0.2 * layoutBounds.width }, options.scoreDisplayOptions ) );
 
     // Wrap scoreDisplay, since we are listening for bounds changes to reposition it.
     this.scoreDisplayParent = new Node( { children: [ scoreDisplay ] } );

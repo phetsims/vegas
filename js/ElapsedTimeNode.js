@@ -12,6 +12,7 @@ define( require => {
   const GameTimer = require( 'VEGAS/GameTimer' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
   const StatusBar = require( 'VEGAS/StatusBar' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -24,7 +25,7 @@ define( require => {
    */
   function ElapsedTimeNode( elapsedTimeProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
       spacing: 8,
       clockIconRadius: 15,
       font: StatusBar.DEFAULT_FONT,

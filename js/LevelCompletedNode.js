@@ -13,6 +13,7 @@ define( require => {
   const Color = require( 'SCENERY/util/Color' );
   const GameTimer = require( 'VEGAS/GameTimer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
@@ -61,7 +62,7 @@ define( require => {
                                continueFunction,
                                options ) {
 
-    options = _.extend( {
+    options = merge( {
       levelVisible: true, // display the level number?
       fill: new Color( 180, 205, 255 ),
       stroke: 'black',
