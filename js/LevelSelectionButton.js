@@ -75,7 +75,7 @@ define( require => {
       bestTimeYSpacing: 10,  // vertical space between drop shadow and best time
 
       // Tandem
-      tandem: Tandem.required
+      tandem: Tandem.REQUIRED
     }, options );
 
     Node.call( this );

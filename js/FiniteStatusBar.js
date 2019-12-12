@@ -82,7 +82,7 @@ define( require => {
       challengeTextOptions: null, // passed to the "Challenge N of M" text
 
       // phet-io
-      tandem: Tandem.required
+      tandem: Tandem.REQUIRED
     }, options );
 
     // nested options for score display

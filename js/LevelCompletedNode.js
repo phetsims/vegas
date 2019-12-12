@@ -77,7 +77,7 @@ define( require => {
       buttonFill: new Color( 255, 255, 0 ),
       starDiameter: 62,
       contentMaxWidth: null, // {number|null} - Will apply as maxWidth to every interior component individually.
-      tandem: Tandem.required
+      tandem: Tandem.REQUIRED
     }, options );
 
     // nodes to be added to the panel
