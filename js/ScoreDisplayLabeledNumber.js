@@ -16,7 +16,7 @@ define( require => {
   const StatusBar = require( 'VEGAS/StatusBar' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const vegas = require( 'VEGAS/vegas' );
 
   // strings
@@ -46,7 +46,7 @@ define( require => {
     // Update number displayed based on score.
     const scorePropertyListener = function( score ) {
       scoreDisplayText.text = StringUtils.fillIn( patternScoreNumberString, {
-        score: Util.toFixed( score, options.scoreDecimalPlaces )
+        score: Utils.toFixed( score, options.scoreDecimalPlaces )
       } );
     };
     scoreProperty.link( scorePropertyListener );

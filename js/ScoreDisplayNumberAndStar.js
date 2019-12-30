@@ -17,7 +17,7 @@ define( require => {
   const StarNode = require( 'SCENERY_PHET/StarNode' );
   const StatusBar = require( 'VEGAS/StatusBar' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const vegas = require( 'VEGAS/vegas' );
 
   /**
@@ -57,7 +57,7 @@ define( require => {
         children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
       }
       else {
-        children.push( new Text( Util.toFixed( score, options.scoreDecimalPlaces ), {
+        children.push( new Text( Utils.toFixed( score, options.scoreDecimalPlaces ), {
           font: options.font,
           fill: options.textFill
         } ) );

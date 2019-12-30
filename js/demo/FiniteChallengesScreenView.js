@@ -23,7 +23,7 @@ define( require => {
   const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const VBox = require( 'SCENERY/nodes/VBox' );
   const vegas = require( 'VEGAS/vegas' );
 
@@ -67,7 +67,7 @@ define( require => {
         new Text( 'Level: ', { font: DEFAULT_FONT } ),
         new HSlider( levelProperty, new Range( 1, 5 ), {
           constrainValue: function( value ) {
-            return Util.roundSymmetric( value );
+            return Utils.roundSymmetric( value );
           }
         } )
       ]
@@ -78,7 +78,7 @@ define( require => {
         new Text( 'Challenge: ', { font: DEFAULT_FONT } ),
         new HSlider( challengeIndexProperty, new Range( 0, NUMBER_OF_CHALLENGES - 1 ), {
           constrainValue: function( value ) {
-            return Util.roundSymmetric( value );
+            return Utils.roundSymmetric( value );
           }
         } )
       ]
@@ -89,7 +89,7 @@ define( require => {
         new Text( 'Number of challenges: ', { font: DEFAULT_FONT } ),
         new HSlider( numberOfChallengesProperty, new Range( 1, NUMBER_OF_CHALLENGES ), {
           constrainValue: function( value ) {
-            return Util.roundSymmetric( value );
+            return Utils.roundSymmetric( value );
           }
         } )
       ]
@@ -109,7 +109,7 @@ define( require => {
         new Text( 'Elapsed time: ', { font: DEFAULT_FONT } ),
         new HSlider( elapsedTimeProperty, new Range( 0, 1000 ), {
           constrainValue: function( value ) {
-            return Util.roundSymmetric( value );
+            return Utils.roundSymmetric( value );
           }
         } )
       ]
