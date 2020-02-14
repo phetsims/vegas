@@ -264,7 +264,7 @@ define( require => {
       dispose: function() {
         this.stop();
         this.screenView && this.screenView.off( 'transform', this.updateBounds );
-        this.initializationVerifier && phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializationVerifier );
+        this.initializationVerifier && phet.phetIo.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializationVerifier );
         CanvasNode.prototype.dispose.call( this );
       }
     },
