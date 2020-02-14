@@ -28,9 +28,6 @@ define( require => {
   const StarNode = require( 'SCENERY_PHET/StarNode' );
   const vegas = require( 'VEGAS/vegas' );
 
-  // ifphetio
-  const phetioEngine = require( 'ifphetio!PHET_IO/phetioEngine' );
-
   // constants
   const DEBUG = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
   const MAX_SPEED = 200; // The maximum speed an image can fall in screen pixels per second.
@@ -108,7 +105,7 @@ define( require => {
     this.inited = false;
 
     // make sure this node is initialized when state is being set for PhET-iO
-    if ( phetioEngine.phetioStateEngine ) {
+    if ( phet.phetIo.phetioEngine.phetioStateEngine ) {
 
       // @private
       this.initializationVerifier = function() {
@@ -116,7 +113,7 @@ define( require => {
           self.init();
         }
       };
-      phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
+      phet.phetIo.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
     }
   }
 
