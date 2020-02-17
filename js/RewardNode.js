@@ -104,8 +104,8 @@ define( require => {
     // RewardNode.init below.
     this.inited = false;
 
-    // make sure this node is initialized when state is being set for PhET-iO
-    if ( phet.phetIo.phetioEngine.phetioStateEngine ) {
+    // For PhET-iO brand only: make sure this Node is initialized when state is being set for PhET-iO
+    if ( _.hasIn( 'window.phet.phetIo' ) && phet.phetIo.phetioEngine.phetioStateEngine ) {
 
       // @private
       this.initializationVerifier = function() {
@@ -113,7 +113,7 @@ define( require => {
           self.init();
         }
       };
-      phet.phetIo.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
+      _.hasIn( 'window.phet.phetIo' ) && phet.phetIo.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
     }
   }
 
