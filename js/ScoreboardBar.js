@@ -25,7 +25,7 @@ define( function( require ) {
   // strings
   var startOverString = require( 'string!VEGAS/startOver' );
   var labelLevelString = require( 'string!VEGAS/label.level' );
-  var labelScoreString = require( 'string!VEGAS/label.score' );
+  var labelScorePatternString = require( 'string!VEGAS/label.scorePattern' );
   var pattern0Challenge1MaxString = require( 'string!VEGAS/pattern.0challenge.1max' );
 
   /**
@@ -87,7 +87,7 @@ define( function( require ) {
     // Score
     var scoreNode = new Text( '', textOptions );
     scoreProperty.link( function( score ) {
-      scoreNode.text = StringUtils.format( labelScoreString, score );
+      scoreNode.text = StringUtils.format( labelScorePatternString, score );
     } );
 
     // Timer, always takes up space even when hidden.
