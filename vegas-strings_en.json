@@ -35,7 +35,7 @@
   "label.level": {
     "value": "Level: {0}"
   },
-  "label.score": {
+  "label.scorePattern": {
     "value": "Score: {0}"
   },
   "check": {
