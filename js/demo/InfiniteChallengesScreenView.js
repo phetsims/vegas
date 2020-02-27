@@ -5,57 +5,54 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const HSlider = require( 'SUN/HSlider' );
-  const InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Property = require( 'AXON/Property' );
-  const Range = require( 'DOT/Range' );
-  const ScreenView = require( 'JOIST/ScreenView' );
-  const StatusBar = require( 'VEGAS/StatusBar' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const vegas = require( 'VEGAS/vegas' );
+import Property from '../../../axon/js/Property.js';
+import Range from '../../../dot/js/Range.js';
+import ScreenView from '../../../joist/js/ScreenView.js';
+import inherit from '../../../phet-core/js/inherit.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import HBox from '../../../scenery/js/nodes/HBox.js';
+import Text from '../../../scenery/js/nodes/Text.js';
+import HSlider from '../../../sun/js/HSlider.js';
+import InfiniteStatusBar from '../InfiniteStatusBar.js';
+import StatusBar from '../StatusBar.js';
+import vegas from '../vegas.js';
 
-  // constants
-  const SCORE_RANGE = new Range( 0, 1000 );
+// constants
+const SCORE_RANGE = new Range( 0, 1000 );
 
-  /**
-   * @constructor
-   */
-  function InfiniteChallengesScreenView() {
+/**
+ * @constructor
+ */
+function InfiniteChallengesScreenView() {
 
-    ScreenView.call( this );
+  ScreenView.call( this );
 
-    const scoreProperty = new Property( 0 );
+  const scoreProperty = new Property( 0 );
 
-    // bar across the top
-    const messageNode = new Text( 'Your Node goes here', {
-      font: StatusBar.DEFAULT_FONT
-    } );
-    const statusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, messageNode, scoreProperty, {
-      backButtonListener: function() { console.log( 'back' ); }
-    } );
-    this.addChild( statusBar );
+  // bar across the top
+  const messageNode = new Text( 'Your Node goes here', {
+    font: StatusBar.DEFAULT_FONT
+  } );
+  const statusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, messageNode, scoreProperty, {
+    backButtonListener: function() { console.log( 'back' ); }
+  } );
+  this.addChild( statusBar );
 
-    // slider for testing score changes
-    const scoreSlider = new HBox( {
-      right: this.layoutBounds.right - 20,
-      top: statusBar.bottom + 30,
-      children: [
-        new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
-        new HSlider( scoreProperty, SCORE_RANGE )
-      ]
-    } );
+  // slider for testing score changes
+  const scoreSlider = new HBox( {
+    right: this.layoutBounds.right - 20,
+    top: statusBar.bottom + 30,
+    children: [
+      new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
+      new HSlider( scoreProperty, SCORE_RANGE )
+    ]
+  } );
 
-    this.addChild( scoreSlider );
-  }
+  this.addChild( scoreSlider );
+}
 
-  vegas.register( 'InfiniteChallengesScreenView', InfiniteChallengesScreenView );
+vegas.register( 'InfiniteChallengesScreenView', InfiniteChallengesScreenView );
 
-  return inherit( ScreenView, InfiniteChallengesScreenView );
-} );
+inherit( ScreenView, InfiniteChallengesScreenView );
+export default InfiniteChallengesScreenView;

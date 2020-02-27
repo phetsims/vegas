@@ -6,63 +6,59 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
-  const StatusBar = require( 'VEGAS/StatusBar' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const vegas = require( 'VEGAS/vegas' );
+import inherit from '../../phet-core/js/inherit.js';
+import merge from '../../phet-core/js/merge.js';
+import HBox from '../../scenery/js/nodes/HBox.js';
+import Text from '../../scenery/js/nodes/Text.js';
+import ScoreDisplayStars from './ScoreDisplayStars.js';
+import StatusBar from './StatusBar.js';
+import vegasStrings from './vegas-strings.js';
+import vegas from './vegas.js';
 
-  // strings
-  const scoreString = require( 'string!VEGAS/score' );
+const scoreString = vegasStrings.score;
+
+/**
+ * @param {Property.<number>} scoreProperty
+ * @param {Object} [options]
+ * @constructor
+ */
+function ScoreDisplayLabeledStars( scoreProperty, options ) {
+
+  options = merge( {
+    font: StatusBar.DEFAULT_FONT,
+    textFill: 'black',
+    spacing: 5
+  }, options );
+
+  const textNode = new Text( scoreString, {
+    font: options.font,
+    fill: options.textFill
+  } );
+
+  const scoreDisplay = new ScoreDisplayStars( scoreProperty, options );
+
+  assert && assert( !options.children, 'ScoreDisplayLabeledStars sets children' );
+  options.children = [ textNode, scoreDisplay ];
+
+  HBox.call( this, options );
+
+  // @private
+  this.disposeScoreDisplayLabeledStars = function() {
+    scoreDisplay.dispose();
+  };
+}
+
+vegas.register( 'ScoreDisplayLabeledStars', ScoreDisplayLabeledStars );
+
+export default inherit( HBox, ScoreDisplayLabeledStars, {
 
   /**
-   * @param {Property.<number>} scoreProperty
-   * @param {Object} [options]
-   * @constructor
+   * @public
+   * @override
    */
-  function ScoreDisplayLabeledStars( scoreProperty, options ) {
-
-    options = merge( {
-      font: StatusBar.DEFAULT_FONT,
-      textFill: 'black',
-      spacing: 5
-    }, options );
-
-    const textNode = new Text( scoreString, {
-      font: options.font,
-      fill: options.textFill
-    } );
-
-    const scoreDisplay = new ScoreDisplayStars( scoreProperty, options );
-
-    assert && assert( !options.children, 'ScoreDisplayLabeledStars sets children' );
-    options.children = [ textNode, scoreDisplay ];
-
-    HBox.call( this, options );
-
-    // @private
-    this.disposeScoreDisplayLabeledStars = function() {
-      scoreDisplay.dispose();
-    };
+  dispose: function() {
+    this.disposeScoreDisplayLabeledStars();
+    HBox.prototype.dispose.call( this );
   }
-
-  vegas.register( 'ScoreDisplayLabeledStars', ScoreDisplayLabeledStars );
-
-  return inherit( HBox, ScoreDisplayLabeledStars, {
-
-    /**
-     * @public
-     * @override
-     */
-    dispose: function() {
-      this.disposeScoreDisplayLabeledStars();
-      HBox.prototype.dispose.call( this );
-    }
-  } );
 } );

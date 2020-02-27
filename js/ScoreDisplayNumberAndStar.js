@@ -7,83 +7,79 @@
  *
  * @author Andrea Lin
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const StarNode = require( 'SCENERY_PHET/StarNode' );
-  const StatusBar = require( 'VEGAS/StatusBar' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const Utils = require( 'DOT/Utils' );
-  const vegas = require( 'VEGAS/vegas' );
+import Utils from '../../dot/js/Utils.js';
+import inherit from '../../phet-core/js/inherit.js';
+import merge from '../../phet-core/js/merge.js';
+import StarNode from '../../scenery-phet/js/StarNode.js';
+import HBox from '../../scenery/js/nodes/HBox.js';
+import Text from '../../scenery/js/nodes/Text.js';
+import StatusBar from './StatusBar.js';
+import vegas from './vegas.js';
 
-  /**
-   * @param {Property.<number>} scoreProperty
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ScoreDisplayNumberAndStar( scoreProperty, options ) {
+/**
+ * @param {Property.<number>} scoreProperty
+ * @param {Object} [options]
+ * @constructor
+ */
+function ScoreDisplayNumberAndStar( scoreProperty, options ) {
 
-    const self = this;
+  const self = this;
 
-    options = merge( {
-      starNodeOptions: null, // options to StarNode
-      font: StatusBar.DEFAULT_FONT,
-      textFill: 'black',
-      scoreDecimalPlaces: 0,
-      spacing: 5
-    }, options );
+  options = merge( {
+    starNodeOptions: null, // options to StarNode
+    font: StatusBar.DEFAULT_FONT,
+    textFill: 'black',
+    scoreDecimalPlaces: 0,
+    spacing: 5
+  }, options );
 
-    // fill in defaults for starNodeOptions
-    options.starNodeOptions = merge( {
-      outerRadius: 10,
-      innerRadius: 5,
-      filledLineWidth: 1.5,
-      emptyLineWidth: 1.5
-    }, options.starNodeOptions );
+  // fill in defaults for starNodeOptions
+  options.starNodeOptions = merge( {
+    outerRadius: 10,
+    innerRadius: 5,
+    filledLineWidth: 1.5,
+    emptyLineWidth: 1.5
+  }, options.starNodeOptions );
 
-    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
+  assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
 
-    HBox.call( this );
+  HBox.call( this );
 
-    // Update number displayed based on score.
-    const scorePropertyListener = function( score ) {
-      const children = [];
+  // Update number displayed based on score.
+  const scorePropertyListener = function( score ) {
+    const children = [];
 
-      if ( score === 0 ) {
-        children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
-      }
-      else {
-        children.push( new Text( Utils.toFixed( score, options.scoreDecimalPlaces ), {
-          font: options.font,
-          fill: options.textFill
-        } ) );
-        children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
-      }
-
-      self.children = children;
-    };
-    scoreProperty.link( scorePropertyListener );
-
-    // @private
-    this.disposeScoreDisplayNumberAndStar = function() {
-      scoreProperty.unlink( scorePropertyListener );
-    };
-
-    this.mutate( options );
-  }
-
-  vegas.register( 'ScoreDisplayNumberAndStar', ScoreDisplayNumberAndStar );
-
-  return inherit( HBox, ScoreDisplayNumberAndStar, {
-
-    // @public 
-    dispose: function() {
-      this.disposeScoreDisplayNumberAndStar();
-      HBox.prototype.dispose.call( this );
+    if ( score === 0 ) {
+      children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
     }
-  } );
+    else {
+      children.push( new Text( Utils.toFixed( score, options.scoreDecimalPlaces ), {
+        font: options.font,
+        fill: options.textFill
+      } ) );
+      children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
+    }
+
+    self.children = children;
+  };
+  scoreProperty.link( scorePropertyListener );
+
+  // @private
+  this.disposeScoreDisplayNumberAndStar = function() {
+    scoreProperty.unlink( scorePropertyListener );
+  };
+
+  this.mutate( options );
+}
+
+vegas.register( 'ScoreDisplayNumberAndStar', ScoreDisplayNumberAndStar );
+
+export default inherit( HBox, ScoreDisplayNumberAndStar, {
+
+  // @public 
+  dispose: function() {
+    this.disposeScoreDisplayNumberAndStar();
+    HBox.prototype.dispose.call( this );
+  }
 } );

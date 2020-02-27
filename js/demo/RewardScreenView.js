@@ -6,57 +6,53 @@
  * @author Sam Reid
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  const RewardDialog = require( 'VEGAS/RewardDialog' );
-  const RewardNode = require( 'VEGAS/RewardNode' );
-  const ScreenView = require( 'JOIST/ScreenView' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const vegas = require( 'VEGAS/vegas' );
+import ScreenView from '../../../joist/js/ScreenView.js';
+import inherit from '../../../phet-core/js/inherit.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import Text from '../../../scenery/js/nodes/Text.js';
+import RectangularPushButton from '../../../sun/js/buttons/RectangularPushButton.js';
+import RewardDialog from '../RewardDialog.js';
+import RewardNode from '../RewardNode.js';
+import vegas from '../vegas.js';
 
-  /**
-   * @constructor
-   */
-  function RewardScreenView() {
-    ScreenView.call( this );
+/**
+ * @constructor
+ */
+function RewardScreenView() {
+  ScreenView.call( this );
 
-    // RewardNode
-    this.rewardNode = new RewardNode();
-    this.addChild( this.rewardNode );
+  // RewardNode
+  this.rewardNode = new RewardNode();
+  this.addChild( this.rewardNode );
 
-    // RewardDialog
-    const rewardDialogButton = new RectangularPushButton( {
-      content: new Text( 'open RewardDialog', { font: new PhetFont( 20 ) } ),
-      listener: function() {
-        var rewardDialog = new RewardDialog( 10, {
-          keepGoingButtonListener: function() {
-            console.log( 'Keep Going button' );
-            rewardDialog.dispose();
-          },
-          newLevelButtonListener: function() {
-            console.log( 'New Level button' );
-            rewardDialog.dispose();
-          }
-        } );
-        rewardDialog.show();
-      },
-      center: this.layoutBounds.center.plusXY( -20, 0 )
-    } );
-    this.addChild( rewardDialogButton );
-  }
-
-  vegas.register( 'RewardScreenView', RewardScreenView );
-
-  return inherit( ScreenView, RewardScreenView, {
-
-    // @public
-    step: function( timeElapsed ) {
-      this.rewardNode.step( timeElapsed );
-    }
+  // RewardDialog
+  const rewardDialogButton = new RectangularPushButton( {
+    content: new Text( 'open RewardDialog', { font: new PhetFont( 20 ) } ),
+    listener: function() {
+      var rewardDialog = new RewardDialog( 10, {
+        keepGoingButtonListener: function() {
+          console.log( 'Keep Going button' );
+          rewardDialog.dispose();
+        },
+        newLevelButtonListener: function() {
+          console.log( 'New Level button' );
+          rewardDialog.dispose();
+        }
+      } );
+      rewardDialog.show();
+    },
+    center: this.layoutBounds.center.plusXY( -20, 0 )
   } );
+  this.addChild( rewardDialogButton );
+}
+
+vegas.register( 'RewardScreenView', RewardScreenView );
+
+export default inherit( ScreenView, RewardScreenView, {
+
+  // @public
+  step: function( timeElapsed ) {
+    this.rewardNode.step( timeElapsed );
+  }
 } );

@@ -5,71 +5,66 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const GameTimer = require( 'VEGAS/GameTimer' );
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const SimpleClockIcon = require( 'SCENERY_PHET/SimpleClockIcon' );
-  const StatusBar = require( 'VEGAS/StatusBar' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const vegas = require( 'VEGAS/vegas' );
+import inherit from '../../phet-core/js/inherit.js';
+import merge from '../../phet-core/js/merge.js';
+import SimpleClockIcon from '../../scenery-phet/js/SimpleClockIcon.js';
+import HBox from '../../scenery/js/nodes/HBox.js';
+import Text from '../../scenery/js/nodes/Text.js';
+import GameTimer from './GameTimer.js';
+import StatusBar from './StatusBar.js';
+import vegas from './vegas.js';
 
-  /**
-   * @param {Property.<number>} elapsedTimeProperty
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ElapsedTimeNode( elapsedTimeProperty, options ) {
+/**
+ * @param {Property.<number>} elapsedTimeProperty
+ * @param {Object} [options]
+ * @constructor
+ */
+function ElapsedTimeNode( elapsedTimeProperty, options ) {
 
-    options = merge( {
-      spacing: 8,
-      clockIconRadius: 15,
-      font: StatusBar.DEFAULT_FONT,
-      textFill: 'black'
-    }, options );
+  options = merge( {
+    spacing: 8,
+    clockIconRadius: 15,
+    font: StatusBar.DEFAULT_FONT,
+    textFill: 'black'
+  }, options );
 
-    const clockIcon = new SimpleClockIcon( options.clockIconRadius );
+  const clockIcon = new SimpleClockIcon( options.clockIconRadius );
 
-    const timeValue = new Text( '', {
-      font: options.font,
-      fill: options.textFill
-    } );
-
-    assert && assert( !options.children, 'ElapsedTimeNode sets children' );
-    options.children = [ clockIcon, timeValue ];
-
-    HBox.call( this, options );
-
-    // Update the time display
-    const elapsedTimeListener = function( elapsedTime ) {
-      timeValue.text = GameTimer.formatTime( elapsedTime );
-    };
-    elapsedTimeProperty.link( elapsedTimeListener );
-
-    // @private
-    this.disposeElapsedTimeNode = function() {
-      if ( elapsedTimeProperty.hasListener( elapsedTimeListener ) ) {
-        elapsedTimeProperty.unlink( elapsedTimeListener );
-      }
-    };
-  }
-
-  vegas.register( 'ElapsedTimeNode', ElapsedTimeNode );
-
-  return inherit( HBox, ElapsedTimeNode, {
-
-    /**
-     * @public
-     * @override
-     */
-    dispose: function() {
-      this.disposeElapsedTimeNode();
-      HBox.prototype.dispose.call( this );
-    }
+  const timeValue = new Text( '', {
+    font: options.font,
+    fill: options.textFill
   } );
 
+  assert && assert( !options.children, 'ElapsedTimeNode sets children' );
+  options.children = [ clockIcon, timeValue ];
+
+  HBox.call( this, options );
+
+  // Update the time display
+  const elapsedTimeListener = function( elapsedTime ) {
+    timeValue.text = GameTimer.formatTime( elapsedTime );
+  };
+  elapsedTimeProperty.link( elapsedTimeListener );
+
+  // @private
+  this.disposeElapsedTimeNode = function() {
+    if ( elapsedTimeProperty.hasListener( elapsedTimeListener ) ) {
+      elapsedTimeProperty.unlink( elapsedTimeListener );
+    }
+  };
+}
+
+vegas.register( 'ElapsedTimeNode', ElapsedTimeNode );
+
+export default inherit( HBox, ElapsedTimeNode, {
+
+  /**
+   * @public
+   * @override
+   */
+  dispose: function() {
+    this.disposeElapsedTimeNode();
+    HBox.prototype.dispose.call( this );
+  }
 } );
