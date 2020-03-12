@@ -48,7 +48,6 @@ export default inherit( Object, GameTimer, {
       const self = this;
       self.elapsedTimeProperty.value = 0;
       self.intervalId = timer.setInterval( function() {
-        //TODO will this be accurate, or should we compute elapsed time and potentially skip some time values?
         self.elapsedTimeProperty.value = self.elapsedTimeProperty.value + 1;
       }, 1000 ); // fire once per second
       self.isRunningProperty.value = true;
