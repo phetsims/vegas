@@ -122,8 +122,7 @@ function LevelSelectionButton( icon, scoreProperty, options ) {
     cornerRadius: options.cornerRadius,
     listener: options.listener,
 
-    // TODO: if LevelSelectionButton changes to inheritance, this will have to change,
-    // see https://github.com/phetsims/vegas/issues/56
+    // TODO: if LevelSelectionButton changes to inheritance, this will have to change, see https://github.com/phetsims/vegas/issues/56
     tandem: options.tandem.createTandem( 'button' )
   } );
 
