@@ -198,7 +198,7 @@ export default inherit( CanvasNode, RewardNode, {
        * but it is one of the things that animates as falling in the RewardNode and its associated data.
        * @private
        */
-      //TODO should we create a separate class for this?
+      // TODO should we create a separate class for this?  See https://github.com/phetsims/vegas/issues/79.
       this.rewards = [];
       for ( let i = 0; i < this.options.nodes.length; i++ ) {
 
