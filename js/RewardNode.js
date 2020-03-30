@@ -23,6 +23,7 @@ import FaceNode from '../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
 import CanvasNode from '../../scenery/js/nodes/CanvasNode.js';
 import Node from '../../scenery/js/nodes/Node.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
 
 // constants
@@ -102,7 +103,7 @@ function RewardNode( options ) {
   this.inited = false;
 
   // For PhET-iO brand only: make sure this Node is initialized when state is being set for PhET-iO
-  if ( _.hasIn( 'window.phet.phetIo' ) && phet.phetIo.phetioEngine.phetioStateEngine ) {
+  if ( Tandem.PHET_IO_ENABLED && phet.phetIo.phetioEngine.phetioStateEngine ) {
 
     // @private
     this.initializationVerifier = function() {
@@ -110,7 +111,7 @@ function RewardNode( options ) {
         self.init();
       }
     };
-    _.hasIn( 'window.phet.phetIo' ) && phet.phetIo.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
+    Tandem.PHET_IO_ENABLED && phet.phetIo.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
   }
 }
 
