@@ -14,7 +14,7 @@ import Text from '../../scenery/js/nodes/Text.js';
 import VBox from '../../scenery/js/nodes/VBox.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../sun/js/Panel.js';
-import vegasStrings from './vegas-strings.js';
+import vegasStrings from './vegasStrings.js';
 import vegas from './vegas.js';
 
 // constants

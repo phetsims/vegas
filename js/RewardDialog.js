@@ -21,7 +21,7 @@ import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js
 import Dialog from '../../sun/js/Dialog.js';
 import phetGirlJugglingStarsImage from '../images/phet-girl-juggling-stars_png.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
-import vegasStrings from './vegas-strings.js';
+import vegasStrings from './vegasStrings.js';
 import vegas from './vegas.js';
 
 const keepGoingString = vegasStrings.keepGoing;

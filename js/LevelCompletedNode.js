@@ -21,7 +21,7 @@ import Panel from '../../sun/js/Panel.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import GameTimer from './GameTimer.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
-import vegasStrings from './vegas-strings.js';
+import vegasStrings from './vegasStrings.js';
 import vegas from './vegas.js';
 
 const continueString = vegasStrings.continue;

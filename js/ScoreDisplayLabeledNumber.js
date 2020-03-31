@@ -14,7 +14,7 @@ import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import StatusBar from './StatusBar.js';
-import vegasStrings from './vegas-strings.js';
+import vegasStrings from './vegasStrings.js';
 import vegas from './vegas.js';
 
 const patternScoreNumberString = vegasStrings.pattern.score.number;

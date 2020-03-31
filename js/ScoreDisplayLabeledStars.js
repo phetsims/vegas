@@ -13,7 +13,7 @@ import HBox from '../../scenery/js/nodes/HBox.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import StatusBar from './StatusBar.js';
-import vegasStrings from './vegas-strings.js';
+import vegasStrings from './vegasStrings.js';
 import vegas from './vegas.js';
 
 const scoreString = vegasStrings.score;

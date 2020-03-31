@@ -14,7 +14,7 @@ import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
 import LevelSelectionScreenView from './demo/LevelSelectionScreenView.js';
 import RewardScreenView from './demo/RewardScreenView.js';
-import vegasStrings from './vegas-strings.js';
+import vegasStrings from './vegasStrings.js';
 
 const vegasTitleString = vegasStrings.vegas.title;
 

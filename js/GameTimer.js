@@ -11,7 +11,7 @@ import Property from '../../axon/js/Property.js';
 import timer from '../../axon/js/timer.js';
 import inherit from '../../phet-core/js/inherit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
-import vegasStrings from './vegas-strings.js';
+import vegasStrings from './vegasStrings.js';
 import vegas from './vegas.js';
 
 const pattern0Hours1Minutes2SecondsString = vegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2seconds' ];
