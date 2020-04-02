@@ -103,7 +103,7 @@ function RewardNode( options ) {
   this.inited = false;
 
   // For PhET-iO brand only: make sure this Node is initialized when state is being set for PhET-iO
-  if ( Tandem.PHET_IO_ENABLED && phet.phetIo.phetioEngine.phetioStateEngine ) {
+  if ( Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine ) {
 
     // @private
     this.initializationVerifier = function() {
@@ -111,7 +111,7 @@ function RewardNode( options ) {
         self.init();
       }
     };
-    Tandem.PHET_IO_ENABLED && phet.phetIo.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
+    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
   }
 }
 
@@ -262,7 +262,7 @@ export default inherit( CanvasNode, RewardNode, {
     dispose: function() {
       this.stop();
       this.screenView && this.screenView.off( 'transform', this.updateBounds );
-      this.initializationVerifier && phet.phetIo.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializationVerifier );
+      this.initializationVerifier && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializationVerifier );
       CanvasNode.prototype.dispose.call( this );
     }
   },
