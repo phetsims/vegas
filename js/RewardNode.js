@@ -189,7 +189,7 @@ export default inherit( CanvasNode, RewardNode, {
       };
 
       // When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
-      this.screenView.on( 'transform', this.updateBounds );
+      this.screenView.transformEmitter.addListener( this.updateBounds );
 
       // Set the initial bounds
       this.updateBounds();
@@ -261,7 +261,7 @@ export default inherit( CanvasNode, RewardNode, {
 
     dispose: function() {
       this.stop();
-      this.screenView && this.screenView.off( 'transform', this.updateBounds );
+      this.screenView && this.screenView.transformEmitter.removeListener( this.updateBounds );
       this.initializationVerifier && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializationVerifier );
       CanvasNode.prototype.dispose.call( this );
     }

@@ -78,7 +78,7 @@ function InfiniteStatusBar( layoutBounds, visibleBoundsProperty, messageNode, sc
   StatusBar.call( this, layoutBounds, visibleBoundsProperty, options );
 
   // When the score display's bounds change, update the layout.
-  scoreDisplay.on( 'bounds', this.updateLayout.bind( this ) );
+  scoreDisplay.boundsProperty.lazyLink( this.updateLayout.bind( this ) );
 
   // @private
   this.disposeInfiniteStatusBar = function() {

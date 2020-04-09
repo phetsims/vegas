@@ -75,8 +75,6 @@ function LevelSelectionButton( icon, scoreProperty, options ) {
     tandem: Tandem.REQUIRED
   }, options );
 
-  Node.call( this );
-
   assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
     'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
   assert && assert( options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
@@ -111,7 +109,7 @@ function LevelSelectionButton( icon, scoreProperty, options ) {
   const scoreDisplayUpdateLayout = function() {
     scoreDisplay.center = scoreDisplayBackground.center;
   };
-  scoreDisplay.on( 'bounds', scoreDisplayUpdateLayout );
+  scoreDisplay.boundsProperty.lazyLink( scoreDisplayUpdateLayout );
   scoreDisplayUpdateLayout();
 
   RectangularPushButton.call( this, {
@@ -174,7 +172,7 @@ inherit( RectangularPushButton, LevelSelectionButton, {
   // @public
   dispose: function() {
     this.disposeLevelSelectionButton();
-    Node.prototype.dispose.call( this );
+    RectangularPushButton.prototype.dispose.call( this );
   }
 }, {
   /**
