@@ -58,11 +58,13 @@ function ScoreDisplayLabeledNumber( scoreProperty, options ) {
 
 vegas.register( 'ScoreDisplayLabeledNumber', ScoreDisplayLabeledNumber );
 
-export default inherit( Node, ScoreDisplayLabeledNumber, {
+inherit( Node, ScoreDisplayLabeledNumber, {
 
-  // @public 
+  // @public
   dispose: function() {
     this.disposeScoreDisplayLabeledNumber();
     Node.prototype.dispose.call( this );
   }
 } );
+
+export default ScoreDisplayLabeledNumber;

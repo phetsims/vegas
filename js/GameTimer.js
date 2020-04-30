@@ -31,7 +31,7 @@ function GameTimer() {
 
 vegas.register( 'GameTimer', GameTimer );
 
-export default inherit( Object, GameTimer, {
+inherit( Object, GameTimer, {
 
   // @public
   reset: function() {
@@ -100,3 +100,5 @@ export default inherit( Object, GameTimer, {
     }
   }
 } );
+
+export default GameTimer;

@@ -214,7 +214,7 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
 
 vegas.register( 'FiniteStatusBar', FiniteStatusBar );
 
-export default inherit( StatusBar, FiniteStatusBar, {
+inherit( StatusBar, FiniteStatusBar, {
 
   /**
    * @public
@@ -244,3 +244,5 @@ export default inherit( StatusBar, FiniteStatusBar, {
     this.startOverButton.centerY = centerY;
   }
 } );
+
+export default FiniteStatusBar;

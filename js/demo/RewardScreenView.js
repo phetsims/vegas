@@ -49,10 +49,12 @@ function RewardScreenView() {
 
 vegas.register( 'RewardScreenView', RewardScreenView );
 
-export default inherit( ScreenView, RewardScreenView, {
+inherit( ScreenView, RewardScreenView, {
 
   // @public
   step: function( timeElapsed ) {
     this.rewardNode.step( timeElapsed );
   }
 } );
+
+export default RewardScreenView;

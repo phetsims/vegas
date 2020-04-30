@@ -83,11 +83,13 @@ function ScoreDisplayStars( scoreProperty, options ) {
 
 vegas.register( 'ScoreDisplayStars', ScoreDisplayStars );
 
-export default inherit( HBox, ScoreDisplayStars, {
+inherit( HBox, ScoreDisplayStars, {
 
-  // @public 
+  // @public
   dispose: function() {
     this.disposeScoreDisplayStars();
     HBox.prototype.dispose.call( this );
   }
 } );
+
+export default ScoreDisplayStars;

@@ -57,7 +57,7 @@ function ElapsedTimeNode( elapsedTimeProperty, options ) {
 
 vegas.register( 'ElapsedTimeNode', ElapsedTimeNode );
 
-export default inherit( HBox, ElapsedTimeNode, {
+inherit( HBox, ElapsedTimeNode, {
 
   /**
    * @public
@@ -68,3 +68,5 @@ export default inherit( HBox, ElapsedTimeNode, {
     HBox.prototype.dispose.call( this );
   }
 } );
+
+export default ElapsedTimeNode;

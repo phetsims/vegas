@@ -159,7 +159,7 @@ function LevelCompletedNode( level,
 
 vegas.register( 'LevelCompletedNode', LevelCompletedNode );
 
-export default inherit( Panel, LevelCompletedNode, {
+inherit( Panel, LevelCompletedNode, {
   /**
    * Releases references.
    * @public
@@ -173,3 +173,5 @@ export default inherit( Panel, LevelCompletedNode, {
     Panel.prototype.dispose.call( this );
   }
 } );
+
+export default LevelCompletedNode;

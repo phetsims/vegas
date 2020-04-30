@@ -88,7 +88,7 @@ function InfiniteStatusBar( layoutBounds, visibleBoundsProperty, messageNode, sc
 
 vegas.register( 'InfiniteStatusBar', InfiniteStatusBar );
 
-export default inherit( StatusBar, InfiniteStatusBar, {
+inherit( StatusBar, InfiniteStatusBar, {
 
   /**
    * @public
@@ -118,3 +118,5 @@ export default inherit( StatusBar, InfiniteStatusBar, {
     this.scoreDisplayParent.centerY = centerY;
   }
 } );
+
+export default InfiniteStatusBar;

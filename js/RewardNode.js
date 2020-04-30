@@ -117,7 +117,7 @@ function RewardNode( options ) {
 
 vegas.register( 'RewardNode', RewardNode );
 
-export default inherit( CanvasNode, RewardNode, {
+inherit( CanvasNode, RewardNode, {
 
     /**
      * Paint the rewards on the canvas
@@ -284,3 +284,5 @@ export default inherit( CanvasNode, RewardNode, {
       return array;
     }
   } );
+
+export default RewardNode;
