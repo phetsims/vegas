@@ -9,7 +9,7 @@
 import Property from '../../axon/js/Property.js';
 import Screen from '../../joist/js/Screen.js';
 import Sim from '../../joist/js/Sim.js';
-import SimLauncher from '../../joist/js/SimLauncher.js';
+import simLauncher from '../../joist/js/simLauncher.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
 import LevelSelectionScreenView from './demo/LevelSelectionScreenView.js';
@@ -24,7 +24,7 @@ const simOptions = {
   }
 };
 
-SimLauncher.launch( function() {
+simLauncher.launch( function() {
   new Sim( vegasTitleString, [
 
     new Screen(
