@@ -118,10 +118,7 @@ function LevelSelectionButton( icon, scoreProperty, options ) {
     yMargin: options.buttonYMargin,
     baseColor: options.baseColor,
     cornerRadius: options.cornerRadius,
-    listener: options.listener,
-
-    // TODO: if LevelSelectionButton changes to inheritance, this will have to change, see https://github.com/phetsims/vegas/issues/56
-    tandem: options.tandem.createTandem( 'button' )
+    listener: options.listener
   } );
 
   // Best time decoration (optional), centered below the button, does not move when button is pressed
