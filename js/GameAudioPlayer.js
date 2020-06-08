@@ -15,8 +15,6 @@ import organSound from '../sounds/organ_mp3.js';
 import trumpetSound from '../sounds/trumpet_mp3.js';
 import vegas from './vegas.js';
 
-// sounds
-
 // constants
 const ding = new SoundClip( dingSound );
 const boing = new SoundClip( boingSound );
