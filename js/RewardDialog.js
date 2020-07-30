@@ -21,17 +21,17 @@ import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js
 import Dialog from '../../sun/js/Dialog.js';
 import phetGirlJugglingStarsImage from '../images/phet-girl-juggling-stars_png.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
-import vegasStrings from './vegasStrings.js';
 import vegas from './vegas.js';
+import vegasStrings from './vegasStrings.js';
 
 const keepGoingString = vegasStrings.keepGoing;
 const newLevelString = vegasStrings.newLevel;
 
 // constants
-const DEFAULT_BUTTONS_FONT = new PhetFont( 16 );
+const DEFAULT_BUTTONS_FONT = new PhetFont( 20 );
 const DEFAULT_SCORE_DISPLAY_OPTIONS = {
-  font: new PhetFont( { size: 30, weight: 'bold' } ),
-  spacing: 6,
+  font: new PhetFont( { size: 38, weight: 'bold' } ),
+  spacing: 8,
   starNodeOptions: {
     outerRadius: 20,
     innerRadius: 10,
@@ -52,8 +52,8 @@ function RewardDialog( score, options ) {
     phetGirlScale: 0.6,
     scoreDisplayOptions: null, // {Object|null} options passed to ScoreDisplayNumberAndStar
     buttonsFont: DEFAULT_BUTTONS_FONT,
-    buttonsWidth: 110, // {number} fixed width for both buttons
-    buttonsYSpacing: 15,
+    buttonsWidth: 145, // {number} fixed width for both buttons
+    buttonsYSpacing: 20,
     keepGoingButtonListener: function() {}, // called when 'Keep Going' button is pressed
     newLevelButtonListener: function() {} // called when 'New Level' button is pressed
   }, options );
@@ -102,7 +102,7 @@ function RewardDialog( score, options ) {
   const content = new HBox( {
     align: 'bottom',
     children: [ phetGirlNode, rightSideNode ],
-    spacing: 40
+    spacing: 52
   } );
 
   Dialog.call( this, content, options );
