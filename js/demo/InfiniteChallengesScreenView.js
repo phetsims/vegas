@@ -9,7 +9,6 @@
 import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
-import inherit from '../../../phet-core/js/inherit.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../scenery/js/nodes/HBox.js';
 import Text from '../../../scenery/js/nodes/Text.js';
@@ -21,38 +20,36 @@ import vegas from '../vegas.js';
 // constants
 const SCORE_RANGE = new Range( 0, 1000 );
 
-/**
- * @constructor
- */
-function InfiniteChallengesScreenView() {
+class InfiniteChallengesScreenView extends ScreenView {
 
-  ScreenView.call( this );
+  constructor() {
 
-  const scoreProperty = new Property( 0 );
+    super();
 
-  // bar across the top
-  const messageNode = new Text( 'Your Node goes here', {
-    font: StatusBar.DEFAULT_FONT
-  } );
-  const statusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, messageNode, scoreProperty, {
-    backButtonListener: function() { console.log( 'back' ); }
-  } );
-  this.addChild( statusBar );
+    const scoreProperty = new Property( 0 );
 
-  // slider for testing score changes
-  const scoreSlider = new HBox( {
-    right: this.layoutBounds.right - 20,
-    top: statusBar.bottom + 30,
-    children: [
-      new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
-      new HSlider( scoreProperty, SCORE_RANGE )
-    ]
-  } );
+    // bar across the top
+    const messageNode = new Text( 'Your Node goes here', {
+      font: StatusBar.DEFAULT_FONT
+    } );
+    const statusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, messageNode, scoreProperty, {
+      backButtonListener: () => console.log( 'back' )
+    } );
+    this.addChild( statusBar );
 
-  this.addChild( scoreSlider );
+    // slider for testing score changes
+    const scoreSlider = new HBox( {
+      right: this.layoutBounds.right - 20,
+      top: statusBar.bottom + 30,
+      children: [
+        new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
+        new HSlider( scoreProperty, SCORE_RANGE )
+      ]
+    } );
+
+    this.addChild( scoreSlider );
+  }
 }
 
 vegas.register( 'InfiniteChallengesScreenView', InfiniteChallengesScreenView );
-
-inherit( ScreenView, InfiniteChallengesScreenView );
 export default InfiniteChallengesScreenView;
