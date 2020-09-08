@@ -1,12 +1,11 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
 /**
- * Game timer display that appears in FiniteStatusBar.
+ * ElapsedTimeNode shows the elapsed time in a game status bar (FiniteStatusBar).
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../phet-core/js/inherit.js';
 import merge from '../../phet-core/js/merge.js';
 import SimpleClockIcon from '../../scenery-phet/js/SimpleClockIcon.js';
 import HBox from '../../scenery/js/nodes/HBox.js';
@@ -15,58 +14,56 @@ import GameTimer from './GameTimer.js';
 import StatusBar from './StatusBar.js';
 import vegas from './vegas.js';
 
-/**
- * @param {Property.<number>} elapsedTimeProperty
- * @param {Object} [options]
- * @constructor
- */
-function ElapsedTimeNode( elapsedTimeProperty, options ) {
+class ElapsedTimeNode extends HBox {
 
-  options = merge( {
-    spacing: 8,
-    clockIconRadius: 15,
-    font: StatusBar.DEFAULT_FONT,
-    textFill: 'black'
-  }, options );
+  /**
+   * @param {Property.<number>} elapsedTimeProperty
+   * @param {Object} [options]
+   */
+  constructor( elapsedTimeProperty, options ) {
 
-  const clockIcon = new SimpleClockIcon( options.clockIconRadius );
+    options = merge( {
+      spacing: 8,
+      clockIconRadius: 15,
+      font: StatusBar.DEFAULT_FONT,
+      textFill: 'black'
+    }, options );
 
-  const timeValue = new Text( '', {
-    font: options.font,
-    fill: options.textFill
-  } );
+    const clockIcon = new SimpleClockIcon( options.clockIconRadius );
 
-  assert && assert( !options.children, 'ElapsedTimeNode sets children' );
-  options.children = [ clockIcon, timeValue ];
+    const timeValue = new Text( '', {
+      font: options.font,
+      fill: options.textFill
+    } );
 
-  HBox.call( this, options );
+    assert && assert( !options.children, 'ElapsedTimeNode sets children' );
+    options.children = [ clockIcon, timeValue ];
 
-  // Update the time display
-  const elapsedTimeListener = function( elapsedTime ) {
-    timeValue.text = GameTimer.formatTime( elapsedTime );
-  };
-  elapsedTimeProperty.link( elapsedTimeListener );
+    super( options );
 
-  // @private
-  this.disposeElapsedTimeNode = function() {
-    if ( elapsedTimeProperty.hasListener( elapsedTimeListener ) ) {
-      elapsedTimeProperty.unlink( elapsedTimeListener );
-    }
-  };
-}
+    // Update the time display
+    const elapsedTimeListener = elapsedTime => {
+      timeValue.text = GameTimer.formatTime( elapsedTime );
+    };
+    elapsedTimeProperty.link( elapsedTimeListener );
 
-vegas.register( 'ElapsedTimeNode', ElapsedTimeNode );
-
-inherit( HBox, ElapsedTimeNode, {
+    // @private
+    this.disposeElapsedTimeNode = () => {
+      if ( elapsedTimeProperty.hasListener( elapsedTimeListener ) ) {
+        elapsedTimeProperty.unlink( elapsedTimeListener );
+      }
+    };
+  }
 
   /**
    * @public
    * @override
    */
-  dispose: function() {
+  dispose() {
     this.disposeElapsedTimeNode();
-    HBox.prototype.dispose.call( this );
+    super.dispose();
   }
-} );
+}
 
+vegas.register( 'ElapsedTimeNode', ElapsedTimeNode );
 export default ElapsedTimeNode;

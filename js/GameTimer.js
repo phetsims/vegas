@@ -7,83 +7,72 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Property from '../../axon/js/Property.js';
+import BooleanProperty from '../../axon/js/BooleanProperty.js';
+import NumberProperty from '../../axon/js/NumberProperty.js';
 import timer from '../../axon/js/timer.js';
-import inherit from '../../phet-core/js/inherit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
-import vegasStrings from './vegasStrings.js';
 import vegas from './vegas.js';
+import vegasStrings from './vegasStrings.js';
 
-const pattern0Hours1Minutes2SecondsString = vegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2seconds' ];
-const pattern0Minutes1SecondsString = vegasStrings.pattern[ '0minutes' ][ '1seconds' ];
+class GameTimer {
 
-/**
- * @constructor
- */
-function GameTimer() {
+  constructor() {
 
-  // @public seconds since the timer was started
-  this.elapsedTimeProperty = new Property( 0 );
-  this.isRunningProperty = new Property( false );
+    // @public seconds since the timer was started
+    this.elapsedTimeProperty = new NumberProperty( 0 );
+    this.isRunningProperty = new BooleanProperty( false );
 
-  this.intervalId = null; // @private
-}
-
-vegas.register( 'GameTimer', GameTimer );
-
-inherit( Object, GameTimer, {
+    this.intervalId = null; // @private
+  }
 
   // @public
-  reset: function() {
+  reset() {
     this.elapsedTimeProperty.reset();
     this.isRunningProperty.reset();
-  },
+  }
 
   /**
    * Starts the timer. This is a no-op if the timer is already running.
    * @public
    */
-  start: function() {
+  start() {
     if ( !this.isRunningProperty.value ) {
-      const self = this;
-      self.elapsedTimeProperty.value = 0;
-      self.intervalId = timer.setInterval( function() {
-        self.elapsedTimeProperty.value = self.elapsedTimeProperty.value + 1;
+      this.elapsedTimeProperty.value = 0;
+      this.intervalId = timer.setInterval( () => {
+        this.elapsedTimeProperty.value = this.elapsedTimeProperty.value + 1;
       }, 1000 ); // fire once per second
-      self.isRunningProperty.value = true;
+      this.isRunningProperty.value = true;
     }
-  },
+  }
 
   /**
    * Stops the timer. This is a no-op if the timer is already stopped.
    * @public
    */
-  stop: function() {
+  stop() {
     if ( this.isRunningProperty.value ) {
       timer.clearInterval( this.intervalId );
       this.intervalId = null;
       this.isRunningProperty.value = false;
     }
-  },
+  }
 
   /**
    * Convenience function for restarting the timer.
    * @public
    */
-  restart: function() {
+  restart() {
     this.stop();
     this.start();
   }
-}, {
 
   /**
    * Formats a value representing seconds into H:MM:SS (localized).
    * @param {number} time in seconds
    * @returns {string}
    * @public
-   * @static
    */
-  formatTime: function( time ) {
+  static formatTime( time ) {
 
     const hours = Math.floor( time / 3600 );
     const minutes = Math.floor( ( time - ( hours * 3600 ) ) / 60 );
@@ -93,12 +82,13 @@ inherit( Object, GameTimer, {
     const secondsString = ( seconds > 9 ) ? seconds : ( '0' + seconds );
 
     if ( hours > 0 ) {
-      return StringUtils.format( pattern0Hours1Minutes2SecondsString, hours, minutesString, secondsString );
+      return StringUtils.format( vegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2seconds' ], hours, minutesString, secondsString );
     }
     else {
-      return StringUtils.format( pattern0Minutes1SecondsString, minutesString, secondsString );
+      return StringUtils.format( vegasStrings.pattern[ '0minutes' ][ '1seconds' ], minutesString, secondsString );
     }
   }
-} );
+}
 
+vegas.register( 'GameTimer', GameTimer );
 export default GameTimer;
