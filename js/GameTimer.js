@@ -9,7 +9,7 @@
 
 import BooleanProperty from '../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../axon/js/NumberProperty.js';
-import timer from '../../axon/js/timer.js';
+import stepTimer from '../../axon/js/stepTimer.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
@@ -38,7 +38,7 @@ class GameTimer {
   start() {
     if ( !this.isRunningProperty.value ) {
       this.elapsedTimeProperty.value = 0;
-      this.intervalId = timer.setInterval( () => {
+      this.intervalId = stepTimer.setInterval( () => {
         this.elapsedTimeProperty.value = this.elapsedTimeProperty.value + 1;
       }, 1000 ); // fire once per second
       this.isRunningProperty.value = true;
@@ -51,7 +51,7 @@ class GameTimer {
    */
   stop() {
     if ( this.isRunningProperty.value ) {
-      timer.clearInterval( this.intervalId );
+      stepTimer.clearInterval( this.intervalId );
       this.intervalId = null;
       this.isRunningProperty.value = false;
     }
