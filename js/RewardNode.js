@@ -67,7 +67,8 @@ class RewardNode extends CanvasNode {
     // on ScreenView bounds and relative transforms
     this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
 
-    // If you pass in a stepEmitter, it will drive the animation
+    // @private If you pass in a stepEmitter, it will drive the animation
+    this.stepCallback = null;
     if ( options.stepEmitter ) {
       this.stepCallback = dt => this.step( dt );
       options.stepEmitter.addListener( this.stepCallback );
@@ -79,7 +80,7 @@ class RewardNode extends CanvasNode {
     this.imageWrappers = [];
 
     // find the unique nodes in the array
-    const uniqueNodes = _.uniq( this.options.nodes );
+    const uniqueNodes = _.uniq( options.nodes );
     uniqueNodes.forEach( ( node, i ) => {
       this.imageWrappers.push( {
         // The image to be rendered in the canvas, will be filled in by toImage callback
@@ -119,6 +120,22 @@ class RewardNode extends CanvasNode {
       };
       Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
     }
+
+    // @private
+    this.disposeRewardNode = () => {
+      options.stepEmitter && options.stepEmitter.removeListener( this.stepCallback );
+      this.screenView && this.screenView.transformEmitter.removeListener( this.updateBounds );
+      this.initializationVerifier && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializationVerifier );
+    };
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeRewardNode();
+    super.dispose();
   }
 
   /**
@@ -250,14 +267,6 @@ class RewardNode extends CanvasNode {
   }
 
   /**
-   * Stops the animation.  If there is a stepEmitter, remove its listener
-   * @private
-   */
-  stop() {
-    this.options.stepEmitter && this.options.stepEmitter.removeListener( this.stepCallback );
-  }
-
-  /**
    * Selects a random X value for the image when it is created.
    * @param {Node} imageWrapper
    * @returns {number}
@@ -305,17 +314,6 @@ class RewardNode extends CanvasNode {
       }
     }
     this.invalidatePaint();
-  }
-
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
-    this.stop();
-    this.screenView && this.screenView.transformEmitter.removeListener( this.updateBounds );
-    this.initializationVerifier && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializationVerifier );
-    super.dispose();
   }
 }
 
