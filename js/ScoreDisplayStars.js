@@ -9,87 +9,83 @@
  * @author Andrea Lin
  */
 
-import inherit from '../../phet-core/js/inherit.js';
 import merge from '../../phet-core/js/merge.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
 import HBox from '../../scenery/js/nodes/HBox.js';
 import vegas from './vegas.js';
 
-/**
- * @param {Property.<number>} scoreProperty
- * @param {Object} [options]
- * @constructor
- */
-function ScoreDisplayStars( scoreProperty, options ) {
+class ScoreDisplayStars extends HBox {
 
-  const self = this;
+  /**
+   * @param {Property.<number>} scoreProperty
+   * @param {Object} [options]
+   */
+  constructor( scoreProperty, options ) {
 
-  options = merge( {
-    starNodeOptions: null, // options to StarNode
-    numberOfStars: 1,
-    perfectScore: 1,
-    spacing: 3
-  }, options );
+    options = merge( {
+      starNodeOptions: null, // options to StarNode
+      numberOfStars: 1,
+      perfectScore: 1,
+      spacing: 3
+    }, options );
 
-  // fill in defaults for starNodeOptions
-  options.starNodeOptions = merge( {
-    outerRadius: 10,
-    innerRadius: 5,
-    filledLineWidth: 1.5,
-    emptyLineWidth: 1.5
-  }, options.starNodeOptions );
+    // fill in defaults for starNodeOptions
+    options.starNodeOptions = merge( {
+      outerRadius: 10,
+      innerRadius: 5,
+      filledLineWidth: 1.5,
+      emptyLineWidth: 1.5
+    }, options.starNodeOptions );
 
-  const numberOfStars = options.numberOfStars;
-  const perfectScore = options.perfectScore;
+    const numberOfStars = options.numberOfStars;
+    const perfectScore = options.perfectScore;
 
-  assert && assert( !options.children, 'ScoreDisplayStars sets children' );
-  HBox.call( this, { children: [] } );
+    super( options );
 
-  // Update visibility of filled and half-filled stars based on score.
-  const scorePropertyListener = function( score ) {
+    // Update visibility of filled and half-filled stars based on score.
+    assert && assert( !options.children, 'ScoreDisplayStars sets children' );
+    const scorePropertyListener = score => {
 
-    assert && assert( score <= perfectScore, 'Score ' + score + ' exceeds perfect score ' + perfectScore );
+      assert && assert( score <= perfectScore, 'Score ' + score + ' exceeds perfect score ' + perfectScore );
 
-    const children = [];
+      const children = [];
 
-    const proportion = score / perfectScore;
-    const numFilledStars = Math.floor( proportion * numberOfStars );
+      const proportion = score / perfectScore;
+      const numFilledStars = Math.floor( proportion * numberOfStars );
 
-    for ( var i = 0; i < numFilledStars; i++ ) {
-      children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
-    }
+      for ( var i = 0; i < numFilledStars; i++ ) {
+        children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
+      }
 
-    const remainder = proportion * numberOfStars - numFilledStars;
-    if ( remainder > 1E-6 ) {
-      children.push( new StarNode( merge( { value: remainder }, options.starNodeOptions ) ) );
-    }
+      const remainder = proportion * numberOfStars - numFilledStars;
+      if ( remainder > 1E-6 ) {
+        children.push( new StarNode( merge( { value: remainder }, options.starNodeOptions ) ) );
+      }
 
-    const numEmptyStars = numberOfStars - children.length;
-    for ( i = 0; i < numEmptyStars; i++ ) {
-      children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
-    }
+      const numEmptyStars = numberOfStars - children.length;
+      for ( i = 0; i < numEmptyStars; i++ ) {
+        children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
+      }
 
-    self.children = children;
-  };
-  scoreProperty.link( scorePropertyListener );
+      this.children = children;
+    };
+    scoreProperty.link( scorePropertyListener );
 
-  // @private
-  this.disposeScoreDisplayStars = function() {
-    scoreProperty.unlink( scorePropertyListener );
-  };
+    // @private
+    this.disposeScoreDisplayStars = function() {
+      scoreProperty.unlink( scorePropertyListener );
+    };
+  }
 
-  this.mutate( options );
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeScoreDisplayStars();
+    super.dispose();
+  }
 }
 
 vegas.register( 'ScoreDisplayStars', ScoreDisplayStars );
-
-inherit( HBox, ScoreDisplayStars, {
-
-  // @public
-  dispose: function() {
-    this.disposeScoreDisplayStars();
-    HBox.prototype.dispose.call( this );
-  }
-} );
-
 export default ScoreDisplayStars;
