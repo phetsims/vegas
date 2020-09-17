@@ -100,8 +100,8 @@ class RewardNode extends CanvasNode {
       } );
     } );
 
-    // @private - Some initialization must occur after this node is attached to the scene graph, see documentation for
-    // initialize() method below.
+    // @private {boolean} Some initialization must occur after this node is attached to the scene graph,
+    // see documentation for initialize() method below.
     this.isInitialized = false;
 
     // @private these will be set by init
@@ -109,7 +109,7 @@ class RewardNode extends CanvasNode {
     this.screenView = null; // {ScreenView}
     this.updateBounds = null; // {function}
 
-    // @private For PhET-iO brand only: make sure this Node is initialized when state is being set for PhET-iO
+    // @private {function} For PhET-iO brand only: make sure this Node is initialized when state is being set for PhET-iO
     this.initializationVerifier = null;
     if ( Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine ) {
       this.initializationVerifier = () => {
