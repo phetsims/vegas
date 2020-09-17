@@ -174,6 +174,9 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
 
   // @private Nodes on the left end of the bar
   this.leftNodes = new HBox( {
+
+    // Because elapsedTimeNode needs to be considered regardless of whether it's visible,
+    // see https://github.com/phetsims/vegas/issues/80
     excludeInvisibleChildrenFromBounds: false,
     resize: false,
     spacing: options.xSpacing,
