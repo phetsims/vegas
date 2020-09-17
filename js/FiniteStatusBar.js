@@ -174,6 +174,7 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
 
   // @private Nodes on the left end of the bar
   this.leftNodes = new HBox( {
+    excludeInvisibleChildrenFromBounds: false,
     resize: false,
     spacing: options.xSpacing,
     children: leftChildren,
