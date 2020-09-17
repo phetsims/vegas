@@ -7,60 +7,55 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../phet-core/js/inherit.js';
 import merge from '../../phet-core/js/merge.js';
 import HBox from '../../scenery/js/nodes/HBox.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import StatusBar from './StatusBar.js';
-import vegasStrings from './vegasStrings.js';
 import vegas from './vegas.js';
+import vegasStrings from './vegasStrings.js';
 
-const scoreString = vegasStrings.score;
+class ScoreDisplayLabeledStars extends HBox {
 
-/**
- * @param {Property.<number>} scoreProperty
- * @param {Object} [options]
- * @constructor
- */
-function ScoreDisplayLabeledStars( scoreProperty, options ) {
+  /**
+   * @param {Property.<number>} scoreProperty
+   * @param {Object} [options]
+   */
+  constructor( scoreProperty, options ) {
 
-  options = merge( {
-    font: StatusBar.DEFAULT_FONT,
-    textFill: 'black',
-    spacing: 5
-  }, options );
+    options = merge( {
+      font: StatusBar.DEFAULT_FONT,
+      textFill: 'black',
+      spacing: 5
+    }, options );
 
-  const textNode = new Text( scoreString, {
-    font: options.font,
-    fill: options.textFill
-  } );
+    const textNode = new Text( vegasStrings.score, {
+      font: options.font,
+      fill: options.textFill
+    } );
 
-  const scoreDisplay = new ScoreDisplayStars( scoreProperty, options );
+    const scoreDisplay = new ScoreDisplayStars( scoreProperty, options );
 
-  assert && assert( !options.children, 'ScoreDisplayLabeledStars sets children' );
-  options.children = [ textNode, scoreDisplay ];
+    assert && assert( !options.children, 'ScoreDisplayLabeledStars sets children' );
+    options.children = [ textNode, scoreDisplay ];
 
-  HBox.call( this, options );
+    super( options );
 
-  // @private
-  this.disposeScoreDisplayLabeledStars = function() {
-    scoreDisplay.dispose();
-  };
-}
-
-vegas.register( 'ScoreDisplayLabeledStars', ScoreDisplayLabeledStars );
-
-inherit( HBox, ScoreDisplayLabeledStars, {
+    // @private
+    this.disposeScoreDisplayLabeledStars = function() {
+      scoreDisplay.dispose();
+    };
+  }
 
   /**
    * @public
    * @override
    */
-  dispose: function() {
+  dispose() {
     this.disposeScoreDisplayLabeledStars();
-    HBox.prototype.dispose.call( this );
+    super.dispose();
   }
-} );
+}
 
+vegas.register( 'ScoreDisplayLabeledStars', ScoreDisplayLabeledStars );
 export default ScoreDisplayLabeledStars;
