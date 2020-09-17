@@ -1,5 +1,6 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
+//TODO https://github.com/phetsims/tasks/issues/1044 converting to ES6 is problematic because super constructor calls updateLayoutProtected
 /**
  * Status bar for games with levels that have an infinite (open-ended) number of challenges per level.
  * See specification in https://github.com/phetsims/vegas/issues/59.

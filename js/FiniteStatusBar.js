@@ -1,5 +1,6 @@
 // Copyright 2013-2020, University of Colorado Boulder
 
+//TODO https://github.com/phetsims/tasks/issues/1044 converting to ES6 is problematic because super constructor calls updateLayoutProtected
 /**
  * Status bar for games that have a finite number of challenges per level.
  * This was adapted from and replaces ScoreboardBar.
