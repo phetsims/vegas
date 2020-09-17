@@ -9,7 +9,6 @@
  */
 
 import NumberProperty from '../../axon/js/NumberProperty.js';
-import inherit from '../../phet-core/js/inherit.js';
 import merge from '../../phet-core/js/merge.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
@@ -24,9 +23,6 @@ import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
 
-const keepGoingString = vegasStrings.keepGoing;
-const newLevelString = vegasStrings.newLevel;
-
 // constants
 const DEFAULT_BUTTONS_FONT = new PhetFont( 20 );
 const DEFAULT_SCORE_DISPLAY_OPTIONS = {
@@ -39,76 +35,76 @@ const DEFAULT_SCORE_DISPLAY_OPTIONS = {
   }
 };
 
-/**
- * @param {number} score
- * @param {Object} [options]
- * @constructor
- */
-function RewardDialog( score, options ) {
+class RewardDialog extends Dialog {
 
-  options = merge( {
+  /**
+   * @param {number} score
+   * @param {Object} [options]
+   */
+  constructor( score, options ) {
 
-    // RewardDialog options
-    phetGirlScale: 0.6,
-    scoreDisplayOptions: null, // {Object|null} options passed to ScoreDisplayNumberAndStar
-    buttonsFont: DEFAULT_BUTTONS_FONT,
-    buttonsWidth: 145, // {number} fixed width for both buttons
-    buttonsYSpacing: 20,
-    keepGoingButtonListener: function() {}, // called when 'Keep Going' button is pressed
-    newLevelButtonListener: function() {} // called when 'New Level' button is pressed
-  }, options );
+    options = merge( {
 
-  options.scoreDisplayOptions = merge( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
+      // RewardDialog options
+      phetGirlScale: 0.6,
+      scoreDisplayOptions: null, // {Object|null} options passed to ScoreDisplayNumberAndStar
+      buttonsFont: DEFAULT_BUTTONS_FONT,
+      buttonsWidth: 145, // {number} fixed width for both buttons
+      buttonsYSpacing: 20,
+      keepGoingButtonListener: () => {}, // called when 'Keep Going' button is pressed
+      newLevelButtonListener: () => {} // called when 'New Level' button is pressed
+    }, options );
 
-  const phetGirlNode = new Image( phetGirlJugglingStarsImage, {
-    scale: options.phetGirlScale
-  } );
+    options.scoreDisplayOptions = merge( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
 
-  const scoreDisplay = new ScoreDisplayNumberAndStar( new NumberProperty( score ), options.scoreDisplayOptions );
+    const phetGirlNode = new Image( phetGirlJugglingStarsImage, {
+      scale: options.phetGirlScale
+    } );
 
-  const buttonOptions = {
-    font: options.buttonsFont,
-    minWidth: options.buttonsWidth,
-    maxWidth: options.buttonsWidth
-  };
+    const scoreDisplay = new ScoreDisplayNumberAndStar( new NumberProperty( score ), options.scoreDisplayOptions );
 
-  const keepGoingButton = new RectangularPushButton( merge( {}, buttonOptions, {
-    content: new Text( keepGoingString, { font: DEFAULT_BUTTONS_FONT } ),
-    listener: options.keepGoingButtonListener,
-    baseColor: 'white'
-  } ) );
+    const buttonOptions = {
+      font: options.buttonsFont,
+      minWidth: options.buttonsWidth,
+      maxWidth: options.buttonsWidth
+    };
 
-  const newLevelButton = new RectangularPushButton( merge( {}, buttonOptions, {
-    content: new Text( newLevelString, { font: DEFAULT_BUTTONS_FONT } ),
-    listener: options.newLevelButtonListener,
-    baseColor: PhetColorScheme.PHET_LOGO_YELLOW
-  } ) );
+    const keepGoingButton = new RectangularPushButton( merge( {}, buttonOptions, {
+      content: new Text( vegasStrings.keepGoing, { font: DEFAULT_BUTTONS_FONT } ),
+      listener: options.keepGoingButtonListener,
+      baseColor: 'white'
+    } ) );
 
-  const buttons = new VBox( {
-    children: [ keepGoingButton, newLevelButton ],
-    spacing: options.buttonsYSpacing
-  } );
+    const newLevelButton = new RectangularPushButton( merge( {}, buttonOptions, {
+      content: new Text( vegasStrings.newLevel, { font: DEFAULT_BUTTONS_FONT } ),
+      listener: options.newLevelButtonListener,
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
+    } ) );
 
-  // half the remaining height, so that scoreDisplay will be centered in the negative space above the buttons.
-  const scoreSpacing = ( phetGirlNode.height - scoreDisplay.height - buttons.height ) / 2;
-  assert && assert( scoreSpacing > 0, 'phetGirlNode is scaled down too much' );
+    const buttons = new VBox( {
+      children: [ keepGoingButton, newLevelButton ],
+      spacing: options.buttonsYSpacing
+    } );
 
-  const rightSideNode = new VBox( {
-    children: [ scoreDisplay, buttons ],
-    align: 'center',
-    spacing: scoreSpacing
-  } );
+    // half the remaining height, so that scoreDisplay will be centered in the negative space above the buttons.
+    const scoreSpacing = ( phetGirlNode.height - scoreDisplay.height - buttons.height ) / 2;
+    assert && assert( scoreSpacing > 0, 'phetGirlNode is scaled down too much' );
 
-  const content = new HBox( {
-    align: 'bottom',
-    children: [ phetGirlNode, rightSideNode ],
-    spacing: 52
-  } );
+    const rightSideNode = new VBox( {
+      children: [ scoreDisplay, buttons ],
+      align: 'center',
+      spacing: scoreSpacing
+    } );
 
-  Dialog.call( this, content, options );
+    const content = new HBox( {
+      align: 'bottom',
+      children: [ phetGirlNode, rightSideNode ],
+      spacing: 52
+    } );
+
+    super( content, options );
+  }
 }
 
 vegas.register( 'RewardDialog', RewardDialog );
-
-inherit( Dialog, RewardDialog );
 export default RewardDialog;
