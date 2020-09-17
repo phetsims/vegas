@@ -68,10 +68,10 @@ class RewardNode extends CanvasNode {
     this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
 
     // @private If you pass in a stepEmitter, it will drive the animation
-    this.stepCallback = null;
+    this.stepEmitterListener = null;
     if ( options.stepEmitter ) {
-      this.stepCallback = dt => this.step( dt );
-      options.stepEmitter.addListener( this.stepCallback );
+      this.stepEmitterListener = dt => this.step( dt );
+      options.stepEmitter.addListener( this.stepEmitterListener );
     }
 
     // @private {Node[]}
@@ -123,7 +123,7 @@ class RewardNode extends CanvasNode {
 
     // @private
     this.disposeRewardNode = () => {
-      options.stepEmitter && options.stepEmitter.removeListener( this.stepCallback );
+      options.stepEmitter && options.stepEmitter.removeListener( this.stepEmitterListener );
       this.screenView && this.screenView.transformEmitter.removeListener( this.updateBounds );
       this.initializationVerifier && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializationVerifier );
     };
