@@ -213,7 +213,7 @@ class RewardNode extends CanvasNode {
    *
    * @jonathanolson said: for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on
    * changes to be precise (since you need them anyways to draw).
-   * @public
+   * @private
    */
   initialize() {
     assert && assert( !this.isInitialized, 'already initialized' );
