@@ -96,7 +96,7 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
     baseColor: PhetColorScheme.BUTTON_YELLOW,
     xMargin: 10,
     yMargin: 8,
-    listener: function() {},
+    listener: () => {},
     tandem: options.tandem.createTandem( 'startOverButton' ),
     maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ) // use 20% of available width
   }, options.startOverButtonOptions );
@@ -129,7 +129,7 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
     }, options.levelTextOptions ) );
     leftChildren.push( levelText );
 
-    var levelListener = function( level ) {
+    var levelListener = level => {
       levelText.text = StringUtils.format( labelLevelString, level );
     };
     options.levelProperty.link( levelListener );
@@ -142,7 +142,7 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
     }, options.challengeTextOptions ) );
     leftChildren.push( challengeNumberText );
 
-    var updateChallengeString = function() {
+    var updateChallengeString = () => {
       challengeNumberText.text = StringUtils.format( pattern0Challenge1MaxString,
         options.challengeIndexProperty.get() + 1, options.numberOfChallengesProperty.get() );
     };
@@ -164,7 +164,7 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
     } );
     leftChildren.push( elapsedTimeNode );
 
-    var timerEnabledListener = function( timerEnabled ) {
+    var timerEnabledListener = timerEnabled => {
       elapsedTimeNode.visible = ( options.timerEnabledProperty && timerEnabled );
     };
     options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
@@ -194,7 +194,7 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
   StatusBar.call( this, layoutBounds, visibleBoundsProperty, options );
 
   // @private
-  this.disposeFiniteStatusBar = function() {
+  this.disposeFiniteStatusBar = () => {
 
     scoreDisplay.dispose();
     elapsedTimeNode && elapsedTimeNode.dispose();

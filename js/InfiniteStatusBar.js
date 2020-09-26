@@ -82,7 +82,7 @@ function InfiniteStatusBar( layoutBounds, visibleBoundsProperty, messageNode, sc
   scoreDisplay.boundsProperty.lazyLink( this.updateLayout.bind( this ) );
 
   // @private
-  this.disposeInfiniteStatusBar = function() {
+  this.disposeInfiniteStatusBar = () => {
     scoreDisplay.dispose();
   };
 }
