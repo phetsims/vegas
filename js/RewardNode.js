@@ -242,7 +242,6 @@ class RewardNode extends CanvasNode {
      * but it is one of the things that animates as falling in the RewardNode and its associated data.
      * @private
      */
-    // TODO should we create a separate class for this?  See https://github.com/phetsims/vegas/issues/79.
     this.rewards = this.options.nodes.map( node => {
 
       //find the image wrapper corresponding to the node
