@@ -35,8 +35,6 @@ class RewardNode extends CanvasNode {
    * @param {Object} [options]
    */
   constructor( options ) {
-
-    // @private
     options = merge( {
 
       // Scale things up for rasterization and back down for rendering so they have nice resolution on retina
@@ -63,7 +61,11 @@ class RewardNode extends CanvasNode {
     // @private
     this.options = options;
 
-    // Bounds in which to render the canvas, which represents the full window. See below for how this is computed based
+    // @private - Store each reward, which has an imageWrapper (see above), x, y, speed. It is not an image, it is not
+    // a node, but it is one of the things that animates as falling in the RewardNode and its associated data.
+    this.rewards = null;
+
+    // @private - Bounds in which to render the canvas, which represents the full window. See below for how this is computed based
     // on ScreenView bounds and relative transforms
     this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
 
@@ -215,11 +217,7 @@ class RewardNode extends CanvasNode {
       // Set the initial bounds
       this.updateBounds();
 
-      /*
-       * Store each reward, which has an imageWrapper (see above), x, y, speed. It is not an image, it is not a node,
-       * but it is one of the things that animates as falling in the RewardNode and its associated data.
-       * @private
-       */
+      // Initialize the reward nodes now that we have bounds
       this.rewards = this.options.nodes.map( node => {
 
         //find the image wrapper corresponding to the node
@@ -251,9 +249,10 @@ class RewardNode extends CanvasNode {
    * Selects a random Y value for the image when it is created, or when it goes back to the top of the screen
    * @param {Node} imageWrapper
    * @returns {number}
-   * @public
+   * @private
    */
   sampleImageYValue( imageWrapper ) {
+
     // Start things about 1 second off the top of the screen
     return this.canvasDisplayBounds.top - phet.joist.random.nextDouble() * this.canvasDisplayBounds.height * 2 -
            MAX_SPEED - imageWrapper.height;
