@@ -101,31 +101,23 @@ class RewardNode extends CanvasNode {
       } );
     } );
 
+    // @private these will be set by init
+    this.screenView = null; // {ScreenView}
+    this.updateBounds = null; // {function}
+
     // @private {boolean} Some initialization must occur after this node is attached to the scene graph,
     // see documentation for initialize() method below.
     this.isInitialized = false;
 
-    // @private these will be set by init
-    this.scene = null; // {Node}
-    this.screenView = null; // {ScreenView}
-    this.updateBounds = null; // {function}
-
     // @private {function} For PhET-iO brand only: make sure this Node is initialized when state is being set for PhET-iO
-    this.initializationVerifier = null;
-    if ( Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine ) {
-      this.initializationVerifier = () => {
-        if ( !this.isInitialized ) {
-          this.initialize();
-        }
-      };
-      Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializationVerifier );
-    }
+    this.initializer = () => this.initialize();
+    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializer );
 
     // @private
     this.disposeRewardNode = () => {
       options.stepEmitter && options.stepEmitter.removeListener( this.stepEmitterListener );
       this.screenView && this.screenView.transformEmitter.removeListener( this.updateBounds );
-      this.initializationVerifier && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializationVerifier );
+      Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializer );
     };
   }
 
@@ -187,15 +179,6 @@ class RewardNode extends CanvasNode {
   }
 
   /**
-   * Find the root of the scenegraph.
-   * @returns {Node}
-   * @private
-   */
-  getScene() {
-    return this.getUniqueTrail().nodes[ 0 ];
-  }
-
-  /**
    * Finds the first parent that is a ScreenView so we can listen for its transform, see https://github.com/phetsims/vegas/issues/4
    * @returns {Node}
    * @private
@@ -216,45 +199,44 @@ class RewardNode extends CanvasNode {
    * @private
    */
   initialize() {
-    assert && assert( !this.isInitialized, 'already initialized' );
+    if ( !this.isInitialized && this.getUniqueTrail().nodes[ 0 ] ) {
+      this.screenView = this.getScreenView();
 
-    this.scene = this.getScene();
-    this.screenView = this.getScreenView();
+      // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
+      this.updateBounds = () => {
 
-    // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
-    this.updateBounds = () => {
+        const local = this.globalToLocalBounds( phet.joist.sim.display.bounds );
+        this.setCanvasBounds( local );
 
-      const local = this.globalToLocalBounds( phet.joist.sim.display.bounds );
-      this.setCanvasBounds( local );
-
-      // Also, store the bounds in the options so the debug flag can render the bounds
-      this.canvasDisplayBounds = local;
-    };
-
-    // When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
-    this.screenView.transformEmitter.addListener( this.updateBounds );
-
-    // Set the initial bounds
-    this.updateBounds();
-
-    /*
-     * Store each reward, which has an imageWrapper (see above), x, y, speed. It is not an image, it is not a node,
-     * but it is one of the things that animates as falling in the RewardNode and its associated data.
-     * @private
-     */
-    this.rewards = this.options.nodes.map( node => {
-
-      //find the image wrapper corresponding to the node
-      const imageWrapper = _.find( this.imageWrappers, imageWrapper => imageWrapper.node === node );
-      return {
-        imageWrapper: imageWrapper,
-        x: this.sampleImageXValue( imageWrapper ),
-        y: this.sampleImageYValue( imageWrapper ),
-        speed: ( phet.joist.random.nextDouble() + 1 ) * MAX_SPEED
+        // Also, store the bounds in the options so the debug flag can render the bounds
+        this.canvasDisplayBounds = local;
       };
-    } );
 
-    this.isInitialized = true;
+      // When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
+      this.screenView.transformEmitter.addListener( this.updateBounds );
+
+      // Set the initial bounds
+      this.updateBounds();
+
+      /*
+       * Store each reward, which has an imageWrapper (see above), x, y, speed. It is not an image, it is not a node,
+       * but it is one of the things that animates as falling in the RewardNode and its associated data.
+       * @private
+       */
+      this.rewards = this.options.nodes.map( node => {
+
+        //find the image wrapper corresponding to the node
+        const imageWrapper = _.find( this.imageWrappers, imageWrapper => imageWrapper.node === node );
+        return {
+          imageWrapper: imageWrapper,
+          x: this.sampleImageXValue( imageWrapper ),
+          y: this.sampleImageYValue( imageWrapper ),
+          speed: ( phet.joist.random.nextDouble() + 1 ) * MAX_SPEED
+        };
+      } );
+
+      this.isInitialized = true;
+    }
   }
 
   /**
@@ -286,9 +268,7 @@ class RewardNode extends CanvasNode {
    * @public
    */
   step( dt ) {
-    if ( !this.isInitialized && this.getScene() !== null ) {
-      this.initialize();
-    }
+    this.initialize();
 
     // Update all of the rewards
     const maxY = this.canvasDisplayBounds.height * this.options.scaleForResolution;
