@@ -67,12 +67,9 @@ class RewardNode extends CanvasNode {
     // on ScreenView bounds and relative transforms
     this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
 
-    // @private If you pass in a stepEmitter, it will drive the animation
-    this.stepEmitterListener = null;
-    if ( options.stepEmitter ) {
-      this.stepEmitterListener = dt => this.step( dt );
-      options.stepEmitter.addListener( this.stepEmitterListener );
-    }
+    // @private - If you pass in a stepEmitter, it will drive the animation
+    this.stepEmitterListener = dt => this.step( dt );
+    options.stepEmitter && options.stepEmitter.addListener( this.stepEmitterListener );
 
     // @private {Node[]}
     // Cache each unique node as an image for faster rendering in canvas.  Use an intermediate imageWrapper since the
