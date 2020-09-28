@@ -201,7 +201,7 @@ class RewardNode extends CanvasNode {
    * @private
    */
   getScreenView() {
-    return this.getUniqueTrail( function( node ) { return node instanceof ScreenView; } ).rootNode();
+    return this.getUniqueTrail( node => node instanceof ScreenView ).rootNode();
   }
 
   /**
@@ -253,7 +253,7 @@ class RewardNode extends CanvasNode {
       ( node => {
 
         //find the image wrapper corresponding to the node
-        const imageWrapper = _.find( self.imageWrappers, function( imageWrapper ) {return imageWrapper.node === node;} );
+        const imageWrapper = _.find( self.imageWrappers, imageWrapper => imageWrapper.node === node );
         self.rewards.push( {
           imageWrapper: imageWrapper,
           x: self.sampleImageXValue( imageWrapper ),
