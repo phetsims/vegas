@@ -244,7 +244,6 @@ class RewardNode extends CanvasNode {
      */
     // TODO should we create a separate class for this?  See https://github.com/phetsims/vegas/issues/79.
     this.rewards = [];
-    const self = this;
     for ( let i = 0; i < this.options.nodes.length; i++ ) {
 
       const node = this.options.nodes[ i ];
@@ -253,11 +252,11 @@ class RewardNode extends CanvasNode {
       ( node => {
 
         //find the image wrapper corresponding to the node
-        const imageWrapper = _.find( self.imageWrappers, imageWrapper => imageWrapper.node === node );
-        self.rewards.push( {
+        const imageWrapper = _.find( this.imageWrappers, imageWrapper => imageWrapper.node === node );
+        this.rewards.push( {
           imageWrapper: imageWrapper,
-          x: self.sampleImageXValue( imageWrapper ),
-          y: self.sampleImageYValue( imageWrapper ),
+          x: this.sampleImageXValue( imageWrapper ),
+          y: this.sampleImageYValue( imageWrapper ),
           speed: ( phet.joist.random.nextDouble() + 1 ) * MAX_SPEED
         } );
       } )( node );
