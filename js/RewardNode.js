@@ -12,7 +12,7 @@
  *
  * For details about the development of the RewardNode, please see https://github.com/phetsims/vegas/issues/4
  *
- * @author Sam Reid
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import Bounds2 from '../../dot/js/Bounds2.js';
