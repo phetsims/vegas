@@ -147,7 +147,7 @@ class RewardNode extends CanvasNode {
   /**
    * Paint the rewards on the canvas
    * @param {CanvasRenderingContext2D} context
-   * @protected
+   * @private
    */
   paintCanvas( context ) {
 
