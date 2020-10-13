@@ -1,8 +1,7 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
-//TODO https://github.com/phetsims/tasks/issues/1044 converting to ES6 is problematic because super constructor calls updateLayoutProtected
 /**
- * Status bar for games with levels that have an infinite (open-ended) number of challenges per level.
+ * InfiniteStatusBar is the status bar for games that have an infinite (open-ended) number of challenges per level.
  * See specification in https://github.com/phetsims/vegas/issues/59.
  *
  * @author Andrea Lin
@@ -56,8 +55,8 @@ function InfiniteStatusBar( layoutBounds, visibleBoundsProperty, messageNode, sc
     yMargin: 10
   } );
 
-  // @private Nodes on the left end of the bar
-  this.leftNodes = new HBox( {
+  // Nodes on the left end of the bar
+  const leftNodes = new HBox( {
     spacing: options.spacing,
     align: 'center',
     children: [ backButton, messageNode ],
@@ -67,19 +66,26 @@ function InfiniteStatusBar( layoutBounds, visibleBoundsProperty, messageNode, sc
   const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty,
     merge( { maxWidth: 0.2 * layoutBounds.width }, options.scoreDisplayOptions ) );
 
-  // Wrap scoreDisplay, since we are listening for bounds changes to reposition it.
-  this.scoreDisplayParent = new Node( { children: [ scoreDisplay ] } );
-
   assert && assert( !options.children, 'InfiniteStatusBar sets children' );
-  options.children = [ this.leftNodes, this.scoreDisplayParent ];
+  options.children = [ leftNodes, scoreDisplay ];
 
-  assert && assert( !options.barHeight, 'InfiniteStatusBar sets barHeight' );
-  options.barHeight = Math.max( this.leftNodes.height, this.scoreDisplayParent.height ) + ( 2 * options.yMargin );
+  assert && assert( options.barHeight === undefined, 'InfiniteStatusBar sets barHeight' );
+  options.barHeight = Math.max( leftNodes.height, scoreDisplay.height ) + ( 2 * options.yMargin );
 
   StatusBar.call( this, layoutBounds, visibleBoundsProperty, options );
 
-  // When the score display's bounds change, update the layout.
-  scoreDisplay.boundsProperty.lazyLink( this.updateLayout.bind( this ) );
+  // Position components on the bar.
+  this.positioningBoundsProperty.link( positioningBounds => {
+    leftNodes.left = positioningBounds.left;
+    leftNodes.centerY = positioningBounds.centerY;
+    scoreDisplay.right = positioningBounds.right;
+    scoreDisplay.centerY = positioningBounds.centerY;
+  } );
+
+  // Keep the score right justified.
+  scoreDisplay.localBoundsProperty.link( () => {
+    scoreDisplay.right = this.positioningBoundsProperty.value.right;
+  } );
 
   // @private
   this.disposeInfiniteStatusBar = () => {
@@ -97,26 +103,7 @@ inherit( StatusBar, InfiniteStatusBar, {
    */
   dispose: function() {
     this.disposeInfiniteStatusBar();
-    StatusBar.prototype.dispose.call( this );
-  },
-
-  /**
-   * Handles layout when the bar changes.
-   * @param {number} leftEdge - the bar's left edge, compensated for xMargin
-   * @param {number} rightEdge - the bar's right edge, compensated for xMargin
-   * @param {number} centerY - the bar's vertical center
-   * @protected
-   * @override
-   */
-  updateLayoutProtected: function( leftEdge, rightEdge, centerY ) {
-
-    // stuff on left end of bar
-    this.leftNodes.left = leftEdge;
-    this.leftNodes.centerY = centerY;
-
-    // Score display on the right end
-    this.scoreDisplayParent.right = rightEdge;
-    this.scoreDisplayParent.centerY = centerY;
+    Node.prototype.dispose.call( this );
   }
 } );
 

@@ -1,10 +1,8 @@
 // Copyright 2013-2020, University of Colorado Boulder
 
-//TODO https://github.com/phetsims/tasks/issues/1044 converting to ES6 is problematic because super constructor calls updateLayoutProtected
 /**
- * Status bar for games that have a finite number of challenges per level.
- * This was adapted from and replaces ScoreboardBar.
- * See https://github.com/phetsims/vegas/issues/66.
+ * FiniteStatusBar is the status bar for games that have a finite number of challenges per level.
+ * This was adapted from and replaces ScoreboardBar. See https://github.com/phetsims/vegas/issues/66.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,6 +12,8 @@ import merge from '../../phet-core/js/merge.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import HBox from '../../scenery/js/nodes/HBox.js';
+import Node from '../../scenery/js/nodes/Node.js';
+import Rectangle from '../../scenery/js/nodes/Rectangle.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import TextPushButton from '../../sun/js/buttons/TextPushButton.js';
 import Tandem from '../../tandem/js/Tandem.js';
@@ -21,8 +21,8 @@ import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayLabeledStars from './ScoreDisplayLabeledStars.js';
 import StatusBar from './StatusBar.js';
-import vegasStrings from './vegasStrings.js';
 import vegas from './vegas.js';
+import vegasStrings from './vegasStrings.js';
 
 const labelLevelString = vegasStrings.label.level;
 const pattern0Challenge1MaxString = vegasStrings.pattern[ '0challenge' ][ '1max' ];
@@ -119,6 +119,12 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
     font: options.font
   }, options.challengeTextOptions );
 
+  // the rectangular bar, size will be set by visibleBoundsListener
+  const barNode = new Rectangle( {
+    fill: options.barFill,
+    stroke: options.barStroke
+  } );
+
   // Nodes on the left end of the bar
   const leftChildren = [];
 
@@ -170,11 +176,11 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
     options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
   }
 
-  // @private Start Over button
-  this.startOverButton = new TextPushButton( options.startOverButtonText, options.startOverButtonOptions );
+  // Start Over button
+  const startOverButton = new TextPushButton( options.startOverButtonText, options.startOverButtonOptions );
 
-  // @private Nodes on the left end of the bar
-  this.leftNodes = new HBox( {
+  // Nodes on the left end of the bar
+  const leftNodes = new HBox( {
 
     // Because elapsedTimeNode needs to be considered regardless of whether it's visible,
     // see https://github.com/phetsims/vegas/issues/80
@@ -182,16 +188,24 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
     resize: false,
     spacing: options.xSpacing,
     children: leftChildren,
-    maxWidth: ( layoutBounds.width - ( 2 * options.xMargin ) - this.startOverButton.width - options.xSpacing )
+    maxWidth: ( layoutBounds.width - ( 2 * options.xMargin ) - startOverButton.width - options.xSpacing )
   } );
 
   assert && assert( !options.children, 'FiniteStatusBar sets children' );
-  options.children = [ this.leftNodes, this.startOverButton ];
+  options.children = [ barNode, leftNodes, startOverButton ];
 
-  assert && assert( !options.barHeight, 'FiniteStatusBar sets barHeight' );
-  options.barHeight = Math.max( this.leftNodes.height, this.startOverButton.height ) + ( 2 * options.yMargin );
+  assert && assert( options.barHeight === undefined, 'InfiniteStatusBar sets barHeight' );
+  options.barHeight = Math.max( leftNodes.height, scoreDisplay.height ) + ( 2 * options.yMargin );
 
   StatusBar.call( this, layoutBounds, visibleBoundsProperty, options );
+
+  // Position components on the bar.
+  this.positioningBoundsProperty.link( positioningBounds => {
+    leftNodes.left = positioningBounds.left;
+    leftNodes.centerY = positioningBounds.centerY;
+    startOverButton.right = positioningBounds.right;
+    startOverButton.centerY = positioningBounds.centerY;
+  } );
 
   // @private
   this.disposeFiniteStatusBar = () => {
@@ -219,7 +233,7 @@ function FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, op
 
 vegas.register( 'FiniteStatusBar', FiniteStatusBar );
 
-inherit( StatusBar, FiniteStatusBar, {
+inherit( Node, FiniteStatusBar, {
 
   /**
    * @public
@@ -227,26 +241,7 @@ inherit( StatusBar, FiniteStatusBar, {
    */
   dispose: function() {
     this.disposeFiniteStatusBar();
-    StatusBar.prototype.dispose.call( this );
-  },
-
-  /**
-   * Handles layout when the bar changes.
-   * @param {number} leftEdge - the bar's left edge, compensated for xMargin
-   * @param {number} rightEdge - the bar's right edge, compensated for xMargin
-   * @param {number} centerY - the bar's vertical center
-   * @protected
-   * @override
-   */
-  updateLayoutProtected: function( leftEdge, rightEdge, centerY ) {
-
-    // stuff on left end of bar
-    this.leftNodes.left = leftEdge;
-    this.leftNodes.centerY = centerY;
-
-    // start over button on right end of bar
-    this.startOverButton.right = rightEdge;
-    this.startOverButton.centerY = centerY;
+    Node.prototype.dispose.call( this );
   }
 } );
 
