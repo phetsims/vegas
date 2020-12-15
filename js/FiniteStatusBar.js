@@ -74,6 +74,9 @@ class FiniteStatusBar extends StatusBar {
       levelTextOptions: null, // passed to the "Level N" text
       challengeTextOptions: null, // passed to the "Challenge N of M" text
 
+      barFill: null,
+      barStroke: null,
+
       // phet-io
       tandem: Tandem.REQUIRED
     }, options );
