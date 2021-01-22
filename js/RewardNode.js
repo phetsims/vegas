@@ -16,6 +16,7 @@
  */
 
 import Bounds2 from '../../dot/js/Bounds2.js';
+import dotRandom from '../../dot/js/dotRandom.js';
 import ScreenView from '../../joist/js/ScreenView.js';
 import merge from '../../phet-core/js/merge.js';
 import FaceNode from '../../scenery-phet/js/FaceNode.js';
@@ -226,7 +227,7 @@ class RewardNode extends CanvasNode {
           imageWrapper: imageWrapper,
           x: this.sampleImageXValue( imageWrapper ),
           y: this.sampleImageYValue( imageWrapper ),
-          speed: ( phet.joist.random.nextDouble() + 1 ) * MAX_SPEED
+          speed: ( dotRandom.nextDouble() + 1 ) * MAX_SPEED
         };
       } );
 
@@ -241,7 +242,7 @@ class RewardNode extends CanvasNode {
    * @private
    */
   sampleImageXValue( imageWrapper ) {
-    return ( phet.joist.random.nextDouble() * this.canvasDisplayBounds.width + this.canvasDisplayBounds.left ) *
+    return ( dotRandom.nextDouble() * this.canvasDisplayBounds.width + this.canvasDisplayBounds.left ) *
            this.options.scaleForResolution - imageWrapper.width / 2;
   }
 
@@ -254,7 +255,7 @@ class RewardNode extends CanvasNode {
   sampleImageYValue( imageWrapper ) {
 
     // Start things about 1 second off the top of the screen
-    return this.canvasDisplayBounds.top - phet.joist.random.nextDouble() * this.canvasDisplayBounds.height * 2 -
+    return this.canvasDisplayBounds.top - dotRandom.nextDouble() * this.canvasDisplayBounds.height * 2 -
            MAX_SPEED - imageWrapper.height;
   }
 
