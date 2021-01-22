@@ -204,7 +204,7 @@ class RewardNode extends CanvasNode {
       // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
       this.updateBounds = () => {
 
-        const local = this.globalToLocalBounds( phet.joist.sim.display.bounds );
+        const local = this.globalToLocalBounds( phet.joist.display.bounds );
         this.setCanvasBounds( local );
 
         // Also, store the bounds in the options so the debug flag can render the bounds
