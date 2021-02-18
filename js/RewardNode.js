@@ -18,9 +18,11 @@
 import Bounds2 from '../../dot/js/Bounds2.js';
 import dotRandom from '../../dot/js/dotRandom.js';
 import ScreenView from '../../joist/js/ScreenView.js';
+import getGlobal from '../../phet-core/js/getGlobal.js';
 import merge from '../../phet-core/js/merge.js';
 import FaceNode from '../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
+import Display from '../../scenery/js/display/Display.js';
 import CanvasNode from '../../scenery/js/nodes/CanvasNode.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Tandem from '../../tandem/js/Tandem.js';
@@ -197,15 +199,24 @@ class RewardNode extends CanvasNode {
    * @jonathanolson said: for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on
    * changes to be precise (since you need them anyways to draw).
    * @private
+   *
+   * @param {Object} [options]
    */
-  initialize() {
+  initialize( options ) {
+
+    options = merge( {
+      display: getGlobal( 'phet.joist.display' )
+    }, options );
+
+    assert && assert( options.display instanceof Display, 'display must be provided' );
+
     if ( !this.isInitialized && this.getUniqueTrail().nodes[ 0 ] ) {
       this.screenView = this.getScreenView();
 
       // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
       this.updateBounds = () => {
 
-        const local = this.globalToLocalBounds( phet.joist.display.bounds );
+        const local = this.globalToLocalBounds( options.display.bounds );
         this.setCanvasBounds( local );
 
         // Also, store the bounds in the options so the debug flag can render the bounds
