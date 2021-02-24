@@ -38,7 +38,7 @@ class LevelSelectionButton extends RectangularPushButton {
   /**
    * @param {Node} icon - appears on the button above the score display, scaled to fit
    * @param {Property.<number>} scoreProperty
-   * @param {Object} [options] - NOT propagated to super!
+   * @param {Object} [options]
    */
   constructor( icon, scoreProperty, options ) {
 
@@ -46,15 +46,15 @@ class LevelSelectionButton extends RectangularPushButton {
 
     options = merge( {
 
-      listener: null, // {function}
-
-      // button size and appearance
-      buttonWidth: 150,
-      buttonHeight: 150,
+      // RectangularPushButton options
       cornerRadius: 10,
       baseColor: 'rgb( 242, 255, 204 )',
-      buttonXMargin: 10,
-      buttonYMargin: 10,
+      xMargin: 10,
+      yMargin: 10,
+
+      // Used to size the content
+      buttonWidth: 150,
+      buttonHeight: 150,
 
       // score display
       scoreDisplayConstructor: ScoreDisplayStars,
@@ -81,7 +81,7 @@ class LevelSelectionButton extends RectangularPushButton {
       'scoreDisplayProportion value out of range'
     );
 
-    const maxContentWidth = options.buttonWidth - 2 * options.buttonXMargin;
+    const maxContentWidth = options.buttonWidth - 2 * options.xMargin;
 
     const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
 
@@ -99,7 +99,7 @@ class LevelSelectionButton extends RectangularPushButton {
     scoreDisplay.maxHeight = scoreDisplayBackground.height - ( 2 * options.scoreDisplayMinYMargin );
 
     // Icon, scaled and padded to fit and to make the button size correct.
-    const iconHeight = options.buttonHeight - scoreDisplayBackground.height - 2 * options.buttonYMargin - options.iconToScoreDisplayYSpace;
+    const iconHeight = options.buttonHeight - scoreDisplayBackground.height - 2 * options.yMargin - options.iconToScoreDisplayYSpace;
     const iconSize = new Dimension2( maxContentWidth, iconHeight );
     const adjustedIcon = LevelSelectionButton.createSizedImageNode( icon, iconSize );
     adjustedIcon.centerX = scoreDisplayBackground.centerX;
@@ -112,14 +112,12 @@ class LevelSelectionButton extends RectangularPushButton {
     scoreDisplay.boundsProperty.lazyLink( scoreDisplayUpdateLayout );
     scoreDisplayUpdateLayout();
 
-    super( {
-      content: new Node( { children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ] } ),
-      xMargin: options.buttonXMargin,
-      yMargin: options.buttonYMargin,
-      baseColor: options.baseColor,
-      cornerRadius: options.cornerRadius,
-      listener: options.listener
+    assert && assert( !options.content, 'LevelSelectionButton sets content' );
+    options.content = new Node( {
+      children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ]
     } );
+
+    super( options );
 
     // Best time decoration (optional), centered below the button, does not move when button is pressed
     if ( options.bestTimeProperty ) {
