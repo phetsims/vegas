@@ -29,7 +29,8 @@ import vegas from './vegas.js';
 // constants
 const SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
 const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
-  // all constructors must have the same signature!
+
+  // All constructors must have the same signature!
   ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars, ScoreDisplayStars, ScoreDisplayNumberAndStar
 ];
 
@@ -106,7 +107,7 @@ class LevelSelectionButton extends RectangularPushButton {
     adjustedIcon.bottom = scoreDisplayBackground.top - options.iconToScoreDisplayYSpace;
 
     // Keep scoreDisplay centered in its background when its bounds change
-    const scoreDisplayUpdateLayout = function() {
+    const scoreDisplayUpdateLayout = () => {
       scoreDisplay.center = scoreDisplayBackground.center;
     };
     scoreDisplay.boundsProperty.lazyLink( scoreDisplayUpdateLayout );
@@ -118,6 +119,10 @@ class LevelSelectionButton extends RectangularPushButton {
     } );
 
     super( options );
+
+    // Variables that are set if options.bestTimeProperty is specified.
+    let bestTimeListener = null;
+    let bestTimeVisibleListener = null;
 
     // Best time decoration (optional), centered below the button, does not move when button is pressed
     if ( options.bestTimeProperty ) {
@@ -131,14 +136,14 @@ class LevelSelectionButton extends RectangularPushButton {
       bestTimeNode.top = this.bottom + options.bestTimeYSpacing;
       this.addChild( bestTimeNode );
 
-      var bestTimeListener = function( bestTime ) {
+      bestTimeListener = bestTime => {
         bestTimeNode.text = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
         bestTimeNode.centerX = centerX;
       };
       options.bestTimeProperty.link( bestTimeListener );
 
       if ( options.bestTimeVisibleProperty ) {
-        var bestTimeVisibleListener = function( visible ) {
+        bestTimeVisibleListener = visible => {
           bestTimeNode.visible = visible;
         };
         options.bestTimeVisibleProperty.link( bestTimeVisibleListener );
@@ -146,7 +151,7 @@ class LevelSelectionButton extends RectangularPushButton {
     }
 
     // @private
-    this.disposeLevelSelectionButton = function() {
+    this.disposeLevelSelectionButton = () => {
 
       scoreDisplay.dispose();
 
@@ -173,6 +178,7 @@ class LevelSelectionButton extends RectangularPushButton {
     icon.scale( Math.min( size.width / icon.bounds.width, size.height / icon.bounds.height ) );
     if ( Math.abs( icon.bounds.width - size.width ) < SCALING_TOLERANCE &&
          Math.abs( icon.bounds.height - size.height ) < SCALING_TOLERANCE ) {
+
       // The aspect ratio of the icon matched that of the specified size, so no padding is necessary.
       return icon;
     }
