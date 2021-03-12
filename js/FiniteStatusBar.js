@@ -134,7 +134,7 @@ class FiniteStatusBar extends StatusBar {
       }, options.levelTextOptions ) );
       leftChildren.push( levelText );
 
-      var levelListener = level => {
+      var levelListener = level => { // eslint-disable-line no-var
         levelText.text = StringUtils.format( vegasStrings.label.level, level );
       };
       options.levelProperty.link( levelListener );
@@ -148,7 +148,7 @@ class FiniteStatusBar extends StatusBar {
       }, options.challengeTextOptions ) );
       leftChildren.push( challengeNumberText );
 
-      var updateChallengeString = () => {
+      var updateChallengeString = () => { // eslint-disable-line no-var
         challengeNumberText.text = StringUtils.format( vegasStrings.pattern[ '0challenge' ][ '1max' ],
           options.challengeIndexProperty.get() + 1, options.numberOfChallengesProperty.get() );
       };
@@ -163,14 +163,14 @@ class FiniteStatusBar extends StatusBar {
     // Timer
     if ( options.elapsedTimeProperty && options.timerEnabledProperty ) {
 
-      var elapsedTimeNode = new ElapsedTimeNode( options.elapsedTimeProperty, {
+      var elapsedTimeNode = new ElapsedTimeNode( options.elapsedTimeProperty, { // eslint-disable-line no-var
         clockRadius: options.clockRadius,
         font: options.font,
         textFill: options.textFill
       } );
       leftChildren.push( elapsedTimeNode );
 
-      var timerEnabledListener = timerEnabled => {
+      var timerEnabledListener = timerEnabled => { // eslint-disable-line no-var
         elapsedTimeNode.visible = ( options.timerEnabledProperty && timerEnabled );
       };
       options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );

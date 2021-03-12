@@ -28,7 +28,7 @@ class RewardScreenView extends ScreenView {
     const rewardDialogButton = new RectangularPushButton( {
       content: new Text( 'open RewardDialog', { font: new PhetFont( 20 ) } ),
       listener: function() {
-        var rewardDialog = new RewardDialog( 10, {
+        const rewardDialog = new RewardDialog( 10, {
           keepGoingButtonListener: () => {
             console.log( 'Keep Going button' );
             rewardDialog.dispose();

@@ -53,7 +53,7 @@ class ScoreDisplayStars extends HBox {
       const proportion = score / perfectScore;
       const numFilledStars = Math.floor( proportion * numberOfStars );
 
-      for ( var i = 0; i < numFilledStars; i++ ) {
+      for ( let i = 0; i < numFilledStars; i++ ) {
         children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
       }
 
@@ -63,7 +63,7 @@ class ScoreDisplayStars extends HBox {
       }
 
       const numEmptyStars = numberOfStars - children.length;
-      for ( i = 0; i < numEmptyStars; i++ ) {
+      for ( let i = 0; i < numEmptyStars; i++ ) {
         children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
       }
 
