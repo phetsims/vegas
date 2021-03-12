@@ -46,7 +46,7 @@ class ScoreDisplayStars extends HBox {
     assert && assert( !options.children, 'ScoreDisplayStars sets children' );
     const scorePropertyListener = score => {
 
-      assert && assert( score <= perfectScore, 'Score ' + score + ' exceeds perfect score ' + perfectScore );
+      assert && assert( score <= perfectScore, `Score ${score} exceeds perfect score ${perfectScore}` );
 
       const children = [];
 

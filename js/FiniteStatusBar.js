@@ -100,7 +100,7 @@ class FiniteStatusBar extends StatusBar {
     }, options.startOverButtonOptions );
 
     assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
-      'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
+      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` ) );
     assert && assert( ( options.challengeIndexProperty && options.numberOfChallengesProperty ) ||
                       ( !options.challengeIndexProperty && !options.numberOfChallengesProperty ),
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );

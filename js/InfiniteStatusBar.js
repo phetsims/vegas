@@ -45,7 +45,7 @@ class InfiniteStatusBar extends StatusBar {
     }, options );
 
     assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
-      'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
+      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` ) );
 
     // button that typically takes us back to the level-selection UI
     const backButton = new BackButton( {

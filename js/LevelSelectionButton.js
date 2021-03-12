@@ -77,7 +77,7 @@ class LevelSelectionButton extends RectangularPushButton {
     }, options );
 
     assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
-      'invalid scoreDisplayConstructor: ' + options.scoreDisplayConstructor ) );
+      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` ) );
     assert && assert( options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
       'scoreDisplayProportion value out of range'
     );

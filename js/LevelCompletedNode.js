@@ -114,11 +114,11 @@ class LevelCompletedNode extends Panel {
         maxWidth: options.contentMaxWidth
       } );
       if ( isNewBestTime ) {
-        timeRichText.text = timeRichText.text + '<br>' + vegasStrings.yourNewBest;
+        timeRichText.text = `${timeRichText.text}<br>${vegasStrings.yourNewBest}`;
       }
       else if ( bestTimeAtThisLevel !== null ) {
-        timeRichText.text = timeRichText.text + '<br>' +
-                            StringUtils.format( vegasStrings.pattern[ '0yourBest' ], GameTimer.formatTime( bestTimeAtThisLevel ) );
+        timeRichText.text = `${timeRichText.text}<br>${
+                            StringUtils.format( vegasStrings.pattern[ '0yourBest' ], GameTimer.formatTime( bestTimeAtThisLevel ) )}`;
       }
       children.push( timeRichText );
     }

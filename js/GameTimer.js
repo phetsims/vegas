@@ -78,8 +78,8 @@ class GameTimer {
     const minutes = Math.floor( ( time - ( hours * 3600 ) ) / 60 );
     const seconds = Math.floor( time - ( hours * 3600 ) - ( minutes * 60 ) );
 
-    const minutesString = ( minutes > 9 || hours === 0 ) ? minutes : ( '0' + minutes );
-    const secondsString = ( seconds > 9 ) ? seconds : ( '0' + seconds );
+    const minutesString = ( minutes > 9 || hours === 0 ) ? minutes : ( `0${minutes}` );
+    const secondsString = ( seconds > 9 ) ? seconds : ( `0${seconds}` );
 
     if ( hours > 0 ) {
       return StringUtils.format( vegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2seconds' ], hours, minutesString, secondsString );
