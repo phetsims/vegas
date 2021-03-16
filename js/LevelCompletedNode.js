@@ -118,7 +118,7 @@ class LevelCompletedNode extends Panel {
       }
       else if ( bestTimeAtThisLevel !== null ) {
         timeRichText.text = `${timeRichText.text}<br>${
-                            StringUtils.format( vegasStrings.pattern[ '0yourBest' ], GameTimer.formatTime( bestTimeAtThisLevel ) )}`;
+          StringUtils.format( vegasStrings.pattern[ '0yourBest' ], GameTimer.formatTime( bestTimeAtThisLevel ) )}`;
       }
       children.push( timeRichText );
     }
