@@ -127,6 +127,7 @@ class FiniteStatusBar extends StatusBar {
     const leftChildren = [];
 
     // Level N
+    let levelListener;
     if ( options.levelProperty && options.levelVisible ) {
 
       const levelText = new Text( '', merge( {
@@ -134,13 +135,14 @@ class FiniteStatusBar extends StatusBar {
       }, options.levelTextOptions ) );
       leftChildren.push( levelText );
 
-      var levelListener = level => { // eslint-disable-line no-var
+      levelListener = level => {
         levelText.text = StringUtils.format( vegasStrings.label.level, level );
       };
       options.levelProperty.link( levelListener );
     }
 
     // Challenge N of M
+    let updateChallengeString;
     if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
 
       const challengeNumberText = new Text( '', merge( {
@@ -148,7 +150,7 @@ class FiniteStatusBar extends StatusBar {
       }, options.challengeTextOptions ) );
       leftChildren.push( challengeNumberText );
 
-      var updateChallengeString = () => { // eslint-disable-line no-var
+      updateChallengeString = () => {
         challengeNumberText.text = StringUtils.format( vegasStrings.pattern[ '0challenge' ][ '1max' ],
           options.challengeIndexProperty.get() + 1, options.numberOfChallengesProperty.get() );
       };
@@ -161,16 +163,18 @@ class FiniteStatusBar extends StatusBar {
     leftChildren.push( scoreDisplay );
 
     // Timer
+    let elapsedTimeNode;
+    let timerEnabledListener;
     if ( options.elapsedTimeProperty && options.timerEnabledProperty ) {
 
-      var elapsedTimeNode = new ElapsedTimeNode( options.elapsedTimeProperty, { // eslint-disable-line no-var
+      elapsedTimeNode = new ElapsedTimeNode( options.elapsedTimeProperty, {
         clockRadius: options.clockRadius,
         font: options.font,
         textFill: options.textFill
       } );
       leftChildren.push( elapsedTimeNode );
 
-      var timerEnabledListener = timerEnabled => { // eslint-disable-line no-var
+      timerEnabledListener = timerEnabled => {
         elapsedTimeNode.visible = ( options.timerEnabledProperty && timerEnabled );
       };
       options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
