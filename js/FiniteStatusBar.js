@@ -1,4 +1,4 @@
-// Copyright 2013-2020, University of Colorado Boulder
+// Copyright 2013-2021, University of Colorado Boulder
 
 /**
  * FiniteStatusBar is the status bar for games that have a finite number of challenges per level.

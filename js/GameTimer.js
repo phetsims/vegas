@@ -1,4 +1,4 @@
-// Copyright 2013-2020, University of Colorado Boulder
+// Copyright 2013-2021, University of Colorado Boulder
 
 /**
  * Game timer, keeps track of the elapsed time in the game using "wall clock" time. The frame rate of this clock is
