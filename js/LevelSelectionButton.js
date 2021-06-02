@@ -18,7 +18,13 @@ import Node from '../../scenery/js/nodes/Node.js';
 import Rectangle from '../../scenery/js/nodes/Rectangle.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
+import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../tambo/js/soundManager.js';
 import Tandem from '../../tandem/js/Tandem.js';
+import gameButtonSound001 from '../sounds/game-button-001_mp3.js';
+import gameButtonSound002 from '../sounds/game-button-002_mp3.js';
+import gameButtonSound003 from '../sounds/game-button-003_mp3.js';
+import gameButtonSound004 from '../sounds/game-button-004_mp3.js';
 import GameTimer from './GameTimer.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayLabeledStars from './ScoreDisplayLabeledStars.js';
@@ -33,6 +39,7 @@ const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
   // All constructors must have the same signature!
   ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars, ScoreDisplayStars, ScoreDisplayNumberAndStar
 ];
+const SOUNDS = [ gameButtonSound001, gameButtonSound002, gameButtonSound003, gameButtonSound004 ];
 
 class LevelSelectionButton extends RectangularPushButton {
 
@@ -72,14 +79,23 @@ class LevelSelectionButton extends RectangularPushButton {
       bestTimeFont: new PhetFont( 24 ),
       bestTimeYSpacing: 10,  // vertical space between drop shadow and best time
 
+      // sound generation
+      soundPlayer: null, // will be created if null using the index
+      soundPlayerIndex: 0, // a value that is used to configure the sound player, ignored if a sound player is specified
+
       // Tandem
       tandem: Tandem.REQUIRED
     }, options );
 
     assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
       `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` ) );
-    assert && assert( options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
+    assert && assert(
+    options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
       'scoreDisplayProportion value out of range'
+    );
+    assert && assert(
+      options.soundPlayer === null || options.soundPlayerIndex === 0,
+      'a sound player and an index should not both be specified'
     );
 
     const maxContentWidth = options.buttonWidth - 2 * options.xMargin;
@@ -117,6 +133,24 @@ class LevelSelectionButton extends RectangularPushButton {
     options.content = new Node( {
       children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ]
     } );
+
+    // sound generation
+    // TODO: This code is temporary while we experiment with some sound options, see https://github.com/phetsims/vegas/issues/89
+    if ( !options.soundPlayer ) {
+      const soundClips = [];
+      SOUNDS.forEach( sound => {
+        const soundClip = new SoundClip( sound, { rateChangesAffectPlayingSounds: false } );
+        soundManager.addSoundGenerator( soundClip );
+        soundClips.push( soundClip );
+      } );
+      options.soundPlayer = {
+        play() {
+          const soundClip = soundClips[ phet.vegas.soundIndexForLevelSelectionButtonsProperty.value ];
+          soundClip.setPlaybackRate( Math.pow( Math.pow( 2, 1 / 12 ), options.soundPlayerIndex ), 0 );
+          soundClip.play();
+        }
+      };
+    }
 
     super( options );
 

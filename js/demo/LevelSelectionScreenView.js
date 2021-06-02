@@ -75,19 +75,22 @@ class LevelSelectionScreenView extends ScreenView {
         numberOfStars: NUM_STARS,
         perfectScore: SCORE_RANGE.max
       },
-      listener: () => console.log( 'level start' )
+      listener: () => console.log( 'level start' ),
+      soundPlayerIndex: 1
     } );
 
     const buttonWithNumberAndStar = new LevelSelectionButton( buttonIcon, scoreProperty, {
       scoreDisplayConstructor: ScoreDisplayNumberAndStar,
-      listener: () => console.log( 'level start' )
+      listener: () => console.log( 'level start' ),
+      soundPlayerIndex: 2
     } );
 
     const buttonWithTextAndNumber = new LevelSelectionButton( buttonIcon, scoreProperty, {
       scoreDisplayConstructor: ScoreDisplayLabeledNumber,
       listener: () => console.log( 'level start' ),
       bestTimeProperty: bestTimeProperty,
-      bestTimeVisibleProperty: bestTimeVisibleProperty
+      bestTimeVisibleProperty: bestTimeVisibleProperty,
+      soundPlayerIndex: 3
     } );
 
     const levelSelectionButtons = new HBox( {
