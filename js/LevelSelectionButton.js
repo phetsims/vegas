@@ -145,7 +145,13 @@ class LevelSelectionButton extends RectangularPushButton {
       } );
       options.soundPlayer = {
         play() {
-          const soundClip = soundClips[ phet.vegas.soundIndexForLevelSelectionButtonsProperty.value ];
+
+          let soundIndex = 0;
+          if ( phet && phet.vegas && phet.vegas.soundIndexForLevelSelectionButtonsProperty ) {
+            soundIndex = phet.vegas.soundIndexForLevelSelectionButtonsProperty.value;
+          }
+
+          const soundClip = soundClips[ soundIndex ];
           soundClip.setPlaybackRate( Math.pow( Math.pow( 2, 1 / 12 ), options.soundPlayerIndex ), 0 );
           soundClip.play();
         }
