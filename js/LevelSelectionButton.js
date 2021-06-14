@@ -80,10 +80,17 @@ class LevelSelectionButton extends RectangularPushButton {
       bestTimeYSpacing: 10,  // vertical space between drop shadow and best time
 
       // sound generation
-      soundPlayer: null, // will be created if null using the index
-      soundPlayerIndex: 0, // a value that is used to configure the sound player, ignored if a sound player is specified
 
-      // Tandem
+      // {number} - A value that is used to configure the default sound player.  This is used to alter the sound when
+      // the button is in a group, which it usually is.  Note that this assumes zero-based indexing, which is often not
+      // the norm for the game levels.  This is ignored if a custom sound player is defined.
+      soundPlayerIndex: 0,
+
+      // {Playable} - Sound player for this button.  If null, a default will be created.  Use Playable.NO_SOUND to
+      // turn off sound generation.
+      soundPlayer: null,
+
+      // phet-io
       tandem: Tandem.REQUIRED
     }, options );
 
