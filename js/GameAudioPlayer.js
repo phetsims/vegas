@@ -90,7 +90,7 @@ class GameAudioPlayer {
   }
 
   /**
-   * play the sound that indicates that the user finished the game and got a perfact score
+   * play the sound that indicates that the user finished the game and got a perfect score
    * @public
    */
   gameOverPerfectScore() {
