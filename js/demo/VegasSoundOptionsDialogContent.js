@@ -31,7 +31,7 @@ class VegasSoundOptionsDialogContent extends VBox {
     const backButtonSoundSelector = new HBox( {
       children: [
         new Text( 'Back button sound: ', TEXT_OPTIONS ),
-        new NumberPicker( phet.vegas.soundIndexForBackButtonProperty, new Property( new Range( 0, 2 ) ) )
+        new NumberPicker( phet.vegas.soundIndexForBackButtonProperty, new Property( new Range( 0, 6 ) ) )
       ],
       spacing: 5
     } );
