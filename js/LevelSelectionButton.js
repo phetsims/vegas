@@ -142,7 +142,7 @@ class LevelSelectionButton extends RectangularPushButton {
     if ( !options.soundPlayer ) {
       assert && assert( options.soundPlayerIndex >= 0, 'invalid value for soundPlayerIndex' );
       const soundClip = new SoundClip( buttonSound, {
-        initialOutputLevel: 0.7,
+        initialOutputLevel: 0.5,
         rateChangesAffectPlayingSounds: false
       } );
       soundManager.addSoundGenerator( soundClip );
