@@ -19,12 +19,10 @@ import Rectangle from '../../scenery/js/nodes/Rectangle.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
 import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
+import soundConstants from '../../tambo/js/soundConstants.js';
 import soundManager from '../../tambo/js/soundManager.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import gameButtonSound001 from '../sounds/game-button-001_mp3.js';
-import gameButtonSound002 from '../sounds/game-button-002_mp3.js';
 import gameButtonSound003 from '../sounds/game-button-003_mp3.js';
-import gameButtonSound004 from '../sounds/game-button-004_mp3.js';
 import GameTimer from './GameTimer.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayLabeledStars from './ScoreDisplayLabeledStars.js';
@@ -39,7 +37,6 @@ const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
   // All constructors must have the same signature!
   ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars, ScoreDisplayStars, ScoreDisplayNumberAndStar
 ];
-const SOUNDS = [ gameButtonSound001, gameButtonSound002, gameButtonSound003, gameButtonSound004 ];
 
 class LevelSelectionButton extends RectangularPushButton {
 
@@ -141,25 +138,17 @@ class LevelSelectionButton extends RectangularPushButton {
       children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ]
     } );
 
-    // sound generation
-    // TODO: This code is temporary while we experiment with some sound options, see https://github.com/phetsims/vegas/issues/89
+    // Sound generation - if no sound player was provided, create the default.
     if ( !options.soundPlayer ) {
-      const soundClips = [];
-      SOUNDS.forEach( sound => {
-        const soundClip = new SoundClip( sound, { rateChangesAffectPlayingSounds: false } );
-        soundManager.addSoundGenerator( soundClip );
-        soundClips.push( soundClip );
+      assert && assert( options.soundPlayerIndex >= 0, 'invalid value for soundPlayerIndex' );
+      const soundClip = new SoundClip( gameButtonSound003, {
+        initialOutputLevel: 0.7,
+        rateChangesAffectPlayingSounds: false
       } );
+      soundManager.addSoundGenerator( soundClip );
       options.soundPlayer = {
         play() {
-
-          let soundIndex = 0;
-          if ( phet && phet.vegas && phet.vegas.soundIndexForLevelSelectionButtonsProperty ) {
-            soundIndex = phet.vegas.soundIndexForLevelSelectionButtonsProperty.value;
-          }
-
-          const soundClip = soundClips[ soundIndex ];
-          soundClip.setPlaybackRate( Math.pow( Math.pow( 2, 1 / 12 ), options.soundPlayerIndex ), 0 );
+          soundClip.setPlaybackRate( Math.pow( soundConstants.TWELFTH_ROOT_OF_TWO, options.soundPlayerIndex ), 0 );
           soundClip.play();
         }
       };

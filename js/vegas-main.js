@@ -14,18 +14,15 @@ import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
 import LevelSelectionScreenView from './demo/LevelSelectionScreenView.js';
 import RewardScreenView from './demo/RewardScreenView.js';
-import VegasSoundOptionsDialogContent from './demo/VegasSoundOptionsDialogContent.js';
 import vegasStrings from './vegasStrings.js';
 
 // constants
 const vegasTitleString = vegasStrings.vegas.title;
-const SOUND_OPTIONS_DIALOG_CONTENT = new VegasSoundOptionsDialogContent();
 
 const simOptions = {
   credits: {
     leadDesign: 'PhET'
-  },
-  createOptionsDialogContent: () => SOUND_OPTIONS_DIALOG_CONTENT
+  }
 };
 
 simLauncher.launch( () => {
