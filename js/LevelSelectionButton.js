@@ -22,7 +22,7 @@ import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
 import soundConstants from '../../tambo/js/soundConstants.js';
 import soundManager from '../../tambo/js/soundManager.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import gameButtonSound003 from '../sounds/game-button-003_mp3.js';
+import buttonSound from '../sounds/level-selection-button_mp3.js';
 import GameTimer from './GameTimer.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayLabeledStars from './ScoreDisplayLabeledStars.js';
@@ -141,7 +141,7 @@ class LevelSelectionButton extends RectangularPushButton {
     // Sound generation - if no sound player was provided, create the default.
     if ( !options.soundPlayer ) {
       assert && assert( options.soundPlayerIndex >= 0, 'invalid value for soundPlayerIndex' );
-      const soundClip = new SoundClip( gameButtonSound003, {
+      const soundClip = new SoundClip( buttonSound, {
         initialOutputLevel: 0.7,
         rateChangesAffectPlayingSounds: false
       } );

@@ -23,31 +23,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by John Blanco"
   },
-  "game-button-001.mp3": {
-    "text": [
-      "Copyright 2021 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "game-button-002.mp3": {
-    "text": [
-      "Copyright 2021 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "game-button-003.mp3": {
-    "text": [
-      "Copyright 2021 University of Colorado Boulder"
-    ],
-    "projectURL": "http://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations)"
-  },
-  "game-button-004.mp3": {
+  "level-selection-button.mp3": {
     "text": [
       "Copyright 2021 University of Colorado Boulder"
     ],
