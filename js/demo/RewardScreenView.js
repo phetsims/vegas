@@ -3,7 +3,7 @@
 /**
  * Test harness for the things related to game rewards.
  *
- * @author Sam Reid
+ * @author Sam Reid (PhET Interactive Simulations)
  * @author Chris Malley (PixelZoom, Inc.)
  */
 

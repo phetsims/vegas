@@ -5,7 +5,7 @@
  * See specification in https://github.com/phetsims/vegas/issues/59.
  *
  * @author John Blanco
- * @author Sam Reid
+ * @author Sam Reid (PhET Interactive Simulations)
  * @author Andrea Lin
  */
 

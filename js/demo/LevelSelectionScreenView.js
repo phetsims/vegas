@@ -3,7 +3,7 @@
 /**
  * Demonstrates UI components related to the typical level-selection UI in games.
  *
- * @author Sam Reid
+ * @author Sam Reid (PhET Interactive Simulations)
  * @author Andrea Lin
  * @author Chris Malley (PixelZoom, Inc.)
  */
