@@ -83,7 +83,7 @@ class LevelSelectionButton extends RectangularPushButton {
       // the norm for the game levels.  This is ignored if a custom sound player is defined.
       soundPlayerIndex: 0,
 
-      // {Playable} - Sound player for this button.  If null, a default will be created.  Use Playable.NO_SOUND to
+      // {SoundPlayer} - Sound player for this button.  If null, a default will be created.  Use SoundPlayer.NO_SOUND to
       // turn off sound generation.
       soundPlayer: null,
 
