@@ -18,7 +18,7 @@ import Text from '../../scenery/js/nodes/Text.js';
 import VBox from '../../scenery/js/nodes/VBox.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../sun/js/Dialog.js';
-import phetGirlJugglingStarsImage from '../images/phet-girl-juggling-stars_png.js';
+import phetGirlJugglingStarsImage from '../images/phetGirlJugglingStars_png.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
