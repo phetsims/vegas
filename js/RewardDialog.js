@@ -69,20 +69,20 @@ class RewardDialog extends Dialog {
       maxWidth: options.buttonsWidth
     };
 
-    const keepGoingButton = new RectangularPushButton( merge( {}, buttonOptions, {
-      content: new Text( vegasStrings.keepGoing, { font: DEFAULT_BUTTONS_FONT } ),
-      listener: options.keepGoingButtonListener,
-      baseColor: 'white'
-    } ) );
-
     const newLevelButton = new RectangularPushButton( merge( {}, buttonOptions, {
       content: new Text( vegasStrings.newLevel, { font: DEFAULT_BUTTONS_FONT } ),
       listener: options.newLevelButtonListener,
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW
     } ) );
 
+    const keepGoingButton = new RectangularPushButton( merge( {}, buttonOptions, {
+      content: new Text( vegasStrings.keepGoing, { font: DEFAULT_BUTTONS_FONT } ),
+      listener: options.keepGoingButtonListener,
+      baseColor: 'white'
+    } ) );
+
     const buttons = new VBox( {
-      children: [ keepGoingButton, newLevelButton ],
+      children: [ newLevelButton, keepGoingButton ],
       spacing: options.buttonsYSpacing
     } );
 
@@ -101,6 +101,9 @@ class RewardDialog extends Dialog {
       children: [ phetGirlNode, rightSideNode ],
       spacing: 52
     } );
+
+    assert && assert( !options.focusOnShowNode );
+    options.focusOnShowNode = newLevelButton;
 
     super( content, options );
   }
