@@ -45,6 +45,9 @@ class RewardDialog extends Dialog {
 
     options = merge( {
 
+      // options passed to Popupable (mixed into Dialog)
+      popupableOptions: {},
+
       // RewardDialog options
       phetGirlScale: 0.6,
       scoreDisplayOptions: null, // {Object|null} options passed to ScoreDisplayNumberAndStar
@@ -102,8 +105,8 @@ class RewardDialog extends Dialog {
       spacing: 52
     } );
 
-    assert && assert( !options.focusOnShowNode );
-    options.focusOnShowNode = newLevelButton;
+    assert && assert( !options.popupableOptions.focusOnShowNode );
+    options.popupableOptions.focusOnShowNode = newLevelButton;
 
     super( content, options );
   }
