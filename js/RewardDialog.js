@@ -55,7 +55,10 @@ class RewardDialog extends Dialog {
       buttonsWidth: 145, // {number} fixed width for both buttons
       buttonsYSpacing: 20,
       keepGoingButtonListener: () => {}, // called when 'Keep Going' button is pressed
-      newLevelButtonListener: () => {} // called when 'New Level' button is pressed
+      newLevelButtonListener: () => {}, // called when 'New Level' button is pressed
+
+      // pdom - Since we are setting the focusOnShowNode to be the first element in content, put the closeButton last
+      closeButtonLastInPDOM: true
     }, options );
 
     options.scoreDisplayOptions = merge( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
