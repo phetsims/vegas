@@ -145,7 +145,7 @@ class LevelSelectionButton extends RectangularPushButton {
         initialOutputLevel: 0.5,
         rateChangesAffectPlayingSounds: false
       } );
-      soundManager.addSoundGenerator( soundClip );
+      soundManager.addSoundGenerator( soundClip, { categoryName: 'user-interface' } );
       options.soundPlayer = {
         play() {
           soundClip.setPlaybackRate( Math.pow( soundConstants.TWELFTH_ROOT_OF_TWO, options.soundPlayerIndex ), 0 );
