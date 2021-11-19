@@ -1,0 +1,16 @@
+{
+  "extends": "../chipper/tsconfig-core.json",
+  "references": [
+    {
+      "path": "../joist"
+    },
+    {
+      "path": "./tsconfig.json"
+    }
+  ],
+  "include": [
+    "js/**/*tests.js",
+    "js/vegas-main.js",
+    "js/demo/**/*"
+  ]
+}
