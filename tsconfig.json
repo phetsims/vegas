@@ -13,6 +13,7 @@
   ],
   "exclude": [
     "js/**/*tests.js",
+    "js/**/*Tests.js",
     "js/vegas-main.js",
     "js/demo/**/*"
   ]
