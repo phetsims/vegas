@@ -8,8 +8,8 @@
 
 import merge from '../../phet-core/js/merge.js';
 import SimpleClockIcon from '../../scenery-phet/js/SimpleClockIcon.js';
-import HBox from '../../scenery/js/nodes/HBox.js';
-import Text from '../../scenery/js/nodes/Text.js';
+import { HBox } from '../../scenery/js/imports.js';
+import { Text } from '../../scenery/js/imports.js';
 import GameTimer from './GameTimer.js';
 import StatusBar from './StatusBar.js';
 import vegas from './vegas.js';

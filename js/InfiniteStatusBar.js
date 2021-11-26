@@ -10,7 +10,7 @@
 
 import merge from '../../phet-core/js/merge.js';
 import BackButton from '../../scenery-phet/js/buttons/BackButton.js';
-import HBox from '../../scenery/js/nodes/HBox.js';
+import { HBox } from '../../scenery/js/imports.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import StatusBar from './StatusBar.js';

@@ -10,8 +10,8 @@
 import Utils from '../../dot/js/Utils.js';
 import merge from '../../phet-core/js/merge.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
-import Node from '../../scenery/js/nodes/Node.js';
-import Text from '../../scenery/js/nodes/Text.js';
+import { Node } from '../../scenery/js/imports.js';
+import { Text } from '../../scenery/js/imports.js';
 import StatusBar from './StatusBar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';

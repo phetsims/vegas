@@ -22,9 +22,9 @@ import getGlobal from '../../phet-core/js/getGlobal.js';
 import merge from '../../phet-core/js/merge.js';
 import FaceNode from '../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
-import Display from '../../scenery/js/display/Display.js';
-import CanvasNode from '../../scenery/js/nodes/CanvasNode.js';
-import Node from '../../scenery/js/nodes/Node.js';
+import { Display } from '../../scenery/js/imports.js';
+import { CanvasNode } from '../../scenery/js/imports.js';
+import { Node } from '../../scenery/js/imports.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
 

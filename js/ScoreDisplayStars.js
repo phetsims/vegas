@@ -11,7 +11,7 @@
 
 import merge from '../../phet-core/js/merge.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
-import HBox from '../../scenery/js/nodes/HBox.js';
+import { HBox } from '../../scenery/js/imports.js';
 import vegas from './vegas.js';
 
 class ScoreDisplayStars extends HBox {

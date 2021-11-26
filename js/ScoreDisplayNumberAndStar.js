@@ -11,8 +11,8 @@
 import Utils from '../../dot/js/Utils.js';
 import merge from '../../phet-core/js/merge.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
-import HBox from '../../scenery/js/nodes/HBox.js';
-import Text from '../../scenery/js/nodes/Text.js';
+import { HBox } from '../../scenery/js/imports.js';
+import { Text } from '../../scenery/js/imports.js';
 import StatusBar from './StatusBar.js';
 import vegas from './vegas.js';
 
