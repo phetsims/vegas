@@ -22,9 +22,7 @@ import getGlobal from '../../phet-core/js/getGlobal.js';
 import merge from '../../phet-core/js/merge.js';
 import FaceNode from '../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
-import { Display } from '../../scenery/js/imports.js';
-import { CanvasNode } from '../../scenery/js/imports.js';
-import { Node } from '../../scenery/js/imports.js';
+import { CanvasNode, Display, Node, TransformTracker } from '../../scenery/js/imports.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
 
@@ -72,6 +70,10 @@ class RewardNode extends CanvasNode {
     // on ScreenView bounds and relative transforms
     this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
 
+    // @private {TransformTracker|null} - Will watch the transform of Nodes along the Trail to this Node so that
+    // we can update the canvasDisplayBounds when the RewardNode or any of its ancestors has a change in transform.
+    this.transformTracker = null;
+
     // @private - If you pass in a stepEmitter, it will drive the animation
     this.stepEmitterListener = dt => this.step( dt );
     options.stepEmitter && options.stepEmitter.addListener( this.stepEmitterListener );
@@ -104,7 +106,6 @@ class RewardNode extends CanvasNode {
     } );
 
     // @private these will be set by init
-    this.screenView = null; // {ScreenView}
     this.updateBounds = null; // {function}
 
     // @private {boolean} Some initialization must occur after this node is attached to the scene graph,
@@ -118,7 +119,7 @@ class RewardNode extends CanvasNode {
     // @private
     this.disposeRewardNode = () => {
       options.stepEmitter && options.stepEmitter.removeListener( this.stepEmitterListener );
-      this.screenView && this.screenView.transformEmitter.removeListener( this.updateBounds );
+      this.transformTracker && this.transformTracker.dispose();
       Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializer );
     };
   }
@@ -210,21 +211,26 @@ class RewardNode extends CanvasNode {
 
     assert && assert( options.display instanceof Display, 'display must be provided' );
 
-    if ( !this.isInitialized && this.getUniqueTrail().nodes[ 0 ] ) {
-      this.screenView = this.getScreenView();
+    if ( !this.isInitialized && this.getUniqueTrail().length > 0 ) {
+
+      const uniqueTrail = this.getUniqueTrail();
+      const indexOfScreenView = uniqueTrail.nodes.indexOf( this.getScreenView() );
+      const trailFromScreenViewToThis = uniqueTrail.slice( indexOfScreenView );
 
       // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
       this.updateBounds = () => {
 
+        // These bounds represent the full window relative to the scene. It is transformed by the inverse of the
+        // ScreenView's matrix (globalToLocalBounds) because the RewardNode is meant to fill the ScreenView. RewardNode
+        // nodes are placed within these bounds.
+        this.canvasDisplayBounds = trailFromScreenViewToThis.globalToLocalBounds( options.display.bounds );
+
         const local = this.globalToLocalBounds( options.display.bounds );
         this.setCanvasBounds( local );
-
-        // Also, store the bounds in the options so the debug flag can render the bounds
-        this.canvasDisplayBounds = local;
       };
 
-      // When the ScreenView transform changes, update the bounds.  This prevents a "behind by one" problem, see https://github.com/phetsims/vegas/issues/4
-      this.screenView.transformEmitter.addListener( this.updateBounds );
+      this.transformTracker = new TransformTracker( uniqueTrail );
+      this.transformTracker.addListener( this.updateBounds );
 
       // Set the initial bounds
       this.updateBounds();
