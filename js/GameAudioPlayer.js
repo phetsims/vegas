@@ -8,19 +8,19 @@
 
 import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../tambo/js/soundManager.js';
-import boingSound from '../sounds/boing_mp3.js';
-import cheerSound from '../sounds/cheer_mp3.js';
-import dingSound from '../sounds/ding_mp3.js';
-import organSound from '../sounds/organ_mp3.js';
-import trumpetSound from '../sounds/trumpet_mp3.js';
+import boing_mp3 from '../sounds/boing_mp3.js';
+import cheer_mp3 from '../sounds/cheer_mp3.js';
+import ding_mp3 from '../sounds/ding_mp3.js';
+import organ_mp3 from '../sounds/organ_mp3.js';
+import trumpet_mp3 from '../sounds/trumpet_mp3.js';
 import vegas from './vegas.js';
 
 // constants
-const ding = new SoundClip( dingSound );
-const boing = new SoundClip( boingSound );
-const trumpet = new SoundClip( trumpetSound );
-const cheer = new SoundClip( cheerSound );
-const organ = new SoundClip( organSound );
+const ding = new SoundClip( ding_mp3 );
+const boing = new SoundClip( boing_mp3 );
+const trumpet = new SoundClip( trumpet_mp3 );
+const cheer = new SoundClip( cheer_mp3 );
+const organ = new SoundClip( organ_mp3 );
 
 let isInitialized = false;
 

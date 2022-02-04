@@ -18,7 +18,7 @@ import { Text } from '../../scenery/js/imports.js';
 import { VBox } from '../../scenery/js/imports.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../sun/js/Dialog.js';
-import phetGirlJugglingStarsImage from '../images/phetGirlJugglingStars_png.js';
+import phetGirlJugglingStars_png from '../images/phetGirlJugglingStars_png.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
@@ -60,7 +60,7 @@ class RewardDialog extends Dialog {
 
     options.scoreDisplayOptions = merge( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
 
-    const phetGirlNode = new Image( phetGirlJugglingStarsImage, {
+    const phetGirlNode = new Image( phetGirlJugglingStars_png, {
       scale: options.phetGirlScale
     } );
 
