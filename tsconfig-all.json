@@ -12,6 +12,7 @@
     "js/**/*tests.js",
     "js/**/*Tests.js",
     "js/vegas-main.js",
-    "js/demo/**/*"
+    "js/demo/**/*",
+    "../chipper/phet-types.d.ts"
   ]
 }

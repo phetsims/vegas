@@ -9,7 +9,8 @@
     "js/**/*",
     "sounds/**/*",
     "images/**/*",
-    "mipmaps/**/*"
+    "mipmaps/**/*",
+    "../chipper/phet-types.d.ts"
   ],
   "exclude": [
     "js/**/*tests.js",
