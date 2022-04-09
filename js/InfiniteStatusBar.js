@@ -13,7 +13,7 @@ import BackButton from '../../scenery-phet/js/buttons/BackButton.js';
 import { HBox } from '../../scenery/js/imports.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
-import StatusBar from './StatusBar.js';
+import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 
 // Valid values for scoreDisplayConstructor. These are the types that are relevant for this status bar.

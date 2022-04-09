@@ -13,7 +13,7 @@ import merge from '../../phet-core/js/merge.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
 import { HBox } from '../../scenery/js/imports.js';
 import { Text } from '../../scenery/js/imports.js';
-import StatusBar from './StatusBar.js';
+import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 
 class ScoreDisplayNumberAndStar extends HBox {

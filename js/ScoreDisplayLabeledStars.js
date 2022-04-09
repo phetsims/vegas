@@ -11,7 +11,7 @@ import merge from '../../phet-core/js/merge.js';
 import { HBox } from '../../scenery/js/imports.js';
 import { Text } from '../../scenery/js/imports.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
-import StatusBar from './StatusBar.js';
+import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
 

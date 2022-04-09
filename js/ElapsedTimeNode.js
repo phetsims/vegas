@@ -11,7 +11,7 @@ import SimpleClockIcon from '../../scenery-phet/js/SimpleClockIcon.js';
 import { HBox } from '../../scenery/js/imports.js';
 import { Text } from '../../scenery/js/imports.js';
 import GameTimer from './GameTimer.js';
-import StatusBar from './StatusBar.js';
+import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 
 class ElapsedTimeNode extends HBox {

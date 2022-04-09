@@ -14,7 +14,7 @@ import { HBox } from '../../../scenery/js/imports.js';
 import { Text } from '../../../scenery/js/imports.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import InfiniteStatusBar from '../InfiniteStatusBar.js';
-import StatusBar from '../StatusBar.js';
+import StatusBar from '../../../scenery-phet/js/StatusBar.js';
 import vegas from '../vegas.js';
 
 // constants
