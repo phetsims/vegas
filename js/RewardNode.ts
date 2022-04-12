@@ -1,6 +1,5 @@
 // Copyright 2014-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Reward node that shows many nodes animating continuously, for fun!  Shown when a perfect score is achieved in a game.
  * You can also test this by running vegas/vegas_en.html and clicking on the "Reward" screen.
@@ -16,108 +15,153 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Emitter from '../../axon/js/Emitter.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import dotRandom from '../../dot/js/dotRandom.js';
 import ScreenView from '../../joist/js/ScreenView.js';
 import getGlobal from '../../phet-core/js/getGlobal.js';
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import FaceNode from '../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
-import { CanvasNode, Display, Node, TransformTracker } from '../../scenery/js/imports.js';
+import { CanvasNode, CanvasNodeOptions, Display, Node, TransformTracker } from '../../scenery/js/imports.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
 
 // constants
-const DEBUG = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
+const DEBUG_CANVAS_NODE_BOUNDS = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
 const MAX_SPEED = 200; // The maximum speed an image can fall in screen pixels per second.
 
-class RewardNode extends CanvasNode {
+// Data structure to hold a cached HTMLImageElement and its associated properties
+type CachedImage = {
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
-    options = merge( {
+  // The image to be rendered in the canvas, to be filled in by toImage callback.
+  image: HTMLImageElement | null;
 
-      // Scale things up for rasterization and back down for rendering so they have nice resolution on retina
-      scaleForResolution: 2,
+  // Node that the cached images is associated with
+  node: Node;
 
-      // {Node[]} Nodes to appear in the reward node.  They will be cached as images to improve performance.
-      // The simulation should override this array to provide images specific to the simulation.
-      // If null, the default is initialized below.
+  // Width and height of the associated Node, so that image can be positioned before the toImage call has completed.
+  width: number;
+  height: number;
+};
+
+// Data structure that describes each individual image that you see animating.
+type RewardImage = {
+
+  // Data structure that describes the image to render
+  cachedImage: CachedImage;
+
+  // Current x and y coordinates of the image
+  x: number;
+  y: number;
+
+  // Random speed at which to animate the image
+  speed: number;
+};
+
+type SelfOptions = {
+
+  // Nodes to appear in the reward node. They will be cached as images to improve performance.
+  // If null, then default Nodes will be created.
+  nodes?: Node[] | null;
+
+  // Scale things up for rasterization, then back down for rendering, so they have nice quality on retina displays.
+  scaleForResolution?: number;
+
+  // If you pass in a stepEmitter {Emitter}, it will drive the animation
+  stepEmitter?: Emitter<[ number ]> | null;
+};
+
+export type RewardNodeOptions = SelfOptions & CanvasNodeOptions;
+
+export default class RewardNode extends CanvasNode {
+
+  // See SelfOptions.nodes
+  private readonly nodes: Node[];
+
+  // See SelfOptions.scaleForResolution
+  private readonly scaleForResolution: number;
+
+  // Data structure for each cached image.
+  private readonly cachedImages: CachedImage[];
+
+  // Data structure for each image that is draw in the reward. Set by initialize, so it's not readonly.
+  private rewardImages: RewardImage[];
+
+  // Bounds in which to render the canvas, which represents the full window. See below for how this is computed based
+  // on ScreenView bounds and relative transforms. Set by initialize, so it's not readonly.
+  private canvasDisplayBounds: Bounds2;
+
+  // Will watch the transform of Nodes along the Trail to this Node so that we can update the canvasDisplayBounds
+  // when the RewardNode or any of its ancestors has a change in transform. Set by initialize, so it's not readonly.
+  private transformTracker: TransformTracker | null;
+
+  // These are set by initialize, so they are not readonly.
+  private updateBounds: null | ( () => void );
+  private isInitialized: boolean;
+
+  // If you provide option stepEmitter, it will call this method to drive animation
+  private readonly stepEmitterListener: ( dt: number ) => void;
+
+  // For PhET-iO brand only: make sure this Node is initialized when state is being set for PhET-iO
+  private readonly initializer: () => void;
+
+  private readonly disposeRewardNode: () => void;
+
+  constructor( providedOptions?: RewardNodeOptions ) {
+
+    const options = optionize<RewardNodeOptions, SelfOptions, CanvasNodeOptions>( {
+
+      // SelfOptions
       nodes: null,
-
-      // If you pass in a stepEmitter {Emitter}, it will drive the animation
+      scaleForResolution: 2,
       stepEmitter: null
-    }, options );
-
-    if ( options.nodes === null ) {
-      options.nodes = RewardNode.createRandomNodes( [
-        new FaceNode( 40, { headStroke: 'black', headLineWidth: 1.5 } ),
-        new StarNode()
-      ], 150 );
-    }
+    }, providedOptions );
 
     super( options );
 
-    // @private
-    this.options = options;
-
-    // @private - Store each reward, which has an imageWrapper (see above), x, y, speed. It is not an image, it is not
-    // a node, but it is one of the things that animates as falling in the RewardNode and its associated data.
-    this.rewards = null;
-
-    // @private - Bounds in which to render the canvas, which represents the full window. See below for how this is computed based
-    // on ScreenView bounds and relative transforms
+    this.scaleForResolution = options.scaleForResolution;
+    this.rewardImages = [];
     this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
-
-    // @private {TransformTracker|null} - Will watch the transform of Nodes along the Trail to this Node so that
-    // we can update the canvasDisplayBounds when the RewardNode or any of its ancestors has a change in transform.
     this.transformTracker = null;
-
-    // @private - If you pass in a stepEmitter, it will drive the animation
-    this.stepEmitterListener = dt => this.step( dt );
-    options.stepEmitter && options.stepEmitter.addListener( this.stepEmitterListener );
-
-    // @private {Node[]}
-    // Cache each unique node as an image for faster rendering in canvas.  Use an intermediate imageWrapper since the
-    // images will be returned later asynchronously. And we need a place to store them, and know when they have arrived.
-    this.imageWrappers = [];
-
-    // find the unique nodes in the array
-    const uniqueNodes = _.uniq( options.nodes );
-    uniqueNodes.forEach( ( node, i ) => {
-      this.imageWrappers.push( {
-        // The image to be rendered in the canvas, will be filled in by toImage callback
-        image: null,
-
-        // Record the width and height so the nodes can be positioned before the toImage call has completed
-        width: node.width,
-        height: node.height,
-
-        // The node itself is recorded in the imageWrapper so the imageWrapper can be looked up based on the original node
-        node: node
-      } );
-
-      const parent = new Node( { children: [ node ], scale: options.scaleForResolution } );
-      parent.toImage( image => {
-        this.imageWrappers[ i ].image = image;
-        parent.dispose(); // not needed anymore, see https://github.com/phetsims/area-model-common/issues/128
-      } );
-    } );
-
-    // @private these will be set by init
-    this.updateBounds = null; // {function}
-
-    // @private {boolean} Some initialization must occur after this node is attached to the scene graph,
-    // see documentation for initialize() method below.
+    this.updateBounds = null;
     this.isInitialized = false;
 
-    // @private {function} For PhET-iO brand only: make sure this Node is initialized when state is being set for PhET-iO
+    this.stepEmitterListener = ( dt: number ) => this.step( dt );
+    options.stepEmitter && options.stepEmitter.addListener( this.stepEmitterListener );
+
+    // Use the provided Nodes, or create defaults.
+    this.nodes = options.nodes || RewardNode.createRandomNodes( [
+      new FaceNode( 40, { headStroke: 'black', headLineWidth: 1.5 } ),
+      new StarNode()
+    ], 150 );
+
+    // For each unique Node, cache its rasterized image.
+    this.cachedImages = _.uniq( this.nodes ).map( node => {
+
+      const cachedImage: CachedImage = {
+        image: null,
+        node: node,
+        width: node.width,
+        height: node.height
+      };
+
+      const parent = new Node( {
+        children: [ node ],
+        scale: this.scaleForResolution
+      } );
+
+      parent.toImage( image => {
+        cachedImage.image = image;
+        parent.dispose(); // not needed anymore, see https://github.com/phetsims/area-model-common/issues/128
+      } );
+
+      return cachedImage;
+    } );
+
     this.initializer = () => this.initialize();
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializer );
 
-    // @private
     this.disposeRewardNode = () => {
       options.stepEmitter && options.stepEmitter.removeListener( this.stepEmitterListener );
       this.transformTracker && this.transformTracker.dispose();
@@ -125,39 +169,18 @@ class RewardNode extends CanvasNode {
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeRewardNode();
     super.dispose();
   }
 
   /**
-   * Convenience factory method to create an array of the specified nodes in an even distribution.
-   * @param {Node[]} nodes array of nodes to use
-   * @param {number} count
-   * @returns {Node[]}
-   * @public
+   * Paint the rewards on the canvas.
    */
-  static createRandomNodes( nodes, count ) {
-    const array = [];
-    for ( let i = 0; i < count; i++ ) {
-      array.push( nodes[ i % nodes.length ] );
-    }
-    return array;
-  }
-
-  /**
-   * Paint the rewards on the canvas
-   * @param {CanvasRenderingContext2D} context
-   * @private
-   */
-  paintCanvas( context ) {
+  public paintCanvas( context: CanvasRenderingContext2D ): void {
 
     // If the debugging flag is on, show the bounds of the canvas
-    if ( DEBUG ) {
+    if ( DEBUG_CANVAS_NODE_BOUNDS ) {
       const bounds = this.canvasDisplayBounds;
 
       // Fill the canvas with gray
@@ -169,48 +192,40 @@ class RewardNode extends CanvasNode {
       context.lineWidth = 5;
       context.strokeRect( bounds.minX, bounds.minY, bounds.width, bounds.height );
     }
-    context.scale( 1 / this.options.scaleForResolution, 1 / this.options.scaleForResolution );
 
-    // Display the rewards, but check that they exist first.  They do not exist when attached to the timer with stepEmitter
-    if ( this.rewards ) {
-      for ( let i = 0; i < this.rewards.length; i++ ) {
-        const reward = this.rewards[ i ];
-        if ( reward.imageWrapper.image ) {
-          context.drawImage( reward.imageWrapper.image, reward.x, reward.y );
-        }
+    context.scale( 1 / this.scaleForResolution, 1 / this.scaleForResolution );
+
+    // Display the rewards.
+    this.rewardImages.forEach( reward => {
+      if ( reward.cachedImage.image ) {
+        context.drawImage( reward.cachedImage.image, reward.x, reward.y );
       }
-    }
+    } );
   }
 
   /**
-   * Finds the first parent that is a ScreenView so we can listen for its transform, see https://github.com/phetsims/vegas/issues/4
-   * @returns {Node}
-   * @private
+   * Finds the first parent that is a ScreenView, so we can listen for its transform,
+   * see https://github.com/phetsims/vegas/issues/4
    */
-  getScreenView() {
+  private getScreenView(): Node {
     return this.getUniqueTrail( node => node instanceof ScreenView ).rootNode();
   }
 
   /**
-   * Only init after being attached to the scene graph, since we must ascertain the local bounds are such that they take
-   * up the global screen.
-   * 1. listen to the size of the scene/display
-   * 2. record the trail between the scene and your CanvasNode, and
-   * 3. apply the inverse of that transform to the CanvasNode (whenever an ancestor's transform changes, or when the scene/display size changes).
+   * Only initialize after being attached to the scene graph, since we must ascertain the local bounds are such that
+   * they take up the global screen.
+   * 1. Listen to the size of the scene/display.
+   * 2. Record the trail between the scene and your CanvasNode, and
+   * 3. Apply the inverse of that transform to the CanvasNode (whenever an ancestor's transform changes, or when the
+   *    scene/display size changes).
    *
-   * @jonathanolson said: for implementing now, I'd watch the iso transform, compute the inverse, and set bounds on
+   * @jonathanolson said: For implementing now, I'd watch the iso transform, compute the inverse, and set bounds on
    * changes to be precise (since you need them anyways to draw).
-   * @private
-   *
-   * @param {Object} [options]
    */
-  initialize( options ) {
+  private initialize(): void {
 
-    options = merge( {
-      display: getGlobal( 'phet.joist.display' )
-    }, options );
-
-    assert && assert( options.display instanceof Display, 'display must be provided' );
+    const display = getGlobal( 'phet.joist.display' );
+    assert && assert( display instanceof Display, 'expected a Display' );
 
     if ( !this.isInitialized && this.getUniqueTrail().length > 0 ) {
 
@@ -218,35 +233,38 @@ class RewardNode extends CanvasNode {
       const indexOfScreenView = uniqueTrail.nodes.indexOf( this.getScreenView() );
       const trailFromScreenViewToThis = uniqueTrail.slice( indexOfScreenView );
 
-      // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped
+      // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped.
       this.updateBounds = () => {
 
         // These bounds represent the full window relative to the scene. It is transformed by the inverse of the
         // ScreenView's matrix (globalToLocalBounds) because the RewardNode is meant to fill the ScreenView. RewardNode
         // nodes are placed within these bounds.
-        this.canvasDisplayBounds = trailFromScreenViewToThis.globalToLocalBounds( options.display.bounds );
+        this.canvasDisplayBounds = trailFromScreenViewToThis.globalToLocalBounds( display.bounds );
 
-        const local = this.globalToLocalBounds( options.display.bounds );
+        const local = this.globalToLocalBounds( display.bounds );
         this.setCanvasBounds( local );
       };
 
       this.transformTracker = new TransformTracker( uniqueTrail );
       this.transformTracker.addListener( this.updateBounds );
 
-      // Set the initial bounds
+      // Set the initial bounds.
       this.updateBounds();
 
-      // Initialize the reward nodes now that we have bounds
-      this.rewards = this.options.nodes.map( node => {
+      // Initialize, now that we have bounds.
+      this.rewardImages = this.nodes.map( node => {
 
-        //find the image wrapper corresponding to the node
-        const imageWrapper = _.find( this.imageWrappers, imageWrapper => imageWrapper.node === node );
-        return {
-          imageWrapper: imageWrapper,
-          x: this.sampleImageXValue( imageWrapper ),
-          y: this.sampleImageYValue( imageWrapper ),
+        // Find the cachedImage that corresponds to the node
+        const cachedImage = _.find( this.cachedImages, cachedImage => cachedImage.node === node )!;
+
+        const reward: RewardImage = {
+          cachedImage: cachedImage,
+          x: this.randomX( cachedImage.width ),
+          y: this.randomY( cachedImage.height ),
           speed: ( dotRandom.nextDouble() + 1 ) * MAX_SPEED
         };
+
+        return reward;
       } );
 
       this.isInitialized = true;
@@ -255,53 +273,55 @@ class RewardNode extends CanvasNode {
 
   /**
    * Selects a random X value for the image when it is created.
-   * @param {Node} imageWrapper
-   * @returns {number}
-   * @private
    */
-  sampleImageXValue( imageWrapper ) {
+  private randomX( nodeWidth: number ): number {
     return ( dotRandom.nextDouble() * this.canvasDisplayBounds.width + this.canvasDisplayBounds.left ) *
-           this.options.scaleForResolution - imageWrapper.width / 2;
+           this.scaleForResolution - nodeWidth / 2;
   }
 
   /**
-   * Selects a random Y value for the image when it is created, or when it goes back to the top of the screen
-   * @param {Node} imageWrapper
-   * @returns {number}
-   * @private
+   * Selects a random Y value for the image when it is created, or when it goes back to the top of the screen.
+   * This start about 1 second off the top of the screen
    */
-  sampleImageYValue( imageWrapper ) {
-
-    // Start things about 1 second off the top of the screen
+  private randomY( nodeHeight: number ): number {
     return this.canvasDisplayBounds.top - dotRandom.nextDouble() * this.canvasDisplayBounds.height * 2 -
-           MAX_SPEED - imageWrapper.height;
+           MAX_SPEED - nodeHeight;
   }
 
   /**
-   * Moves the rewards down according to their speed.
-   * @param {number} dt
-   * @public
+   * Animates the images.
    */
-  step( dt ) {
+  public step( dt: number ): void {
     this.initialize();
 
-    // Update all of the rewards
-    const maxY = this.canvasDisplayBounds.height * this.options.scaleForResolution;
-    for ( let i = 0; i < this.rewards.length; i++ ) {
-      const reward = this.rewards[ i ];
+    const maxY = this.canvasDisplayBounds.height * this.scaleForResolution;
 
-      // Move each node straight down at constant speed
+    // Move all images.
+    this.rewardImages.forEach( reward => {
+
+      // Move each image straight down at constant speed.
       reward.y += reward.speed * dt;
 
-      // Move back to the top after the node falls off the bottom
+      // Move back to the top after the image falls off the bottom.
       if ( reward.y > maxY ) {
-        reward.x = this.sampleImageXValue( reward.imageWrapper );
-        reward.y = this.sampleImageYValue( reward.imageWrapper );
+        reward.x = this.randomX( reward.cachedImage.width );
+        reward.y = this.randomY( reward.cachedImage.height );
       }
-    }
+    } );
+
     this.invalidatePaint();
+  }
+
+  /**
+   * Convenience factory method to create an array of the specified Nodes in an even distribution.
+   */
+  public static createRandomNodes( nodes: Node[], count: number ): Node[] {
+    const array = [];
+    for ( let i = 0; i < count; i++ ) {
+      array.push( nodes[ i % nodes.length ] );
+    }
+    return array;
   }
 }
 
 vegas.register( 'RewardNode', RewardNode );
-export default RewardNode;
