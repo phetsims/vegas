@@ -1,5 +1,6 @@
 // Copyright 2013-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Game timer, keeps track of the elapsed time in the game using "wall clock" time. The frame rate of this clock is
  * sufficient for displaying a game timer in "seconds", but not for driving smooth animation.

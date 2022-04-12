@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * ElapsedTimeNode shows the elapsed time in a game status bar (FiniteStatusBar).
  *
