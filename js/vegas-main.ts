@@ -26,41 +26,37 @@ const simOptions = {
   }
 };
 
+function createEmptyModel() {
+  return {};
+}
+
 simLauncher.launch( () => {
   new Sim( vegasTitleString, [
 
     new Screen(
-      ( () => {
-        return {};
-      } ),
-      ( model => new LevelSelectionScreenView() ), {
+      createEmptyModel,
+      () => new LevelSelectionScreenView(), {
         name: 'Level Selection',
         backgroundColorProperty: new Property( 'white' )
       } ),
 
     new Screen(
-      ( () => {
-        return {};
-      } ),
-      ( model => new FiniteChallengesScreenView() ), {
+      createEmptyModel,
+      () => new FiniteChallengesScreenView(), {
         name: 'Finite Challenges',
         backgroundColorProperty: new Property( 'white' )
       } ),
 
     new Screen(
-      ( () => {
-        return {};
-      } ),
-      ( model => new InfiniteChallengesScreenView() ), {
+      createEmptyModel,
+      () => new InfiniteChallengesScreenView(), {
         name: 'Infinite Challenges',
         backgroundColorProperty: new Property( 'white' )
       } ),
 
     new Screen(
-      ( () => {
-        return {};
-      } ),
-      ( model => new RewardScreenView() ), {
+      createEmptyModel,
+      () => new RewardScreenView(), {
         name: 'Reward',
         backgroundColorProperty: new Property( 'white' )
       } )
