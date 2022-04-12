@@ -1,5 +1,6 @@
 // Copyright 2014-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Button for selecting a game level.
  * Includes an icon, score display, and (optional) 'best time' display.
