@@ -1,5 +1,6 @@
 // Copyright 2014-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Demonstrates the challenge UI for a game that has an infinite number of challenges per level.
  *
