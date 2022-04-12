@@ -3,16 +3,20 @@
   "references": [
     {
       "path": "../joist/tsconfig-module.json"
-    },
-    {
-      "path": "./tsconfig.json"
     }
   ],
   "include": [
+    "js/**/*",
+    "images/**/*",
+    "sounds/**/*",
+    "mipmaps/**/*",
+    "../chipper/phet-types.d.ts",
+    "../chipper/node_modules/@types/lodash/index.d.ts"
+  ],
+  "exclude": [
     "js/**/*tests.js",
     "js/**/*Tests.js",
     "js/vegas-main.js",
-    "js/demo/**/*",
-    "../chipper/phet-types.d.ts"
+    "js/demo/**/*"
   ]
 }

@@ -2,20 +2,14 @@
   "extends": "../chipper/tsconfig-core.json",
   "references": [
     {
-      "path": "../joist/tsconfig-module.json"
+      "path": "./tsconfig-module.json"
     }
   ],
   "include": [
-    "js/**/*",
-    "sounds/**/*",
-    "images/**/*",
-    "mipmaps/**/*",
-    "../chipper/phet-types.d.ts"
-  ],
-  "exclude": [
     "js/**/*tests.js",
     "js/**/*Tests.js",
     "js/vegas-main.js",
-    "js/demo/**/*"
+    "js/demo/**/*",
+    "../chipper/phet-types.d.ts"
   ]
 }
