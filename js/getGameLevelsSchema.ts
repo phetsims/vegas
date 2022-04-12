@@ -1,6 +1,5 @@
 // Copyright 2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Gets the QueryStringMachine schema for the gameLevels query parameter.
  *
@@ -18,7 +17,7 @@
 
 import vegas from './vegas.js';
 
-function getGameLevelsSchema( numberOfLevels ) {
+function getGameLevelsSchema( numberOfLevels: number ) {
   return {
     public: true,
     type: 'array',
@@ -27,7 +26,7 @@ function getGameLevelsSchema( numberOfLevels ) {
       isValidValue: Number.isInteger
     },
     defaultValue: null,
-    isValidValue: array => {
+    isValidValue: ( array: number[] ) => {
       return ( array === null ) || (
         array.length > 0 &&
         // unique level numbers
