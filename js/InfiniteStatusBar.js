@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * InfiniteStatusBar is the status bar for games that have an infinite (open-ended) number of challenges per level.
  * See specification in https://github.com/phetsims/vegas/issues/59.

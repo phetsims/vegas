@@ -1,5 +1,6 @@
 // Copyright 2013-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * FiniteStatusBar is the status bar for games that have a finite number of challenges per level.
  * This was adapted from and replaces ScoreboardBar. See https://github.com/phetsims/vegas/issues/66.
