@@ -200,7 +200,7 @@ export default class FiniteStatusBar extends StatusBar {
     if ( options.elapsedTimeProperty && options.timerEnabledProperty ) {
 
       elapsedTimeNode = new ElapsedTimeNode( options.elapsedTimeProperty, {
-        clockRadius: options.clockIconRadius,
+        clockIconRadius: options.clockIconRadius,
         font: options.font,
         textFill: options.textFill
       } );

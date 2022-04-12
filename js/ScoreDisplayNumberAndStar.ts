@@ -21,7 +21,6 @@ type SelfOptions = {
   font?: Font;
   textFill?: IColor;
   scoreDecimalPlaces?: number;
-  spacing?: number;
   starNodeOptions?: any; //TODO https://github.com/phetsims/scenery-phet/issues/734
 };
 
@@ -34,16 +33,20 @@ export default class ScoreDisplayNumberAndStar extends HBox {
   constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayNumberAndStarOptions ) {
 
     const options = optionize<ScoreDisplayNumberAndStarOptions, SelfOptions, HBoxOptions>( {
+
+      // SelfOptions
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
       scoreDecimalPlaces: 0,
-      spacing: 5,
       starNodeOptions: {
         outerRadius: 10,
         innerRadius: 5,
         filledLineWidth: 1.5,
         emptyLineWidth: 1.5
-      }
+      },
+
+      // HBoxOptions
+      spacing: 5
     }, providedOptions );
 
     super( options );

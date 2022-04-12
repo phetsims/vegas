@@ -19,7 +19,6 @@ import vegas from './vegas.js';
 type SelfOptions = {
   numberOfStars?: number;
   perfectScore?: number;
-  spacing?: number;
   starNodeOptions?: any; //TODO https://github.com/phetsims/scenery-phet/issues/734
 };
 
@@ -32,15 +31,19 @@ export default class ScoreDisplayStars extends HBox {
   constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayStarsOptions ) {
 
     const options = optionize<ScoreDisplayStarsOptions, SelfOptions, HBoxOptions>( {
+
+      // SelfOptions
       numberOfStars: 1,
       perfectScore: 1,
-      spacing: 3,
       starNodeOptions: {
         outerRadius: 10,
         innerRadius: 5,
         filledLineWidth: 1.5,
         emptyLineWidth: 1.5
-      }
+      },
+
+      // HBoxOptions
+      spacing: 3
     }, providedOptions );
 
     const numberOfStars = options.numberOfStars;

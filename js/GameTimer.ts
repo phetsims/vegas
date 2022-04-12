@@ -1,6 +1,5 @@
 // Copyright 2013-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Game timer, keeps track of the elapsed time in the game using "wall clock" time. The frame rate of this clock is
  * sufficient for displaying a game timer in "seconds", but not for driving smooth animation.
@@ -10,33 +9,39 @@
 
 import BooleanProperty from '../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../axon/js/NumberProperty.js';
+import Property from '../../axon/js/Property.js';
 import stepTimer from '../../axon/js/stepTimer.js';
+import { TimerListener } from '../../axon/js/Timer.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
 
-class GameTimer {
+export default class GameTimer {
+
+  // whether the timer is running
+  public readonly isRunningProperty: Property<boolean>;
+
+  // seconds since the timer was started
+  public readonly elapsedTimeProperty: Property<number>;
+
+  // see Timer.setInterval and clearInterval
+  private intervalId: TimerListener | null;
 
   constructor() {
-
-    // @public seconds since the timer was started
-    this.elapsedTimeProperty = new NumberProperty( 0 );
     this.isRunningProperty = new BooleanProperty( false );
-
-    this.intervalId = null; // @private
+    this.elapsedTimeProperty = new NumberProperty( 0 );
+    this.intervalId = null;
   }
 
-  // @public
-  reset() {
-    this.elapsedTimeProperty.reset();
+  public reset(): void {
     this.isRunningProperty.reset();
+    this.elapsedTimeProperty.reset();
   }
 
   /**
    * Starts the timer. This is a no-op if the timer is already running.
-   * @public
    */
-  start() {
+  public start(): void {
     if ( !this.isRunningProperty.value ) {
       this.elapsedTimeProperty.value = 0;
       this.intervalId = stepTimer.setInterval( () => {
@@ -48,11 +53,10 @@ class GameTimer {
 
   /**
    * Stops the timer. This is a no-op if the timer is already stopped.
-   * @public
    */
-  stop() {
+  public stop(): void {
     if ( this.isRunningProperty.value ) {
-      stepTimer.clearInterval( this.intervalId );
+      stepTimer.clearInterval( this.intervalId! );
       this.intervalId = null;
       this.isRunningProperty.value = false;
     }
@@ -60,20 +64,16 @@ class GameTimer {
 
   /**
    * Convenience function for restarting the timer.
-   * @public
    */
-  restart() {
+  public restart(): void {
     this.stop();
     this.start();
   }
 
   /**
    * Formats a value representing seconds into H:MM:SS (localized).
-   * @param {number} time in seconds
-   * @returns {string}
-   * @public
    */
-  static formatTime( time ) {
+  public static formatTime( time: number ): string {
 
     const hours = Math.floor( time / 3600 );
     const minutes = Math.floor( ( time - ( hours * 3600 ) ) / 60 );
@@ -83,13 +83,14 @@ class GameTimer {
     const secondsString = ( seconds > 9 ) ? seconds : ( `0${seconds}` );
 
     if ( hours > 0 ) {
-      return StringUtils.format( vegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2seconds' ], hours, minutesString, secondsString );
+      return StringUtils.format( vegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2seconds' ],
+        hours, minutesString, secondsString );
     }
     else {
-      return StringUtils.format( vegasStrings.pattern[ '0minutes' ][ '1seconds' ], minutesString, secondsString );
+      return StringUtils.format( vegasStrings.pattern[ '0minutes' ][ '1seconds' ],
+        minutesString, secondsString );
     }
   }
 }
 
 vegas.register( 'GameTimer', GameTimer );
-export default GameTimer;

@@ -1,34 +1,43 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * ElapsedTimeNode shows the elapsed time in a game status bar (FiniteStatusBar).
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../phet-core/js/merge.js';
 import SimpleClockIcon from '../../scenery-phet/js/SimpleClockIcon.js';
-import { HBox } from '../../scenery/js/imports.js';
-import { Text } from '../../scenery/js/imports.js';
+import { Font, HBox, HBoxOptions, IColor, Text } from '../../scenery/js/imports.js';
 import GameTimer from './GameTimer.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
+import IProperty from '../../axon/js/IProperty.js';
+import optionize from '../../phet-core/js/optionize.js';
 
-class ElapsedTimeNode extends HBox {
+type SelfOptions = {
+  clockIconRadius?: number;
+  font?: Font;
+  textFill?: IColor;
+};
 
-  /**
-   * @param {Property.<number>} elapsedTimeProperty
-   * @param {Object} [options]
-   */
-  constructor( elapsedTimeProperty, options ) {
+export type ElapsedTimeNodeOptions = SelfOptions & HBoxOptions;
 
-    options = merge( {
-      spacing: 8,
+export default class ElapsedTimeNode extends HBox {
+
+  private readonly disposeElapsedTimeNode: () => void;
+
+  constructor( elapsedTimeProperty: IProperty<number>, providedOptions?: ElapsedTimeNodeOptions ) {
+
+    const options = optionize<ElapsedTimeNodeOptions, SelfOptions, HBoxOptions>( {
+
+      // SelfOptions
       clockIconRadius: 15,
       font: StatusBar.DEFAULT_FONT,
-      textFill: 'black'
-    }, options );
+      textFill: 'black',
+
+      // HBoxOptions
+      spacing: 8
+    }, providedOptions );
 
     const clockIcon = new SimpleClockIcon( options.clockIconRadius );
 
@@ -43,12 +52,11 @@ class ElapsedTimeNode extends HBox {
     super( options );
 
     // Update the time display
-    const elapsedTimeListener = elapsedTime => {
+    const elapsedTimeListener = ( elapsedTime: number ) => {
       timeValue.text = GameTimer.formatTime( elapsedTime );
     };
     elapsedTimeProperty.link( elapsedTimeListener );
 
-    // @private
     this.disposeElapsedTimeNode = () => {
       if ( elapsedTimeProperty.hasListener( elapsedTimeListener ) ) {
         elapsedTimeProperty.unlink( elapsedTimeListener );
@@ -56,15 +64,10 @@ class ElapsedTimeNode extends HBox {
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeElapsedTimeNode();
     super.dispose();
   }
 }
 
 vegas.register( 'ElapsedTimeNode', ElapsedTimeNode );
-export default ElapsedTimeNode;
