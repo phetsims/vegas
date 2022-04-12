@@ -1,6 +1,5 @@
 // Copyright 2014-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Button for selecting a game level.
  * Includes an icon, score display, and (optional) 'best time' display.
@@ -12,13 +11,12 @@
  * @author Andrea Lin
  */
 
+import IProperty from '../../axon/js/IProperty.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { Node } from '../../scenery/js/imports.js';
-import { Rectangle } from '../../scenery/js/imports.js';
-import { Text } from '../../scenery/js/imports.js';
-import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
+import { Font, IColor, Node, Rectangle, Text } from '../../scenery/js/imports.js';
+import RectangularPushButton, { RectangularPushButtonOptions } from '../../sun/js/buttons/RectangularPushButton.js';
 import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
 import soundConstants from '../../tambo/js/soundConstants.js';
 import soundManager from '../../tambo/js/soundManager.js';
@@ -32,6 +30,7 @@ import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 
 // constants
+const DEFAULT_BEST_TIME_FONT = new PhetFont( 24 );
 const SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
 const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
 
@@ -39,69 +38,78 @@ const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
   ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars, ScoreDisplayStars, ScoreDisplayNumberAndStar
 ];
 
-class LevelSelectionButton extends RectangularPushButton {
+type SelfOptions = {
+
+  // Used to size the content
+  buttonWidth?: number;
+  buttonHeight?: number;
+
+  // score display
+  scoreDisplayConstructor?: any; //TODO https://github.com/phetsims/vegas/issues/102
+  scoreDisplayOptions?: any; //TODO https://github.com/phetsims/vegas/issues/102
+  scoreDisplayProportion?: number; // percentage of the button height occupied by scoreDisplay, (0,0.5]
+  scoreDisplayMinXMargin?: number; // horizontal margin between scoreDisplay and its background
+  scoreDisplayMinYMargin?: number;  // vertical margin between scoreDisplay and its background
+  iconToScoreDisplayYSpace?: number; // vertical space between icon and score display
+
+  // best time (optional)
+  bestTimeProperty?: IProperty<number> | null; // best time in seconds, null if no best time
+  bestTimeVisibleProperty?: IProperty<boolean> | null; // controls visibility of best time, null if no best time
+  bestTimeFill?: IColor;
+  bestTimeFont?: Font;
+  bestTimeYSpacing?: number;  // vertical space between drop shadow and best time
+
+  // Configures the soundPlayer for a specific game level. Note that this assumes zero-based indexing for game level,
+  // which is often not the case. This option is ignored if RectangularPushButtonOptions.soundPlayer is provided.
+  soundPlayerIndex?: number;
+};
+
+export type LevelSelectionButtonOptions = SelfOptions & Omit<RectangularPushButtonOptions, 'content'>;
+
+export default class LevelSelectionButton extends RectangularPushButton {
+
+  private readonly disposeLevelSelectionButton: () => void;
 
   /**
-   * @param {Node} icon - appears on the button above the score display, scaled to fit
-   * @param {Property.<number>} scoreProperty
-   * @param {Object} [options]
+   * @param icon - appears on the button above the score display, scaled to fit
+   * @param scoreProperty
+   * @param providedOptions
    */
-  constructor( icon, scoreProperty, options ) {
+  constructor( icon: Node, scoreProperty: IProperty<number>, providedOptions?: LevelSelectionButtonOptions ) {
 
-    assert && assert( icon instanceof Node );
+    const options = optionize<LevelSelectionButtonOptions, SelfOptions, RectangularPushButtonOptions, 'xMargin' | 'yMargin'>( {
 
-    options = merge( {
+      // SelfOptions
+      buttonWidth: 150,
+      buttonHeight: 150,
+      scoreDisplayConstructor: ScoreDisplayStars,
+      scoreDisplayOptions: {},
+      scoreDisplayProportion: 0.2,
+      scoreDisplayMinXMargin: 10,
+      scoreDisplayMinYMargin: 5,
+      iconToScoreDisplayYSpace: 10,
+      bestTimeProperty: null,
+      bestTimeVisibleProperty: null,
+      bestTimeFill: 'black',
+      bestTimeFont: DEFAULT_BEST_TIME_FONT,
+      bestTimeYSpacing: 10,
 
       // RectangularPushButton options
       cornerRadius: 10,
       baseColor: 'rgb( 242, 255, 204 )',
       xMargin: 10,
       yMargin: 10,
-
-      // Used to size the content
-      buttonWidth: 150,
-      buttonHeight: 150,
-
-      // score display
-      scoreDisplayConstructor: ScoreDisplayStars,
-      scoreDisplayOptions: null, // passed to scoreDisplayConstructor
-      scoreDisplayProportion: 0.2, // percentage of the button height occupied by scoreDisplay, (0,0.5]
-      scoreDisplayMinXMargin: 10, // horizontal margin between scoreDisplay and its background
-      scoreDisplayMinYMargin: 5,  // vertical margin between scoreDisplay and its background
-      iconToScoreDisplayYSpace: 10, // vertical space between icon and score display
-
-      // best time (optional)
-      bestTimeProperty: null, // null if no best time || {Property.<number>} best time in seconds
-      bestTimeVisibleProperty: null, // null || Property.<boolean>} controls visibility of best time
-      bestTimeFill: 'black',
-      bestTimeFont: new PhetFont( 24 ),
-      bestTimeYSpacing: 10,  // vertical space between drop shadow and best time
-
-      // sound generation
-
-      // {number} - A value that is used to configure the default sound player.  This is used to alter the sound when
-      // the button is in a group, which it usually is.  Note that this assumes zero-based indexing, which is often not
-      // the norm for the game levels.  This is ignored if a custom sound player is defined.
       soundPlayerIndex: 0,
-
-      // {SoundPlayer} - Sound player for this button.  If null, a default will be created.  Use SoundPlayer.NO_SOUND to
-      // turn off sound generation.
-      soundPlayer: null,
 
       // phet-io
       tandem: Tandem.REQUIRED
-    }, options );
+    }, providedOptions );
 
-    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
-      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` ) );
-    assert && assert(
-    options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
-      'scoreDisplayProportion value out of range'
-    );
-    assert && assert(
-      options.soundPlayer === null || options.soundPlayerIndex === 0,
-      'a sound player and an index should not both be specified'
-    );
+    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor ),
+      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` );
+    assert && assert( options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
+      `scoreDisplayProportion out of range: ${options.scoreDisplayProportion}` );
+    assert && assert( options.soundPlayerIndex >= 0, `invalid soundPlayerIndex: ${options.soundPlayerIndex}` );
 
     const maxContentWidth = options.buttonWidth - 2 * options.xMargin;
 
@@ -139,9 +147,8 @@ class LevelSelectionButton extends RectangularPushButton {
       children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ]
     } );
 
-    // Sound generation - if no sound player was provided, create the default.
-    if ( !options.soundPlayer ) {
-      assert && assert( options.soundPlayerIndex >= 0, 'invalid value for soundPlayerIndex' );
+    // If no sound player was provided, create the default.
+    if ( options.soundPlayer === undefined ) {
       const soundClip = new SoundClip( levelSelectionButton_mp3, {
         initialOutputLevel: 0.5,
         rateChangesAffectPlayingSounds: false
@@ -151,6 +158,9 @@ class LevelSelectionButton extends RectangularPushButton {
         play() {
           soundClip.setPlaybackRate( Math.pow( soundConstants.TWELFTH_ROOT_OF_TWO, options.soundPlayerIndex ), 0 );
           soundClip.play();
+        },
+        stop() {
+          soundClip.stop();
         }
       };
     }
@@ -158,8 +168,8 @@ class LevelSelectionButton extends RectangularPushButton {
     super( options );
 
     // Variables that are set if options.bestTimeProperty is specified.
-    let bestTimeListener = null;
-    let bestTimeVisibleListener = null;
+    let bestTimeListener: ( ( bestTime: number ) => void ) | null = null;
+    let bestTimeVisibleListener: ( ( visible: boolean ) => void ) | null = null;
 
     // Best time decoration (optional), centered below the button, does not move when button is pressed
     if ( options.bestTimeProperty ) {
@@ -173,30 +183,29 @@ class LevelSelectionButton extends RectangularPushButton {
       bestTimeNode.top = this.bottom + options.bestTimeYSpacing;
       this.addChild( bestTimeNode );
 
-      bestTimeListener = bestTime => {
+      bestTimeListener = ( bestTime: number ) => {
         bestTimeNode.text = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
         bestTimeNode.centerX = centerX;
       };
       options.bestTimeProperty.link( bestTimeListener );
 
       if ( options.bestTimeVisibleProperty ) {
-        bestTimeVisibleListener = visible => {
+        bestTimeVisibleListener = ( visible: boolean ) => {
           bestTimeNode.visible = visible;
         };
         options.bestTimeVisibleProperty.link( bestTimeVisibleListener );
       }
     }
 
-    // @private
     this.disposeLevelSelectionButton = () => {
 
       scoreDisplay.dispose();
 
-      if ( bestTimeListener && options.bestTimeProperty.hasListener( bestTimeListener ) ) {
+      if ( options.bestTimeProperty && bestTimeListener && options.bestTimeProperty.hasListener( bestTimeListener ) ) {
         options.bestTimeProperty.unlink( bestTimeListener );
       }
 
-      if ( bestTimeVisibleListener && options.bestTimeVisibleProperty.hasListener( bestTimeVisibleListener ) ) {
+      if ( options.bestTimeVisibleProperty && bestTimeVisibleListener && options.bestTimeVisibleProperty.hasListener( bestTimeVisibleListener ) ) {
         options.bestTimeVisibleProperty.unlink( bestTimeVisibleListener );
       }
     };
@@ -205,13 +214,8 @@ class LevelSelectionButton extends RectangularPushButton {
   /**
    * Creates a new icon with the same dimensions as the specified icon. The new icon will be scaled to fit,
    * and a background with the specified size may be added to ensure that the bounds of the returned node are correct.
-   * @public
-   *
-   * @param {Node} icon
-   * @param {Dimension2} size
-   * @returns {Node}
    */
-  static createSizedImageNode( icon, size ) {
+  public static createSizedImageNode( icon: Node, size: Dimension2 ): Node {
     icon.scale( Math.min( size.width / icon.bounds.width, size.height / icon.bounds.height ) );
     if ( Math.abs( icon.bounds.width - size.width ) < SCALING_TOLERANCE &&
          Math.abs( icon.bounds.height - size.height ) < SCALING_TOLERANCE ) {
@@ -227,15 +231,10 @@ class LevelSelectionButton extends RectangularPushButton {
     return background;
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeLevelSelectionButton();
     super.dispose();
   }
 }
 
 vegas.register( 'LevelSelectionButton', LevelSelectionButton );
-export default LevelSelectionButton;
