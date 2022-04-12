@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Display a score as 'N *', where N is a number and '*' is a star.
  * If N is 0, it is hidden and the star is grayed out.
@@ -12,40 +11,46 @@
 import Utils from '../../dot/js/Utils.js';
 import merge from '../../phet-core/js/merge.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
-import { HBox } from '../../scenery/js/imports.js';
-import { Text } from '../../scenery/js/imports.js';
+import { Font, HBox, HBoxOptions, IColor, Text } from '../../scenery/js/imports.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
+import IProperty from '../../axon/js/IProperty.js';
+import optionize from '../../phet-core/js/optionize.js';
 
-class ScoreDisplayNumberAndStar extends HBox {
+type SelfOptions = {
+  font?: Font;
+  textFill?: IColor;
+  scoreDecimalPlaces?: number;
+  spacing?: number;
+  starNodeOptions?: any; //TODO https://github.com/phetsims/scenery-phet/issues/734
+};
 
-  /**
-   * @param {Property.<number>} scoreProperty
-   * @param {Object} [options]
-   */
-  constructor( scoreProperty, options ) {
+export type ScoreDisplayNumberAndStarOptions = SelfOptions & Omit<HBoxOptions, 'children'>;
 
-    options = merge( {
-      starNodeOptions: null, // options to StarNode
+export default class ScoreDisplayNumberAndStar extends HBox {
+
+  private readonly disposeScoreDisplayNumberAndStar: () => void;
+
+  constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayNumberAndStarOptions ) {
+
+    const options = optionize<ScoreDisplayNumberAndStarOptions, SelfOptions, HBoxOptions>( {
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
       scoreDecimalPlaces: 0,
-      spacing: 5
-    }, options );
-
-    // fill in defaults for starNodeOptions
-    options.starNodeOptions = merge( {
-      outerRadius: 10,
-      innerRadius: 5,
-      filledLineWidth: 1.5,
-      emptyLineWidth: 1.5
-    }, options.starNodeOptions );
+      spacing: 5,
+      starNodeOptions: {
+        outerRadius: 10,
+        innerRadius: 5,
+        filledLineWidth: 1.5,
+        emptyLineWidth: 1.5
+      }
+    }, providedOptions );
 
     super( options );
 
     // Update number displayed based on score.
     assert && assert( !options.children, 'ScoreDisplayNumberAndStar sets children' );
-    const scorePropertyListener = score => {
+    const scorePropertyListener = ( score: number ) => {
       const children = [];
 
       if ( score === 0 ) {
@@ -63,21 +68,15 @@ class ScoreDisplayNumberAndStar extends HBox {
     };
     scoreProperty.link( scorePropertyListener );
 
-    // @private
     this.disposeScoreDisplayNumberAndStar = function() {
       scoreProperty.unlink( scorePropertyListener );
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeScoreDisplayNumberAndStar();
     super.dispose();
   }
 }
 
 vegas.register( 'ScoreDisplayNumberAndStar', ScoreDisplayNumberAndStar );
-export default ScoreDisplayNumberAndStar;

@@ -1,6 +1,5 @@
-// Copyright 2013-2021, University of Colorado Boulder
+// Copyright 2013-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Display a score as '* * * *', where '*' are stars, which may be fully or partially filled in.
  * See specification in https://github.com/phetsims/vegas/issues/59.
@@ -10,33 +9,39 @@
  * @author Andrea Lin
  */
 
+import IProperty from '../../axon/js/IProperty.js';
 import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
-import { HBox } from '../../scenery/js/imports.js';
+import { HBox, HBoxOptions } from '../../scenery/js/imports.js';
 import vegas from './vegas.js';
 
-class ScoreDisplayStars extends HBox {
+type SelfOptions = {
+  numberOfStars?: number;
+  perfectScore?: number;
+  spacing?: number;
+  starNodeOptions?: any; //TODO https://github.com/phetsims/scenery-phet/issues/734
+};
 
-  /**
-   * @param {Property.<number>} scoreProperty
-   * @param {Object} [options]
-   */
-  constructor( scoreProperty, options ) {
+export type ScoreDisplayStarsOptions = SelfOptions & Omit<HBoxOptions, 'children'>;
 
-    options = merge( {
-      starNodeOptions: null, // options to StarNode
+export default class ScoreDisplayStars extends HBox {
+
+  private readonly disposeScoreDisplayStars: () => void;
+
+  constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayStarsOptions ) {
+
+    const options = optionize<ScoreDisplayStarsOptions, SelfOptions, HBoxOptions>( {
       numberOfStars: 1,
       perfectScore: 1,
-      spacing: 3
-    }, options );
-
-    // fill in defaults for starNodeOptions
-    options.starNodeOptions = merge( {
-      outerRadius: 10,
-      innerRadius: 5,
-      filledLineWidth: 1.5,
-      emptyLineWidth: 1.5
-    }, options.starNodeOptions );
+      spacing: 3,
+      starNodeOptions: {
+        outerRadius: 10,
+        innerRadius: 5,
+        filledLineWidth: 1.5,
+        emptyLineWidth: 1.5
+      }
+    }, providedOptions );
 
     const numberOfStars = options.numberOfStars;
     const perfectScore = options.perfectScore;
@@ -45,7 +50,7 @@ class ScoreDisplayStars extends HBox {
 
     // Update visibility of filled and half-filled stars based on score.
     assert && assert( !options.children, 'ScoreDisplayStars sets children' );
-    const scorePropertyListener = score => {
+    const scorePropertyListener = ( score: number ) => {
 
       assert && assert( score <= perfectScore, `Score ${score} exceeds perfect score ${perfectScore}` );
 
@@ -72,21 +77,15 @@ class ScoreDisplayStars extends HBox {
     };
     scoreProperty.link( scorePropertyListener );
 
-    // @private
     this.disposeScoreDisplayStars = function() {
       scoreProperty.unlink( scorePropertyListener );
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeScoreDisplayStars();
     super.dispose();
   }
 }
 
 vegas.register( 'ScoreDisplayStars', ScoreDisplayStars );
-export default ScoreDisplayStars;

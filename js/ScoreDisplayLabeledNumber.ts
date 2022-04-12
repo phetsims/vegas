@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Display a score as 'Score: N', where N is a number.
  * See specification in https://github.com/phetsims/vegas/issues/59.
@@ -9,27 +8,33 @@
  */
 
 import Utils from '../../dot/js/Utils.js';
-import merge from '../../phet-core/js/merge.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
-import { Node } from '../../scenery/js/imports.js';
-import { Text } from '../../scenery/js/imports.js';
+import { Font, HBoxOptions, IColor, Node, Text } from '../../scenery/js/imports.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
+import IProperty from '../../axon/js/IProperty.js';
+import optionize from '../../phet-core/js/optionize.js';
 
-class ScoreDisplayLabeledNumber extends Node {
+type SelfOptions = {
+  font?: Font;
+  textFill?: IColor;
+  scoreDecimalPlaces?: number;
+};
 
-  /**
-   * @param {Property.<number>} scoreProperty
-   * @param {Object} [options]
-   */
-  constructor( scoreProperty, options ) {
+export type ScoreDisplayLabeledNumberOptions = SelfOptions & Omit<HBoxOptions, 'children'>;
 
-    options = merge( {
+export default class ScoreDisplayLabeledNumber extends Node {
+
+  private readonly disposeScoreDisplayLabeledNumber: () => void;
+
+  constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayLabeledNumberOptions ) {
+
+    const options = optionize<ScoreDisplayLabeledNumberOptions, SelfOptions, HBoxOptions>( {
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
       scoreDecimalPlaces: 0
-    }, options );
+    }, providedOptions );
 
     const scoreDisplayText = new Text( '', {
       font: options.font,
@@ -40,7 +45,7 @@ class ScoreDisplayLabeledNumber extends Node {
     options.children = [ scoreDisplayText ];
 
     // Update number displayed based on score.
-    const scorePropertyListener = function( score ) {
+    const scorePropertyListener = ( score: number ) => {
       scoreDisplayText.text = StringUtils.fillIn( vegasStrings.pattern.score.number, {
         score: Utils.toFixed( score, options.scoreDecimalPlaces )
       } );
@@ -49,21 +54,15 @@ class ScoreDisplayLabeledNumber extends Node {
 
     super( options );
 
-    // @private
     this.disposeScoreDisplayLabeledNumber = function() {
       scoreProperty.unlink( scorePropertyListener );
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeScoreDisplayLabeledNumber();
     super.dispose();
   }
 }
 
 vegas.register( 'ScoreDisplayLabeledNumber', ScoreDisplayLabeledNumber );
-export default ScoreDisplayLabeledNumber;
