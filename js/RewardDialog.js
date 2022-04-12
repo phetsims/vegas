@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * A dialog that the client displays when the user gets a specific number of stars.
  * See specification in https://github.com/phetsims/vegas/issues/59.
