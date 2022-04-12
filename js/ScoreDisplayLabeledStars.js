@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Display a score as 'Score: * * * *', where '*' are stars, which may be fully or partially filled in.
  * See specification in https://github.com/phetsims/vegas/issues/59.

@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Display a score as 'Score: N', where N is a number.
  * See specification in https://github.com/phetsims/vegas/issues/59.

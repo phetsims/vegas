@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Display a score as 'N *', where N is a number and '*' is a star.
  * If N is 0, it is hidden and the star is grayed out.
