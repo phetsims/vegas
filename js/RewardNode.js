@@ -1,5 +1,6 @@
 // Copyright 2014-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Reward node that shows many nodes animating continuously, for fun!  Shown when a perfect score is achieved in a game.
  * You can also test this by running vegas/vegas_en.html and clicking on the "Reward" screen.
