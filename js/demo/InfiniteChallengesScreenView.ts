@@ -1,6 +1,5 @@
 // Copyright 2014-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Demonstrates the challenge UI for a game that has an infinite number of challenges per level.
  *
@@ -21,7 +20,7 @@ import vegas from '../vegas.js';
 // constants
 const SCORE_RANGE = new Range( 0, 1000 );
 
-class InfiniteChallengesScreenView extends ScreenView {
+export default class InfiniteChallengesScreenView extends ScreenView {
 
   constructor() {
 
@@ -53,4 +52,3 @@ class InfiniteChallengesScreenView extends ScreenView {
 }
 
 vegas.register( 'InfiniteChallengesScreenView', InfiniteChallengesScreenView );
-export default InfiniteChallengesScreenView;

@@ -1,6 +1,5 @@
 // Copyright 2014-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Demonstrates UI components related to the typical level-selection UI in games.
  *
@@ -32,7 +31,7 @@ const NUM_STARS = 5;
 const SCORE_RANGE = new Range( 0, 1000 );
 const BEST_TIME_RANGE = new Range( 0, 10000 );
 
-class LevelSelectionScreenView extends ScreenView {
+export default class LevelSelectionScreenView extends ScreenView {
 
   constructor() {
 
@@ -134,4 +133,3 @@ class LevelSelectionScreenView extends ScreenView {
 }
 
 vegas.register( 'LevelSelectionScreenView', LevelSelectionScreenView );
-export default LevelSelectionScreenView;

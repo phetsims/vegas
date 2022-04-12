@@ -8,7 +8,7 @@
  */
 
 import { Font, HBox, HBoxOptions, IColor, Text } from '../../scenery/js/imports.js';
-import ScoreDisplayStars from './ScoreDisplayStars.js';
+import ScoreDisplayStars, { ScoreDisplayStarsOptions } from './ScoreDisplayStars.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
@@ -21,7 +21,7 @@ type SelfOptions = {
   spacing?: number;
 };
 
-export type ScoreDisplayLabeledStarsOptions = SelfOptions & Omit<HBoxOptions, 'children'>;
+export type ScoreDisplayLabeledStarsOptions = SelfOptions & ScoreDisplayStarsOptions & Omit<HBoxOptions, 'children'>;
 
 export default class ScoreDisplayLabeledStars extends HBox {
 

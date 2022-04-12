@@ -1,6 +1,5 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Test harness for the things related to game rewards.
  *
@@ -16,7 +15,9 @@ import RewardDialog from '../RewardDialog.js';
 import RewardNode from '../RewardNode.js';
 import vegas from '../vegas.js';
 
-class RewardScreenView extends ScreenView {
+export default class RewardScreenView extends ScreenView {
+
+  private readonly rewardNode: RewardNode;
 
   constructor() {
     super();
@@ -46,11 +47,9 @@ class RewardScreenView extends ScreenView {
     this.addChild( rewardDialogButton );
   }
 
-  // @public
-  step( timeElapsed ) {
+  public step( timeElapsed: number ): void {
     this.rewardNode.step( timeElapsed );
   }
 }
 
 vegas.register( 'RewardScreenView', RewardScreenView );
-export default RewardScreenView;

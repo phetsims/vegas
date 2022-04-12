@@ -1,6 +1,5 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Demonstrates vegas UI components.
  *
@@ -9,14 +8,12 @@
  */
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
-import Property from '../../../axon/js/Property.js';
+import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { HBox } from '../../../scenery/js/imports.js';
-import { Text } from '../../../scenery/js/imports.js';
-import { VBox } from '../../../scenery/js/imports.js';
+import { HBox, Text, VBox } from '../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../sun/js/buttons/RectangularPushButton.js';
 import Checkbox from '../../../sun/js/Checkbox.js';
 import HSlider from '../../../sun/js/HSlider.js';
@@ -29,17 +26,32 @@ const PERFECT_SCORE = 10;
 const NUMBER_OF_CHALLENGES = 10;
 const DEFAULT_FONT = new PhetFont( 20 );
 
-class FiniteChallengesScreenView extends ScreenView {
+export default class FiniteChallengesScreenView extends ScreenView {
 
   constructor() {
 
     super();
 
-    const levelProperty = new Property( 1 ); // 1-based
-    const challengeIndexProperty = new Property( 0 );
-    const numberOfChallengesProperty = new Property( NUMBER_OF_CHALLENGES );
-    const scoreProperty = new Property( 0 );
-    const elapsedTimeProperty = new Property( 0 );
+    // 1-based
+    const levelProperty = new NumberProperty( 1, {
+      numberType: 'Integer',
+      range: new Range( 1, 5 )
+    } );
+    const challengeIndexProperty = new NumberProperty( 0, {
+      numberType: 'Integer',
+      range: new Range( 0, NUMBER_OF_CHALLENGES - 1 )
+    } );
+    const numberOfChallengesProperty = new NumberProperty( NUMBER_OF_CHALLENGES, {
+      numberType: 'Integer',
+      range: new Range( 1, NUMBER_OF_CHALLENGES )
+    } );
+    const scoreProperty = new NumberProperty( 0, {
+      numberType: 'Integer',
+      range: new Range( 0, PERFECT_SCORE )
+    } );
+    const elapsedTimeProperty = new NumberProperty( 0, {
+      range: new Range( 0, 1000 )
+    } );
     const timerEnabledProperty = new BooleanProperty( true );
 
     // status bar across the top
@@ -60,7 +72,7 @@ class FiniteChallengesScreenView extends ScreenView {
     const levelSlider = new HBox( {
       children: [
         new Text( 'Level: ', { font: DEFAULT_FONT } ),
-        new HSlider( levelProperty, new Range( 1, 5 ), {
+        new HSlider( levelProperty, levelProperty.range!, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]
@@ -69,7 +81,7 @@ class FiniteChallengesScreenView extends ScreenView {
     const challengeIndexSlider = new HBox( {
       children: [
         new Text( 'Challenge: ', { font: DEFAULT_FONT } ),
-        new HSlider( challengeIndexProperty, new Range( 0, NUMBER_OF_CHALLENGES - 1 ), {
+        new HSlider( challengeIndexProperty, challengeIndexProperty.range!, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]
@@ -78,7 +90,7 @@ class FiniteChallengesScreenView extends ScreenView {
     const numberOfChallengesSlider = new HBox( {
       children: [
         new Text( 'Number of challenges: ', { font: DEFAULT_FONT } ),
-        new HSlider( numberOfChallengesProperty, new Range( 1, NUMBER_OF_CHALLENGES ), {
+        new HSlider( numberOfChallengesProperty, numberOfChallengesProperty.range!, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]
@@ -89,14 +101,16 @@ class FiniteChallengesScreenView extends ScreenView {
       top: statusBar.bottom + 30,
       children: [
         new Text( 'Score: ', { font: DEFAULT_FONT } ),
-        new HSlider( scoreProperty, new Range( 0, PERFECT_SCORE ) )
+        new HSlider( scoreProperty, scoreProperty.range!, {
+          constrainValue: value => Utils.roundSymmetric( value )
+        } )
       ]
     } );
 
     const elapsedTimeSlider = new HBox( {
       children: [
         new Text( 'Elapsed time: ', { font: DEFAULT_FONT } ),
-        new HSlider( elapsedTimeProperty, new Range( 0, 1000 ), {
+        new HSlider( elapsedTimeProperty, elapsedTimeProperty.range!, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]
@@ -141,4 +155,3 @@ class FiniteChallengesScreenView extends ScreenView {
 }
 
 vegas.register( 'FiniteChallengesScreenView', FiniteChallengesScreenView );
-export default FiniteChallengesScreenView;
