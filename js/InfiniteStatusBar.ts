@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * InfiniteStatusBar is the status bar for games that have an infinite (open-ended) number of challenges per level.
  * See specification in https://github.com/phetsims/vegas/issues/59.
@@ -11,11 +10,15 @@
 
 import merge from '../../phet-core/js/merge.js';
 import BackButton from '../../scenery-phet/js/buttons/BackButton.js';
-import { HBox } from '../../scenery/js/imports.js';
+import { HBox, Node } from '../../scenery/js/imports.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
-import StatusBar from '../../scenery-phet/js/StatusBar.js';
+import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
+import Bounds2 from '../../dot/js/Bounds2.js';
+import IProperty from '../../axon/js/IProperty.js';
+import optionize from '../../phet-core/js/optionize.js';
+import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 
 // Valid values for scoreDisplayConstructor. These are the types that are relevant for this status bar.
 // All constructors must have the same signature!
@@ -23,30 +26,45 @@ const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
   ScoreDisplayLabeledNumber, ScoreDisplayNumberAndStar
 ];
 
-class InfiniteStatusBar extends StatusBar {
+type SelfOptions = {
+  backButtonListener?: PushButtonListener;
+  xMargin?: number;
+  yMargin?: number;
+  spacing?: number;
+
+  // score display
+  scoreDisplayConstructor?: any;
+  scoreDisplayOptions?: any;
+};
+
+export type InfiniteStatusBarOptions = SelfOptions & Omit<StatusBarOptions, 'children' | 'barHeight'>;
+
+export default class InfiniteStatusBar extends StatusBar {
+
+  private readonly disposeInfiniteStatusBar: () => void;
 
   /**
-   * @param {Bounds2} layoutBounds - static 'safe' bounds of the parent ScreenView
-   * @param {Property.<Bounds2>} visibleBoundsProperty - dynamic bounds of the browser window
+   * @param layoutBounds - layoutBounds of the ScreenView
+   * @param visibleBoundsProperty - visible bounds of the ScreenView
    * @param {Node} messageNode - to the right of the back button, typically Text
-   * @param {Property.<number>} scoreProperty
-   * @param {Object} [options]
+   * @param scoreProperty
+   * @param providedOptions
    */
-  constructor( layoutBounds, visibleBoundsProperty, messageNode, scoreProperty, options ) {
+  constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, messageNode: Node,
+               scoreProperty: IProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
 
-    options = merge( {
-      backButtonListener: null,
+    const options = optionize<InfiniteStatusBarOptions, Omit<SelfOptions, 'scoreDisplayOptions'>, StatusBarOptions>( {
+
+      // SelfOptions
+      backButtonListener: _.noop,
       xMargin: 20,
       yMargin: 10,
       spacing: 10,
+      scoreDisplayConstructor: ScoreDisplayNumberAndStar
+    }, providedOptions );
 
-      // score display
-      scoreDisplayConstructor: ScoreDisplayNumberAndStar,
-      scoreDisplayOptions: null // passed to scoreDisplayConstructor
-    }, options );
-
-    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
-      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` ) );
+    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor ),
+      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` );
 
     // button that typically takes us back to the level-selection UI
     const backButton = new BackButton( {
@@ -87,21 +105,15 @@ class InfiniteStatusBar extends StatusBar {
       scoreDisplay.right = this.positioningBoundsProperty.value.right;
     } );
 
-    // @private
     this.disposeInfiniteStatusBar = () => {
       scoreDisplay.dispose();
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeInfiniteStatusBar();
     super.dispose();
   }
 }
 
 vegas.register( 'InfiniteStatusBar', InfiniteStatusBar );
-export default InfiniteStatusBar;

@@ -1,6 +1,5 @@
 // Copyright 2013-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * FiniteStatusBar is the status bar for games that have a finite number of challenges per level.
  * This was adapted from and replaces ScoreboardBar. See https://github.com/phetsims/vegas/issues/66.
@@ -8,20 +7,21 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import optionize from '../../phet-core/js/optionize.js';
 import merge from '../../phet-core/js/merge.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
-import { HBox } from '../../scenery/js/imports.js';
-import { Rectangle } from '../../scenery/js/imports.js';
-import { Text } from '../../scenery/js/imports.js';
-import TextPushButton from '../../sun/js/buttons/TextPushButton.js';
+import { Font, HBox, IColor, Node, Rectangle, Text, TextOptions } from '../../scenery/js/imports.js';
+import TextPushButton, { TextPushButtonOptions } from '../../sun/js/buttons/TextPushButton.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayLabeledStars from './ScoreDisplayLabeledStars.js';
-import StatusBar from '../../scenery-phet/js/StatusBar.js';
+import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
+import IProperty from '../../axon/js/IProperty.js';
+import Bounds2 from '../../dot/js/Bounds2.js';
 
 // Valid values for scoreDisplayConstructor. These are the types that are relevant for this status bar.
 // All constructors must have the same signature!
@@ -29,58 +29,89 @@ const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
   ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars
 ];
 
-class FiniteStatusBar extends StatusBar {
+type SelfOptions = {
+
+  // optional Properties
+  challengeIndexProperty?: IProperty<number> | null;
+  numberOfChallengesProperty?: IProperty<number> | null;
+  levelProperty?: IProperty<number> | null;
+  elapsedTimeProperty?: IProperty<number> | null;
+  timerEnabledProperty?: IProperty<boolean> | null;
+
+  // things that can be hidden
+  levelVisible?: boolean;
+  challengeNumberVisible?: boolean;
+
+  // all text
+  font?: Font;
+  textFill?: IColor;
+
+  // score display
+  scoreDisplayConstructor?: any;
+  scoreDisplayOptions?: any;
+
+  // nested options for 'Start Over' button, filled in below
+  startOverButtonOptions?: TextPushButtonOptions | null;
+  startOverButtonText?: string;
+
+  // Timer
+  clockIconRadius?: number;
+
+  // spacing and margin for things in the bar
+  xSpacing?: number;
+  xMargin?: number;
+  yMargin?: number;
+
+  levelTextOptions?: TextOptions | null; // passed to the "Level N" text
+  challengeTextOptions?: TextOptions | null; // passed to the "Challenge N of M" text
+
+  barFill?: IColor;
+  barStroke?: IColor;
+};
+
+export type FiniteStatusBarOptions = SelfOptions & StatusBarOptions;
+
+export default class FiniteStatusBar extends StatusBar {
+
+  private readonly disposeFiniteStatusBar: () => void;
 
   /**
-   * @param {Bounds2} layoutBounds
-   * @param {Property.<Bounds2>} visibleBoundsProperty
-   * @param {Property.<number>} scoreProperty
-   * @param {Object} [options]
+   * @param layoutBounds - layoutBounds of the ScreenView
+   * @param visibleBoundsProperty - visible bounds of the ScreenView
+   * @param scoreProperty
+   * @param providedOptions
    */
-  constructor( layoutBounds, visibleBoundsProperty, scoreProperty, options ) {
+  constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, scoreProperty: IProperty<number>,
+               providedOptions?: FiniteStatusBarOptions ) {
 
-    options = merge( {
+    const options = optionize<FiniteStatusBarOptions, SelfOptions, StatusBarOptions, 'tandem'>( {
 
-      // optional Properties
-      challengeIndexProperty: null, // {Property.<number>|null}
-      numberOfChallengesProperty: null, // {Property.<number>|null}
-      levelProperty: null, // {Property.<number>|null}
-      elapsedTimeProperty: null, // {Property.<number>|null}
-      timerEnabledProperty: null, // {Property.<boolean>|null}
-
-      // things that can be hidden
+      // SelfOptions
+      challengeIndexProperty: null,
+      numberOfChallengesProperty: null,
+      levelProperty: null,
+      elapsedTimeProperty: null,
+      timerEnabledProperty: null,
       levelVisible: true,
       challengeNumberVisible: true,
-
-      // all text
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
-
-      // score display
       scoreDisplayConstructor: ScoreDisplayLabeledNumber,
-      scoreDisplayOptions: null, // passed to scoreDisplayConstructor
-
-      // nested options for 'Start Over' button, filled in below
+      scoreDisplayOptions: null,
       startOverButtonOptions: null,
       startOverButtonText: vegasStrings.startOver,
-
-      // Timer
       clockIconRadius: 15,
-
-      // spacing and margin for things in the bar
       xSpacing: 50,
       xMargin: 20,
       yMargin: 10,
-
-      levelTextOptions: null, // passed to the "Level N" text
-      challengeTextOptions: null, // passed to the "Challenge N of M" text
-
+      levelTextOptions: null,
+      challengeTextOptions: null,
       barFill: null,
       barStroke: null,
 
-      // phet-io
+      // StatusBarOptions
       tandem: Tandem.REQUIRED
-    }, options );
+    }, providedOptions );
 
     // nested options for score display
     options.scoreDisplayOptions = merge( {
@@ -100,8 +131,8 @@ class FiniteStatusBar extends StatusBar {
       maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ) // use 20% of available width
     }, options.startOverButtonOptions );
 
-    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor,
-      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` ) );
+    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor ),
+      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` );
     assert && assert( ( options.challengeIndexProperty && options.numberOfChallengesProperty ) ||
                       ( !options.challengeIndexProperty && !options.numberOfChallengesProperty ),
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
@@ -128,7 +159,7 @@ class FiniteStatusBar extends StatusBar {
     const leftChildren = [];
 
     // Level N
-    let levelListener;
+    let levelListener: ( ( level: number ) => void ) | null = null;
     if ( options.levelProperty && options.levelVisible ) {
 
       const levelText = new Text( '', merge( {
@@ -136,14 +167,14 @@ class FiniteStatusBar extends StatusBar {
       }, options.levelTextOptions ) );
       leftChildren.push( levelText );
 
-      levelListener = level => {
+      levelListener = ( level: number ) => {
         levelText.text = StringUtils.format( vegasStrings.label.level, level );
       };
       options.levelProperty.link( levelListener );
     }
 
     // Challenge N of M
-    let updateChallengeString;
+    let updateChallengeString: ( () => void ) | null = null;
     if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
 
       const challengeNumberText = new Text( '', merge( {
@@ -153,7 +184,7 @@ class FiniteStatusBar extends StatusBar {
 
       updateChallengeString = () => {
         challengeNumberText.text = StringUtils.format( vegasStrings.pattern[ '0challenge' ][ '1max' ],
-          options.challengeIndexProperty.get() + 1, options.numberOfChallengesProperty.get() );
+          options.challengeIndexProperty!.get() + 1, options.numberOfChallengesProperty!.get() );
       };
       options.challengeIndexProperty.link( updateChallengeString );
       options.numberOfChallengesProperty.link( updateChallengeString );
@@ -164,19 +195,19 @@ class FiniteStatusBar extends StatusBar {
     leftChildren.push( scoreDisplay );
 
     // Timer
-    let elapsedTimeNode;
-    let timerEnabledListener;
+    let elapsedTimeNode: Node | null = null;
+    let timerEnabledListener: ( ( timerEnabled: boolean ) => void ) | null = null;
     if ( options.elapsedTimeProperty && options.timerEnabledProperty ) {
 
       elapsedTimeNode = new ElapsedTimeNode( options.elapsedTimeProperty, {
-        clockRadius: options.clockRadius,
+        clockRadius: options.clockIconRadius,
         font: options.font,
         textFill: options.textFill
       } );
       leftChildren.push( elapsedTimeNode );
 
-      timerEnabledListener = timerEnabled => {
-        elapsedTimeNode.visible = ( options.timerEnabledProperty && timerEnabled );
+      timerEnabledListener = ( timerEnabled: boolean ) => {
+        elapsedTimeNode!.visible = ( !!options.timerEnabledProperty && timerEnabled );
       };
       options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
     }
@@ -212,39 +243,33 @@ class FiniteStatusBar extends StatusBar {
       startOverButton.centerY = positioningBounds.centerY;
     } );
 
-    // @private
     this.disposeFiniteStatusBar = () => {
 
       scoreDisplay.dispose();
       elapsedTimeNode && elapsedTimeNode.dispose();
 
-      if ( options.levelProperty && options.levelProperty.hasListener( levelListener ) ) {
+      if ( options.levelProperty && levelListener && options.levelProperty.hasListener( levelListener ) ) {
         options.levelProperty.unlink( levelListener );
       }
 
-      if ( options.challengeIndexProperty && options.challengeIndexProperty.hasListener( updateChallengeString ) ) {
+      if ( options.challengeIndexProperty && updateChallengeString && options.challengeIndexProperty.hasListener( updateChallengeString ) ) {
         options.challengeIndexProperty.unlink( updateChallengeString );
       }
 
-      if ( options.numberOfChallengesProperty && options.numberOfChallengesProperty.hasListener( updateChallengeString ) ) {
+      if ( options.numberOfChallengesProperty && updateChallengeString && options.numberOfChallengesProperty.hasListener( updateChallengeString ) ) {
         options.numberOfChallengesProperty.link( updateChallengeString );
       }
 
-      if ( options.timerEnabledProperty && options.timerEnabledProperty.hasListener( timerEnabledListener ) ) {
+      if ( options.timerEnabledProperty && timerEnabledListener && options.timerEnabledProperty.hasListener( timerEnabledListener ) ) {
         options.timerEnabledProperty.unlink( timerEnabledListener );
       }
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeFiniteStatusBar();
     super.dispose();
   }
 }
 
 vegas.register( 'FiniteStatusBar', FiniteStatusBar );
-export default FiniteStatusBar;
