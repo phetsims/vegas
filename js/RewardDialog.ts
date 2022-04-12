@@ -44,7 +44,7 @@ type SelfOptions = {
   newLevelButtonListener?: PushButtonListener; // called when 'New Level' button is pressed
 };
 
-type DialogOptions = any; //TODO Dialog.js has not been ported to TypeScript
+type DialogOptions = any; //TODO https://github.com/phetsims/vegas/issues/103 Dialog.js has not been ported to TypeScript
 
 export type RewardDialogOptions = SelfOptions & Omit<DialogOptions, 'focusOnShowNode'>;
 
