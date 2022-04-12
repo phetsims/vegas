@@ -1,5 +1,6 @@
 // Copyright 2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Gets the QueryStringMachine schema for the gameLevels query parameter.
  *
