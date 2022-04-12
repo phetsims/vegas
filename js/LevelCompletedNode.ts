@@ -1,6 +1,5 @@
 // Copyright 2013-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * This node is used to display a user's results when they complete a level.
  *
@@ -9,54 +8,73 @@
  */
 
 import Property from '../../axon/js/Property.js';
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { RichText } from '../../scenery/js/imports.js';
-import { Text } from '../../scenery/js/imports.js';
-import { VBox } from '../../scenery/js/imports.js';
-import { Color } from '../../scenery/js/imports.js';
+import { Color, Font, IColor, RichText, Text, VBox } from '../../scenery/js/imports.js';
+import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import TextPushButton from '../../sun/js/buttons/TextPushButton.js';
-import Panel from '../../sun/js/Panel.js';
+import Panel, { PanelOptions } from '../../sun/js/Panel.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import GameTimer from './GameTimer.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
 
-class LevelCompletedNode extends Panel {
-  /**
-   * @param {number} level - numerical value representing game level completed
-   * @param {number} score
-   * @param {number} perfectScore
-   * @param {number} numStars
-   * @param {boolean} timerEnabled
-   * @param {number} elapsedTime (in seconds)
-   * @param {number} bestTimeAtThisLevel (in seconds), null indicates no best time
-   * @param {boolean} isNewBestTime
-   * @param {function} continueFunction - function to call when the user presses the 'Continue' button
-   * @param {Object} [options]
-   */
-  constructor( level, score, perfectScore, numStars, timerEnabled, elapsedTime, bestTimeAtThisLevel, isNewBestTime,
-               continueFunction, options ) {
+type SelfOptions = {
+  levelVisible?: boolean; // whether to display the level number
+  ySpacing?: number;
+  titleFont?: Font;
+  infoFont?: Font;
+  buttonFont?: Font;
+  buttonFill?: IColor;
+  starDiameter?: number;
+  contentMaxWidth?: number | null; // applied as maxWidth to every subcomponent individually, not Panel's content
+};
 
-    options = merge( {
+export type LevelCompletedNodeOptions = SelfOptions & PanelOptions;
+
+export default class LevelCompletedNode extends Panel {
+
+  private readonly disposeLevelCompletedNode: () => void;
+
+  /**
+   * @param level - the game level that has been completed
+   * @param score
+   * @param perfectScore
+   * @param numberOfStars
+   * @param timerEnabled
+   * @param elapsedTime (in seconds)
+   * @param bestTimeAtThisLevel (in seconds), null indicates no best time
+   * @param isNewBestTime
+   * @param continueFunction - function to call when the user presses the 'Continue' button
+   * @param providedOptions
+   */
+  constructor( level: number, score: number, perfectScore: number, numberOfStars: number, timerEnabled: boolean,
+               elapsedTime: number, bestTimeAtThisLevel: number | null, isNewBestTime: boolean,
+               continueFunction: PushButtonListener, providedOptions?: LevelCompletedNodeOptions ) {
+
+    const options = optionize<LevelCompletedNodeOptions, SelfOptions, PanelOptions, 'tandem'>( {
+
+      // SelfOptions
       levelVisible: true, // whether to display the level number
-      fill: new Color( 180, 205, 255 ),
-      stroke: 'black',
-      lineWidth: 2,
-      cornerRadius: 35,
-      xMargin: 20,
-      yMargin: 20,
       ySpacing: 30,
       titleFont: new PhetFont( { size: 28, weight: 'bold' } ),
       infoFont: new PhetFont( { size: 22, weight: 'bold' } ),
       buttonFont: new PhetFont( 26 ),
       buttonFill: new Color( 255, 255, 0 ),
       starDiameter: 62,
-      contentMaxWidth: null, // {number|null} - Will apply as maxWidth to every interior component individually.
+      contentMaxWidth: null,
+
+      // PanelOptions
+      fill: new Color( 180, 205, 255 ),
+      stroke: 'black',
+      lineWidth: 2,
+      cornerRadius: 35,
+      xMargin: 20,
+      yMargin: 20,
       tandem: Tandem.REQUIRED
-    }, options );
+    }, providedOptions );
 
     // nodes to be added to the panel
     const children = [];
@@ -81,7 +99,7 @@ class LevelCompletedNode extends Panel {
 
     // Progress indicator
     const scoreDisplayStars = new ScoreDisplayStars( new Property( score ), {
-      numberOfStars: numStars,
+      numberOfStars: numberOfStars,
       perfectScore: perfectScore,
       starNodeOptions: {
         innerRadius: options.starDiameter / 4,
@@ -106,7 +124,7 @@ class LevelCompletedNode extends Panel {
     } ) );
 
     // Time (optional)
-    let timeRichText = null;
+    let timeRichText: RichText | null = null;
     if ( timerEnabled ) {
       // @private {Node}
       timeRichText = new RichText( StringUtils.format( vegasStrings.label.time, GameTimer.formatTime( elapsedTime ) ), {
@@ -134,10 +152,13 @@ class LevelCompletedNode extends Panel {
     } );
     children.push( continueButton );
 
-    // Panel
-    super( new VBox( { children: children, spacing: options.ySpacing } ), options );
+    const content = new VBox( {
+      children: children,
+      spacing: options.ySpacing
+    } );
 
-    // @private
+    super( content, options );
+
     this.disposeLevelCompletedNode = () => {
       timeRichText && timeRichText.dispose();
       continueButton.dispose();
@@ -145,16 +166,10 @@ class LevelCompletedNode extends Panel {
     };
   }
 
-  /**
-   * Releases references.
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeLevelCompletedNode();
     super.dispose();
   }
 }
 
 vegas.register( 'LevelCompletedNode', LevelCompletedNode );
-export default LevelCompletedNode;

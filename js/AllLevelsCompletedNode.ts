@@ -1,43 +1,48 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * AllLevelsCompletedNode is a pseudo-dialog shown when all game levels have been completed.
  *
  * @author Jonathan Olson
  */
 
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import FaceNode from '../../scenery-phet/js/FaceNode.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { Node } from '../../scenery/js/imports.js';
-import { RichText } from '../../scenery/js/imports.js';
-import { Text } from '../../scenery/js/imports.js';
-import { VBox } from '../../scenery/js/imports.js';
+import { Node, NodeOptions, RichText, Text, VBox } from '../../scenery/js/imports.js';
+import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../sun/js/Panel.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
 
-// constants
-const FACE_DIAMETER = 160; // empirically determined
+type SelfOptions = {
 
-class AllLevelsCompletedNode extends Node {
+  // diameter of the smiley face
+  faceDiameter?: number;
+
+  // Controls the width of the main message and the text in the button
+  maxTextWidth?: number;
+};
+
+export type AllLevelsCompletedNodeOptions = SelfOptions & NodeOptions;
+
+export default class AllLevelsCompletedNode extends Node {
 
   /**
-   * @param {Function} listener - function that gets called when 'next' button is pressed
-   * @param {Object} [options]
+   * @param listener function that gets called when 'next' button is pressed
+   * @param providedOptions
    */
-  constructor( listener, options ) {
+  constructor( listener: PushButtonListener, providedOptions?: AllLevelsCompletedNodeOptions ) {
     super();
 
-    options = merge( {
-      // {number} - Controls the width of the main message and the text in the button
+    const options = optionize<AllLevelsCompletedNodeOptions, SelfOptions, NodeOptions>( {
+      faceDiameter: 160,
       maxTextWidth: 300
-    }, options );
+    }, providedOptions );
 
     // create the smiley face
-    const faceNode = new FaceNode( FACE_DIAMETER );
+    const faceNode = new FaceNode( options.faceDiameter );
 
     // create the dialog text
     const textMessage = new RichText( vegasStrings.youCompletedAllLevels, {
@@ -68,4 +73,3 @@ class AllLevelsCompletedNode extends Node {
 }
 
 vegas.register( 'AllLevelsCompletedNode', AllLevelsCompletedNode );
-export default AllLevelsCompletedNode;
