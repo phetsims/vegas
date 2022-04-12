@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * A dialog that the client displays when the user gets a specific number of stars.
  * See specification in https://github.com/phetsims/vegas/issues/59.
@@ -11,16 +10,15 @@
 
 import NumberProperty from '../../axon/js/NumberProperty.js';
 import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { HBox } from '../../scenery/js/imports.js';
-import { Image } from '../../scenery/js/imports.js';
-import { Text } from '../../scenery/js/imports.js';
-import { VBox } from '../../scenery/js/imports.js';
+import { Font, HBox, Image, Text, VBox } from '../../scenery/js/imports.js';
+import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../sun/js/Dialog.js';
 import phetGirlJugglingStars_png from '../images/phetGirlJugglingStars_png.js';
-import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
+import ScoreDisplayNumberAndStar, { ScoreDisplayNumberAndStarOptions } from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
 
@@ -36,28 +34,38 @@ const DEFAULT_SCORE_DISPLAY_OPTIONS = {
   }
 };
 
-class RewardDialog extends Dialog {
+type SelfOptions = {
+  phetGirlScale?: number;
+  scoreDisplayOptions?: ScoreDisplayNumberAndStarOptions;
+  buttonsFont?: Font;
+  buttonsWidth?: number; // fixed width for both buttons
+  buttonsYSpacing?: number;
+  keepGoingButtonListener?: PushButtonListener; // called when 'Keep Going' button is pressed
+  newLevelButtonListener?: PushButtonListener; // called when 'New Level' button is pressed
+};
 
-  /**
-   * @param {number} score
-   * @param {Object} [options]
-   */
-  constructor( score, options ) {
+type DialogOptions = any; //TODO Dialog.js has not been ported to TypeScript
 
-    options = merge( {
+export type RewardDialogOptions = SelfOptions & Omit<DialogOptions, 'focusOnShowNode'>;
 
-      // RewardDialog options
+export default class RewardDialog extends Dialog {
+
+  constructor( score: number, providedOptions?: RewardDialogOptions ) {
+
+    const options = optionize<RewardDialogOptions, Omit<SelfOptions, 'scoreDisplayOptions'>, DialogOptions>( {
+
+      // RewardDialogOptions
       phetGirlScale: 0.6,
-      scoreDisplayOptions: null, // {Object|null} options passed to ScoreDisplayNumberAndStar
       buttonsFont: DEFAULT_BUTTONS_FONT,
-      buttonsWidth: 145, // {number} fixed width for both buttons
+      buttonsWidth: 145,
       buttonsYSpacing: 20,
-      keepGoingButtonListener: () => {}, // called when 'Keep Going' button is pressed
-      newLevelButtonListener: () => {}, // called when 'New Level' button is pressed
+      keepGoingButtonListener: _.noop,
+      newLevelButtonListener: _.noop,
 
+      // DialogOptions
       // pdom - Since we are setting the focusOnShowNode to be the first element in content, put the closeButton last
       closeButtonLastInPDOM: true
-    }, options );
+    }, providedOptions );
 
     options.scoreDisplayOptions = merge( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
 
@@ -114,4 +122,3 @@ class RewardDialog extends Dialog {
 }
 
 vegas.register( 'RewardDialog', RewardDialog );
-export default RewardDialog;
