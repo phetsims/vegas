@@ -1,6 +1,5 @@
 // Copyright 2013-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * audio player for the various sounds that are commonly used in PhET games
  *
@@ -26,25 +25,21 @@ const organ = new SoundClip( organ_mp3 );
 let isInitialized = false;
 
 /**
- * A function that adds all the sounds to the sound manager
- * Only does anything on the first time it is called
+ * Adds all needed sounds to the sound manager.
+ * Only does anything on the first time it is called.
  */
-function addSoundsToSoundGenerator() {
-  if ( isInitialized ) {
-    return;
+function addSoundsToSoundGenerator(): void {
+  if ( !isInitialized ) {
+    soundManager.addSoundGenerator( ding );
+    soundManager.addSoundGenerator( boing );
+    soundManager.addSoundGenerator( trumpet );
+    soundManager.addSoundGenerator( cheer );
+    soundManager.addSoundGenerator( organ );
+    isInitialized = true;
   }
-  soundManager.addSoundGenerator( ding );
-  soundManager.addSoundGenerator( boing );
-  soundManager.addSoundGenerator( trumpet );
-  soundManager.addSoundGenerator( cheer );
-  soundManager.addSoundGenerator( organ );
-  isInitialized = true;
 }
 
-/**
- * @constructor
- */
-class GameAudioPlayer {
+export default class GameAudioPlayer {
 
   constructor() {
     addSoundsToSoundGenerator();
@@ -52,17 +47,15 @@ class GameAudioPlayer {
 
   /**
    * play the sound that indicates a correct answer
-   * @public
    */
-  correctAnswer() {
+  public correctAnswer(): void {
     ding.play();
   }
 
   /**
    * play the sound that indicates an incorrect answer
-   * @public
    */
-  wrongAnswer() {
+  public wrongAnswer(): void {
     boing.play();
   }
 
@@ -70,34 +63,30 @@ class GameAudioPlayer {
    * play the sound that indicates a challenge has been completed
    * @public
    */
-  challengeComplete() {
+  public challengeComplete(): void {
     organ.play();
   }
 
   /**
    * play the sound that indicates that the user completed the game but didn't earn any points
-   * @public
    */
-  gameOverZeroScore() {
+  public gameOverZeroScore(): void {
     boing.play();
   }
 
   /**
    * play the sound that indicates that the user finished the game and got some correct and some incorrect answers
-   * @public
    */
-  gameOverImperfectScore() {
+  public gameOverImperfectScore(): void {
     trumpet.play();
   }
 
   /**
    * play the sound that indicates that the user finished the game and got a perfect score
-   * @public
    */
-  gameOverPerfectScore() {
+  public gameOverPerfectScore(): void {
     cheer.play();
   }
 }
 
 vegas.register( 'GameAudioPlayer', GameAudioPlayer );
-export default GameAudioPlayer;
