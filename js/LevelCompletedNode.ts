@@ -11,7 +11,7 @@ import Property from '../../axon/js/Property.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { Color, Font, IColor, RichText, Text, VBox } from '../../scenery/js/imports.js';
+import { Font, IColor, RichText, Text, VBox } from '../../scenery/js/imports.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import TextPushButton from '../../sun/js/buttons/TextPushButton.js';
 import Panel, { PanelOptions } from '../../sun/js/Panel.js';
@@ -20,6 +20,10 @@ import GameTimer from './GameTimer.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
+
+const DEFAULT_TITLE_FONT = new PhetFont( { size: 28, weight: 'bold' } );
+const DEFAULT_INFO_FONT = new PhetFont( { size: 22, weight: 'bold' } );
+const DEFAULT_BUTTON_FONT = new PhetFont( 26 );
 
 type SelfOptions = {
   levelVisible?: boolean; // whether to display the level number
@@ -57,17 +61,17 @@ export default class LevelCompletedNode extends Panel {
     const options = optionize<LevelCompletedNodeOptions, SelfOptions, PanelOptions, 'tandem'>( {
 
       // SelfOptions
-      levelVisible: true, // whether to display the level number
+      levelVisible: true,
       ySpacing: 30,
-      titleFont: new PhetFont( { size: 28, weight: 'bold' } ),
-      infoFont: new PhetFont( { size: 22, weight: 'bold' } ),
-      buttonFont: new PhetFont( 26 ),
-      buttonFill: new Color( 255, 255, 0 ),
+      titleFont: DEFAULT_TITLE_FONT,
+      infoFont: DEFAULT_INFO_FONT,
+      buttonFont: DEFAULT_BUTTON_FONT,
+      buttonFill: 'rgb( 255, 255, 0 )',
       starDiameter: 62,
       contentMaxWidth: null,
 
       // PanelOptions
-      fill: new Color( 180, 205, 255 ),
+      fill: 'rgb( 180, 205, 255 )',
       stroke: 'black',
       lineWidth: 2,
       cornerRadius: 35,
