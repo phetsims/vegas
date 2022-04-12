@@ -8,7 +8,7 @@
   "include": [
     "js/**/*tests.js",
     "js/**/*Tests.js",
-    "js/vegas-main.js",
+    "js/vegas-main.ts",
     "js/demo/**/*",
     "../chipper/phet-types.d.ts"
   ]
