@@ -1,5 +1,6 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * AllLevelsCompletedNode is a pseudo-dialog shown when all game levels have been completed.
  *
