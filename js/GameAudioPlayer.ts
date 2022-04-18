@@ -61,7 +61,6 @@ export default class GameAudioPlayer {
 
   /**
    * play the sound that indicates a challenge has been completed
-   * @public
    */
   public challengeComplete(): void {
     organ.play();

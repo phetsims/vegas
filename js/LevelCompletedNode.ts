@@ -130,7 +130,6 @@ export default class LevelCompletedNode extends Panel {
     // Time (optional)
     let timeRichText: RichText | null = null;
     if ( timerEnabled ) {
-      // @private {Node}
       timeRichText = new RichText( StringUtils.format( vegasStrings.label.time, GameTimer.formatTime( elapsedTime ) ), {
         font: options.infoFont,
         align: 'center',
