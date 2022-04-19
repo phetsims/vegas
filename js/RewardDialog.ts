@@ -52,7 +52,7 @@ export default class RewardDialog extends Dialog {
 
   constructor( score: number, providedOptions?: RewardDialogOptions ) {
 
-    const options = optionize<RewardDialogOptions, Omit<SelfOptions, 'scoreDisplayOptions'>, DialogOptions>( {
+    const options = optionize<RewardDialogOptions, Omit<SelfOptions, 'scoreDisplayOptions'>, DialogOptions>()( {
 
       // RewardDialogOptions
       phetGirlScale: 0.6,

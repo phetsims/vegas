@@ -28,7 +28,7 @@ export default class ElapsedTimeNode extends HBox {
 
   constructor( elapsedTimeProperty: IProperty<number>, providedOptions?: ElapsedTimeNodeOptions ) {
 
-    const options = optionize<ElapsedTimeNodeOptions, SelfOptions, HBoxOptions>( {
+    const options = optionize<ElapsedTimeNodeOptions, SelfOptions, HBoxOptions>()( {
 
       // SelfOptions
       clockIconRadius: 15,

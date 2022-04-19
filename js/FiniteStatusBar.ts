@@ -84,7 +84,7 @@ export default class FiniteStatusBar extends StatusBar {
   constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, scoreProperty: IProperty<number>,
                providedOptions?: FiniteStatusBarOptions ) {
 
-    const options = optionize<FiniteStatusBarOptions, SelfOptions, StatusBarOptions, 'tandem'>( {
+    const options = optionize<FiniteStatusBarOptions, SelfOptions, StatusBarOptions>()( {
 
       // SelfOptions
       challengeIndexProperty: null,

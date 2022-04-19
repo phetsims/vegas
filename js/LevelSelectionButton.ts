@@ -77,7 +77,7 @@ export default class LevelSelectionButton extends RectangularPushButton {
    */
   constructor( icon: Node, scoreProperty: IProperty<number>, providedOptions?: LevelSelectionButtonOptions ) {
 
-    const options = optionize<LevelSelectionButtonOptions, SelfOptions, RectangularPushButtonOptions, 'xMargin' | 'yMargin'>( {
+    const options = optionize<LevelSelectionButtonOptions, SelfOptions, RectangularPushButtonOptions>()( {
 
       // SelfOptions
       buttonWidth: 150,

@@ -30,7 +30,7 @@ export default class ScoreDisplayStars extends HBox {
 
   constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayStarsOptions ) {
 
-    const options = optionize<ScoreDisplayStarsOptions, SelfOptions, HBoxOptions>( {
+    const options = optionize<ScoreDisplayStarsOptions, SelfOptions, HBoxOptions>()( {
 
       // SelfOptions
       numberOfStars: 1,

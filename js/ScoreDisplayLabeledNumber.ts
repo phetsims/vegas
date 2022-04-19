@@ -30,7 +30,7 @@ export default class ScoreDisplayLabeledNumber extends Node {
 
   constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayLabeledNumberOptions ) {
 
-    const options = optionize<ScoreDisplayLabeledNumberOptions, SelfOptions, HBoxOptions>( {
+    const options = optionize<ScoreDisplayLabeledNumberOptions, SelfOptions, HBoxOptions>()( {
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
       scoreDecimalPlaces: 0

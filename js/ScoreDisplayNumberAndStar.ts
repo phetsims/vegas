@@ -32,7 +32,7 @@ export default class ScoreDisplayNumberAndStar extends HBox {
 
   constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayNumberAndStarOptions ) {
 
-    const options = optionize<ScoreDisplayNumberAndStarOptions, SelfOptions, HBoxOptions>( {
+    const options = optionize<ScoreDisplayNumberAndStarOptions, SelfOptions, HBoxOptions>()( {
 
       // SelfOptions
       font: StatusBar.DEFAULT_FONT,

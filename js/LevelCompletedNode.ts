@@ -58,7 +58,7 @@ export default class LevelCompletedNode extends Panel {
                elapsedTime: number, bestTimeAtThisLevel: number | null, isNewBestTime: boolean,
                continueFunction: PushButtonListener, providedOptions?: LevelCompletedNodeOptions ) {
 
-    const options = optionize<LevelCompletedNodeOptions, SelfOptions, PanelOptions, 'tandem'>( {
+    const options = optionize<LevelCompletedNodeOptions, SelfOptions, PanelOptions>()( {
 
       // SelfOptions
       levelVisible: true,

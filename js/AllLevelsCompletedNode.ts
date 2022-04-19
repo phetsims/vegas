@@ -36,7 +36,7 @@ export default class AllLevelsCompletedNode extends Node {
   constructor( listener: PushButtonListener, providedOptions?: AllLevelsCompletedNodeOptions ) {
     super();
 
-    const options = optionize<AllLevelsCompletedNodeOptions, SelfOptions, NodeOptions>( {
+    const options = optionize<AllLevelsCompletedNodeOptions, SelfOptions, NodeOptions>()( {
       faceDiameter: 160,
       maxTextWidth: 300
     }, providedOptions );

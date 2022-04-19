@@ -110,7 +110,7 @@ export default class RewardNode extends CanvasNode {
 
   constructor( providedOptions?: RewardNodeOptions ) {
 
-    const options = optionize<RewardNodeOptions, SelfOptions, CanvasNodeOptions>( {
+    const options = optionize<RewardNodeOptions, SelfOptions, CanvasNodeOptions>()( {
 
       // SelfOptions
       nodes: null,
