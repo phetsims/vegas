@@ -82,6 +82,7 @@ export default class InfiniteStatusBar extends StatusBar {
       maxWidth: 0.7 * layoutBounds.width
     } );
 
+    //TODO https://github.com/phetsims/vegas/issues/102 use optionize
     const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty,
       merge( { maxWidth: 0.2 * layoutBounds.width }, options.scoreDisplayOptions ) );
 

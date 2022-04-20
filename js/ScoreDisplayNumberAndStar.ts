@@ -57,6 +57,7 @@ export default class ScoreDisplayNumberAndStar extends HBox {
       const children = [];
 
       if ( score === 0 ) {
+        //TODO https://github.com/phetsims/scenery-phet/issues/734 use optionize<StarNodeOptions, {}, StarNodeOptions>
         children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
       }
       else {
@@ -64,6 +65,7 @@ export default class ScoreDisplayNumberAndStar extends HBox {
           font: options.font,
           fill: options.textFill
         } ) );
+        //TODO https://github.com/phetsims/scenery-phet/issues/734 use optionize<StarNodeOptions, {}, StarNodeOptions>
         children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
       }
 

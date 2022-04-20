@@ -52,7 +52,7 @@ type SelfOptions = {
   scoreDisplayOptions?: any; //TODO https://github.com/phetsims/vegas/issues/102
 
   // nested options for 'Start Over' button, filled in below
-  startOverButtonOptions?: TextPushButtonOptions | null;
+  startOverButtonOptions?: TextPushButtonOptions;
   startOverButtonText?: string;
 
   // options for the timer node
@@ -63,8 +63,8 @@ type SelfOptions = {
   xMargin?: number;
   yMargin?: number;
 
-  levelTextOptions?: TextOptions | null; // passed to the "Level N" text
-  challengeTextOptions?: TextOptions | null; // passed to the "Challenge N of M" text
+  levelTextOptions?: TextOptions; // passed to the "Level N" text
+  challengeTextOptions?: TextOptions; // passed to the "Challenge N of M" text
 
   barFill?: IColor;
   barStroke?: IColor;
@@ -85,7 +85,9 @@ export default class FiniteStatusBar extends StatusBar {
   constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, scoreProperty: IProperty<number>,
                providedOptions?: FiniteStatusBarOptions ) {
 
-    const options = optionize<FiniteStatusBarOptions, SelfOptions, StatusBarOptions>()( {
+    const options = optionize<FiniteStatusBarOptions,
+      Omit<SelfOptions, 'startOverButtonOptions' | 'levelTextOptions' | 'challengeTextOptions'>,
+      StatusBarOptions>()( {
 
       // SelfOptions
       challengeIndexProperty: null,
@@ -99,14 +101,11 @@ export default class FiniteStatusBar extends StatusBar {
       textFill: 'black',
       scoreDisplayConstructor: ScoreDisplayLabeledNumber,
       scoreDisplayOptions: null,
-      startOverButtonOptions: null,
       startOverButtonText: vegasStrings.startOver,
       clockIconRadius: 15,
       xSpacing: 50,
       xMargin: 20,
       yMargin: 10,
-      levelTextOptions: null,
-      challengeTextOptions: null,
       barFill: null,
       barStroke: null,
 
@@ -121,7 +120,7 @@ export default class FiniteStatusBar extends StatusBar {
     }, options.scoreDisplayOptions );
 
     // nested options for 'Start Over' button
-    options.startOverButtonOptions = merge( {
+    options.startOverButtonOptions = optionize<TextPushButtonOptions, {}, TextPushButtonOptions>()( {
       font: options.font,
       textFill: options.textFill,
       baseColor: PhetColorScheme.BUTTON_YELLOW,
@@ -139,13 +138,13 @@ export default class FiniteStatusBar extends StatusBar {
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
 
     // nested options for 'Level N' text
-    options.levelTextOptions = merge( {
+    options.levelTextOptions = optionize<TextOptions, {}, TextOptions>()( {
       fill: options.textFill,
       font: options.font
     }, options.levelTextOptions );
 
     // nested options for 'Challenge N of M' text
-    options.challengeTextOptions = merge( {
+    options.challengeTextOptions = optionize<TextOptions, {}, TextOptions>()( {
       fill: options.textFill,
       font: options.font
     }, options.challengeTextOptions );
@@ -163,7 +162,7 @@ export default class FiniteStatusBar extends StatusBar {
     let levelListener: ( ( level: number ) => void ) | null = null;
     if ( options.levelProperty && options.levelVisible ) {
 
-      const levelText = new Text( '', merge( {
+      const levelText = new Text( '', optionize<TextOptions, {}, TextOptions>()( {
         tandem: options.tandem.createTandem( 'levelText' )
       }, options.levelTextOptions ) );
       leftChildren.push( levelText );
@@ -178,7 +177,7 @@ export default class FiniteStatusBar extends StatusBar {
     let updateChallengeString: ( () => void ) | null = null;
     if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
 
-      const challengeNumberText = new Text( '', merge( {
+      const challengeNumberText = new Text( '', optionize<TextOptions, {}, TextOptions>()( {
         tandem: options.tandem.createTandem( 'challengeNumberText' )
       }, options.challengeTextOptions ) );
       leftChildren.push( challengeNumberText );

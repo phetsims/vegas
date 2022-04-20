@@ -10,12 +10,12 @@
 
 import NumberProperty from '../../axon/js/NumberProperty.js';
 import merge from '../../phet-core/js/merge.js';
-import optionize from '../../phet-core/js/optionize.js';
+import optionize, { optionize3 } from '../../phet-core/js/optionize.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import { Font, HBox, Image, Text, VBox } from '../../scenery/js/imports.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
-import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
+import RectangularPushButton, { RectangularPushButtonOptions } from '../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../sun/js/Dialog.js';
 import phetGirlJugglingStars_png from '../images/phetGirlJugglingStars_png.js';
 import ScoreDisplayNumberAndStar, { ScoreDisplayNumberAndStarOptions } from './ScoreDisplayNumberAndStar.js';
@@ -81,17 +81,19 @@ export default class RewardDialog extends Dialog {
       maxWidth: options.buttonsWidth
     };
 
-    const newLevelButton = new RectangularPushButton( merge( {}, buttonOptions, {
-      content: new Text( vegasStrings.newLevel, { font: DEFAULT_BUTTONS_FONT } ),
-      listener: options.newLevelButtonListener,
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
-    } ) );
+    const newLevelButton = new RectangularPushButton(
+      optionize3<RectangularPushButtonOptions, {}, RectangularPushButtonOptions>()( {}, buttonOptions, {
+        content: new Text( vegasStrings.newLevel, { font: DEFAULT_BUTTONS_FONT } ),
+        listener: options.newLevelButtonListener,
+        baseColor: PhetColorScheme.PHET_LOGO_YELLOW
+      } ) );
 
-    const keepGoingButton = new RectangularPushButton( merge( {}, buttonOptions, {
-      content: new Text( vegasStrings.keepGoing, { font: DEFAULT_BUTTONS_FONT } ),
-      listener: options.keepGoingButtonListener,
-      baseColor: 'white'
-    } ) );
+    const keepGoingButton = new RectangularPushButton(
+      optionize3<RectangularPushButtonOptions, {}, RectangularPushButtonOptions>()( {}, buttonOptions, {
+        content: new Text( vegasStrings.keepGoing, { font: DEFAULT_BUTTONS_FONT } ),
+        listener: options.keepGoingButtonListener,
+        baseColor: 'white'
+      } ) );
 
     const buttons = new VBox( {
       children: [ newLevelButton, keepGoingButton ],
