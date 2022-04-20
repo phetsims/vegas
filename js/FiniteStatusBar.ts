@@ -25,6 +25,7 @@ import Bounds2 from '../../dot/js/Bounds2.js';
 
 // Valid values for scoreDisplayConstructor. These are the types that are relevant for this status bar.
 // All constructors must have the same signature!
+// REVIEW-TS: Would it be possible to type this and thus enforce the requirement for having the same signature?
 const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
   ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars
 ];
@@ -54,7 +55,7 @@ type SelfOptions = {
   startOverButtonOptions?: TextPushButtonOptions | null;
   startOverButtonText?: string;
 
-  // Timer
+  // options for the timer node
   clockIconRadius?: number;
 
   // spacing and margin for things in the bar

@@ -32,6 +32,7 @@ import vegas from './vegas.js';
 // constants
 const DEFAULT_BEST_TIME_FONT = new PhetFont( 24 );
 const SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
+// REVIEW-TS: Would it be possible to type this and thus enforce the requirement for having the same signature?
 const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
 
   // All constructors must have the same signature!

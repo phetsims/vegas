@@ -31,7 +31,7 @@ import vegas from './vegas.js';
 const DEBUG_CANVAS_NODE_BOUNDS = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
 const MAX_SPEED = 200; // The maximum speed an image can fall in screen pixels per second.
 
-// Data structure to hold a cached HTMLImageElement and its associated properties
+// Data structure to hold a cached HTMLImageElement and its associated properties.
 type CachedImage = {
 
   // The image to be rendered in the canvas, to be filled in by toImage callback.

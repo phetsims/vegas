@@ -30,6 +30,8 @@ export default class ScoreDisplayLabeledStars extends HBox {
   constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayLabeledStarsOptions ) {
 
     const options = optionize<ScoreDisplayLabeledStarsOptions, SelfOptions, HBoxOptions>()( {
+
+      // SelfOptions
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
       spacing: 5

@@ -37,6 +37,8 @@ export default class AllLevelsCompletedNode extends Node {
     super();
 
     const options = optionize<AllLevelsCompletedNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
       faceDiameter: 160,
       maxTextWidth: 300
     }, providedOptions );
