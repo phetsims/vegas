@@ -1,6 +1,5 @@
 // Copyright 2014-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Main file for the vegas library demo.
  *
@@ -11,6 +10,7 @@ import Property from '../../axon/js/Property.js';
 import Screen from '../../joist/js/Screen.js';
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
 import LevelSelectionScreenView from './demo/LevelSelectionScreenView.js';
@@ -37,28 +37,32 @@ simLauncher.launch( () => {
       createEmptyModel,
       () => new LevelSelectionScreenView(), {
         name: 'Level Selection',
-        backgroundColorProperty: new Property( 'white' )
+        backgroundColorProperty: new Property( 'white' ),
+        tandem: Tandem.OPT_OUT
       } ),
 
     new Screen(
       createEmptyModel,
       () => new FiniteChallengesScreenView(), {
         name: 'Finite Challenges',
-        backgroundColorProperty: new Property( 'white' )
+        backgroundColorProperty: new Property( 'white' ),
+        tandem: Tandem.OPT_OUT
       } ),
 
     new Screen(
       createEmptyModel,
       () => new InfiniteChallengesScreenView(), {
         name: 'Infinite Challenges',
-        backgroundColorProperty: new Property( 'white' )
+        backgroundColorProperty: new Property( 'white' ),
+        tandem: Tandem.OPT_OUT
       } ),
 
     new Screen(
       createEmptyModel,
       () => new RewardScreenView(), {
         name: 'Reward',
-        backgroundColorProperty: new Property( 'white' )
+        backgroundColorProperty: new Property( 'white' ),
+        tandem: Tandem.OPT_OUT
       } )
   ], simOptions ).start();
 } );
