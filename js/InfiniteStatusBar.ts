@@ -22,7 +22,7 @@ import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 
 // Valid values for scoreDisplayConstructor. These are the types that are relevant for this status bar.
 // All constructors must have the same signature!
-// REVIEW-TS: Would it be possible to type this and thus enforce the requirement for having the same signature?
+//TODO https://github.com/phetsims/vegas/issues/102
 const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
   ScoreDisplayLabeledNumber, ScoreDisplayNumberAndStar
 ];
@@ -34,8 +34,8 @@ type SelfOptions = {
   spacing?: number;
 
   // score display
-  scoreDisplayConstructor?: any;
-  scoreDisplayOptions?: any;
+  scoreDisplayConstructor?: any; //TODO https://github.com/phetsims/vegas/issues/102
+  scoreDisplayOptions?: any; //TODO https://github.com/phetsims/vegas/issues/102
 };
 
 export type InfiniteStatusBarOptions = SelfOptions & Omit<StatusBarOptions, 'children' | 'barHeight'>;

@@ -25,7 +25,7 @@ import Bounds2 from '../../dot/js/Bounds2.js';
 
 // Valid values for scoreDisplayConstructor. These are the types that are relevant for this status bar.
 // All constructors must have the same signature!
-// REVIEW-TS: Would it be possible to type this and thus enforce the requirement for having the same signature?
+//TODO https://github.com/phetsims/vegas/issues/102
 const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
   ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars
 ];
@@ -48,8 +48,8 @@ type SelfOptions = {
   textFill?: IColor;
 
   // score display
-  scoreDisplayConstructor?: any;
-  scoreDisplayOptions?: any;
+  scoreDisplayConstructor?: any; //TODO https://github.com/phetsims/vegas/issues/102
+  scoreDisplayOptions?: any; //TODO https://github.com/phetsims/vegas/issues/102
 
   // nested options for 'Start Over' button, filled in below
   startOverButtonOptions?: TextPushButtonOptions | null;
