@@ -17,6 +17,7 @@ import { HBox, Text, VBox } from '../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../sun/js/buttons/RectangularPushButton.js';
 import Checkbox from '../../../sun/js/Checkbox.js';
 import HSlider from '../../../sun/js/HSlider.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import FiniteStatusBar from '../FiniteStatusBar.js';
 import LevelCompletedNode from '../LevelCompletedNode.js';
 import vegas from '../vegas.js';
@@ -30,7 +31,9 @@ export default class FiniteChallengesScreenView extends ScreenView {
 
   constructor() {
 
-    super();
+    super( {
+      tandem: Tandem.OPT_OUT
+    } );
 
     // 1-based
     const levelProperty = new NumberProperty( 1, {

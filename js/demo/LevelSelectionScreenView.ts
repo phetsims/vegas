@@ -13,10 +13,7 @@ import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { HBox } from '../../../scenery/js/imports.js';
-import { Rectangle } from '../../../scenery/js/imports.js';
-import { Text } from '../../../scenery/js/imports.js';
-import { VBox } from '../../../scenery/js/imports.js';
+import { HBox, Rectangle, Text, VBox } from '../../../scenery/js/imports.js';
 import Checkbox from '../../../sun/js/Checkbox.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import LevelSelectionButton from '../LevelSelectionButton.js';
@@ -25,6 +22,7 @@ import ScoreDisplayLabeledStars from '../ScoreDisplayLabeledStars.js';
 import ScoreDisplayNumberAndStar from '../ScoreDisplayNumberAndStar.js';
 import ScoreDisplayStars from '../ScoreDisplayStars.js';
 import vegas from '../vegas.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
 // constants
 const NUM_STARS = 5;
@@ -35,7 +33,9 @@ export default class LevelSelectionScreenView extends ScreenView {
 
   constructor() {
 
-    super();
+    super( {
+      tandem: Tandem.OPT_OUT
+    } );
 
     const scoreProperty = new Property( 0 );
     const bestTimeProperty = new Property( 0 );

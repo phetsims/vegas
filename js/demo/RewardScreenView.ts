@@ -14,13 +14,16 @@ import RectangularPushButton from '../../../sun/js/buttons/RectangularPushButton
 import RewardDialog from '../RewardDialog.js';
 import RewardNode from '../RewardNode.js';
 import vegas from '../vegas.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
 export default class RewardScreenView extends ScreenView {
 
   private readonly rewardNode: RewardNode;
 
   constructor() {
-    super();
+    super( {
+      tandem: Tandem.OPT_OUT
+    } );
 
     // RewardNode
     this.rewardNode = new RewardNode();
