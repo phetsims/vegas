@@ -47,7 +47,7 @@ export default class RewardScreenView extends ScreenView {
     this.addChild( rewardDialogButton );
   }
 
-  public step( timeElapsed: number ): void {
+  public override step( timeElapsed: number ): void {
     this.rewardNode.step( timeElapsed );
   }
 }
