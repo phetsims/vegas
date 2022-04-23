@@ -8,7 +8,7 @@
 
 import Property from '../../axon/js/Property.js';
 import Screen from '../../joist/js/Screen.js';
-import Sim from '../../joist/js/Sim.js';
+import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
@@ -20,7 +20,7 @@ import vegasStrings from './vegasStrings.js';
 // constants
 const vegasTitleString = vegasStrings.vegas.title;
 
-const simOptions = {
+const simOptions: SimOptions = {
   credits: {
     leadDesign: 'PhET'
   }
