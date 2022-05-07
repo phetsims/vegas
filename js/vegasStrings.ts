@@ -9,54 +9,54 @@ import vegas from './vegas.js';
 
 type StringsType = {
   'vegas': {
-    'title': string
-  },
+    'title': string;
+  };
   'pattern': {
     '0challenge': {
-      '1max': string
-    },
+      '1max': string;
+    };
     '0hours': {
       '1minutes': {
-        '2seconds': string
+        '2seconds': string;
       }
-    },
+    };
     '0minutes': {
-      '1seconds': string
-    },
-    '0yourBest': string,
+      '1seconds': string;
+    };
+    '0yourBest': string;
     'score': {
-      'number': string
+      'number': string;
     }
-  },
-  'keepTrying': string,
-  'good': string,
-  'great': string,
-  'excellent': string,
-  'yourNewBest': string,
-  'continue': string,
+  };
+  'keepTrying': string;
+  'good': string;
+  'great': string;
+  'excellent': string;
+  'yourNewBest': string;
+  'continue': string;
   'label': {
-    'level': string,
-    'scorePattern': string,
-    'time': string,
+    'level': string;
+    'scorePattern': string;
+    'time': string;
     'score': {
-      'max': string
+      'max': string;
     }
-  },
-  'check': string,
-  'next': string,
+  };
+  'check': string;
+  'next': string;
   'button': {
-    'newGame': string
-  },
-  'showAnswer': string,
-  'tryAgain': string,
-  'selectLevel': string,
-  'startOver': string,
-  'keepGoing': string,
-  'newLevel': string,
-  'score': string,
-  'done': string,
-  'youCompletedAllLevels': string,
-  'chooseYourLevel': string
+    'newGame': string;
+  };
+  'showAnswer': string;
+  'tryAgain': string;
+  'selectLevel': string;
+  'startOver': string;
+  'keepGoing': string;
+  'newLevel': string;
+  'score': string;
+  'done': string;
+  'youCompletedAllLevels': string;
+  'chooseYourLevel': string;
 };
 
 const vegasStrings = getStringModule( 'VEGAS' ) as StringsType;
