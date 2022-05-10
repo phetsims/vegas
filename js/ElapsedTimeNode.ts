@@ -20,7 +20,7 @@ type SelfOptions = {
   textFill?: IColor;
 };
 
-export type ElapsedTimeNodeOptions = SelfOptions & HBoxOptions;
+export type ElapsedTimeNodeOptions = SelfOptions & Omit<HBoxOptions, 'children'>;
 
 export default class ElapsedTimeNode extends HBox {
 
@@ -46,7 +46,6 @@ export default class ElapsedTimeNode extends HBox {
       fill: options.textFill
     } );
 
-    assert && assert( !options.children, 'ElapsedTimeNode sets children' );
     options.children = [ clockIcon, timeValue ];
 
     super( options );

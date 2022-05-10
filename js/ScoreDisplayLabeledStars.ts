@@ -44,7 +44,6 @@ export default class ScoreDisplayLabeledStars extends HBox {
 
     const scoreDisplay = new ScoreDisplayStars( scoreProperty, options );
 
-    assert && assert( !options.children, 'ScoreDisplayLabeledStars sets children' );
     options.children = [ textNode, scoreDisplay ];
 
     super( options );

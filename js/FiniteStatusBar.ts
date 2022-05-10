@@ -70,7 +70,7 @@ type SelfOptions = {
   barStroke?: IColor;
 };
 
-export type FiniteStatusBarOptions = SelfOptions & StatusBarOptions;
+export type FiniteStatusBarOptions = SelfOptions & Omit<StatusBarOptions, 'children' | 'barHeight'>;
 
 export default class FiniteStatusBar extends StatusBar {
 
@@ -227,10 +227,8 @@ export default class FiniteStatusBar extends StatusBar {
       maxWidth: ( layoutBounds.width - ( 2 * options.xMargin ) - startOverButton.width - options.xSpacing )
     } );
 
-    assert && assert( !options.children, 'FiniteStatusBar sets children' );
     options.children = [ barNode, leftNodes, startOverButton ];
 
-    assert && assert( options.barHeight === undefined, 'FiniteStatusBar sets barHeight' );
     options.barHeight = Math.max( leftNodes.height, scoreDisplay.height ) + ( 2 * options.yMargin );
 
     super( layoutBounds, visibleBoundsProperty, options );

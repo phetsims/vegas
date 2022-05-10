@@ -52,7 +52,6 @@ export default class ScoreDisplayNumberAndStar extends HBox {
     super( options );
 
     // Update number displayed based on score.
-    assert && assert( !options.children, 'ScoreDisplayNumberAndStar sets children' );
     const scorePropertyListener = ( score: number ) => {
       const children = [];
 

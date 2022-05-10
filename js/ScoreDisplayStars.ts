@@ -52,7 +52,6 @@ export default class ScoreDisplayStars extends HBox {
     super( options );
 
     // Update visibility of filled and half-filled stars based on score.
-    assert && assert( !options.children, 'ScoreDisplayStars sets children' );
     const scorePropertyListener = ( score: number ) => {
 
       assert && assert( score <= perfectScore, `Score ${score} exceeds perfect score ${perfectScore}` );

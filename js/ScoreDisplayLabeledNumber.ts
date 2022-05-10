@@ -43,7 +43,6 @@ export default class ScoreDisplayLabeledNumber extends Node {
       fill: options.textFill
     } );
 
-    assert && assert( !options.children, 'ScoreDisplayNumber sets children' );
     options.children = [ scoreDisplayText ];
 
     // Update number displayed based on score.

@@ -86,10 +86,8 @@ export default class InfiniteStatusBar extends StatusBar {
     const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty,
       merge( { maxWidth: 0.2 * layoutBounds.width }, options.scoreDisplayOptions ) );
 
-    assert && assert( !options.children, 'InfiniteStatusBar sets children' );
     options.children = [ leftNodes, scoreDisplay ];
 
-    assert && assert( options.barHeight === undefined, 'InfiniteStatusBar sets barHeight' );
     options.barHeight = Math.max( leftNodes.height, scoreDisplay.height ) + ( 2 * options.yMargin );
 
     super( layoutBounds, visibleBoundsProperty, options );

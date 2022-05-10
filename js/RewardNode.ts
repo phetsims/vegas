@@ -224,8 +224,7 @@ export default class RewardNode extends CanvasNode {
    */
   private initialize(): void {
 
-    const display = getGlobal( 'phet.joist.display' );
-    assert && assert( display instanceof Display, 'expected a Display' );
+    const display: Display = getGlobal( 'phet.joist.display' );
 
     if ( !this.isInitialized && this.getUniqueTrail().length > 0 ) {
 

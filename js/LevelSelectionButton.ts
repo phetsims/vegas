@@ -144,7 +144,6 @@ export default class LevelSelectionButton extends RectangularPushButton {
     scoreDisplay.boundsProperty.lazyLink( scoreDisplayUpdateLayout );
     scoreDisplayUpdateLayout();
 
-    assert && assert( !options.content, 'LevelSelectionButton sets content' );
     options.content = new Node( {
       children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ]
     } );

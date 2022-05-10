@@ -116,7 +116,6 @@ export default class RewardDialog extends Dialog {
       spacing: 52
     } );
 
-    assert && assert( !options.focusOnShowNode );
     options.focusOnShowNode = newLevelButton;
 
     super( content, options );
