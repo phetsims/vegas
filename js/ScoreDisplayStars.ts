@@ -62,19 +62,19 @@ export default class ScoreDisplayStars extends HBox {
       const numFilledStars = Math.floor( proportion * numberOfStars );
 
       for ( let i = 0; i < numFilledStars; i++ ) {
-        //TODO https://github.com/phetsims/scenery-phet/issues/734 use optionize<StarNodeOptions, {}, StarNodeOptions>
+        //TODO https://github.com/phetsims/scenery-phet/issues/734 use combineOptions<StarNodeOptions>
         children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
       }
 
       const remainder = proportion * numberOfStars - numFilledStars;
       if ( remainder > 1E-6 ) {
-        //TODO https://github.com/phetsims/scenery-phet/issues/734 use optionize<StarNodeOptions, {}, StarNodeOptions>
+        //TODO https://github.com/phetsims/scenery-phet/issues/734 use combineOptions<StarNodeOptions>
         children.push( new StarNode( merge( { value: remainder }, options.starNodeOptions ) ) );
       }
 
       const numEmptyStars = numberOfStars - children.length;
       for ( let i = 0; i < numEmptyStars; i++ ) {
-        //TODO https://github.com/phetsims/scenery-phet/issues/734 use optionize<StarNodeOptions, {}, StarNodeOptions>
+        //TODO https://github.com/phetsims/scenery-phet/issues/734 use combineOptions<StarNodeOptions>
         children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
       }
 

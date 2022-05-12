@@ -7,7 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import optionize from '../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import merge from '../../phet-core/js/merge.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
@@ -120,7 +120,7 @@ export default class FiniteStatusBar extends StatusBar {
     }, options.scoreDisplayOptions );
 
     // nested options for 'Start Over' button
-    options.startOverButtonOptions = optionize<TextPushButtonOptions, {}, TextPushButtonOptions>()( {
+    options.startOverButtonOptions = combineOptions<TextPushButtonOptions>( {
       font: options.font,
       textFill: options.textFill,
       baseColor: PhetColorScheme.BUTTON_YELLOW,
@@ -138,13 +138,13 @@ export default class FiniteStatusBar extends StatusBar {
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
 
     // nested options for 'Level N' text
-    options.levelTextOptions = optionize<TextOptions, {}, TextOptions>()( {
+    options.levelTextOptions = combineOptions<TextOptions>( {
       fill: options.textFill,
       font: options.font
     }, options.levelTextOptions );
 
     // nested options for 'Challenge N of M' text
-    options.challengeTextOptions = optionize<TextOptions, {}, TextOptions>()( {
+    options.challengeTextOptions = combineOptions<TextOptions>( {
       fill: options.textFill,
       font: options.font
     }, options.challengeTextOptions );
@@ -162,7 +162,7 @@ export default class FiniteStatusBar extends StatusBar {
     let levelListener: ( ( level: number ) => void ) | null = null;
     if ( options.levelProperty && options.levelVisible ) {
 
-      const levelText = new Text( '', optionize<TextOptions, {}, TextOptions>()( {
+      const levelText = new Text( '', combineOptions<TextOptions>( {
         tandem: options.tandem.createTandem( 'levelText' )
       }, options.levelTextOptions ) );
       leftChildren.push( levelText );
@@ -177,7 +177,7 @@ export default class FiniteStatusBar extends StatusBar {
     let updateChallengeString: ( () => void ) | null = null;
     if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
 
-      const challengeNumberText = new Text( '', optionize<TextOptions, {}, TextOptions>()( {
+      const challengeNumberText = new Text( '', combineOptions<TextOptions>( {
         tandem: options.tandem.createTandem( 'challengeNumberText' )
       }, options.challengeTextOptions ) );
       leftChildren.push( challengeNumberText );
