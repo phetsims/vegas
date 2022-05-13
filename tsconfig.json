@@ -1,15 +1,9 @@
 {
   "extends": "../chipper/tsconfig-core.json",
-  "references": [
-    {
-      "path": "./tsconfig-module.json"
-    }
-  ],
   "include": [
-    "js/**/*tests.js",
-    "js/**/*Tests.js",
-    "js/vegas-main.ts",
-    "js/demo/**/*",
-    "../chipper/phet-types.d.ts"
+    "js/**/*",
+    "images/**/*",
+    "mipmaps/**/*",
+    "sounds/**/*"
   ]
 }
