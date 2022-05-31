@@ -9,6 +9,7 @@
  */
 
 import NumberProperty from '../../axon/js/NumberProperty.js';
+import OmitStrict from '../../phet-core/js/types/OmitStrict.js';
 import merge from '../../phet-core/js/merge.js';
 import optionize, { combineOptions3 } from '../../phet-core/js/optionize.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
@@ -46,13 +47,13 @@ type SelfOptions = {
 
 type DialogOptions = any; //TODO https://github.com/phetsims/vegas/issues/103 Dialog.js has not been ported to TypeScript
 
-export type RewardDialogOptions = SelfOptions & Omit<DialogOptions, 'focusOnShowNode'>;
+export type RewardDialogOptions = SelfOptions & OmitStrict<DialogOptions, 'focusOnShowNode'>;
 
 export default class RewardDialog extends Dialog {
 
   constructor( score: number, providedOptions?: RewardDialogOptions ) {
 
-    const options = optionize<RewardDialogOptions, Omit<SelfOptions, 'scoreDisplayOptions'>, DialogOptions>()( {
+    const options = optionize<RewardDialogOptions, OmitStrict<SelfOptions, 'scoreDisplayOptions'>, DialogOptions>()( {
 
       // RewardDialogOptions
       phetGirlScale: 0.6,

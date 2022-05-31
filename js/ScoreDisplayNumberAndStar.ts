@@ -16,6 +16,7 @@ import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import IProperty from '../../axon/js/IProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
+import OmitStrict from '../../phet-core/js/types/OmitStrict.js';
 
 type SelfOptions = {
   font?: Font;
@@ -24,7 +25,7 @@ type SelfOptions = {
   starNodeOptions?: any; //TODO https://github.com/phetsims/scenery-phet/issues/734
 };
 
-export type ScoreDisplayNumberAndStarOptions = SelfOptions & Omit<HBoxOptions, 'children'>;
+export type ScoreDisplayNumberAndStarOptions = SelfOptions & OmitStrict<HBoxOptions, 'children'>;
 
 export default class ScoreDisplayNumberAndStar extends HBox {
 

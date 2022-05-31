@@ -22,6 +22,7 @@ import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
 import IProperty from '../../axon/js/IProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
+import OmitStrict from '../../phet-core/js/types/OmitStrict.js';
 
 // Valid values for scoreDisplayConstructor. These are the types that are relevant for this status bar.
 // All constructors must have the same signature!
@@ -70,7 +71,7 @@ type SelfOptions = {
   barStroke?: IColor;
 };
 
-export type FiniteStatusBarOptions = SelfOptions & Omit<StatusBarOptions, 'children' | 'barHeight'>;
+export type FiniteStatusBarOptions = SelfOptions & OmitStrict<StatusBarOptions, 'children' | 'barHeight'>;
 
 export default class FiniteStatusBar extends StatusBar {
 
@@ -86,7 +87,7 @@ export default class FiniteStatusBar extends StatusBar {
                providedOptions?: FiniteStatusBarOptions ) {
 
     const options = optionize<FiniteStatusBarOptions,
-      Omit<SelfOptions, 'startOverButtonOptions' | 'levelTextOptions' | 'challengeTextOptions'>,
+      OmitStrict<SelfOptions, 'startOverButtonOptions' | 'levelTextOptions' | 'challengeTextOptions'>,
       StatusBarOptions>()( {
 
       // SelfOptions

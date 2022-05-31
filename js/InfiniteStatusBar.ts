@@ -19,6 +19,7 @@ import Bounds2 from '../../dot/js/Bounds2.js';
 import IProperty from '../../axon/js/IProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
+import OmitStrict from '../../phet-core/js/types/OmitStrict.js';
 
 // Valid values for scoreDisplayConstructor. These are the types that are relevant for this status bar.
 // All constructors must have the same signature!
@@ -38,7 +39,7 @@ type SelfOptions = {
   scoreDisplayOptions?: any; //TODO https://github.com/phetsims/vegas/issues/102
 };
 
-export type InfiniteStatusBarOptions = SelfOptions & Omit<StatusBarOptions, 'children' | 'barHeight'>;
+export type InfiniteStatusBarOptions = SelfOptions & OmitStrict<StatusBarOptions, 'children' | 'barHeight'>;
 
 export default class InfiniteStatusBar extends StatusBar {
 
@@ -54,7 +55,7 @@ export default class InfiniteStatusBar extends StatusBar {
   constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, messageNode: Node,
                scoreProperty: IProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
 
-    const options = optionize<InfiniteStatusBarOptions, Omit<SelfOptions, 'scoreDisplayOptions'>, StatusBarOptions>()( {
+    const options = optionize<InfiniteStatusBarOptions, OmitStrict<SelfOptions, 'scoreDisplayOptions'>, StatusBarOptions>()( {
 
       // SelfOptions
       backButtonListener: _.noop,

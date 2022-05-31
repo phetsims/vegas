@@ -12,6 +12,7 @@
  */
 
 import IProperty from '../../axon/js/IProperty.js';
+import OmitStrict from '../../phet-core/js/types/OmitStrict.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
@@ -66,7 +67,7 @@ type SelfOptions = {
   soundPlayerIndex?: number;
 };
 
-export type LevelSelectionButtonOptions = SelfOptions & Omit<RectangularPushButtonOptions, 'content'>;
+export type LevelSelectionButtonOptions = SelfOptions & OmitStrict<RectangularPushButtonOptions, 'content'>;
 
 export default class LevelSelectionButton extends RectangularPushButton {
 

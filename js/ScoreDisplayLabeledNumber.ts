@@ -15,6 +15,7 @@ import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
 import IProperty from '../../axon/js/IProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
+import OmitStrict from '../../phet-core/js/types/OmitStrict.js';
 
 type SelfOptions = {
   font?: Font;
@@ -22,7 +23,7 @@ type SelfOptions = {
   scoreDecimalPlaces?: number;
 };
 
-export type ScoreDisplayLabeledNumberOptions = SelfOptions & Omit<HBoxOptions, 'children'>;
+export type ScoreDisplayLabeledNumberOptions = SelfOptions & OmitStrict<HBoxOptions, 'children'>;
 
 export default class ScoreDisplayLabeledNumber extends Node {
 
