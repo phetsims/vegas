@@ -14,7 +14,7 @@ import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
 import IProperty from '../../axon/js/IProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
-import OmitStrict from '../../phet-core/js/types/OmitStrict.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
   font?: Font;
@@ -22,7 +22,7 @@ type SelfOptions = {
   spacing?: number;
 };
 
-export type ScoreDisplayLabeledStarsOptions = SelfOptions & ScoreDisplayStarsOptions & OmitStrict<HBoxOptions, 'children'>;
+export type ScoreDisplayLabeledStarsOptions = SelfOptions & ScoreDisplayStarsOptions & StrictOmit<HBoxOptions, 'children'>;
 
 export default class ScoreDisplayLabeledStars extends HBox {
 

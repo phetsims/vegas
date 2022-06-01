@@ -13,7 +13,7 @@ import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import IProperty from '../../axon/js/IProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
-import OmitStrict from '../../phet-core/js/types/OmitStrict.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
   clockIconRadius?: number;
@@ -21,7 +21,7 @@ type SelfOptions = {
   textFill?: IColor;
 };
 
-export type ElapsedTimeNodeOptions = SelfOptions & OmitStrict<HBoxOptions, 'children'>;
+export type ElapsedTimeNodeOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
 export default class ElapsedTimeNode extends HBox {
 

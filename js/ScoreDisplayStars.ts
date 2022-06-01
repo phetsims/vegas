@@ -10,7 +10,7 @@
  */
 
 import IProperty from '../../axon/js/IProperty.js';
-import OmitStrict from '../../phet-core/js/types/OmitStrict.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import merge from '../../phet-core/js/merge.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
@@ -23,7 +23,7 @@ type SelfOptions = {
   starNodeOptions?: any; //TODO https://github.com/phetsims/scenery-phet/issues/734
 };
 
-export type ScoreDisplayStarsOptions = SelfOptions & OmitStrict<HBoxOptions, 'children'>;
+export type ScoreDisplayStarsOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
 export default class ScoreDisplayStars extends HBox {
 
