@@ -48,7 +48,7 @@ export default class InfiniteStatusBar extends StatusBar {
   /**
    * @param layoutBounds - layoutBounds of the ScreenView
    * @param visibleBoundsProperty - visible bounds of the ScreenView
-   * @param {Node} messageNode - to the right of the back button, typically Text
+   * @param messageNode - to the right of the back button, typically Text
    * @param scoreProperty
    * @param providedOptions
    */
