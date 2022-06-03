@@ -11,7 +11,7 @@
 import NumberProperty from '../../axon/js/NumberProperty.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import merge from '../../phet-core/js/merge.js';
-import optionize, { combineOptions3 } from '../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import { Font, HBox, Image, Text, VBox } from '../../scenery/js/imports.js';
@@ -83,14 +83,14 @@ export default class RewardDialog extends Dialog {
     };
 
     const newLevelButton = new RectangularPushButton(
-      combineOptions3<RectangularPushButtonOptions>( {}, buttonOptions, {
+      combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
         content: new Text( vegasStrings.newLevel, { font: DEFAULT_BUTTONS_FONT } ),
         listener: options.newLevelButtonListener,
         baseColor: PhetColorScheme.PHET_LOGO_YELLOW
       } ) );
 
     const keepGoingButton = new RectangularPushButton(
-      combineOptions3<RectangularPushButtonOptions>( {}, buttonOptions, {
+      combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
         content: new Text( vegasStrings.keepGoing, { font: DEFAULT_BUTTONS_FONT } ),
         listener: options.keepGoingButtonListener,
         baseColor: 'white'
