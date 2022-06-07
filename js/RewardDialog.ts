@@ -10,14 +10,13 @@
 
 import NumberProperty from '../../axon/js/NumberProperty.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import merge from '../../phet-core/js/merge.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import { Font, HBox, Image, Text, VBox } from '../../scenery/js/imports.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../sun/js/buttons/RectangularPushButton.js';
-import Dialog from '../../sun/js/Dialog.js';
+import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
 import phetGirlJugglingStars_png from '../images/phetGirlJugglingStars_png.js';
 import ScoreDisplayNumberAndStar, { ScoreDisplayNumberAndStarOptions } from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
@@ -25,27 +24,17 @@ import vegasStrings from './vegasStrings.js';
 
 // constants
 const DEFAULT_BUTTONS_FONT = new PhetFont( 20 );
-const DEFAULT_SCORE_DISPLAY_OPTIONS = {
-  font: new PhetFont( { size: 38, weight: 'bold' } ),
-  spacing: 8,
-  starNodeOptions: {
-    outerRadius: 20,
-    innerRadius: 10,
-    filledLineWidth: 2
-  }
-};
+const DEFAULT_SCORE_DISPLAY_FONT = new PhetFont( { size: 38, weight: 'bold' } );
 
 type SelfOptions = {
   phetGirlScale?: number;
-  scoreDisplayOptions?: ScoreDisplayNumberAndStarOptions;
   buttonsFont?: Font;
   buttonsWidth?: number; // fixed width for both buttons
   buttonsYSpacing?: number;
   keepGoingButtonListener?: PushButtonListener; // called when 'Keep Going' button is pressed
   newLevelButtonListener?: PushButtonListener; // called when 'New Level' button is pressed
+  scoreDisplayOptions?: ScoreDisplayNumberAndStarOptions;
 };
-
-type DialogOptions = any; //TODO https://github.com/phetsims/vegas/issues/103 Dialog.js has not been ported to TypeScript
 
 export type RewardDialogOptions = SelfOptions & StrictOmit<DialogOptions, 'focusOnShowNode'>;
 
@@ -53,7 +42,7 @@ export default class RewardDialog extends Dialog {
 
   constructor( score: number, providedOptions?: RewardDialogOptions ) {
 
-    const options = optionize<RewardDialogOptions, StrictOmit<SelfOptions, 'scoreDisplayOptions'>, DialogOptions>()( {
+    const options = optionize<RewardDialogOptions, SelfOptions, DialogOptions>()( {
 
       // RewardDialogOptions
       phetGirlScale: 0.6,
@@ -62,13 +51,20 @@ export default class RewardDialog extends Dialog {
       buttonsYSpacing: 20,
       keepGoingButtonListener: _.noop,
       newLevelButtonListener: _.noop,
+      scoreDisplayOptions: {
+        font: DEFAULT_SCORE_DISPLAY_FONT,
+        spacing: 8,
+        starNodeOptions: {
+          outerRadius: 20,
+          innerRadius: 10,
+          filledLineWidth: 2
+        }
+      },
 
       // DialogOptions
       // pdom - Since we are setting the focusOnShowNode to be the first element in content, put the closeButton last
       closeButtonLastInPDOM: true
     }, providedOptions );
-
-    options.scoreDisplayOptions = merge( {}, DEFAULT_SCORE_DISPLAY_OPTIONS, options.numeratorOptions );
 
     const phetGirlNode = new Image( phetGirlJugglingStars_png, {
       scale: options.phetGirlScale
