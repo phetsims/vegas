@@ -29,7 +29,7 @@ const DEFAULT_FONT = new PhetFont( 20 );
 
 export default class FiniteChallengesScreenView extends ScreenView {
 
-  constructor() {
+  public constructor() {
 
     super( {
       tandem: Tandem.OPT_OUT

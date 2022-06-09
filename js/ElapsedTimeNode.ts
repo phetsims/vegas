@@ -27,7 +27,7 @@ export default class ElapsedTimeNode extends HBox {
 
   private readonly disposeElapsedTimeNode: () => void;
 
-  constructor( elapsedTimeProperty: IProperty<number>, providedOptions?: ElapsedTimeNodeOptions ) {
+  public constructor( elapsedTimeProperty: IProperty<number>, providedOptions?: ElapsedTimeNodeOptions ) {
 
     const options = optionize<ElapsedTimeNodeOptions, SelfOptions, HBoxOptions>()( {
 

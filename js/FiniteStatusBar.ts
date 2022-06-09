@@ -83,8 +83,8 @@ export default class FiniteStatusBar extends StatusBar {
    * @param scoreProperty
    * @param providedOptions
    */
-  constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, scoreProperty: IProperty<number>,
-               providedOptions?: FiniteStatusBarOptions ) {
+  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, scoreProperty: IProperty<number>,
+                      providedOptions?: FiniteStatusBarOptions ) {
 
     const options = optionize<FiniteStatusBarOptions,
       StrictOmit<SelfOptions, 'startOverButtonOptions' | 'levelTextOptions' | 'challengeTextOptions'>,

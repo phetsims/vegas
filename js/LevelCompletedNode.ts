@@ -54,9 +54,9 @@ export default class LevelCompletedNode extends Panel {
    * @param continueFunction - function to call when the user presses the 'Continue' button
    * @param providedOptions
    */
-  constructor( level: number, score: number, perfectScore: number, numberOfStars: number, timerEnabled: boolean,
-               elapsedTime: number, bestTimeAtThisLevel: number | null, isNewBestTime: boolean,
-               continueFunction: PushButtonListener, providedOptions?: LevelCompletedNodeOptions ) {
+  public constructor( level: number, score: number, perfectScore: number, numberOfStars: number, timerEnabled: boolean,
+                      elapsedTime: number, bestTimeAtThisLevel: number | null, isNewBestTime: boolean,
+                      continueFunction: PushButtonListener, providedOptions?: LevelCompletedNodeOptions ) {
 
     const options = optionize<LevelCompletedNodeOptions, SelfOptions, PanelOptions>()( {
 

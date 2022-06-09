@@ -27,7 +27,7 @@ export default class GameTimer {
   // see Timer.setInterval and clearInterval
   private intervalId: TimerListener | null;
 
-  constructor() {
+  public constructor() {
     this.isRunningProperty = new BooleanProperty( false );
     this.elapsedTimeProperty = new NumberProperty( 0 );
     this.intervalId = null;

@@ -33,7 +33,7 @@ export default class AllLevelsCompletedNode extends Node {
    * @param listener function that gets called when 'next' button is pressed
    * @param providedOptions
    */
-  constructor( listener: PushButtonListener, providedOptions?: AllLevelsCompletedNodeOptions ) {
+  public constructor( listener: PushButtonListener, providedOptions?: AllLevelsCompletedNodeOptions ) {
     super();
 
     const options = optionize<AllLevelsCompletedNodeOptions, SelfOptions, NodeOptions>()( {

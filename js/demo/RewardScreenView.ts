@@ -20,7 +20,7 @@ export default class RewardScreenView extends ScreenView {
 
   private readonly rewardNode: RewardNode;
 
-  constructor() {
+  public constructor() {
     super( {
       tandem: Tandem.OPT_OUT
     } );

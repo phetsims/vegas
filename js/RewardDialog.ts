@@ -40,7 +40,7 @@ export type RewardDialogOptions = SelfOptions & StrictOmit<DialogOptions, 'focus
 
 export default class RewardDialog extends Dialog {
 
-  constructor( score: number, providedOptions?: RewardDialogOptions ) {
+  public constructor( score: number, providedOptions?: RewardDialogOptions ) {
 
     const options = optionize<RewardDialogOptions, SelfOptions, DialogOptions>()( {
 

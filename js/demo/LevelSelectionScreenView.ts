@@ -31,7 +31,7 @@ const BEST_TIME_RANGE = new Range( 0, 10000 );
 
 export default class LevelSelectionScreenView extends ScreenView {
 
-  constructor() {
+  public constructor() {
 
     super( {
       tandem: Tandem.OPT_OUT

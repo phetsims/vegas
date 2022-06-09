@@ -29,7 +29,7 @@ export default class ScoreDisplayStars extends HBox {
 
   private readonly disposeScoreDisplayStars: () => void;
 
-  constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayStarsOptions ) {
+  public constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayStarsOptions ) {
 
     const options = optionize<ScoreDisplayStarsOptions, SelfOptions, HBoxOptions>()( {
 

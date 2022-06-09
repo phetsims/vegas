@@ -52,8 +52,8 @@ export default class InfiniteStatusBar extends StatusBar {
    * @param scoreProperty
    * @param providedOptions
    */
-  constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, messageNode: Node,
-               scoreProperty: IProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
+  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, messageNode: Node,
+                      scoreProperty: IProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
 
     const options = optionize<InfiniteStatusBarOptions, StrictOmit<SelfOptions, 'scoreDisplayOptions'>, StatusBarOptions>()( {
 

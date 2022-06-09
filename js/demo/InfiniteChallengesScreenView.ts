@@ -22,7 +22,7 @@ const SCORE_RANGE = new Range( 0, 1000 );
 
 export default class InfiniteChallengesScreenView extends ScreenView {
 
-  constructor() {
+  public constructor() {
 
     super( {
       tandem: Tandem.OPT_OUT

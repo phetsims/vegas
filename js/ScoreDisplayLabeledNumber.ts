@@ -29,7 +29,7 @@ export default class ScoreDisplayLabeledNumber extends Node {
 
   private readonly disposeScoreDisplayLabeledNumber: () => void;
 
-  constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayLabeledNumberOptions ) {
+  public constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayLabeledNumberOptions ) {
 
     const options = optionize<ScoreDisplayLabeledNumberOptions, SelfOptions, HBoxOptions>()( {
 

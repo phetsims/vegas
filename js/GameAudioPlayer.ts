@@ -41,7 +41,7 @@ function addSoundsToSoundGenerator(): void {
 
 export default class GameAudioPlayer {
 
-  constructor() {
+  public constructor() {
     addSoundsToSoundGenerator();
   }
 

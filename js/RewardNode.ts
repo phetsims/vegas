@@ -108,7 +108,7 @@ export default class RewardNode extends CanvasNode {
 
   private readonly disposeRewardNode: () => void;
 
-  constructor( providedOptions?: RewardNodeOptions ) {
+  public constructor( providedOptions?: RewardNodeOptions ) {
 
     const options = optionize<RewardNodeOptions, SelfOptions, CanvasNodeOptions>()( {
 
