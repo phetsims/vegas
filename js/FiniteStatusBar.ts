@@ -127,7 +127,7 @@ export default class FiniteStatusBar extends StatusBar {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 10,
       yMargin: 8,
-      listener: () => {},
+      listener: _.noop,
       tandem: options.tandem.createTandem( 'startOverButton' ),
       maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ) // use 20% of available width
     }, options.startOverButtonOptions );
