@@ -10,9 +10,8 @@
  */
 
 import IProperty from '../../axon/js/IProperty.js';
+import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import merge from '../../phet-core/js/merge.js';
-import optionize from '../../phet-core/js/optionize.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
 import { HBox, HBoxOptions } from '../../scenery/js/imports.js';
 import vegas from './vegas.js';
@@ -65,20 +64,17 @@ export default class ScoreDisplayStars extends HBox {
       const numFilledStars = Math.floor( proportion * numberOfStars );
 
       for ( let i = 0; i < numFilledStars; i++ ) {
-        //TODO https://github.com/phetsims/scenery-phet/issues/734 use combineOptions<StarNodeOptions>
-        children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
+        children.push( new StarNode( combineOptions<StarNodeOptions>( { value: 1 }, options.starNodeOptions ) ) );
       }
 
       const remainder = proportion * numberOfStars - numFilledStars;
       if ( remainder > 1E-6 ) {
-        //TODO https://github.com/phetsims/scenery-phet/issues/734 use combineOptions<StarNodeOptions>
-        children.push( new StarNode( merge( { value: remainder }, options.starNodeOptions ) ) );
+        children.push( new StarNode( combineOptions<StarNodeOptions>( { value: remainder }, options.starNodeOptions ) ) );
       }
 
       const numEmptyStars = numberOfStars - children.length;
       for ( let i = 0; i < numEmptyStars; i++ ) {
-        //TODO https://github.com/phetsims/scenery-phet/issues/734 use combineOptions<StarNodeOptions>
-        children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
+        children.push( new StarNode( combineOptions<StarNodeOptions>( { value: 0 }, options.starNodeOptions ) ) );
       }
 
       this.children = children;

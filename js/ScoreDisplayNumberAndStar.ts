@@ -8,15 +8,14 @@
  * @author Andrea Lin
  */
 
-import Utils from '../../dot/js/Utils.js';
-import merge from '../../phet-core/js/merge.js';
-import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
-import { Font, HBox, HBoxOptions, IColor, Text } from '../../scenery/js/imports.js';
-import StatusBar from '../../scenery-phet/js/StatusBar.js';
-import vegas from './vegas.js';
 import IProperty from '../../axon/js/IProperty.js';
-import optionize from '../../phet-core/js/optionize.js';
+import Utils from '../../dot/js/Utils.js';
+import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
+import StatusBar from '../../scenery-phet/js/StatusBar.js';
+import { Font, HBox, HBoxOptions, IColor, Text } from '../../scenery/js/imports.js';
+import vegas from './vegas.js';
 
 type SelfOptions = {
   font?: Font;
@@ -59,16 +58,14 @@ export default class ScoreDisplayNumberAndStar extends HBox {
       const children = [];
 
       if ( score === 0 ) {
-        //TODO https://github.com/phetsims/scenery-phet/issues/734 use combineOptions<StarNodeOptions>
-        children.push( new StarNode( merge( { value: 0 }, options.starNodeOptions ) ) );
+        children.push( new StarNode( combineOptions<StarNodeOptions>( { value: 0 }, options.starNodeOptions ) ) );
       }
       else {
         children.push( new Text( Utils.toFixed( score, options.scoreDecimalPlaces ), {
           font: options.font,
           fill: options.textFill
         } ) );
-        //TODO https://github.com/phetsims/scenery-phet/issues/734 use combineOptions<StarNodeOptions>
-        children.push( new StarNode( merge( { value: 1 }, options.starNodeOptions ) ) );
+        children.push( new StarNode( combineOptions<StarNodeOptions>( { value: 1 }, options.starNodeOptions ) ) );
       }
 
       this.children = children;
