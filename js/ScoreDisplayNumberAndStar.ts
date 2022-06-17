@@ -10,7 +10,7 @@
 
 import Utils from '../../dot/js/Utils.js';
 import merge from '../../phet-core/js/merge.js';
-import StarNode from '../../scenery-phet/js/StarNode.js';
+import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
 import { Font, HBox, HBoxOptions, IColor, Text } from '../../scenery/js/imports.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
@@ -22,7 +22,7 @@ type SelfOptions = {
   font?: Font;
   textFill?: IColor;
   scoreDecimalPlaces?: number;
-  starNodeOptions?: any; //TODO https://github.com/phetsims/scenery-phet/issues/734
+  starNodeOptions?: StarNodeOptions;
 };
 
 export type ScoreDisplayNumberAndStarOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
@@ -40,8 +40,10 @@ export default class ScoreDisplayNumberAndStar extends HBox {
       textFill: 'black',
       scoreDecimalPlaces: 0,
       starNodeOptions: {
-        outerRadius: 10,
-        innerRadius: 5,
+        starShapeOptions: {
+          outerRadius: 10,
+          innerRadius: 5
+        },
         filledLineWidth: 1.5,
         emptyLineWidth: 1.5
       },

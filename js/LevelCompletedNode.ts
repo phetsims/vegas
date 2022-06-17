@@ -106,8 +106,10 @@ export default class LevelCompletedNode extends Panel {
       numberOfStars: numberOfStars,
       perfectScore: perfectScore,
       starNodeOptions: {
-        innerRadius: options.starDiameter / 4,
-        outerRadius: options.starDiameter / 2
+        starShapeOptions: {
+          innerRadius: options.starDiameter / 4,
+          outerRadius: options.starDiameter / 2
+        }
       },
       maxWidth: options.contentMaxWidth
     } );
