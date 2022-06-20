@@ -61,32 +61,30 @@ export default class LevelSelectionScreenView extends ScreenView {
     const buttonIcon = new Rectangle( 0, 0, 100, 100, { fill: 'red', stroke: 'black' } );
 
     const buttonWithStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
-      scoreDisplayConstructor: ScoreDisplayStars,
-      scoreDisplayOptions: {
+      createScoreDisplay: scoreProperty => new ScoreDisplayStars( scoreProperty, {
         numberOfStars: NUM_STARS,
         perfectScore: SCORE_RANGE.max
-      },
+      } ),
       listener: () => console.log( 'level start' )
     } );
 
     const buttonWithTextAndStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
-      scoreDisplayConstructor: ScoreDisplayLabeledStars,
-      scoreDisplayOptions: {
+      createScoreDisplay: scoreProperty => new ScoreDisplayLabeledStars( scoreProperty, {
         numberOfStars: NUM_STARS,
         perfectScore: SCORE_RANGE.max
-      },
+      } ),
       listener: () => console.log( 'level start' ),
       soundPlayerIndex: 1
     } );
 
     const buttonWithNumberAndStar = new LevelSelectionButton( buttonIcon, scoreProperty, {
-      scoreDisplayConstructor: ScoreDisplayNumberAndStar,
+      createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty ),
       listener: () => console.log( 'level start' ),
       soundPlayerIndex: 2
     } );
 
     const buttonWithTextAndNumber = new LevelSelectionButton( buttonIcon, scoreProperty, {
-      scoreDisplayConstructor: ScoreDisplayLabeledNumber,
+      createScoreDisplay: scoreProperty => new ScoreDisplayLabeledNumber( scoreProperty ),
       listener: () => console.log( 'level start' ),
       bestTimeProperty: bestTimeProperty,
       bestTimeVisibleProperty: bestTimeVisibleProperty,

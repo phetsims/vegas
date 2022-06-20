@@ -8,25 +8,17 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../phet-core/js/merge.js';
+import IProperty from '../../axon/js/IProperty.js';
+import Bounds2 from '../../dot/js/Bounds2.js';
+import optionize from '../../phet-core/js/optionize.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import BackButton from '../../scenery-phet/js/buttons/BackButton.js';
+import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import { HBox, Node } from '../../scenery/js/imports.js';
+import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
-import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
-import Bounds2 from '../../dot/js/Bounds2.js';
-import IProperty from '../../axon/js/IProperty.js';
-import optionize from '../../phet-core/js/optionize.js';
-import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
-import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-
-// Valid values for scoreDisplayConstructor. These are the types that are relevant for this status bar.
-// All constructors must have the same signature!
-//TODO https://github.com/phetsims/vegas/issues/102
-const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
-  ScoreDisplayLabeledNumber, ScoreDisplayNumberAndStar
-];
 
 type SelfOptions = {
   backButtonListener?: PushButtonListener;
@@ -35,8 +27,7 @@ type SelfOptions = {
   spacing?: number;
 
   // score display
-  scoreDisplayConstructor?: any; //TODO https://github.com/phetsims/vegas/issues/102
-  scoreDisplayOptions?: any; //TODO https://github.com/phetsims/vegas/issues/102
+  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => ScoreDisplayLabeledNumber | ScoreDisplayNumberAndStar;
 };
 
 export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
@@ -55,18 +46,15 @@ export default class InfiniteStatusBar extends StatusBar {
   public constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, messageNode: Node,
                       scoreProperty: IProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
 
-    const options = optionize<InfiniteStatusBarOptions, StrictOmit<SelfOptions, 'scoreDisplayOptions'>, StatusBarOptions>()( {
+    const options = optionize<InfiniteStatusBarOptions, SelfOptions, StatusBarOptions>()( {
 
       // SelfOptions
       backButtonListener: _.noop,
       xMargin: 20,
       yMargin: 10,
       spacing: 10,
-      scoreDisplayConstructor: ScoreDisplayNumberAndStar
+      createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty )
     }, providedOptions );
-
-    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor ),
-      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` );
 
     // button that typically takes us back to the level-selection UI
     const backButton = new BackButton( {
@@ -83,9 +71,9 @@ export default class InfiniteStatusBar extends StatusBar {
       maxWidth: 0.7 * layoutBounds.width
     } );
 
-    //TODO https://github.com/phetsims/vegas/issues/102 use optionize
-    const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty,
-      merge( { maxWidth: 0.2 * layoutBounds.width }, options.scoreDisplayOptions ) );
+    // Create the score display.
+    const scoreDisplay = options.createScoreDisplay( scoreProperty );
+    scoreDisplay.maxWidth = 0.2 * layoutBounds.width;
 
     options.children = [ leftNodes, scoreDisplay ];
 

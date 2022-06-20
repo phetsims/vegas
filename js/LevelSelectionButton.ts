@@ -34,12 +34,12 @@ import vegas from './vegas.js';
 const DEFAULT_BEST_TIME_FONT = new PhetFont( 24 );
 const SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
 
-//TODO https://github.com/phetsims/vegas/issues/102
-const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
-
-  // All constructors must have the same signature!
-  ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars, ScoreDisplayStars, ScoreDisplayNumberAndStar
-];
+// valid types for the score display in level selection buttons
+type ValidScoreDisplayTypes =
+  ScoreDisplayLabeledNumber |
+  ScoreDisplayLabeledStars |
+  ScoreDisplayStars |
+  ScoreDisplayNumberAndStar;
 
 type SelfOptions = {
 
@@ -48,8 +48,7 @@ type SelfOptions = {
   buttonHeight?: number;
 
   // score display
-  scoreDisplayConstructor?: any; //TODO https://github.com/phetsims/vegas/issues/102
-  scoreDisplayOptions?: any; //TODO https://github.com/phetsims/vegas/issues/102
+  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => ValidScoreDisplayTypes;
   scoreDisplayProportion?: number; // percentage of the button height occupied by scoreDisplay, (0,0.5]
   scoreDisplayMinXMargin?: number; // horizontal margin between scoreDisplay and its background
   scoreDisplayMinYMargin?: number;  // vertical margin between scoreDisplay and its background
@@ -85,8 +84,7 @@ export default class LevelSelectionButton extends RectangularPushButton {
       // SelfOptions
       buttonWidth: 150,
       buttonHeight: 150,
-      scoreDisplayConstructor: ScoreDisplayStars,
-      scoreDisplayOptions: {},
+      createScoreDisplay: () => new ScoreDisplayStars( scoreProperty ),
       scoreDisplayProportion: 0.2,
       scoreDisplayMinXMargin: 10,
       scoreDisplayMinYMargin: 5,
@@ -108,15 +106,11 @@ export default class LevelSelectionButton extends RectangularPushButton {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
-    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor ),
-      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` );
-    assert && assert( options.scoreDisplayProportion > 0 && options.scoreDisplayProportion <= 0.5,
-      `scoreDisplayProportion out of range: ${options.scoreDisplayProportion}` );
     assert && assert( options.soundPlayerIndex >= 0, `invalid soundPlayerIndex: ${options.soundPlayerIndex}` );
 
     const maxContentWidth = options.buttonWidth - 2 * options.xMargin;
 
-    const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
+    const scoreDisplay = options.createScoreDisplay( scoreProperty );
 
     // Background behind scoreDisplay
     const scoreDisplayBackgroundHeight = options.buttonHeight * options.scoreDisplayProportion;

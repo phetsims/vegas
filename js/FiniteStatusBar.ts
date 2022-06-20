@@ -7,29 +7,21 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import IProperty from '../../axon/js/IProperty.js';
+import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
-import merge from '../../phet-core/js/merge.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
+import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import { Font, HBox, IColor, Node, Rectangle, Text, TextOptions } from '../../scenery/js/imports.js';
 import TextPushButton, { TextPushButtonOptions } from '../../sun/js/buttons/TextPushButton.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayLabeledStars from './ScoreDisplayLabeledStars.js';
-import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
-import IProperty from '../../axon/js/IProperty.js';
-import Bounds2 from '../../dot/js/Bounds2.js';
-import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-
-// Valid values for scoreDisplayConstructor. These are the types that are relevant for this status bar.
-// All constructors must have the same signature!
-//TODO https://github.com/phetsims/vegas/issues/102
-const VALID_SCORE_DISPLAY_CONSTRUCTORS = [
-  ScoreDisplayLabeledNumber, ScoreDisplayLabeledStars
-];
 
 type SelfOptions = {
 
@@ -49,8 +41,7 @@ type SelfOptions = {
   textFill?: IColor;
 
   // score display
-  scoreDisplayConstructor?: any; //TODO https://github.com/phetsims/vegas/issues/102
-  scoreDisplayOptions?: any; //TODO https://github.com/phetsims/vegas/issues/102
+  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => ScoreDisplayLabeledNumber | ScoreDisplayLabeledStars;
 
   // nested options for 'Start Over' button, filled in below
   startOverButtonOptions?: TextPushButtonOptions;
@@ -99,9 +90,11 @@ export default class FiniteStatusBar extends StatusBar {
       levelVisible: true,
       challengeNumberVisible: true,
       font: StatusBar.DEFAULT_FONT,
-      textFill: 'black',
-      scoreDisplayConstructor: ScoreDisplayLabeledNumber,
-      scoreDisplayOptions: null,
+      textFill: StatusBar.DEFAULT_TEXT_FILL,
+      createScoreDisplay: scoreProperty => new ScoreDisplayLabeledNumber( scoreProperty, {
+        font: providedOptions && providedOptions.font ? providedOptions.font : StatusBar.DEFAULT_FONT,
+        textFill: providedOptions && providedOptions.textFill ? providedOptions.textFill : StatusBar.DEFAULT_TEXT_FILL
+      } ),
       startOverButtonText: vegasStrings.startOver,
       clockIconRadius: 15,
       xSpacing: 50,
@@ -113,12 +106,6 @@ export default class FiniteStatusBar extends StatusBar {
       // StatusBarOptions
       tandem: Tandem.REQUIRED
     }, providedOptions );
-
-    // nested options for score display
-    options.scoreDisplayOptions = merge( {
-      font: options.font,
-      textFill: options.textFill
-    }, options.scoreDisplayOptions );
 
     // nested options for 'Start Over' button
     options.startOverButtonOptions = combineOptions<TextPushButtonOptions>( {
@@ -132,8 +119,6 @@ export default class FiniteStatusBar extends StatusBar {
       maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ) // use 20% of available width
     }, options.startOverButtonOptions );
 
-    assert && assert( _.includes( VALID_SCORE_DISPLAY_CONSTRUCTORS, options.scoreDisplayConstructor ),
-      `invalid scoreDisplayConstructor: ${options.scoreDisplayConstructor}` );
     assert && assert( ( options.challengeIndexProperty && options.numberOfChallengesProperty ) ||
                       ( !options.challengeIndexProperty && !options.numberOfChallengesProperty ),
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
@@ -192,7 +177,7 @@ export default class FiniteStatusBar extends StatusBar {
     }
 
     // Score
-    const scoreDisplay = new options.scoreDisplayConstructor( scoreProperty, options.scoreDisplayOptions );
+    const scoreDisplay = options.createScoreDisplay( scoreProperty );
     leftChildren.push( scoreDisplay );
 
     // Timer
