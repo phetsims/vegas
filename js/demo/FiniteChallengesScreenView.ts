@@ -119,9 +119,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
       ]
     } );
 
-    const timerEnabledCheckbox = new Checkbox(
-      new Text( 'Timer enabled', { font: DEFAULT_FONT } ),
-      timerEnabledProperty );
+    const timerEnabledCheckbox = new Checkbox( timerEnabledProperty, new Text( 'Timer enabled', { font: DEFAULT_FONT } ) );
 
     const controls = new VBox( {
       align: 'left',

@@ -115,9 +115,7 @@ export default class LevelSelectionScreenView extends ScreenView {
       ]
     } );
 
-    const bestTimeVisibleCheckbox = new Checkbox(
-      new Text( 'Best time visible', { font: new PhetFont( 20 ) } ),
-      bestTimeVisibleProperty );
+    const bestTimeVisibleCheckbox = new Checkbox( bestTimeVisibleProperty, new Text( 'Best time visible', { font: new PhetFont( 20 ) } ) );
 
     const controls = new HBox( {
       resize: false,
