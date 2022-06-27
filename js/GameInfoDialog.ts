@@ -53,7 +53,7 @@ export default class GameInfoDialog extends Dialog {
       }, options.descriptionTextOptions ) )
     );
 
-    // Hide descriptions for levels that are not included in gameLevelsProperty.
+    // Hide descriptions for levels that are not included in options.gameLevels.
     // We must still create these Nodes so that the PhET-iO API is not changed.
     if ( options.gameLevels ) {
       assert && assert( _.every( options.gameLevels, gameLevel => ( Number.isInteger( gameLevel ) && gameLevel > 0 ) ),
