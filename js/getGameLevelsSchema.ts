@@ -25,7 +25,7 @@ function getGameLevelsSchema( numberOfLevels: number ) {
       type: 'number',
       isValidValue: Number.isInteger
     },
-    defaultValue: null,
+    defaultValue: Array.from( { length: numberOfLevels }, ( _, i ) => i + 1 ), // [ 1, 2,...,numberOfLevels]
     isValidValue: ( array: number[] ) => {
       return ( array === null ) || (
         array.length > 0 &&
