@@ -1,4 +1,4 @@
-// Copyright 2018-2022, University of Colorado Boulder
+// Copyright 2022, University of Colorado Boulder
 
 /**
  * GameInfoDialog shows descriptions for the levels of a game.  Each description is on a separate line.
