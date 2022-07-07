@@ -211,7 +211,8 @@ export default class RewardNode extends CanvasNode {
 
   /**
    * Only initialize after being attached to the scene graph, since we must ascertain the local bounds are such that
-   * they take up the global screen.
+   * they take up the global screen. Do not move the RewardNode in the scene graph after calling initialize.
+   *
    * 1. Listen to the size of the scene/display.
    * 2. Record the trail between the scene and your CanvasNode, and
    * 3. Apply the inverse of that transform to the CanvasNode (whenever an ancestor's transform changes, or when the
@@ -232,6 +233,8 @@ export default class RewardNode extends CanvasNode {
 
       // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped.
       const updateBounds = () => {
+        assert && assert( this.getUniqueTrail().equals( uniqueTrail ),
+          'Do not move the RewardNode in the scene graph after calling initialize or the transformation may break.' );
 
         // These bounds represent the full window relative to the scene. It is transformed by the inverse of the
         // ScreenView's matrix (globalToLocalBounds) because the RewardNode is meant to fill the ScreenView. RewardNode
