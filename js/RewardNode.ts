@@ -96,8 +96,7 @@ export default class RewardNode extends CanvasNode {
   // when the RewardNode or any of its ancestors has a change in transform. Set by initialize, so it's not readonly.
   private transformTracker: TransformTracker | null;
 
-  // These are set by initialize, so they are not readonly.
-  private updateBounds: null | ( () => void );
+  // Set by initialize, so not readonly.
   private isInitialized: boolean;
 
   // If you provide option stepEmitter, it will call this method to drive animation
@@ -124,7 +123,6 @@ export default class RewardNode extends CanvasNode {
     this.rewardImages = [];
     this.canvasDisplayBounds = new Bounds2( 0, 0, 0, 0 );
     this.transformTracker = null;
-    this.updateBounds = null;
     this.isInitialized = false;
 
     this.stepEmitterListener = ( dt: number ) => this.step( dt );
@@ -233,7 +231,7 @@ export default class RewardNode extends CanvasNode {
       const trailFromScreenViewToThis = uniqueTrail.slice( indexOfScreenView );
 
       // Listen to the bounds of the scene, so the canvas can be resized if the window is reshaped.
-      this.updateBounds = () => {
+      const updateBounds = () => {
 
         // These bounds represent the full window relative to the scene. It is transformed by the inverse of the
         // ScreenView's matrix (globalToLocalBounds) because the RewardNode is meant to fill the ScreenView. RewardNode
@@ -245,10 +243,10 @@ export default class RewardNode extends CanvasNode {
       };
 
       this.transformTracker = new TransformTracker( uniqueTrail );
-      this.transformTracker.addListener( this.updateBounds );
+      this.transformTracker.addListener( updateBounds );
 
       // Set the initial bounds.
-      this.updateBounds();
+      updateBounds();
 
       // Initialize, now that we have bounds.
       this.rewardImages = this.nodes.map( node => {
