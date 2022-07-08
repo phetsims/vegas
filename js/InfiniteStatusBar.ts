@@ -16,7 +16,6 @@ import BackButton from '../../scenery-phet/js/buttons/BackButton.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import { HBox, Node } from '../../scenery/js/imports.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
-import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
 
@@ -27,7 +26,7 @@ type SelfOptions = {
   spacing?: number;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => ScoreDisplayLabeledNumber | ScoreDisplayNumberAndStar;
+  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => Node;
 };
 
 export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
