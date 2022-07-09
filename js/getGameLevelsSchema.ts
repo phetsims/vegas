@@ -26,13 +26,15 @@ function getGameLevelsSchema( numberOfLevels: number ) {
   return {
     public: true,
     type: 'array',
+
+    // each level number in the array
     elementSchema: {
       type: 'number',
-
-      // validation for each level number in the array
       isValidValue: ( value: number ) => ( Number.isInteger( value ) && value > 0 && value <= numberOfLevels )
     },
-    defaultValue: Array.from( { length: numberOfLevels }, ( _, i ) => i + 1 ), // [ 1, 2,...,numberOfLevels]
+
+    // [ 1, 2,...,numberOfLevels]
+    defaultValue: Array.from( { length: numberOfLevels }, ( _, i ) => i + 1 ),
 
     // validation for the array as a whole
     isValidValue: ( array: number[] ) => {
