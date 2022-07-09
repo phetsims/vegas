@@ -28,17 +28,19 @@ function getGameLevelsSchema( numberOfLevels: number ) {
     type: 'array',
     elementSchema: {
       type: 'number',
-      isValidValue: ( value: number ) => ( Number.isInteger( value ) && value > 0 )
+
+      // validation for each level number in the array
+      isValidValue: ( value: number ) => ( Number.isInteger( value ) && value > 0 && value <= numberOfLevels )
     },
     defaultValue: Array.from( { length: numberOfLevels }, ( _, i ) => i + 1 ), // [ 1, 2,...,numberOfLevels]
+
+    // validation for the array as a whole
     isValidValue: ( array: number[] ) => {
       return ( array === null ) || (
         // at least 1 level must be visible
         array.length > 0 &&
         // unique level numbers
         array.length === _.uniq( array ).length &&
-        // valid level numbers
-        _.every( array, element => element > 0 && element <= numberOfLevels ) &&
         // sorted by ascending level number
         _.every( array, ( value, index, array ) => ( index === 0 || array[ index - 1 ] <= value ) )
       );
