@@ -29,6 +29,7 @@ function getGameLevelsSchema( numberOfLevels: number ) {
     defaultValue: Array.from( { length: numberOfLevels }, ( _, i ) => i + 1 ), // [ 1, 2,...,numberOfLevels]
     isValidValue: ( array: number[] ) => {
       return ( array === null ) || (
+        // at least 1 level must be visible
         array.length > 0 &&
         // unique level numbers
         array.length === _.uniq( array ).length &&
