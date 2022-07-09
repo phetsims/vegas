@@ -87,13 +87,9 @@ export default class LevelSelectionButtonGroup extends Node {
     const buttons: LevelSelectionButton[] = items.map( item =>
       new LevelSelectionButton( new AlignBox( item.icon, alignBoxOptions ), item.scoreProperty,
         combineOptions<LevelSelectionButtonOptions>( {
-          tandem: options.tandem.createTandem( item.tandemName! )
+          tandem: options.tandem.supplied ? options.tandem.createTandem( item.tandemName! ) : Tandem.OPT_OUT
         }, item.options ) )
     );
-
-    options.children = [ options.createLayoutNode( buttons ) ];
-
-    super( options );
 
     // Hide buttons for levels that are not included in gameLevels.
     // All buttons must be instantiated so that the PhET-iO API is not changed conditionally.
@@ -105,6 +101,11 @@ export default class LevelSelectionButtonGroup extends Node {
         button.visible = options.gameLevels!.includes( index + 1 );
       } );
     }
+
+    // Create the layout for the buttons.
+    options.children = [ options.createLayoutNode( buttons ) ];
+
+    super( options );
   }
 }
 
