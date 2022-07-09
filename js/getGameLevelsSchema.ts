@@ -2,6 +2,7 @@
 
 /**
  * Gets the QueryStringMachine schema for the gameLevels query parameter.
+ * Note that game levels are numbered starting from 1.
  *
  * History:
  * - The `gameLevels` query parameter was first proposed and discussed in https://github.com/phetsims/vegas/issues/86.
