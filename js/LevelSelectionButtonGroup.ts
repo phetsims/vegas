@@ -43,7 +43,7 @@ type SelfOptions = {
 
   // Options for all LevelSelectionButton instances in the group.
   // These can be overridden for specific button(s) via LevelSelectionButtonGroupItem.options.
-  levelSelectionButtonOptions: LevelSelectionButtonOptions;
+  levelSelectionButtonOptions: StrictOmit<LevelSelectionButtonOptions, 'tandem'>;
 
   // Creates the Node that handles layout of the buttons
   createLayoutNode?: ( buttons: LevelSelectionButton[] ) => LayoutNode<NodeLayoutConstraint>;
@@ -88,7 +88,7 @@ export default class LevelSelectionButtonGroup extends Node {
       new LevelSelectionButton( new AlignBox( item.icon, alignBoxOptions ), item.scoreProperty,
         combineOptions<LevelSelectionButtonOptions>( {
           tandem: options.tandem.supplied ? options.tandem.createTandem( item.tandemName! ) : Tandem.OPT_OUT
-        }, item.options ) )
+        }, options.levelSelectionButtonOptions, item.options ) )
     );
 
     // Hide buttons for levels that are not included in gameLevels.
