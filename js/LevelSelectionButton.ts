@@ -12,9 +12,9 @@
  */
 
 import IProperty from '../../axon/js/IProperty.js';
-import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
 import optionize from '../../phet-core/js/optionize.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import { Font, IColor, Node, Rectangle, Text } from '../../scenery/js/imports.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../sun/js/buttons/RectangularPushButton.js';
@@ -24,22 +24,12 @@ import soundManager from '../../tambo/js/soundManager.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import levelSelectionButton_mp3 from '../sounds/levelSelectionButton_mp3.js';
 import GameTimer from './GameTimer.js';
-import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
-import ScoreDisplayLabeledStars from './ScoreDisplayLabeledStars.js';
-import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 
 // constants
 const DEFAULT_BEST_TIME_FONT = new PhetFont( 24 );
 const SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
-
-// valid types for the score display in level selection buttons
-type ValidScoreDisplayTypes =
-  ScoreDisplayLabeledNumber |
-  ScoreDisplayLabeledStars |
-  ScoreDisplayStars |
-  ScoreDisplayNumberAndStar;
 
 type SelfOptions = {
 
@@ -48,7 +38,7 @@ type SelfOptions = {
   buttonHeight?: number;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => ValidScoreDisplayTypes;
+  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => Node;
   scoreDisplayProportion?: number; // percentage of the button height occupied by scoreDisplay, (0,0.5]
   scoreDisplayMinXMargin?: number; // horizontal margin between scoreDisplay and its background
   scoreDisplayMinYMargin?: number;  // vertical margin between scoreDisplay and its background

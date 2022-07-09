@@ -19,7 +19,6 @@ import TextPushButton, { TextPushButtonOptions } from '../../sun/js/buttons/Text
 import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
-import ScoreDisplayLabeledStars from './ScoreDisplayLabeledStars.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
 
@@ -41,7 +40,7 @@ type SelfOptions = {
   textFill?: IColor;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => ScoreDisplayLabeledNumber | ScoreDisplayLabeledStars;
+  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => Node;
 
   // nested options for 'Start Over' button, filled in below
   startOverButtonOptions?: TextPushButtonOptions;
