@@ -61,6 +61,7 @@ export type LevelSelectionButtonGroupOptions = SelfOptions & StrictOmit<NodeOpti
 export default class LevelSelectionButtonGroup extends Node {
 
   public constructor( items: LevelSelectionButtonGroupItem[], providedOptions?: LevelSelectionButtonGroupOptions ) {
+    assert && assert( items.length > 0, 'at least one item must be specified' );
 
     const options = optionize<LevelSelectionButtonGroupOptions,
       StrictOmit<SelfOptions, 'createLayoutNode' | 'gameLevels'>, NodeOptions>()( {
@@ -97,6 +98,7 @@ export default class LevelSelectionButtonGroup extends Node {
     // Hide buttons for levels that are not included in gameLevels.
     // All buttons must be instantiated so that the PhET-iO API is not changed conditionally.
     if ( options.gameLevels ) {
+      assert && assert( options.gameLevels.length > 0, 'at least 1 gameLevel must be visible' );
       assert && assert( _.every( options.gameLevels, gameLevel => ( Number.isInteger( gameLevel ) && gameLevel > 0 ) ),
         'gameLevels must be positive integers' );
       buttons.forEach( ( button, index ) => {
