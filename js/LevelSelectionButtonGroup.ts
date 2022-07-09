@@ -1,0 +1,109 @@
+// Copyright 2022, University of Colorado Boulder
+
+//TODO https://github.com/phetsims/vegas/issues/107 Do not use this yet, it's work that is in-progress.
+/**
+ * LevelSelectionButtonGroup is a group that creates LevelSelectionButtons, used in games.
+ *
+ * Responsibilities include:
+ * - Instantiation of the buttons, based on an 'items' array that describes the buttons.
+ * - Setting an effective uniform size for the button icons.
+ * - Layout of the buttons. The layout is customizable, with the default being a single row of buttons.
+ * - Support for the gameLevels query parameter, via the gameLevels option.
+ *
+ * @author Chris Malley (PixelZoom, Inc.)
+ */
+
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import PickRequired from '../../phet-core/js/types/PickRequired.js';
+import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
+import { AlignBox, AlignGroup, HBox, HBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
+import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
+import IProperty from '../../axon/js/IProperty.js';
+import Tandem from '../../tandem/js/Tandem.js';
+import vegas from './vegas.js';
+
+// Describes one LevelSelectionButton
+export type LevelSelectionButtonGroupItem = {
+
+  // The icon displayed on the button
+  icon: Node;
+
+  // The score displayed on the button
+  scoreProperty: IProperty<number>;
+
+  // Name used when creating the button's tandem. If a tandem is provided for the group, then this must be specified.
+  tandemName?: string;
+
+  // Options for the button. These will override LevelSelectionButtonGroupOptions.levelSelectionButtonOptions.
+  // Setting tandem is the responsibility of the group, so it is omitted here.
+  options?: StrictOmit<LevelSelectionButtonOptions, 'tandem'>;
+};
+
+type SelfOptions = {
+
+  // Options for all LevelSelectionButton instances in the group.
+  // These can be overridden for specific button(s) via LevelSelectionButtonGroupItem.options.
+  levelSelectionButtonOptions: LevelSelectionButtonOptions;
+
+  // Creates the Node that handles layout of the buttons
+  createLayoutNode?: ( buttons: LevelSelectionButton[] ) => LayoutNode<NodeLayoutConstraint>;
+
+  // Options for the default LayoutNode (HBox). Ignored if createLayoutNode is provided.
+  defaultLayoutNodeOptions?: StrictOmit<HBoxOptions, 'children'>;
+
+  // Game levels whose buttons should be visible. Levels are numbered starting from 1.
+  // Set this to the value of the gameLevels query parameter, if supported by your sim. See getGameLevelsSchema.ts.
+  gameLevels?: number[];
+};
+
+export type LevelSelectionButtonGroupOptions = SelfOptions & StrictOmit<NodeOptions, 'children'> & PickRequired<NodeOptions, 'tandem'>;
+
+export default class LevelSelectionButtonGroup extends Node {
+
+  public constructor( items: LevelSelectionButtonGroupItem[], providedOptions?: LevelSelectionButtonGroupOptions ) {
+
+    const options = optionize<LevelSelectionButtonGroupOptions,
+      StrictOmit<SelfOptions, 'createLayoutNode' | 'gameLevels'>, NodeOptions>()( {
+      defaultLayoutNodeOptions: {
+        spacing: 10
+      },
+      tandem: Tandem.REQUIRED // this default is provided for JavaScript simulations
+    }, providedOptions );
+
+    // The default LayoutNode is an HBox, with results in a single row of buttons.
+    if ( !options.createLayoutNode ) {
+      options.createLayoutNode = ( buttons: LevelSelectionButton[] ) => new HBox( combineOptions<HBoxOptions>( {
+        children: buttons
+      }, options.defaultLayoutNodeOptions ) );
+    }
+
+    // All icons will have the same effective size.
+    const alignBoxOptions = {
+      group: new AlignGroup()
+    };
+
+    // Create the LevelSelectionButton instances.
+    const buttons: LevelSelectionButton[] = items.map( item =>
+      new LevelSelectionButton( new AlignBox( item.icon, alignBoxOptions ), item.scoreProperty,
+        combineOptions<LevelSelectionButtonOptions>( {
+          tandem: options.tandem.createTandem( item.tandemName! )
+        }, item.options ) )
+    );
+
+    options.children = [ options.createLayoutNode( buttons ) ];
+
+    super( options );
+
+    // Hide buttons for levels that are not included in gameLevels.
+    // All buttons must be instantiated so that the PhET-iO API is not changed conditionally.
+    if ( options.gameLevels ) {
+      assert && assert( _.every( options.gameLevels, gameLevel => ( Number.isInteger( gameLevel ) && gameLevel > 0 ) ),
+        'gameLevels must be positive integers' );
+      buttons.forEach( ( button, index ) => {
+        button.visible = options.gameLevels!.includes( index + 1 );
+      } );
+    }
+  }
+}
+
+vegas.register( 'LevelSelectionButtonGroup', LevelSelectionButtonGroup );
