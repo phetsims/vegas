@@ -31,7 +31,7 @@ export type LevelSelectionButtonGroupItem = {
   // The score displayed on the button
   scoreProperty: IProperty<number>;
 
-  // Name used when creating the button's tandem. If a tandem is provided for the group, then this must be specified.
+  // Name used when creating the button's tandem, defaults to `level${N}Button`
   tandemName?: string;
 
   // Options for the button. These will override LevelSelectionButtonGroupOptions.levelSelectionButtonOptions.
@@ -84,12 +84,19 @@ export default class LevelSelectionButtonGroup extends Node {
     };
 
     // Create the LevelSelectionButton instances.
-    const buttons: LevelSelectionButton[] = items.map( item =>
-      new LevelSelectionButton( new AlignBox( item.icon, alignBoxOptions ), item.scoreProperty,
+    const buttons: LevelSelectionButton[] = items.map( ( item, index ) => {
+
+      let tandem = Tandem.OPT_OUT;
+      if ( options.tandem.supplied ) {
+        const tandemName = item.tandemName || `level${index + 1}Button`;
+        tandem = options.tandem.createTandem( tandemName );
+      }
+
+      return new LevelSelectionButton( new AlignBox( item.icon, alignBoxOptions ), item.scoreProperty,
         combineOptions<LevelSelectionButtonOptions>( {
-          tandem: options.tandem.supplied ? options.tandem.createTandem( item.tandemName! ) : Tandem.OPT_OUT
-        }, options.levelSelectionButtonOptions, item.options ) )
-    );
+          tandem: tandem
+        }, options.levelSelectionButtonOptions, item.options ) );
+    } );
 
     // Hide buttons for levels that are not included in gameLevels.
     // All buttons must be instantiated so that the PhET-iO API is not changed conditionally.
