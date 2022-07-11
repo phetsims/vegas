@@ -16,7 +16,7 @@
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
-import { AlignBox, AlignGroup, FlowBox, FlowBoxOptions, FlowConstraintOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, FlowBox, FlowBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
 import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import IProperty from '../../axon/js/IProperty.js';
 import Tandem from '../../tandem/js/Tandem.js';
@@ -49,8 +49,7 @@ type SelfOptions = {
   createLayoutNode?: ( buttons: LevelSelectionButton[] ) => LayoutNode<NodeLayoutConstraint>;
 
   // Options for the default layout, which is a FlowBox. Ignored if createLayoutNode is provided.
-  //TODO https://github.com/phetsims/vegas/issues/108 workaround: no way to set FlowBoxConstraints.lineSpacing or FlowBoxConstraints.justify via options
-  flowBoxOptions?: StrictOmit<FlowBoxOptions, 'children'> & Pick<FlowConstraintOptions, 'lineSpacing' | 'justify'>;
+  flowBoxOptions?: StrictOmit<FlowBoxOptions, 'children'>;
 
   // Game levels whose buttons should be visible. Levels are numbered starting from 1.
   // Set this to the value of the gameLevels query parameter, if supported by your sim. See getGameLevelsSchema.ts.
@@ -125,16 +124,6 @@ export default class LevelSelectionButtonGroup extends Node {
       layoutNode = new FlowBox( combineOptions<FlowBoxOptions>( {
         children: buttons
       }, options.flowBoxOptions ) );
-
-      //TODO https://github.com/phetsims/vegas/issues/108 workaround: no way to set FlowBoxConstraints.lineSpacing via options
-      if ( options.flowBoxOptions.lineSpacing !== undefined ) {
-        layoutNode.lineSpacing = options.flowBoxOptions.lineSpacing;
-      }
-
-      //TODO https://github.com/phetsims/vegas/issues/108 workaround: no way to set FlowBoxConstraints.justify via options
-      if ( options.flowBoxOptions.justify !== undefined ) {
-        layoutNode.justify = options.flowBoxOptions.justify;
-      }
     }
 
     options.children = [ layoutNode ];
