@@ -60,6 +60,10 @@ export type LevelSelectionButtonGroupOptions = SelfOptions & StrictOmit<NodeOpti
 
 export default class LevelSelectionButtonGroup extends Node {
 
+  // Buttons, ordered by increasing level number.
+  // Note that level numbering starts from 1, to match the gameLevels query parameter.
+  private readonly buttons: LevelSelectionButton[];
+
   public constructor( items: LevelSelectionButtonGroupItem[], providedOptions?: LevelSelectionButtonGroupOptions ) {
     assert && assert( items.length > 0, 'at least one item must be specified' );
 
@@ -117,6 +121,18 @@ export default class LevelSelectionButtonGroup extends Node {
     options.children = [ options.createLayoutNode( buttons ) ];
 
     super( options );
+
+    this.buttons = buttons;
+  }
+
+  /**
+   * Sets the focus to the button associated with a specified level number.
+   * @param level - numbered starting from 1
+   */
+  public focusLevelSelectionButton( level: number ): void {
+    assert && assert( Number.isInteger( level ) && level > 0 && level <= this.buttons.length,
+      `invalid level: ${level}` );
+    this.buttons[ level - 1 ].focus();
   }
 }
 
