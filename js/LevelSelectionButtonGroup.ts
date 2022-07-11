@@ -50,6 +50,7 @@ type SelfOptions = {
 
   // Options for the default layout, which is a FlowBox. Ignored if createLayoutNode is provided.
   //TODO https://github.com/phetsims/vegas/issues/108 workaround: no way to set FlowBoxConstraints.lineSpacing or FlowBoxConstraints.justify via options
+  //TODO https://github.com/phetsims/vegas/issues/108 expected to use FlowBoxConstraints.justifyLines, bug?
   flowBoxOptions?: StrictOmit<FlowBoxOptions, 'children'> & Pick<FlowConstraintOptions, 'lineSpacing' | 'justify'>;
 
   // Game levels whose buttons should be visible. Levels are numbered starting from 1.
