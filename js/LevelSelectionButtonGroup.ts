@@ -65,6 +65,8 @@ export default class LevelSelectionButtonGroup extends Node {
 
     const options = optionize<LevelSelectionButtonGroupOptions,
       StrictOmit<SelfOptions, 'createLayoutNode' | 'gameLevels'>, NodeOptions>()( {
+
+      // Default layout is a single row of buttons
       flowBoxOptions: {
         orientation: 'horizontal',
         spacing: 10
@@ -72,7 +74,7 @@ export default class LevelSelectionButtonGroup extends Node {
       tandem: Tandem.REQUIRED // this default is provided for JavaScript simulations
     }, providedOptions );
 
-    // The default LayoutNode is an HBox, with results in a single row of buttons.
+    // The default layout is a FlowBox.
     if ( !options.createLayoutNode ) {
       options.createLayoutNode = ( buttons: LevelSelectionButton[] ) =>
         new FlowBox( combineOptions<FlowBoxOptions>( {
