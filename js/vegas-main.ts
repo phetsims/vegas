@@ -13,9 +13,9 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
-import LevelSelectionScreenView from './demo/LevelSelectionScreenView.js';
 import RewardScreenView from './demo/RewardScreenView.js';
 import vegasStrings from './vegasStrings.js';
+import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
 
 // constants
 const vegasTitleString = vegasStrings.vegas.title;
@@ -35,8 +35,8 @@ simLauncher.launch( () => {
 
     new Screen(
       createEmptyModel,
-      () => new LevelSelectionScreenView(), {
-        name: 'Level Selection',
+      () => new ComponentsScreenView(), {
+        name: 'Components',
         backgroundColorProperty: new Property( 'white' ),
         tandem: Tandem.OPT_OUT
       } ),
