@@ -16,7 +16,7 @@
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
-import { AlignBox, AlignGroup, FlowBox, FlowBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, FlowBox, FlowBoxOptions, FlowConstraintOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
 import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import IProperty from '../../axon/js/IProperty.js';
 import Tandem from '../../tandem/js/Tandem.js';
@@ -45,11 +45,12 @@ type SelfOptions = {
   // These can be overridden for specific button(s) via LevelSelectionButtonGroupItem.options.
   levelSelectionButtonOptions: StrictOmit<LevelSelectionButtonOptions, 'tandem'>;
 
-  // Creates the Node that handles layout of the buttons
+  // Creates the Node that handles layout of the buttons. Defaults to a FlowBox with flowBoxOptions.
   createLayoutNode?: ( buttons: LevelSelectionButton[] ) => LayoutNode<NodeLayoutConstraint>;
 
   // Options for the default layout, which is a FlowBox. Ignored if createLayoutNode is provided.
-  flowBoxOptions?: StrictOmit<FlowBoxOptions, 'children'>;
+  //TODO https://github.com/phetsims/vegas/issues/108 workaround: no way to set FlowBoxConstraints.lineSpacing or FlowBoxConstraints.justify via options
+  flowBoxOptions?: StrictOmit<FlowBoxOptions, 'children'> & Pick<FlowConstraintOptions, 'lineSpacing' | 'justify'>;
 
   // Game levels whose buttons should be visible. Levels are numbered starting from 1.
   // Set this to the value of the gameLevels query parameter, if supported by your sim. See getGameLevelsSchema.ts.
@@ -82,14 +83,6 @@ export default class LevelSelectionButtonGroup extends Node {
       tandem: Tandem.REQUIRED // this default is provided for JavaScript simulations
     }, providedOptions );
 
-    // The default layout Node is a FlowBox.
-    if ( !options.createLayoutNode ) {
-      options.createLayoutNode = ( buttons: LevelSelectionButton[] ) =>
-        new FlowBox( combineOptions<FlowBoxOptions>( {
-          children: buttons
-        }, options.flowBoxOptions ) );
-    }
-
     // All icons will have the same effective size.
     const alignBoxOptions = {
       group: new AlignGroup()
@@ -121,8 +114,30 @@ export default class LevelSelectionButtonGroup extends Node {
       } );
     }
 
-    // Create the layout for the buttons.
-    options.children = [ options.createLayoutNode( buttons ) ];
+
+    let layoutNode;
+    if ( options.createLayoutNode ) {
+      layoutNode = options.createLayoutNode( buttons );
+    }
+    else {
+
+      // The default layout Node is a FlowBox.
+      layoutNode = new FlowBox( combineOptions<FlowBoxOptions>( {
+        children: buttons
+      }, options.flowBoxOptions ) );
+
+      //TODO https://github.com/phetsims/vegas/issues/108 workaround: no way to set FlowBoxConstraints.lineSpacing via options
+      if ( options.flowBoxOptions.lineSpacing !== undefined ) {
+        layoutNode.lineSpacing = options.flowBoxOptions.lineSpacing;
+      }
+
+      //TODO https://github.com/phetsims/vegas/issues/108 workaround: no way to set FlowBoxConstraints.justify via options
+      if ( options.flowBoxOptions.justify !== undefined ) {
+        layoutNode.justify = options.flowBoxOptions.justify;
+      }
+    }
+
+    options.children = [ layoutNode ];
 
     super( options );
 
