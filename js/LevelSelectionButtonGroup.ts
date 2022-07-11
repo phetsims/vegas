@@ -64,6 +64,10 @@ export default class LevelSelectionButtonGroup extends Node {
   // Note that level numbering starts from 1, to match the gameLevels query parameter.
   private readonly buttons: LevelSelectionButton[];
 
+  /**
+   * @param items - descriptions of the LevelSelectionButtons, ordered by increasing level number
+   * @param [providedOptions]
+   */
   public constructor( items: LevelSelectionButtonGroupItem[], providedOptions?: LevelSelectionButtonGroupOptions ) {
     assert && assert( items.length > 0, 'at least one item must be specified' );
 
