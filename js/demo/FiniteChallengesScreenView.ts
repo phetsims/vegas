@@ -59,6 +59,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
 
     // status bar across the top
     const statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreProperty, {
+      barFill: 'pink',
       font: new PhetFont( 20 ),
       levelProperty: levelProperty,
       challengeIndexProperty: challengeIndexProperty,
