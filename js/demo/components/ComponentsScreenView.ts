@@ -13,6 +13,7 @@ import vegas from '../../vegas.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import DemosScreenView, { DemosScreenViewOptions } from '../../../../sun/js/demo/DemosScreenView.js';
+import demoGameInfoDialog from './demoGameInfoDialog.js';
 import demoLevelSelectionButton from './demoLevelSelectionButton.js';
 import demoLevelSelectionButtonGroup from './demoLevelSelectionButtonGroup.js';
 import demoRewardNode from './demoRewardNode.js';
@@ -31,6 +32,7 @@ export default class ComponentsScreenView extends DemosScreenView {
 
     // To add a demo, add an entry here of type SunDemo.
     const demos = [
+      { label: 'GameInfoDialog', createNode: demoGameInfoDialog },
       { label: 'LevelSelectionButton', createNode: demoLevelSelectionButton },
       { label: 'LevelSelectionButtonGroup', createNode: demoLevelSelectionButtonGroup },
       { label: 'RewardNode', createNode: demoRewardNode },
