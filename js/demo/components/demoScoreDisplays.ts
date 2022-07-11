@@ -2,6 +2,8 @@
 
 /**
  * Demo for various score displays.
+ *
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';

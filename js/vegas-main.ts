@@ -13,7 +13,6 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
-import RewardScreenView from './demo/RewardScreenView.js';
 import vegasStrings from './vegasStrings.js';
 import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
 
@@ -53,14 +52,6 @@ simLauncher.launch( () => {
       createEmptyModel,
       () => new InfiniteChallengesScreenView(), {
         name: 'Infinite Challenges',
-        backgroundColorProperty: new Property( 'white' ),
-        tandem: Tandem.OPT_OUT
-      } ),
-
-    new Screen(
-      createEmptyModel,
-      () => new RewardScreenView(), {
-        name: 'Reward',
         backgroundColorProperty: new Property( 'white' ),
         tandem: Tandem.OPT_OUT
       } )

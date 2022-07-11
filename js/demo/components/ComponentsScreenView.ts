@@ -14,8 +14,9 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import DemosScreenView, { DemosScreenViewOptions } from '../../../../sun/js/demo/DemosScreenView.js';
 import demoLevelSelectionButton from './demoLevelSelectionButton.js';
+import demoRewardNode from './demoRewardNode.js';
+import demoRewardDialog from './demoRewardDialog.js';
 import demoScoreDisplays from './demoScoreDisplays.js';
-
 
 type SelfOptions = EmptyObjectType;
 type ComponentsScreenViewOptions = SelfOptions & DemosScreenViewOptions;
@@ -31,6 +32,8 @@ export default class ComponentsScreenView extends DemosScreenView {
     // To add a demo, add an entry here of type SunDemo.
     const demos = [
       { label: 'LevelSelectionButton', createNode: demoLevelSelectionButton },
+      { label: 'RewardDialog', createNode: demoRewardDialog },
+      { label: 'RewardNode', createNode: demoRewardNode },
       { label: 'ScoreDisplays', createNode: demoScoreDisplays }
     ];
 
