@@ -29,7 +29,7 @@ export default function demoScoreDisplay( layoutBounds: Bounds2 ) {
   // Various options for displaying score.
   const scoreDisplays = new VBox( {
     resize: false,
-    spacing: 20,
+    spacing: 50,
     align: 'left',
     centerX: layoutBounds.centerX,
     top: layoutBounds.top + 20,
