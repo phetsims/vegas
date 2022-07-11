@@ -16,7 +16,7 @@
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
-import { AlignBox, AlignGroup, HBox, HBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, FlowBox, FlowBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
 import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import IProperty from '../../axon/js/IProperty.js';
 import Tandem from '../../tandem/js/Tandem.js';
@@ -48,8 +48,8 @@ type SelfOptions = {
   // Creates the Node that handles layout of the buttons
   createLayoutNode?: ( buttons: LevelSelectionButton[] ) => LayoutNode<NodeLayoutConstraint>;
 
-  // Options for the default LayoutNode (HBox). Ignored if createLayoutNode is provided.
-  defaultLayoutNodeOptions?: StrictOmit<HBoxOptions, 'children'>;
+  // Options for the default layout, which is a FlowBox. Ignored if createLayoutNode is provided.
+  flowBoxOptions?: StrictOmit<FlowBoxOptions, 'children'>;
 
   // Game levels whose buttons should be visible. Levels are numbered starting from 1.
   // Set this to the value of the gameLevels query parameter, if supported by your sim. See getGameLevelsSchema.ts.
@@ -65,7 +65,8 @@ export default class LevelSelectionButtonGroup extends Node {
 
     const options = optionize<LevelSelectionButtonGroupOptions,
       StrictOmit<SelfOptions, 'createLayoutNode' | 'gameLevels'>, NodeOptions>()( {
-      defaultLayoutNodeOptions: {
+      flowBoxOptions: {
+        orientation: 'horizontal',
         spacing: 10
       },
       tandem: Tandem.REQUIRED // this default is provided for JavaScript simulations
@@ -73,9 +74,10 @@ export default class LevelSelectionButtonGroup extends Node {
 
     // The default LayoutNode is an HBox, with results in a single row of buttons.
     if ( !options.createLayoutNode ) {
-      options.createLayoutNode = ( buttons: LevelSelectionButton[] ) => new HBox( combineOptions<HBoxOptions>( {
-        children: buttons
-      }, options.defaultLayoutNodeOptions ) );
+      options.createLayoutNode = ( buttons: LevelSelectionButton[] ) =>
+        new FlowBox( combineOptions<FlowBoxOptions>( {
+          children: buttons
+        }, options.flowBoxOptions ) );
     }
 
     // All icons will have the same effective size.
