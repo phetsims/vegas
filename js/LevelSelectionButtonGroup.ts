@@ -34,6 +34,9 @@ export type LevelSelectionButtonGroupItem = {
   // Name used when creating the button's tandem, defaults to `level${N}Button`
   tandemName?: string;
 
+  // optional documentation for PhET-iO
+  phetioDocumentation?: string;
+
   // Options for the button. These will override LevelSelectionButtonGroupOptions.levelSelectionButtonOptions.
   // Setting tandem is the responsibility of the group, so it is omitted here.
   options?: StrictOmit<LevelSelectionButtonOptions, 'tandem'>;
