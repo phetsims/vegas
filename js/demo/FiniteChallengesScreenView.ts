@@ -101,8 +101,6 @@ export default class FiniteChallengesScreenView extends ScreenView {
     } );
 
     const scoreSlider = new HBox( {
-      left: this.layoutBounds.left + 20,
-      top: statusBar.bottom + 30,
       children: [
         new Text( 'Score: ', { font: DEFAULT_FONT } ),
         new HSlider( scoreProperty, scoreProperty.range!, {
@@ -121,15 +119,6 @@ export default class FiniteChallengesScreenView extends ScreenView {
     } );
 
     const timerEnabledCheckbox = new Checkbox( timerEnabledProperty, new Text( 'Timer enabled', { font: DEFAULT_FONT } ) );
-
-    const controls = new VBox( {
-      align: 'left',
-      spacing: 15,
-      left: this.layoutBounds.left + 20,
-      top: statusBar.bottom + 30,
-      children: [ levelSlider, challengeIndexSlider, numberOfChallengesSlider, scoreSlider, elapsedTimeSlider, timerEnabledCheckbox ]
-    } );
-    this.addChild( controls );
 
     // button to open LevelCompleteNode
     const levelCompletedButton = new RectangularPushButton( {
@@ -152,7 +141,22 @@ export default class FiniteChallengesScreenView extends ScreenView {
         this.addChild( levelCompletedNode );
       }
     } );
-    this.addChild( levelCompletedButton );
+
+    const controls = new VBox( {
+      align: 'left',
+      spacing: 25,
+      center: this.layoutBounds.center,
+      children: [
+        levelSlider,
+        challengeIndexSlider,
+        numberOfChallengesSlider,
+        scoreSlider,
+        elapsedTimeSlider,
+        timerEnabledCheckbox,
+        levelCompletedButton
+      ]
+    } );
+    this.addChild( controls );
   }
 }
 
