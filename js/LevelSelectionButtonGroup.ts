@@ -49,14 +49,16 @@ type SelfOptions = {
   // These can be overridden for specific button(s) via LevelSelectionButtonGroupItem.options.
   levelSelectionButtonOptions: StrictOmit<LevelSelectionButtonOptions, 'tandem'>;
 
-  // Creates the Node that handles layout of the buttons. Defaults to a FlowBox with flowBoxOptions.
-  createLayoutNode?: ( buttons: LevelSelectionButton[] ) => LayoutNode<NodeLayoutConstraint>;
-
   // Options for the default layout, which is a FlowBox. Ignored if createLayoutNode is provided.
   flowBoxOptions?: StrictOmit<FlowBoxOptions, 'children'>;
 
-  // Game levels whose buttons should be visible. Levels are numbered starting from 1.
-  // Set this to the value of the gameLevels query parameter, if supported by your sim. See getGameLevelsSchema.ts.
+  // Creates the Node that handles layout of the buttons.
+  // Use this option if you have a custom layout that cannot be achieved using the default FlowBox.
+  createLayoutNode?: ( buttons: LevelSelectionButton[] ) => LayoutNode<NodeLayoutConstraint>;
+
+  // Game levels whose buttons should be visible. Levels are numbered starting from 1, to comply with the gameLevels
+  // query parameter. Set this to the value of the gameLevels query parameter, if supported by your sim.
+  // See getGameLevelsSchema.ts.
   gameLevels?: number[];
 };
 
@@ -137,8 +139,10 @@ export default class LevelSelectionButtonGroup extends Node {
   }
 
   /**
-   * Sets the focus to the button associated with a specified level number.
-   * @param level - numbered starting from 1
+   * Sets the focus to the button associated with a specified level number. If your simulation supports keyboard
+   * traversal, you'll typically need to call this when returning to the UI that show the LevelSelectionButtonGroup,
+   * for example, when the 'Back' or 'Start Over' button is pressed in a game.
+   * @param level - numbered starting from 1, to comply with gameLevels query parameter
    */
   public focusLevelSelectionButton( level: number ): void {
     assert && assert( Number.isInteger( level ) && level > 0 && level <= this.buttons.length,
