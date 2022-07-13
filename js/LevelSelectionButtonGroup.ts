@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * LevelSelectionButtonGroup is a group that creates LevelSelectionButtons, used in games.
+ * LevelSelectionButtonGroup is a group of related LevelSelectionButtons, used in games.
  *
  * Responsibilities include:
  * - Instantiation of the buttons, based on an 'items' array that describes the buttons.
