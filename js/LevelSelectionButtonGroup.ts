@@ -7,8 +7,13 @@
  * Responsibilities include:
  * - Instantiation of the buttons, based on an 'items' array that describes the buttons.
  * - Setting an effective uniform size for the button icons.
- * - Layout of the buttons. The layout is customizable, with the default being a single row of buttons.
+ * - Layout of the buttons, see details below.
  * - Support for the gameLevels query parameter, via the gameLevels option.
+ *
+ * Layout:
+ * - the default layout is a single row of buttons, customizable via LevelSelectionButtonGroupOptions.flowBoxOptions
+ * - to create multiple rows of buttons, see the example in WaveGameLevelSelectionButtonGroup
+ * - to create a totally custom layout, use LevelSelectionButtonGroupOptions.createLayoutNode option
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
