@@ -7,7 +7,9 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import { Text } from '../../../../scenery/js/imports.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import GameInfoDialog from '../../GameInfoDialog.js';
 
 export default function demoGameInfoDialog( layoutBounds: Bounds2 ) {
@@ -19,7 +21,12 @@ export default function demoGameInfoDialog( layoutBounds: Bounds2 ) {
     'Description of level 4'
   ];
 
-  const dialog = new GameInfoDialog( levelDescriptions );
+  const dialog = new GameInfoDialog( levelDescriptions, {
+    title: new Text( 'Your Title', {
+      font: new PhetFont( { size: 30, weight: 'bold' } )
+    } ),
+    ySpacing: 20
+  } );
 
   return new InfoButton( {
     listener: () => dialog.show(),
