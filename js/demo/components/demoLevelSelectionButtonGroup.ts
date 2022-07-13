@@ -199,7 +199,7 @@ class XButtonGroup extends LevelSelectionButtonGroup {
           xSpacing: 5,
           ySpacing: 5,
 
-          // Layout in an X pattern, by using empty (null) cells.
+          // Layout in an X pattern, by making every-other cell empty (null).
           // We'd never do anything this brute-force in production code, but this is a demo.
           rows: [
             [ buttons[ 0 ], null, buttons[ 1 ] ],
