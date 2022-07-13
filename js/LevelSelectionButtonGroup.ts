@@ -94,7 +94,7 @@ export default class LevelSelectionButtonGroup extends Node {
     };
 
     // Create the LevelSelectionButton instances.
-    const buttons: LevelSelectionButton[] = items.map( ( item, index ) => {
+    const buttons = items.map( ( item, index ) => {
 
       let tandem = Tandem.OPT_OUT;
       if ( options.tandem.supplied ) {
