@@ -33,9 +33,9 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ) {
 
   const singleLineButtonGroup = new SingleLineButtonGroup( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
 
-  const multiLineButtonGroup = new MultiLineButtonGroup( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
+  const multiLineButtonGroup = new MultiLineButtonGroup( scoreProperty );
 
-  const xButtonGroup = new XButtonGroup( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
+  const xButtonGroup = new XButtonGroup( scoreProperty );
 
   const controlPanel = new ControlPanel( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
 
@@ -103,7 +103,7 @@ class SingleLineButtonGroup extends LevelSelectionButtonGroup {
  */
 class MultiLineButtonGroup extends LevelSelectionButtonGroup {
 
-  public constructor( scoreProperty: RangedProperty, bestTimeProperty: RangedProperty, bestTimeVisibleProperty: IProperty<boolean> ) {
+  public constructor( scoreProperty: RangedProperty ) {
 
     const numberOfLevels = 5;
 
@@ -119,9 +119,7 @@ class MultiLineButtonGroup extends LevelSelectionButtonGroup {
         options: {
           createScoreDisplay: () => new ScoreDisplayStars( scoreProperty, {
             perfectScore: scoreProperty.range.max
-          } ),
-          bestTimeProperty: bestTimeProperty,
-          bestTimeVisibleProperty: bestTimeVisibleProperty
+          } )
         }
       } );
     }
@@ -166,7 +164,7 @@ class MultiLineButtonGroup extends LevelSelectionButtonGroup {
  */
 class XButtonGroup extends LevelSelectionButtonGroup {
 
-  public constructor( scoreProperty: RangedProperty, bestTimeProperty: RangedProperty, bestTimeVisibleProperty: IProperty<boolean> ) {
+  public constructor( scoreProperty: RangedProperty ) {
 
     const numberOfLevels = 5;
 
