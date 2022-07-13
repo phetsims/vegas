@@ -7,7 +7,7 @@
  * - Instantiation of the buttons, based on an 'items' array that describes the buttons.
  * - Setting an effective uniform size for the button icons.
  * - Layout of the buttons, see details below.
- * - Support for the gameLevels query parameter, via the gameLevels option.
+ * - Support for the gameLevels query parameter, via LevelSelectionButtonGroupOptions.gameLevels.
  *
  * Layout:
  * - the default layout is a single row of buttons, customizable via LevelSelectionButtonGroupOptions.flowBoxOptions
