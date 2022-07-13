@@ -40,22 +40,22 @@ export default class FiniteChallengesScreenView extends ScreenView {
     const levelProperty = new NumberProperty( 1, {
       numberType: 'Integer',
       range: new Range( 1, 5 )
-    } );
+    } ).asRanged();
     const challengeIndexProperty = new NumberProperty( 0, {
       numberType: 'Integer',
       range: new Range( 0, NUMBER_OF_CHALLENGES - 1 )
-    } );
+    } ).asRanged();
     const numberOfChallengesProperty = new NumberProperty( NUMBER_OF_CHALLENGES, {
       numberType: 'Integer',
       range: new Range( 1, NUMBER_OF_CHALLENGES )
-    } );
+    } ).asRanged();
     const scoreProperty = new NumberProperty( 0, {
       numberType: 'Integer',
       range: new Range( 0, PERFECT_SCORE )
-    } );
+    } ).asRanged();
     const elapsedTimeProperty = new NumberProperty( 0, {
       range: new Range( 0, 1000 )
-    } );
+    } ).asRanged();
     const timerEnabledProperty = new BooleanProperty( true );
 
     // status bar across the top
@@ -76,7 +76,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
     const levelSlider = new HBox( {
       children: [
         new Text( 'Level: ', { font: DEFAULT_FONT } ),
-        new HSlider( levelProperty, levelProperty.range!, {
+        new HSlider( levelProperty, levelProperty.range, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]
@@ -85,7 +85,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
     const challengeIndexSlider = new HBox( {
       children: [
         new Text( 'Challenge: ', { font: DEFAULT_FONT } ),
-        new HSlider( challengeIndexProperty, challengeIndexProperty.range!, {
+        new HSlider( challengeIndexProperty, challengeIndexProperty.range, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]
@@ -94,7 +94,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
     const numberOfChallengesSlider = new HBox( {
       children: [
         new Text( 'Number of challenges: ', { font: DEFAULT_FONT } ),
-        new HSlider( numberOfChallengesProperty, numberOfChallengesProperty.range!, {
+        new HSlider( numberOfChallengesProperty, numberOfChallengesProperty.range, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]
@@ -103,7 +103,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
     const scoreSlider = new HBox( {
       children: [
         new Text( 'Score: ', { font: DEFAULT_FONT } ),
-        new HSlider( scoreProperty, scoreProperty.range!, {
+        new HSlider( scoreProperty, scoreProperty.range, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]
@@ -112,7 +112,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
     const elapsedTimeSlider = new HBox( {
       children: [
         new Text( 'Elapsed time: ', { font: DEFAULT_FONT } ),
-        new HSlider( elapsedTimeProperty, elapsedTimeProperty.range!, {
+        new HSlider( elapsedTimeProperty, elapsedTimeProperty.range, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]
