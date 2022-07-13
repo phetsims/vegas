@@ -48,7 +48,7 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ) {
     listener: () => console.log( 'level start' )
   } );
 
-  const buttonWithTextAndStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
+  const buttonWithLabeledStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
     createScoreDisplay: scoreProperty => new ScoreDisplayLabeledStars( scoreProperty, {
       numberOfStars: NUM_STARS,
       perfectScore: scoreRange.max
@@ -63,7 +63,7 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ) {
     soundPlayerIndex: 2
   } );
 
-  const buttonWithTextAndNumber = new LevelSelectionButton( buttonIcon, scoreProperty, {
+  const buttonWithLabeledNumber = new LevelSelectionButton( buttonIcon, scoreProperty, {
     createScoreDisplay: scoreProperty => new ScoreDisplayLabeledNumber( scoreProperty ),
     listener: () => console.log( 'level start' ),
     bestTimeProperty: bestTimeProperty,
@@ -74,7 +74,7 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ) {
   const levelSelectionButtons = new HBox( {
     spacing: 20,
     align: 'top',
-    children: [ buttonWithStars, buttonWithTextAndStars, buttonWithNumberAndStar, buttonWithTextAndNumber ]
+    children: [ buttonWithStars, buttonWithLabeledStars, buttonWithNumberAndStar, buttonWithLabeledNumber ]
   } );
 
   const scoreSlider = new HBox( {
