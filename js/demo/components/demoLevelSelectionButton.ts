@@ -10,7 +10,7 @@ import ScoreDisplayStars from '../../ScoreDisplayStars.js';
 import ScoreDisplayLabeledStars from '../../ScoreDisplayLabeledStars.js';
 import ScoreDisplayNumberAndStar from '../../ScoreDisplayNumberAndStar.js';
 import ScoreDisplayLabeledNumber from '../../ScoreDisplayLabeledNumber.js';
-import { HBox, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HSlider from '../../../../sun/js/HSlider.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -35,8 +35,10 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ) {
 
   const bestTimeVisibleProperty = new BooleanProperty( true );
 
-  // Level selection buttons
-  const buttonIcon = new Rectangle( 0, 0, 100, 100, { fill: 'red', stroke: 'black' } );
+  const buttonIcon = new RichText( 'Level<br>1', {
+    align: 'center',
+    font: new PhetFont( 14 )
+  } );
 
   const buttonWithStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
     createScoreDisplay: scoreProperty => new ScoreDisplayStars( scoreProperty, {
@@ -96,9 +98,14 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ) {
       enabledProperty: new DerivedProperty( [ bestTimeProperty ], bestTime => ( bestTime > 0 ) )
     } );
 
-  const controls = new HBox( {
-    spacing: 30,
-    children: [ scoreSlider, bestTimeSlider, bestTimeVisibleCheckbox ]
+  const controls = new VBox( {
+    spacing: 20,
+    align: 'right',
+    children: [
+      scoreSlider,
+      bestTimeSlider,
+      bestTimeVisibleCheckbox
+    ]
   } );
 
   return new VBox( {
