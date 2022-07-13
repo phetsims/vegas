@@ -21,10 +21,9 @@ const NUM_STARS = 5;
 
 export default function demoScoreDisplay( layoutBounds: Bounds2 ) {
 
-  const scoreRange = new Range( 0, 1000 );
   const scoreProperty = new NumberProperty( 0, {
-    range: scoreRange
-  } );
+    range: new Range( 0, 1000 )
+  } ).asRanged();
 
   // Various options for displaying score.
   const scoreDisplays = new VBox( {
@@ -34,8 +33,8 @@ export default function demoScoreDisplay( layoutBounds: Bounds2 ) {
     centerX: layoutBounds.centerX,
     top: layoutBounds.top + 20,
     children: [
-      new ScoreDisplayStars( scoreProperty, { numberOfStars: NUM_STARS, perfectScore: scoreRange.max } ),
-      new ScoreDisplayLabeledStars( scoreProperty, { numberOfStars: NUM_STARS, perfectScore: scoreRange.max } ),
+      new ScoreDisplayStars( scoreProperty, { numberOfStars: NUM_STARS, perfectScore: scoreProperty.range.max } ),
+      new ScoreDisplayLabeledStars( scoreProperty, { numberOfStars: NUM_STARS, perfectScore: scoreProperty.range.max } ),
       new ScoreDisplayNumberAndStar( scoreProperty ),
       new ScoreDisplayLabeledNumber( scoreProperty )
     ]
@@ -44,7 +43,7 @@ export default function demoScoreDisplay( layoutBounds: Bounds2 ) {
   const scoreSlider = new HBox( {
     children: [
       new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
-      new HSlider( scoreProperty, scoreRange )
+      new HSlider( scoreProperty, scoreProperty.range )
     ]
   } );
 
