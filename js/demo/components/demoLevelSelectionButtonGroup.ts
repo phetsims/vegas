@@ -6,7 +6,7 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
-import { HBox, Text, VBox } from '../../../../scenery/js/imports.js';
+import { GridBox, HBox, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HSlider from '../../../../sun/js/HSlider.js';
 import NumberProperty, { RangedProperty } from '../../../../axon/js/NumberProperty.js';
@@ -17,6 +17,7 @@ import ScoreDisplayStars from '../../ScoreDisplayStars.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import IProperty from '../../../../axon/js/IProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import LevelSelectionButton from '../../LevelSelectionButton.js';
 
 export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ) {
 
@@ -34,17 +35,22 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ) {
 
   const multiLineButtonGroup = new MultiLineButtonGroup( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
 
+  const xButtonGroup = new XButtonGroup( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
+
   const controlPanel = new ControlPanel( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
 
-  return new VBox( {
+  return new HBox( {
     children: [
-      new HBox( {
-        spacing: 100,
+      new VBox( {
+        spacing: 50,
         children: [ singleLineButtonGroup, multiLineButtonGroup ]
       } ),
-      controlPanel
+      new VBox( {
+        spacing: 50,
+        children: [ xButtonGroup, controlPanel ]
+      } )
     ],
-    spacing: 80,
+    spacing: 100,
     center: layoutBounds.center
   } );
 }
@@ -149,6 +155,58 @@ class MultiLineButtonGroup extends LevelSelectionButtonGroup {
         preferredWidth: preferredWidth,
         wrap: true, // start a new row when preferredWidth is reached
         justify: 'center' // horizontal justification
+      },
+      tandem: Tandem.OPT_OUT
+    } );
+  }
+}
+
+/**
+ * Demonstrates how to create a custom layout (in this case, an 'X' pattern), using the createLayoutNode option.
+ */
+class XButtonGroup extends LevelSelectionButtonGroup {
+
+  public constructor( scoreProperty: RangedProperty, bestTimeProperty: RangedProperty, bestTimeVisibleProperty: IProperty<boolean> ) {
+
+    const numberOfLevels = 5;
+
+    // Describe the buttons. For demonstration purposes, all buttons are associated with the same scoreProperty and
+    // bestTimeProperty. In a real game, each level would have its own scoreProperty and bestTimeProperty.
+    const items: LevelSelectionButtonGroupItem[] = [];
+    for ( let level = 1; level <= numberOfLevels; level++ ) {
+      items.push( {
+
+        // The button icon is simply its level number.
+        icon: new Text( level, { font: new PhetFont( 15 ) } ),
+        scoreProperty: scoreProperty,
+        options: {
+          createScoreDisplay: () => new ScoreDisplayStars( scoreProperty, {
+            perfectScore: scoreProperty.range.max
+          } )
+        }
+      } );
+    }
+
+    super( items, {
+      levelSelectionButtonOptions: {
+        baseColor: 'orange',
+        buttonWidth: 75,
+        buttonHeight: 75
+      },
+      createLayoutNode: ( buttons: LevelSelectionButton[] ) => {
+        assert && assert( buttons.length === 5, 'rows option value is hardcoded for 5 levels' );
+        return new GridBox( {
+          xSpacing: 5,
+          ySpacing: 5,
+
+          // Layout in an X pattern, by using empty (null) cells.
+          // We'd never do anything this brute-force in production code, but this is a demo.
+          rows: [
+            [ buttons[ 0 ], null, buttons[ 1 ] ],
+            [ null, buttons[ 2 ], null ],
+            [ buttons[ 3 ], null, buttons[ 4 ] ]
+          ]
+        } );
       },
       tandem: Tandem.OPT_OUT
     } );
