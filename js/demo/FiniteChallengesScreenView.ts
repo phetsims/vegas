@@ -1,13 +1,14 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
 /**
- * Demonstrates vegas UI components.
+ * Demonstrates UI components that typically appear in a game level that has a finite number of challenges.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
@@ -70,7 +71,6 @@ export default class FiniteChallengesScreenView extends ScreenView {
         listener: () => { console.log( 'Start Over' ); }
       }
     } );
-    this.addChild( statusBar );
 
     // Controls for changing Properties
     const levelSlider = new HBox( {
@@ -120,30 +120,36 @@ export default class FiniteChallengesScreenView extends ScreenView {
 
     const timerEnabledCheckbox = new Checkbox( timerEnabledProperty, new Text( 'Timer enabled', { font: DEFAULT_FONT } ) );
 
-    // button to open LevelCompleteNode
+    const levelCompletedNode = new LevelCompletedNode(
+      levelProperty.get(), // level
+      scoreProperty.value, // score
+      PERFECT_SCORE, // maxScore
+      4, // numberOfStars
+      true, // timerEnabled
+      77, // elapsedTime
+      74, // bestTimeAtThisLevel
+      true, // isNewBestTime
+      () => { levelCompletedNode.visible = false; }, // Continue button callback
+      {
+        center: this.layoutBounds.center,
+        visible: false
+      }
+    );
+
+    // button to show LevelCompletedNode
     const levelCompletedButton = new RectangularPushButton( {
       content: new Text( 'show LevelCompletedNode', { font: new PhetFont( 20 ) } ),
       centerX: this.layoutBounds.centerX,
       bottom: this.layoutBounds.bottom - 20,
+      enabledProperty: new DerivedProperty( [ levelCompletedNode.visibleProperty ], visible => !visible ),
       listener: () => {
-        const levelCompletedNode = new LevelCompletedNode(
-          levelProperty.get(), // level
-          scoreProperty.value, // score
-          PERFECT_SCORE, // maxScore
-          4, // numberOfStars
-          true, // timerEnabled
-          77, // elapsedTime
-          74, // bestTimeAtThisLevel
-          true, // isNewBestTime
-          () => { levelCompletedNode.detach(); }, // Continue button callback
-          { center: this.layoutBounds.center }
-        );
-        this.addChild( levelCompletedNode );
+        levelCompletedNode.visible = true;
       }
     } );
 
+    // Lay out all controls
     const controls = new VBox( {
-      align: 'left',
+      align: 'right',
       spacing: 25,
       center: this.layoutBounds.center,
       children: [
@@ -156,7 +162,8 @@ export default class FiniteChallengesScreenView extends ScreenView {
         levelCompletedButton
       ]
     } );
-    this.addChild( controls );
+
+    this.children = [ statusBar, controls, levelCompletedNode ];
   }
 }
 
