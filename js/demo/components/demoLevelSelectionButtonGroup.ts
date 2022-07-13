@@ -155,6 +155,9 @@ class MultiLineButtonGroup extends LevelSelectionButtonGroup {
   }
 }
 
+/**
+ * The controls for this demo
+ */
 class ControlPanel extends VBox {
   public constructor( scoreProperty: RangedProperty, bestTimeProperty: RangedProperty, bestTimeVisibleProperty: Property<boolean> ) {
 
