@@ -13,11 +13,12 @@ import ScoreDisplayLabeledNumber from '../../ScoreDisplayLabeledNumber.js';
 import { HBox, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HSlider from '../../../../sun/js/HSlider.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import NumberProperty, { RangedProperty } from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import LevelSelectionButton from '../../LevelSelectionButton.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Property from '../../../../axon/js/Property.js';
 
 const NUM_STARS = 5;
 
@@ -26,20 +27,22 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ) {
   const scoreRange = new Range( 0, 1000 );
   const scoreProperty = new NumberProperty( 0, {
     range: scoreRange
-  } );
+  } ).asRanged();
 
   const bestTimeRange = new Range( 0, 10000 );
   const bestTimeProperty = new NumberProperty( 0, {
     range: bestTimeRange
-  } );
+  } ).asRanged();
 
   const bestTimeVisibleProperty = new BooleanProperty( true );
 
+  // Simple icon used on all buttons
   const buttonIcon = new RichText( 'Level<br>1', {
     align: 'center',
     font: new PhetFont( 14 )
   } );
 
+  // Examples of LevelSelectionButton with various 'score display' options
   const buttonWithStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
     createScoreDisplay: scoreProperty => new ScoreDisplayStars( scoreProperty, {
       numberOfStars: NUM_STARS,
@@ -77,40 +80,52 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ) {
     children: [ buttonWithStars, buttonWithLabeledStars, buttonWithNumberAndStar, buttonWithLabeledNumber ]
   } );
 
-  const scoreSlider = new HBox( {
-    children: [
-      new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
-      new HSlider( scoreProperty, scoreRange )
-    ]
-  } );
-
-  const bestTimeSlider = new HBox( {
-    children: [
-      new Text( 'Best Time: ', { font: new PhetFont( 20 ) } ),
-      new HSlider( bestTimeProperty, bestTimeRange )
-    ]
-  } );
-
-  const bestTimeVisibleCheckbox = new Checkbox( bestTimeVisibleProperty,
-    new Text( 'Best time visible', { font: new PhetFont( 20 ) } ), {
-
-      // Best time is only displayed when it's > 0, so this control is irrelevant when bestTime === 0.
-      enabledProperty: new DerivedProperty( [ bestTimeProperty ], bestTime => ( bestTime > 0 ) )
-    } );
-
-  const controls = new VBox( {
-    spacing: 20,
-    align: 'right',
-    children: [
-      scoreSlider,
-      bestTimeSlider,
-      bestTimeVisibleCheckbox
-    ]
-  } );
+  const controlPanel = new DemoLevelSelectionButtonControlPanel( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
 
   return new VBox( {
     spacing: 50,
-    children: [ levelSelectionButtons, controls ],
+    children: [ levelSelectionButtons, controlPanel ],
     center: layoutBounds.center
   } );
+}
+
+/**
+ * The controls for this demo and demoLevelSelectionButtonGroup
+ */
+export class DemoLevelSelectionButtonControlPanel extends VBox {
+  public constructor( scoreProperty: RangedProperty, bestTimeProperty: RangedProperty, bestTimeVisibleProperty: Property<boolean> ) {
+
+    const textOptions = { font: new PhetFont( 20 ) };
+    const textSpacing = 10;
+
+    const scoreSlider = new HBox( {
+      spacing: textSpacing,
+      children: [
+        new Text( 'Score: ', textOptions ),
+        new HSlider( scoreProperty, scoreProperty.range )
+      ]
+    } );
+
+    const bestTimeSlider = new HBox( {
+      spacing: textSpacing,
+      children: [
+        new Text( 'Best Time: ', textOptions ),
+        new HSlider( bestTimeProperty, bestTimeProperty.range )
+      ]
+    } );
+
+    const bestTimeVisibleCheckbox = new Checkbox( bestTimeVisibleProperty,
+      new Text( 'Best time visible', textOptions ), {
+        spacing: textSpacing,
+
+        // Best time is only displayed when it's > 0, so this control is irrelevant when bestTime === 0.
+        enabledProperty: new DerivedProperty( [ bestTimeProperty ], bestTime => ( bestTime > 0 ) )
+      } );
+
+    super( {
+      spacing: 15,
+      align: 'right',
+      children: [ scoreSlider, bestTimeSlider, bestTimeVisibleCheckbox ]
+    } );
+  }
 }
