@@ -10,9 +10,9 @@
  * - Support for the gameLevels query parameter, via LevelSelectionButtonGroupOptions.gameLevels.
  *
  * Layout:
- * - the default layout is a single row of buttons, customizable via LevelSelectionButtonGroupOptions.flowBoxOptions
- * - to create multiple rows of buttons, see example MultiRowButtonGroup in demoLevelSelectionButtonGroup.ts
- * - to create a custom layout, see example XButtonGroup in demoLevelSelectionButtonGroup.ts
+ * - The default layout is a single row of buttons, customizable via LevelSelectionButtonGroupOptions.flowBoxOptions.
+ * - To create multiple rows of buttons, see example MultiRowButtonGroup in demoLevelSelectionButtonGroup.ts.
+ * - To create a custom layout, see example XButtonGroup in demoLevelSelectionButtonGroup.ts.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
