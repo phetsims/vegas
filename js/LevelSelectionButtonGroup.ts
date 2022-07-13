@@ -11,8 +11,8 @@
  *
  * Layout:
  * - the default layout is a single row of buttons, customizable via LevelSelectionButtonGroupOptions.flowBoxOptions
- * - to create multiple rows of buttons, see demoLevelSelectionButtonGroup.ts for an example
- * - to create a totally custom layout, use LevelSelectionButtonGroupOptions.createLayoutNode option
+ * - to create multiple rows of buttons, see example MultiRowButtonGroup in demoLevelSelectionButtonGroup.ts
+ * - to create a custom layout, see example XButtonGroup in demoLevelSelectionButtonGroup.ts
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

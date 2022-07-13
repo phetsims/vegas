@@ -31,9 +31,9 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ) {
 
   const bestTimeVisibleProperty = new BooleanProperty( true );
 
-  const singleLineButtonGroup = new SingleLineButtonGroup( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
+  const singleRowButtonGroup = new SingleRowButtonGroup( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
 
-  const multiLineButtonGroup = new MultiLineButtonGroup( scoreProperty );
+  const multiRowButtonGroup = new MultiRowButtonGroup( scoreProperty );
 
   const xButtonGroup = new XButtonGroup( scoreProperty );
 
@@ -43,7 +43,7 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ) {
     children: [
       new VBox( {
         spacing: 50,
-        children: [ singleLineButtonGroup, multiLineButtonGroup ]
+        children: [ singleRowButtonGroup, multiRowButtonGroup ]
       } ),
       new VBox( {
         spacing: 50,
@@ -56,9 +56,9 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ) {
 }
 
 /**
- * Demonstrates the default layout of LevelSelectionButtonGroup, a single line of buttons
+ * Demonstrates the default layout of LevelSelectionButtonGroup, a single row of buttons.
  */
-class SingleLineButtonGroup extends LevelSelectionButtonGroup {
+class SingleRowButtonGroup extends LevelSelectionButtonGroup {
 
   public constructor( scoreProperty: RangedProperty, bestTimeProperty: IProperty<number>, bestTimeVisibleProperty: IProperty<boolean> ) {
 
@@ -99,9 +99,10 @@ class SingleLineButtonGroup extends LevelSelectionButtonGroup {
 }
 
 /**
- * Demonstrates how to customize LevelSelectionButtonGroup to provide multiple rows of buttons
+ * Demonstrates how to customize LevelSelectionButtonGroup to provide multiple rows of buttons.
+ * Note the use of options preferredWidth, wrap, and justify.
  */
-class MultiLineButtonGroup extends LevelSelectionButtonGroup {
+class MultiRowButtonGroup extends LevelSelectionButtonGroup {
 
   public constructor( scoreProperty: RangedProperty ) {
 
@@ -160,7 +161,8 @@ class MultiLineButtonGroup extends LevelSelectionButtonGroup {
 }
 
 /**
- * Demonstrates how to create a custom layout (in this case, an 'X' pattern), using the createLayoutNode option.
+ * Demonstrates how to create a custom layout, in this case, an 'X' pattern.
+ * Note the use of option createLayoutNode.
  */
 class XButtonGroup extends LevelSelectionButtonGroup {
 
@@ -191,6 +193,8 @@ class XButtonGroup extends LevelSelectionButtonGroup {
         buttonWidth: 75,
         buttonHeight: 75
       },
+
+      // Create a custom layout, not possible via the default FlowBox and flowBoxOptions.
       createLayoutNode: ( buttons: LevelSelectionButton[] ) => {
         assert && assert( buttons.length === 5, 'rows option value is hardcoded for 5 levels' );
         return new GridBox( {
