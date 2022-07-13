@@ -21,6 +21,7 @@ import LevelSelectionButton from '../../LevelSelectionButton.js';
 
 export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ) {
 
+  // Properties used by LevelSelectionButtonGroupItem
   const scoreProperty = new NumberProperty( 0, {
     range: new Range( 0, 1000 )
   } ).asRanged();
@@ -31,12 +32,12 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ) {
 
   const bestTimeVisibleProperty = new BooleanProperty( true );
 
+  // A few examples of LevelSelectionButtonGroup, all wired to the above Properties
   const singleRowButtonGroup = new SingleRowButtonGroup( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
-
   const multiRowButtonGroup = new MultiRowButtonGroup( scoreProperty );
-
   const xButtonGroup = new XButtonGroup( scoreProperty );
 
+  // Controls that modify the above Properties
   const controlPanel = new ControlPanel( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
 
   return new HBox( {
