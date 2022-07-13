@@ -18,6 +18,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import IProperty from '../../../../axon/js/IProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import LevelSelectionButton from '../../LevelSelectionButton.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ) {
 
@@ -243,7 +244,10 @@ class ControlPanel extends VBox {
 
     const bestTimeVisibleCheckbox = new Checkbox( bestTimeVisibleProperty,
       new Text( 'Best time visible', textOptions ), {
-        spacing: textSpacing
+        spacing: textSpacing,
+
+        // Best time is only displayed when it's > 0, so this control is irrelevant when bestTime === 0.
+        enabledProperty: new DerivedProperty( [ bestTimeProperty ], bestTime => ( bestTime > 0 ) )
       } );
 
     super( {

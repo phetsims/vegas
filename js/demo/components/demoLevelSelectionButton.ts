@@ -17,6 +17,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import LevelSelectionButton from '../../LevelSelectionButton.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 const NUM_STARS = 5;
 
@@ -89,7 +90,11 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ) {
   } );
 
   const bestTimeVisibleCheckbox = new Checkbox( bestTimeVisibleProperty,
-    new Text( 'Best time visible', { font: new PhetFont( 20 ) } ) );
+    new Text( 'Best time visible', { font: new PhetFont( 20 ) } ), {
+
+      // Best time is only displayed when it's > 0, so this control is irrelevant when bestTime === 0.
+      enabledProperty: new DerivedProperty( [ bestTimeProperty ], bestTime => ( bestTime > 0 ) )
+    } );
 
   const controls = new HBox( {
     spacing: 30,
