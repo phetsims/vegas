@@ -83,7 +83,7 @@ export default class LevelSelectionButtonGroup extends Node {
         orientation: 'horizontal',
         spacing: 10
       },
-      tandem: Tandem.REQUIRED // this default is provided for JavaScript simulations
+      tandem: Tandem.REQUIRED // This default is provided for JavaScript simulations.
     }, providedOptions );
 
     // All icons will have the same effective size.
@@ -117,14 +117,13 @@ export default class LevelSelectionButtonGroup extends Node {
       } );
     }
 
-
     let layoutNode;
     if ( options.createLayoutNode ) {
       layoutNode = options.createLayoutNode( buttons );
     }
     else {
 
-      // The default layout Node is a FlowBox.
+      // The default layout is a FlowBox, customizable via options.flowBoxOptions.
       layoutNode = new FlowBox( combineOptions<FlowBoxOptions>( {
         children: buttons
       }, options.flowBoxOptions ) );
