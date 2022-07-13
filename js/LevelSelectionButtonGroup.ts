@@ -1,6 +1,5 @@
 // Copyright 2022, University of Colorado Boulder
 
-//TODO https://github.com/phetsims/vegas/issues/107 Do not use this yet, it's work that is in-progress.
 /**
  * LevelSelectionButtonGroup is a group that creates LevelSelectionButtons, used in games.
  *
