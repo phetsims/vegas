@@ -99,7 +99,7 @@ export default class RewardNode extends CanvasNode {
   // Set by initialize, so not readonly.
   private isInitialized: boolean;
 
-  // If you provide option stepEmitter, it will call this method to drive animation
+  // If you provide RewardNodeOptions.stepEmitter, it will call this method to drive animation
   private readonly stepEmitterListener: ( dt: number ) => void;
 
   // For PhET-iO brand only: make sure this Node is initialized when state is being set for PhET-iO
