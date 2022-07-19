@@ -49,7 +49,7 @@ class DemoNode extends Node {
     } );
 
     this.disposeDemoNode = () => {
-      rewardNode.dispose();
+      rewardNode.dispose(); // must be disposed in the demo, see https://github.com/phetsims/vegas/issues/111
       isPlayingProperty.dispose();
       timeControls.dispose();
       if ( stepTimer.hasListener( stepTimerListener ) ) {
