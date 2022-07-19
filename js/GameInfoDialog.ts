@@ -12,6 +12,7 @@ import { RichText, RichTextOptions, VBox, VBoxOptions } from '../../scenery/js/i
 import vegas from './vegas.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import { Node } from '../../scenery/js/imports.js';
 import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
 import EmptyObjectType from '../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../tandem/js/Tandem.js';
@@ -58,9 +59,12 @@ export default class GameInfoDialog extends Dialog {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
+    // Constrain the width of the title, and ensure that the title can still be used with scenery DAG feature.
     if ( options.title ) {
-      assert && assert( !options.title.maxWidth, 'use GameInfoDialogOptions.maxContentWidth to constraint title width' );
-      options.title.maxWidth = options.maxContentWidth;
+      options.title = new Node( {
+        children: [ options.title ],
+        maxWidth: options.maxContentWidth
+      } );
     }
 
     const descriptionNodes = levelDescriptions.map( ( levelDescription, index ) =>
