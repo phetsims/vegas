@@ -25,8 +25,12 @@ const simOptions: SimOptions = {
   }
 };
 
+class VegasModel {
+  public step(): void { /* no stepping here */ }
+}
+
 function createEmptyModel() {
-  return {};
+  return new VegasModel();
 }
 
 simLauncher.launch( () => {
