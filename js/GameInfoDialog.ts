@@ -15,6 +15,9 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
 import EmptyObjectType from '../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../tandem/js/Tandem.js';
+import PhetFont from '../../scenery-phet/js/PhetFont.js';
+
+const DEFAULT_DESCRIPTION_TEXT_FONT = new PhetFont( 24 );
 
 type SelfOptions = {
 
@@ -39,7 +42,10 @@ export default class GameInfoDialog extends Dialog {
    */
   public constructor( levelDescriptions: string[], providedOptions?: GameInfoDialogOptions ) {
 
-    const options = optionize<GameInfoDialogOptions, StrictOmit<SelfOptions, 'gameLevels' | 'descriptionTextOptions'>, DialogOptions>()( {
+    const options = optionize<GameInfoDialogOptions, StrictOmit<SelfOptions, 'gameLevels'>, DialogOptions>()( {
+      descriptionTextOptions: {
+        font: DEFAULT_DESCRIPTION_TEXT_FONT
+      },
       vBoxOptions: {
         align: 'left',
         spacing: 20
