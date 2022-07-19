@@ -14,28 +14,52 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 
 export default function demoRewardNode( layoutBounds: Bounds2 ) {
+  return new DemoNode( layoutBounds );
+}
 
-  const rewardNode = new RewardNode();
+class DemoNode extends Node {
 
-  const isPlayingProperty = new BooleanProperty( true );
+  private readonly disposeDemoNode: () => void;
 
-  const timeControls = new TimeControlNode( isPlayingProperty, {
-    playPauseStepButtonOptions: {
-      stepForwardButtonOptions: {
-        listener: () => rewardNode.step( 0.1 )
+  public constructor( layoutBounds: Bounds2 ) {
+
+    const rewardNode = new RewardNode();
+
+    const isPlayingProperty = new BooleanProperty( true );
+
+    const timeControls = new TimeControlNode( isPlayingProperty, {
+      playPauseStepButtonOptions: {
+        stepForwardButtonOptions: {
+          listener: () => rewardNode.step( 0.1 )
+        }
+      },
+      centerX: layoutBounds.centerX,
+      bottom: layoutBounds.bottom - 20
+    } );
+
+    const stepTimerListener = ( dt: number ) => {
+      if ( isPlayingProperty.value ) {
+        rewardNode.step( dt );
       }
-    },
-    centerX: layoutBounds.centerX,
-    bottom: layoutBounds.bottom - 20
-  } );
+    };
+    stepTimer.addListener( stepTimerListener );
 
-  stepTimer.addListener( dt => {
-    if ( isPlayingProperty.value ) {
-      rewardNode.step( dt );
-    }
-  } );
+    super( {
+      children: [ rewardNode, timeControls ]
+    } );
 
-  return new Node( {
-    children: [ rewardNode, timeControls ]
-  } );
+    this.disposeDemoNode = () => {
+      rewardNode.dispose();
+      isPlayingProperty.dispose();
+      timeControls.dispose();
+      if ( stepTimer.hasListener( stepTimerListener ) ) {
+        stepTimer.removeListener( stepTimerListener );
+      }
+    };
+  }
+
+  public override dispose(): void {
+    this.disposeDemoNode();
+    super.dispose();
+  }
 }
