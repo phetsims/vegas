@@ -12,14 +12,14 @@ import ScoreDisplayStars from '../../ScoreDisplayStars.js';
 import ScoreDisplayLabeledStars from '../../ScoreDisplayLabeledStars.js';
 import ScoreDisplayNumberAndStar from '../../ScoreDisplayNumberAndStar.js';
 import ScoreDisplayLabeledNumber from '../../ScoreDisplayLabeledNumber.js';
-import { HBox, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HSlider from '../../../../sun/js/HSlider.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 const NUM_STARS = 5;
 
-export default function demoScoreDisplay( layoutBounds: Bounds2 ) {
+export default function demoScoreDisplay( layoutBounds: Bounds2 ): Node {
 
   const scoreProperty = new NumberProperty( 0, {
     range: new Range( 0, 1000 )

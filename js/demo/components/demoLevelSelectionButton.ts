@@ -10,7 +10,7 @@ import ScoreDisplayStars from '../../ScoreDisplayStars.js';
 import ScoreDisplayLabeledStars from '../../ScoreDisplayLabeledStars.js';
 import ScoreDisplayNumberAndStar from '../../ScoreDisplayNumberAndStar.js';
 import ScoreDisplayLabeledNumber from '../../ScoreDisplayLabeledNumber.js';
-import { HBox, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HSlider from '../../../../sun/js/HSlider.js';
 import NumberProperty, { RangedProperty } from '../../../../axon/js/NumberProperty.js';
@@ -22,7 +22,7 @@ import Property from '../../../../axon/js/Property.js';
 
 const NUM_STARS = 5;
 
-export default function demoLevelSelectionButton( layoutBounds: Bounds2 ) {
+export default function demoLevelSelectionButton( layoutBounds: Bounds2 ): Node {
 
   const scoreRange = new Range( 0, 1000 );
   const scoreProperty = new NumberProperty( 0, {

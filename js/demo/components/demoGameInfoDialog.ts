@@ -7,12 +7,12 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { Node, Text } from '../../../../scenery/js/imports.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import GameInfoDialog from '../../GameInfoDialog.js';
 
-export default function demoGameInfoDialog( layoutBounds: Bounds2 ) {
+export default function demoGameInfoDialog( layoutBounds: Bounds2 ): Node {
 
   const levelDescriptions = [
     'Description of level 1',

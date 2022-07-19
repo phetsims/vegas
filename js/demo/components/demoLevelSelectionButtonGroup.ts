@@ -6,7 +6,7 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
-import { GridBox, HBox, Text, VBox } from '../../../../scenery/js/imports.js';
+import { GridBox, HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import NumberProperty, { RangedProperty } from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -17,7 +17,7 @@ import IProperty from '../../../../axon/js/IProperty.js';
 import LevelSelectionButton from '../../LevelSelectionButton.js';
 import { DemoLevelSelectionButtonControlPanel } from './demoLevelSelectionButton.js';
 
-export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ) {
+export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ): Node {
 
   // Properties used by LevelSelectionButtonGroupItem
   const scoreProperty = new NumberProperty( 0, {

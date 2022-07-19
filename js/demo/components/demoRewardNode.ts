@@ -13,7 +13,7 @@ import stepTimer from '../../../../axon/js/stepTimer.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 
-export default function demoRewardNode( layoutBounds: Bounds2 ) {
+export default function demoRewardNode( layoutBounds: Bounds2 ): Node {
   return new DemoNode( layoutBounds );
 }
 
