@@ -16,6 +16,7 @@ import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
 import EmptyObjectType from '../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
+import ScreenView from '../../joist/js/ScreenView.js';
 
 const DEFAULT_DESCRIPTION_TEXT_FONT = new PhetFont( 24 );
 
@@ -29,7 +30,10 @@ type SelfOptions = {
   descriptionTextOptions?: StrictOmit<RichTextOptions, 'tandem'>;
 
   // Options for the layout (VBox)
-  vBoxOptions?: StrictOmit<VBoxOptions, 'children'>;
+  vBoxOptions?: StrictOmit<VBoxOptions, 'children' | 'maxWidth'>;
+
+  // constrains the width of the Dialog's content and title
+  maxContentWidth?: number;
 };
 
 export type GameInfoDialogOptions = SelfOptions & DialogOptions;
@@ -50,8 +54,14 @@ export default class GameInfoDialog extends Dialog {
         align: 'left',
         spacing: 20
       },
+      maxContentWidth: 0.75 * ScreenView.DEFAULT_LAYOUT_BOUNDS.width,
       tandem: Tandem.REQUIRED
     }, providedOptions );
+
+    if ( options.title ) {
+      assert && assert( !options.title.maxWidth, 'use GameInfoDialogOptions.maxContentWidth to constraint title width' );
+      options.title.maxWidth = options.maxContentWidth;
+    }
 
     const descriptionNodes = levelDescriptions.map( ( levelDescription, index ) =>
       new RichText( levelDescription, optionize<RichTextOptions, EmptyObjectType, RichTextOptions>()( {
@@ -71,7 +81,8 @@ export default class GameInfoDialog extends Dialog {
 
     // Vertical layout
     const content = new VBox( optionize<VBoxOptions, EmptyObjectType, VBoxOptions>()( {
-      children: descriptionNodes
+      children: descriptionNodes,
+      maxWidth: options.maxContentWidth // scale all descriptions uniformly
     }, options.vBoxOptions ) );
 
     super( content, options );
