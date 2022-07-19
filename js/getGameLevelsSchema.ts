@@ -47,7 +47,7 @@ function getGameLevelsSchema( numberOfLevels: number ) {
         _.every( array, ( value, index, array ) => ( index === 0 || array[ index - 1 ] <= value ) )
       );
     }
-  };
+  } as const;
 }
 
 vegas.register( 'getGameLevelsSchema', getGameLevelsSchema );
