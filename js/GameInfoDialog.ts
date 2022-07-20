@@ -8,13 +8,11 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import { RichText, RichTextOptions, VBox, VBoxOptions } from '../../scenery/js/imports.js';
+import { Node, RichText, RichTextOptions, VBox, VBoxOptions } from '../../scenery/js/imports.js';
 import vegas from './vegas.js';
-import optionize from '../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import { Node } from '../../scenery/js/imports.js';
 import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
-import { EmptySelfOptions } from '../../phet-core/js/optionize.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import ScreenView from '../../joist/js/ScreenView.js';

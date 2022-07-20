@@ -10,8 +10,7 @@
 
 import vegasQueryParameters from '../../vegasQueryParameters.js';
 import vegas from '../../vegas.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DemosScreenView, { DemosScreenViewOptions } from '../../../../sun/js/demo/DemosScreenView.js';
 import demoGameInfoDialog from './demoGameInfoDialog.js';
 import demoLevelSelectionButton from './demoLevelSelectionButton.js';
