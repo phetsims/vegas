@@ -11,7 +11,7 @@
 import vegasQueryParameters from '../../vegasQueryParameters.js';
 import vegas from '../../vegas.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DemosScreenView, { DemosScreenViewOptions } from '../../../../sun/js/demo/DemosScreenView.js';
 import demoGameInfoDialog from './demoGameInfoDialog.js';
 import demoLevelSelectionButton from './demoLevelSelectionButton.js';
@@ -19,7 +19,7 @@ import demoLevelSelectionButtonGroup from './demoLevelSelectionButtonGroup.js';
 import demoRewardNode from './demoRewardNode.js';
 import demoScoreDisplays from './demoScoreDisplays.js';
 
-type SelfOptions = EmptyObjectType;
+type SelfOptions = EmptySelfOptions;
 type ComponentsScreenViewOptions = SelfOptions & DemosScreenViewOptions;
 
 export default class ComponentsScreenView extends DemosScreenView {

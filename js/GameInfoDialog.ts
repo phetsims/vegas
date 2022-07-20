@@ -14,7 +14,7 @@ import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import { Node } from '../../scenery/js/imports.js';
 import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
-import EmptyObjectType from '../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../phet-core/js/optionize.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import ScreenView from '../../joist/js/ScreenView.js';
@@ -68,7 +68,7 @@ export default class GameInfoDialog extends Dialog {
     }
 
     const descriptionNodes = levelDescriptions.map( ( levelDescription, index ) =>
-      new RichText( levelDescription, optionize<RichTextOptions, EmptyObjectType, RichTextOptions>()( {
+      new RichText( levelDescription, optionize<RichTextOptions, EmptySelfOptions, RichTextOptions>()( {
         tandem: options.tandem.createTandem( `level${index}DescriptionText` )
       }, options.descriptionTextOptions ) )
     );
@@ -84,7 +84,7 @@ export default class GameInfoDialog extends Dialog {
     }
 
     // Vertical layout
-    const content = new VBox( optionize<VBoxOptions, EmptyObjectType, VBoxOptions>()( {
+    const content = new VBox( optionize<VBoxOptions, EmptySelfOptions, VBoxOptions>()( {
       children: descriptionNodes,
       maxWidth: options.maxContentWidth // scale all descriptions uniformly
     }, options.vBoxOptions ) );
