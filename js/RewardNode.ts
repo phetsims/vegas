@@ -15,7 +15,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Emitter from '../../axon/js/Emitter.js';
+import IEmitter from '../../axon/js/IEmitter.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import dotRandom from '../../dot/js/dotRandom.js';
 import ScreenView from '../../joist/js/ScreenView.js';
@@ -69,7 +69,7 @@ type SelfOptions = {
   scaleForResolution?: number;
 
   // If you pass in a stepEmitter {Emitter}, it will drive the animation
-  stepEmitter?: Emitter<[ number ]> | null;
+  stepEmitter?: IEmitter<[ number ]> | null;
 };
 
 export type RewardNodeOptions = SelfOptions & CanvasNodeOptions;
