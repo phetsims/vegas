@@ -14,12 +14,12 @@ import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
-import { Font, HBox, HBoxOptions, IColor, Text } from '../../scenery/js/imports.js';
+import { Font, HBox, HBoxOptions, TColor, Text } from '../../scenery/js/imports.js';
 import vegas from './vegas.js';
 
 type SelfOptions = {
   font?: Font;
-  textFill?: IColor;
+  textFill?: TColor;
   scoreDecimalPlaces?: number;
   starNodeOptions?: StarNodeOptions;
 };

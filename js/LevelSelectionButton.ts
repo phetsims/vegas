@@ -16,7 +16,7 @@ import Dimension2 from '../../dot/js/Dimension2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { Font, IColor, Node, Rectangle, Text } from '../../scenery/js/imports.js';
+import { Font, TColor, Node, Rectangle, Text } from '../../scenery/js/imports.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../sun/js/buttons/RectangularPushButton.js';
 import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
 import soundConstants from '../../tambo/js/soundConstants.js';
@@ -47,7 +47,7 @@ type SelfOptions = {
   // best time (optional)
   bestTimeProperty?: IProperty<number> | null; // best time in seconds, null if no best time
   bestTimeVisibleProperty?: IProperty<boolean> | null; // controls visibility of best time, null if no best time
-  bestTimeFill?: IColor;
+  bestTimeFill?: TColor;
   bestTimeFont?: Font;
   bestTimeYSpacing?: number;  // vertical space between drop shadow and best time
 

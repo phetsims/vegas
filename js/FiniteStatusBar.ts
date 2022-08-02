@@ -14,7 +14,7 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
-import { Font, HBox, IColor, Node, Rectangle, Text, TextOptions } from '../../scenery/js/imports.js';
+import { Font, HBox, TColor, Node, Rectangle, Text, TextOptions } from '../../scenery/js/imports.js';
 import TextPushButton, { TextPushButtonOptions } from '../../sun/js/buttons/TextPushButton.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
@@ -37,7 +37,7 @@ type SelfOptions = {
 
   // all text
   font?: Font;
-  textFill?: IColor;
+  textFill?: TColor;
 
   // score display
   createScoreDisplay?: ( scoreProperty: IProperty<number> ) => Node;
@@ -57,8 +57,8 @@ type SelfOptions = {
   levelTextOptions?: TextOptions; // passed to the "Level N" text
   challengeTextOptions?: TextOptions; // passed to the "Challenge N of M" text
 
-  barFill?: IColor;
-  barStroke?: IColor;
+  barFill?: TColor;
+  barStroke?: TColor;
 };
 
 export type FiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;

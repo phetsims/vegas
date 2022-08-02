@@ -9,7 +9,7 @@
 
 import Utils from '../../dot/js/Utils.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
-import { Font, HBoxOptions, IColor, Node, Text } from '../../scenery/js/imports.js';
+import { Font, HBoxOptions, TColor, Node, Text } from '../../scenery/js/imports.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
@@ -19,7 +19,7 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
   font?: Font;
-  textFill?: IColor;
+  textFill?: TColor;
   scoreDecimalPlaces?: number;
 };
 

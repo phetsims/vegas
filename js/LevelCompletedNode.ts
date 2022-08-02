@@ -11,7 +11,7 @@ import Property from '../../axon/js/Property.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { Font, IColor, RichText, Text, VBox } from '../../scenery/js/imports.js';
+import { Font, TColor, RichText, Text, VBox } from '../../scenery/js/imports.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import TextPushButton from '../../sun/js/buttons/TextPushButton.js';
 import Panel, { PanelOptions } from '../../sun/js/Panel.js';
@@ -31,7 +31,7 @@ type SelfOptions = {
   titleFont?: Font;
   infoFont?: Font;
   buttonFont?: Font;
-  buttonFill?: IColor;
+  buttonFill?: TColor;
   starDiameter?: number;
   contentMaxWidth?: number | null; // applied as maxWidth to every subcomponent individually, not Panel's content
 };

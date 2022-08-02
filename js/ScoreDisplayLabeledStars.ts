@@ -7,7 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import { Font, HBox, HBoxOptions, IColor, Text } from '../../scenery/js/imports.js';
+import { Font, HBox, HBoxOptions, TColor, Text } from '../../scenery/js/imports.js';
 import ScoreDisplayStars, { ScoreDisplayStarsOptions } from './ScoreDisplayStars.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
@@ -18,7 +18,7 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
   font?: Font;
-  textFill?: IColor;
+  textFill?: TColor;
   spacing?: number;
 };
 
