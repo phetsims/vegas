@@ -18,7 +18,7 @@
 
 import vegas from './vegas.js';
 
-function getGameLevelsSchema( numberOfLevels: number ) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+function getGameLevelsSchema( numberOfLevels: number ) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types, explicit-method-return-type
 
   assert && assert( Number.isInteger( numberOfLevels ) && numberOfLevels > 0,
     `numberOfLevels must be a positive integer: ${numberOfLevels}` );

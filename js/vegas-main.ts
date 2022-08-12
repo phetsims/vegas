@@ -29,7 +29,7 @@ class VegasModel {
   public step(): void { /* no stepping here */ }
 }
 
-function createEmptyModel() {
+function createEmptyModel(): VegasModel {
   return new VegasModel();
 }
 
