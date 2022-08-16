@@ -7,7 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import IProperty from '../../axon/js/IProperty.js';
+import TProperty from '../../axon/js/TProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -25,11 +25,11 @@ import vegasStrings from './vegasStrings.js';
 type SelfOptions = {
 
   // optional Properties
-  challengeIndexProperty?: IProperty<number> | null;
-  numberOfChallengesProperty?: IProperty<number> | null;
-  levelProperty?: IProperty<number> | null;
-  elapsedTimeProperty?: IProperty<number> | null;
-  timerEnabledProperty?: IProperty<boolean> | null;
+  challengeIndexProperty?: TProperty<number> | null;
+  numberOfChallengesProperty?: TProperty<number> | null;
+  levelProperty?: TProperty<number> | null;
+  elapsedTimeProperty?: TProperty<number> | null;
+  timerEnabledProperty?: TProperty<boolean> | null;
 
   // things that can be hidden
   levelVisible?: boolean;
@@ -40,7 +40,7 @@ type SelfOptions = {
   textFill?: TColor;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => Node;
+  createScoreDisplay?: ( scoreProperty: TProperty<number> ) => Node;
 
   // nested options for 'Start Over' button, filled in below
   startOverButtonOptions?: TextPushButtonOptions;
@@ -73,7 +73,7 @@ export default class FiniteStatusBar extends StatusBar {
    * @param scoreProperty
    * @param providedOptions
    */
-  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, scoreProperty: IProperty<number>,
+  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: TProperty<Bounds2>, scoreProperty: TProperty<number>,
                       providedOptions?: FiniteStatusBarOptions ) {
 
     const options = optionize<FiniteStatusBarOptions,

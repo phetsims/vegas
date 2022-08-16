@@ -22,7 +22,7 @@ import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import { AlignBox, AlignGroup, FlowBox, FlowBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
 import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
-import IProperty from '../../axon/js/IProperty.js';
+import TProperty from '../../axon/js/TProperty.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
 
@@ -33,7 +33,7 @@ export type LevelSelectionButtonGroupItem = {
   icon: Node;
 
   // The score displayed on the button
-  scoreProperty: IProperty<number>;
+  scoreProperty: TProperty<number>;
 
   // Name used when creating the button's tandem, defaults to `level${N}Button`
   tandemName?: string;

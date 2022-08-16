@@ -8,7 +8,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import IProperty from '../../axon/js/IProperty.js';
+import TProperty from '../../axon/js/TProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -26,7 +26,7 @@ type SelfOptions = {
   spacing?: number;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => Node;
+  createScoreDisplay?: ( scoreProperty: TProperty<number> ) => Node;
 };
 
 export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
@@ -42,8 +42,8 @@ export default class InfiniteStatusBar extends StatusBar {
    * @param scoreProperty
    * @param providedOptions
    */
-  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: IProperty<Bounds2>, messageNode: Node,
-                      scoreProperty: IProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
+  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: TProperty<Bounds2>, messageNode: Node,
+                      scoreProperty: TProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
 
     const options = optionize<InfiniteStatusBarOptions, SelfOptions, StatusBarOptions>()( {
 

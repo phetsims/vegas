@@ -11,7 +11,7 @@
  * @author Andrea Lin
  */
 
-import IProperty from '../../axon/js/IProperty.js';
+import TProperty from '../../axon/js/TProperty.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -38,15 +38,15 @@ type SelfOptions = {
   buttonHeight?: number;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: IProperty<number> ) => Node;
+  createScoreDisplay?: ( scoreProperty: TProperty<number> ) => Node;
   scoreDisplayProportion?: number; // percentage of the button height occupied by scoreDisplay, (0,0.5]
   scoreDisplayMinXMargin?: number; // horizontal margin between scoreDisplay and its background
   scoreDisplayMinYMargin?: number;  // vertical margin between scoreDisplay and its background
   iconToScoreDisplayYSpace?: number; // vertical space between icon and score display
 
   // best time (optional)
-  bestTimeProperty?: IProperty<number> | null; // best time in seconds, null if no best time
-  bestTimeVisibleProperty?: IProperty<boolean> | null; // controls visibility of best time, null if no best time
+  bestTimeProperty?: TProperty<number> | null; // best time in seconds, null if no best time
+  bestTimeVisibleProperty?: TProperty<boolean> | null; // controls visibility of best time, null if no best time
   bestTimeFill?: TColor;
   bestTimeFont?: Font;
   bestTimeYSpacing?: number;  // vertical space between drop shadow and best time
@@ -67,7 +67,7 @@ export default class LevelSelectionButton extends RectangularPushButton {
    * @param scoreProperty
    * @param providedOptions
    */
-  public constructor( icon: Node, scoreProperty: IProperty<number>, providedOptions?: LevelSelectionButtonOptions ) {
+  public constructor( icon: Node, scoreProperty: TProperty<number>, providedOptions?: LevelSelectionButtonOptions ) {
 
     const options = optionize<LevelSelectionButtonOptions, SelfOptions, RectangularPushButtonOptions>()( {
 

@@ -8,7 +8,7 @@
  * @author Andrea Lin
  */
 
-import IProperty from '../../axon/js/IProperty.js';
+import TProperty from '../../axon/js/TProperty.js';
 import Utils from '../../dot/js/Utils.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -30,7 +30,7 @@ export default class ScoreDisplayNumberAndStar extends HBox {
 
   private readonly disposeScoreDisplayNumberAndStar: () => void;
 
-  public constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayNumberAndStarOptions ) {
+  public constructor( scoreProperty: TProperty<number>, providedOptions?: ScoreDisplayNumberAndStarOptions ) {
 
     const options = optionize<ScoreDisplayNumberAndStarOptions, SelfOptions, HBoxOptions>()( {
 

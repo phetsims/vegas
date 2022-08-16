@@ -11,7 +11,7 @@ import { Font, HBox, HBoxOptions, TColor, Text } from '../../scenery/js/imports.
 import GameTimer from './GameTimer.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
-import IProperty from '../../axon/js/IProperty.js';
+import TProperty from '../../axon/js/TProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 
@@ -27,7 +27,7 @@ export default class ElapsedTimeNode extends HBox {
 
   private readonly disposeElapsedTimeNode: () => void;
 
-  public constructor( elapsedTimeProperty: IProperty<number>, providedOptions?: ElapsedTimeNodeOptions ) {
+  public constructor( elapsedTimeProperty: TProperty<number>, providedOptions?: ElapsedTimeNodeOptions ) {
 
     const options = optionize<ElapsedTimeNodeOptions, SelfOptions, HBoxOptions>()( {
 

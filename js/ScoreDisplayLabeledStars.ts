@@ -12,7 +12,7 @@ import ScoreDisplayStars, { ScoreDisplayStarsOptions } from './ScoreDisplayStars
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
-import IProperty from '../../axon/js/IProperty.js';
+import TProperty from '../../axon/js/TProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 
@@ -28,7 +28,7 @@ export default class ScoreDisplayLabeledStars extends HBox {
 
   private readonly disposeScoreDisplayLabeledStars: () => void;
 
-  public constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayLabeledStarsOptions ) {
+  public constructor( scoreProperty: TProperty<number>, providedOptions?: ScoreDisplayLabeledStarsOptions ) {
 
     const options = optionize<ScoreDisplayLabeledStarsOptions, SelfOptions, HBoxOptions>()( {
 

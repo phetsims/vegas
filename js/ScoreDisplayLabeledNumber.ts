@@ -13,7 +13,7 @@ import { Font, HBoxOptions, TColor, Node, Text } from '../../scenery/js/imports.
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import vegasStrings from './vegasStrings.js';
-import IProperty from '../../axon/js/IProperty.js';
+import TProperty from '../../axon/js/TProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 
@@ -29,7 +29,7 @@ export default class ScoreDisplayLabeledNumber extends Node {
 
   private readonly disposeScoreDisplayLabeledNumber: () => void;
 
-  public constructor( scoreProperty: IProperty<number>, providedOptions?: ScoreDisplayLabeledNumberOptions ) {
+  public constructor( scoreProperty: TProperty<number>, providedOptions?: ScoreDisplayLabeledNumberOptions ) {
 
     const options = optionize<ScoreDisplayLabeledNumberOptions, SelfOptions, HBoxOptions>()( {
 

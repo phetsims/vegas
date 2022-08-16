@@ -13,7 +13,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../../LevelSelectionButtonGroup.js';
 import ScoreDisplayStars from '../../ScoreDisplayStars.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import IProperty from '../../../../axon/js/IProperty.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 import LevelSelectionButton from '../../LevelSelectionButton.js';
 import { DemoLevelSelectionButtonControlPanel } from './demoLevelSelectionButton.js';
 
@@ -59,7 +59,7 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ): 
  */
 class SingleRowButtonGroup extends LevelSelectionButtonGroup {
 
-  public constructor( scoreProperty: RangedProperty, bestTimeProperty: IProperty<number>, bestTimeVisibleProperty: IProperty<boolean> ) {
+  public constructor( scoreProperty: RangedProperty, bestTimeProperty: TProperty<number>, bestTimeVisibleProperty: TProperty<boolean> ) {
 
     const numberOfLevels = 3;
 
