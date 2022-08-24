@@ -47,7 +47,7 @@ type SelfOptions = {
 
   // Options for all LevelSelectionButton instances in the group.
   // These can be overridden for specific button(s) via LevelSelectionButtonGroupItem.options.
-  levelSelectionButtonOptions: StrictOmit<LevelSelectionButtonOptions, 'tandem'>;
+  levelSelectionButtonOptions?: StrictOmit<LevelSelectionButtonOptions, 'tandem'>;
 
   // Options for the default layout, which is a FlowBox. Ignored if createLayoutNode is provided.
   flowBoxOptions?: StrictOmit<FlowBoxOptions, 'children'>;
@@ -78,7 +78,7 @@ export default class LevelSelectionButtonGroup extends Node {
     assert && assert( items.length > 0, 'at least one item must be specified' );
 
     const options = optionize<LevelSelectionButtonGroupOptions,
-      StrictOmit<SelfOptions, 'createLayoutNode' | 'gameLevels'>, NodeOptions>()( {
+      StrictOmit<SelfOptions, 'createLayoutNode' | 'gameLevels' | 'levelSelectionButtonOptions'>, NodeOptions>()( {
 
       // The default layout is a single row of buttons.
       flowBoxOptions: {
