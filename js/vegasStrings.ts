@@ -11,82 +11,82 @@ import vegas from './vegas.js';
 type StringsType = {
   'vegas': {
     'title': string;
-    'titleProperty': TReadOnlyProperty<string>;
+    'titleStringProperty': TReadOnlyProperty<string>;
   };
   'pattern': {
     '0challenge': {
       '1max': string;
-      '1maxProperty': TReadOnlyProperty<string>;
+      '1maxStringProperty': TReadOnlyProperty<string>;
     };
     '0hours': {
       '1minutes': {
         '2seconds': string;
-        '2secondsProperty': TReadOnlyProperty<string>;
+        '2secondsStringProperty': TReadOnlyProperty<string>;
       }
     };
     '0minutes': {
       '1seconds': string;
-      '1secondsProperty': TReadOnlyProperty<string>;
+      '1secondsStringProperty': TReadOnlyProperty<string>;
     };
     '0yourBest': string;
-    '0yourBestProperty': TReadOnlyProperty<string>;
+    '0yourBestStringProperty': TReadOnlyProperty<string>;
     'score': {
       'number': string;
-      'numberProperty': TReadOnlyProperty<string>;
+      'numberStringProperty': TReadOnlyProperty<string>;
     }
   };
   'keepTrying': string;
-  'keepTryingProperty': TReadOnlyProperty<string>;
+  'keepTryingStringProperty': TReadOnlyProperty<string>;
   'good': string;
-  'goodProperty': TReadOnlyProperty<string>;
+  'goodStringProperty': TReadOnlyProperty<string>;
   'great': string;
-  'greatProperty': TReadOnlyProperty<string>;
+  'greatStringProperty': TReadOnlyProperty<string>;
   'excellent': string;
-  'excellentProperty': TReadOnlyProperty<string>;
+  'excellentStringProperty': TReadOnlyProperty<string>;
   'yourNewBest': string;
-  'yourNewBestProperty': TReadOnlyProperty<string>;
+  'yourNewBestStringProperty': TReadOnlyProperty<string>;
   'continue': string;
-  'continueProperty': TReadOnlyProperty<string>;
+  'continueStringProperty': TReadOnlyProperty<string>;
   'label': {
     'level': string;
-    'levelProperty': TReadOnlyProperty<string>;
+    'levelStringProperty': TReadOnlyProperty<string>;
     'scorePattern': string;
-    'scorePatternProperty': TReadOnlyProperty<string>;
+    'scorePatternStringProperty': TReadOnlyProperty<string>;
     'time': string;
-    'timeProperty': TReadOnlyProperty<string>;
+    'timeStringProperty': TReadOnlyProperty<string>;
     'score': {
       'max': string;
-      'maxProperty': TReadOnlyProperty<string>;
+      'maxStringProperty': TReadOnlyProperty<string>;
     }
   };
   'check': string;
-  'checkProperty': TReadOnlyProperty<string>;
+  'checkStringProperty': TReadOnlyProperty<string>;
   'next': string;
-  'nextProperty': TReadOnlyProperty<string>;
+  'nextStringProperty': TReadOnlyProperty<string>;
   'button': {
     'newGame': string;
-    'newGameProperty': TReadOnlyProperty<string>;
+    'newGameStringProperty': TReadOnlyProperty<string>;
   };
   'showAnswer': string;
-  'showAnswerProperty': TReadOnlyProperty<string>;
+  'showAnswerStringProperty': TReadOnlyProperty<string>;
   'tryAgain': string;
-  'tryAgainProperty': TReadOnlyProperty<string>;
+  'tryAgainStringProperty': TReadOnlyProperty<string>;
   'selectLevel': string;
-  'selectLevelProperty': TReadOnlyProperty<string>;
+  'selectLevelStringProperty': TReadOnlyProperty<string>;
   'startOver': string;
-  'startOverProperty': TReadOnlyProperty<string>;
+  'startOverStringProperty': TReadOnlyProperty<string>;
   'keepGoing': string;
-  'keepGoingProperty': TReadOnlyProperty<string>;
+  'keepGoingStringProperty': TReadOnlyProperty<string>;
   'newLevel': string;
-  'newLevelProperty': TReadOnlyProperty<string>;
+  'newLevelStringProperty': TReadOnlyProperty<string>;
   'score': string;
-  'scoreProperty': TReadOnlyProperty<string>;
+  'scoreStringProperty': TReadOnlyProperty<string>;
   'done': string;
-  'doneProperty': TReadOnlyProperty<string>;
+  'doneStringProperty': TReadOnlyProperty<string>;
   'youCompletedAllLevels': string;
-  'youCompletedAllLevelsProperty': TReadOnlyProperty<string>;
+  'youCompletedAllLevelsStringProperty': TReadOnlyProperty<string>;
   'chooseYourLevel': string;
-  'chooseYourLevelProperty': TReadOnlyProperty<string>;
+  'chooseYourLevelStringProperty': TReadOnlyProperty<string>;
 };
 
 const vegasStrings = getStringModule( 'VEGAS' ) as StringsType;
