@@ -17,7 +17,7 @@ import vegasStrings from './vegasStrings.js';
 import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
 
 // constants
-const vegasTitleString = vegasStrings.vegas.title;
+const vegasTitleStringProperty = vegasStrings.vegas.titleStringProperty;
 
 const simOptions: SimOptions = {
   credits: {
@@ -34,7 +34,7 @@ function createEmptyModel(): VegasModel {
 }
 
 simLauncher.launch( () => {
-  new Sim( vegasTitleString, [
+  new Sim( vegasTitleStringProperty, [
 
     new Screen(
       createEmptyModel,
