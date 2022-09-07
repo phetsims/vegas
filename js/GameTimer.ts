@@ -14,7 +14,7 @@ import stepTimer from '../../axon/js/stepTimer.js';
 import { TimerListener } from '../../axon/js/Timer.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import vegas from './vegas.js';
-import vegasStrings from './vegasStrings.js';
+import VegasStrings from './VegasStrings.js';
 
 export default class GameTimer {
 
@@ -83,11 +83,11 @@ export default class GameTimer {
     const secondsString = ( seconds > 9 ) ? seconds : ( `0${seconds}` );
 
     if ( hours > 0 ) {
-      return StringUtils.format( vegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2seconds' ],
+      return StringUtils.format( VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2seconds' ],
         hours, minutesString, secondsString );
     }
     else {
-      return StringUtils.format( vegasStrings.pattern[ '0minutes' ][ '1seconds' ],
+      return StringUtils.format( VegasStrings.pattern[ '0minutes' ][ '1seconds' ],
         minutesString, secondsString );
     }
   }

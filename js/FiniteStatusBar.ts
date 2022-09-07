@@ -20,7 +20,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import vegas from './vegas.js';
-import vegasStrings from './vegasStrings.js';
+import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {
 
@@ -94,7 +94,7 @@ export default class FiniteStatusBar extends StatusBar {
         font: providedOptions && providedOptions.font ? providedOptions.font : StatusBar.DEFAULT_FONT,
         textFill: providedOptions && providedOptions.textFill ? providedOptions.textFill : StatusBar.DEFAULT_TEXT_FILL
       } ),
-      startOverButtonText: vegasStrings.startOver,
+      startOverButtonText: VegasStrings.startOver,
       clockIconRadius: 15,
       xSpacing: 50,
       xMargin: 20,
@@ -153,7 +153,7 @@ export default class FiniteStatusBar extends StatusBar {
       leftChildren.push( levelText );
 
       levelListener = ( level: number ) => {
-        levelText.text = StringUtils.format( vegasStrings.label.level, level );
+        levelText.text = StringUtils.format( VegasStrings.label.level, level );
       };
       options.levelProperty.link( levelListener );
     }
@@ -168,7 +168,7 @@ export default class FiniteStatusBar extends StatusBar {
       leftChildren.push( challengeNumberText );
 
       updateChallengeString = () => {
-        challengeNumberText.text = StringUtils.format( vegasStrings.pattern[ '0challenge' ][ '1max' ],
+        challengeNumberText.text = StringUtils.format( VegasStrings.pattern[ '0challenge' ][ '1max' ],
           options.challengeIndexProperty!.get() + 1, options.numberOfChallengesProperty!.get() );
       };
       options.challengeIndexProperty.link( updateChallengeString );

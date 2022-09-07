@@ -20,7 +20,7 @@ import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
 import phetGirlJugglingStars_png from '../images/phetGirlJugglingStars_png.js';
 import ScoreDisplayNumberAndStar, { ScoreDisplayNumberAndStarOptions } from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
-import vegasStrings from './vegasStrings.js';
+import VegasStrings from './VegasStrings.js';
 
 // constants
 const DEFAULT_BUTTONS_FONT = new PhetFont( 20 );
@@ -80,14 +80,14 @@ export default class RewardDialog extends Dialog {
 
     const newLevelButton = new RectangularPushButton(
       combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
-        content: new Text( vegasStrings.newLevel, { font: DEFAULT_BUTTONS_FONT } ),
+        content: new Text( VegasStrings.newLevel, { font: DEFAULT_BUTTONS_FONT } ),
         listener: options.newLevelButtonListener,
         baseColor: PhetColorScheme.PHET_LOGO_YELLOW
       } ) );
 
     const keepGoingButton = new RectangularPushButton(
       combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
-        content: new Text( vegasStrings.keepGoing, { font: DEFAULT_BUTTONS_FONT } ),
+        content: new Text( VegasStrings.keepGoing, { font: DEFAULT_BUTTONS_FONT } ),
         listener: options.keepGoingButtonListener,
         baseColor: 'white'
       } ) );

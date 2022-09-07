@@ -19,7 +19,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import GameTimer from './GameTimer.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
-import vegasStrings from './vegasStrings.js';
+import VegasStrings from './VegasStrings.js';
 
 const DEFAULT_TITLE_FONT = new PhetFont( { size: 28, weight: 'bold' } );
 const DEFAULT_INFO_FONT = new PhetFont( { size: 22, weight: 'bold' } );
@@ -85,15 +85,15 @@ export default class LevelCompletedNode extends Panel {
 
     // Title, which changes based on how the user did.
     const proportionCorrect = score / perfectScore;
-    let titleText = vegasStrings.keepTrying;
+    let titleText = VegasStrings.keepTrying;
     if ( proportionCorrect > 0.95 ) {
-      titleText = vegasStrings.excellent;
+      titleText = VegasStrings.excellent;
     }
     else if ( proportionCorrect > 0.75 ) {
-      titleText = vegasStrings.great;
+      titleText = VegasStrings.great;
     }
     else if ( proportionCorrect >= 0.5 ) {
-      titleText = vegasStrings.good;
+      titleText = VegasStrings.good;
     }
     const title = new Text( titleText, {
       font: options.titleFont,
@@ -117,14 +117,14 @@ export default class LevelCompletedNode extends Panel {
 
     // Level (optional)
     if ( options.levelVisible ) {
-      children.push( new Text( StringUtils.format( vegasStrings.label.level, level ), {
+      children.push( new Text( StringUtils.format( VegasStrings.label.level, level ), {
         font: options.infoFont,
         maxWidth: options.contentMaxWidth
       } ) );
     }
 
     // Score
-    children.push( new Text( StringUtils.format( vegasStrings.label.score.max, score, perfectScore ), {
+    children.push( new Text( StringUtils.format( VegasStrings.label.score.max, score, perfectScore ), {
       font: options.infoFont,
       maxWidth: options.contentMaxWidth
     } ) );
@@ -132,23 +132,23 @@ export default class LevelCompletedNode extends Panel {
     // Time (optional)
     let timeRichText: RichText | null = null;
     if ( timerEnabled ) {
-      timeRichText = new RichText( StringUtils.format( vegasStrings.label.time, GameTimer.formatTime( elapsedTime ) ), {
+      timeRichText = new RichText( StringUtils.format( VegasStrings.label.time, GameTimer.formatTime( elapsedTime ) ), {
         font: options.infoFont,
         align: 'center',
         maxWidth: options.contentMaxWidth
       } );
       if ( isNewBestTime ) {
-        timeRichText.text = `${timeRichText.text}<br>${vegasStrings.yourNewBest}`;
+        timeRichText.text = `${timeRichText.text}<br>${VegasStrings.yourNewBest}`;
       }
       else if ( bestTimeAtThisLevel !== null ) {
         timeRichText.text = `${timeRichText.text}<br>${
-          StringUtils.format( vegasStrings.pattern[ '0yourBest' ], GameTimer.formatTime( bestTimeAtThisLevel ) )}`;
+          StringUtils.format( VegasStrings.pattern[ '0yourBest' ], GameTimer.formatTime( bestTimeAtThisLevel ) )}`;
       }
       children.push( timeRichText );
     }
 
     // Continue button
-    const continueButton = new TextPushButton( vegasStrings.continue, {
+    const continueButton = new TextPushButton( VegasStrings.continue, {
       listener: continueFunction,
       font: options.buttonFont,
       baseColor: options.buttonFill,

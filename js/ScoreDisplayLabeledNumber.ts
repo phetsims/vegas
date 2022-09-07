@@ -12,7 +12,7 @@ import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import { Font, HBoxOptions, TColor, Node, Text } from '../../scenery/js/imports.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
-import vegasStrings from './vegasStrings.js';
+import VegasStrings from './VegasStrings.js';
 import TProperty from '../../axon/js/TProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -48,7 +48,7 @@ export default class ScoreDisplayLabeledNumber extends Node {
 
     // Update number displayed based on score.
     const scorePropertyListener = ( score: number ) => {
-      scoreDisplayText.text = StringUtils.fillIn( vegasStrings.pattern.score.number, {
+      scoreDisplayText.text = StringUtils.fillIn( VegasStrings.pattern.score.number, {
         score: Utils.toFixed( score, options.scoreDecimalPlaces )
       } );
     };

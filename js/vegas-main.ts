@@ -13,11 +13,11 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
-import vegasStrings from './vegasStrings.js';
+import VegasStrings from './VegasStrings.js';
 import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
 
 // constants
-const vegasTitleStringProperty = vegasStrings.vegas.titleStringProperty;
+const vegasTitleStringProperty = VegasStrings.vegas.titleStringProperty;
 
 const simOptions: SimOptions = {
   credits: {

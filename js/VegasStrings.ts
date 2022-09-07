@@ -89,8 +89,8 @@ type StringsType = {
   'chooseYourLevelStringProperty': TReadOnlyProperty<string>;
 };
 
-const vegasStrings = getStringModule( 'VEGAS' ) as StringsType;
+const VegasStrings = getStringModule( 'VEGAS' ) as StringsType;
 
-vegas.register( 'vegasStrings', vegasStrings );
+vegas.register( 'VegasStrings', VegasStrings );
 
-export default vegasStrings;
+export default VegasStrings;

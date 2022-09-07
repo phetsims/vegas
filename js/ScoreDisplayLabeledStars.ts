@@ -11,7 +11,7 @@ import { Font, HBox, HBoxOptions, TColor, Text } from '../../scenery/js/imports.
 import ScoreDisplayStars, { ScoreDisplayStarsOptions } from './ScoreDisplayStars.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
-import vegasStrings from './vegasStrings.js';
+import VegasStrings from './VegasStrings.js';
 import TProperty from '../../axon/js/TProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -38,7 +38,7 @@ export default class ScoreDisplayLabeledStars extends HBox {
       spacing: 5
     }, providedOptions );
 
-    const textNode = new Text( vegasStrings.score, {
+    const textNode = new Text( VegasStrings.score, {
       font: options.font,
       fill: options.textFill
     } );

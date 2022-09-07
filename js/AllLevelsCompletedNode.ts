@@ -14,7 +14,7 @@ import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../sun/js/Panel.js';
 import vegas from './vegas.js';
-import vegasStrings from './vegasStrings.js';
+import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {
 
@@ -47,7 +47,7 @@ export default class AllLevelsCompletedNode extends Node {
     const faceNode = new FaceNode( options.faceDiameter );
 
     // create the dialog text
-    const textMessage = new RichText( vegasStrings.youCompletedAllLevels, {
+    const textMessage = new RichText( VegasStrings.youCompletedAllLevels, {
       font: new PhetFont( 25 ),
       lineWrap: 300,
       maxWidth: options.maxTextWidth,
@@ -56,7 +56,7 @@ export default class AllLevelsCompletedNode extends Node {
 
     // create the button
     const button = new RectangularPushButton( {
-      content: new Text( vegasStrings.done, {
+      content: new Text( VegasStrings.done, {
         font: new PhetFont( 30 ),
         maxWidth: options.maxTextWidth
       } ),
