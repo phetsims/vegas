@@ -16,6 +16,7 @@ import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import ScreenView from '../../joist/js/ScreenView.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 
 const DEFAULT_DESCRIPTION_TEXT_FONT = new PhetFont( 24 );
 
@@ -43,7 +44,7 @@ export default class GameInfoDialog extends Dialog {
    * @param levelDescriptions - level descriptions, in order of ascending level number
    * @param providedOptions
    */
-  public constructor( levelDescriptions: string[], providedOptions?: GameInfoDialogOptions ) {
+  public constructor( levelDescriptions: ( string | TReadOnlyProperty<string> )[], providedOptions?: GameInfoDialogOptions ) {
 
     const options = optionize<GameInfoDialogOptions, StrictOmit<SelfOptions, 'gameLevels'>, DialogOptions>()( {
       descriptionTextOptions: {
