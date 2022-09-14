@@ -40,6 +40,8 @@ export type GameInfoDialogOptions = SelfOptions & DialogOptions;
 
 export default class GameInfoDialog extends Dialog {
 
+  private readonly disposeGameInfoDialog: () => void;
+
   /**
    * @param levelDescriptions - level descriptions, in order of ascending level number
    * @param providedOptions
@@ -89,6 +91,15 @@ export default class GameInfoDialog extends Dialog {
     }, options.vBoxOptions ) );
 
     super( content, options );
+
+    this.disposeGameInfoDialog = () => {
+      descriptionNodes.forEach( node => node.dispose() );
+    };
+  }
+
+  public override dispose(): void {
+    this.disposeGameInfoDialog();
+    super.dispose();
   }
 }
 
