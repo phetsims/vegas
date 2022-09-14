@@ -39,7 +39,7 @@ simLauncher.launch( () => {
     new Screen(
       createEmptyModel,
       () => new ComponentsScreenView(), {
-        name: 'Components',
+        name: new Property( 'Components' ),
         backgroundColorProperty: new Property( 'white' ),
         tandem: Tandem.OPT_OUT
       } ),
@@ -47,7 +47,7 @@ simLauncher.launch( () => {
     new Screen(
       createEmptyModel,
       () => new FiniteChallengesScreenView(), {
-        name: 'Finite Challenges',
+        name: new Property( 'Finite Challenges' ),
         backgroundColorProperty: new Property( 'white' ),
         tandem: Tandem.OPT_OUT
       } ),
@@ -55,7 +55,7 @@ simLauncher.launch( () => {
     new Screen(
       createEmptyModel,
       () => new InfiniteChallengesScreenView(), {
-        name: 'Infinite Challenges',
+        name: new Property( 'Infinite Challenges' ),
         backgroundColorProperty: new Property( 'white' ),
         tandem: Tandem.OPT_OUT
       } )
