@@ -9,6 +9,7 @@
  */
 
 import TProperty from '../../axon/js/TProperty.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -42,7 +43,7 @@ export default class InfiniteStatusBar extends StatusBar {
    * @param scoreProperty
    * @param providedOptions
    */
-  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: TProperty<Bounds2>, messageNode: Node,
+  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, messageNode: Node,
                       scoreProperty: TProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
 
     const options = optionize<InfiniteStatusBarOptions, SelfOptions, StatusBarOptions>()( {
