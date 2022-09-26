@@ -5,88 +5,88 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
+import LinkableProperty from '../../axon/js/LinkableProperty.js';
 import vegas from './vegas.js';
 
 type StringsType = {
   'vegas': {
     'title': string;
-    'titleStringProperty': TReadOnlyProperty<string>;
+    'titleStringProperty': LinkableProperty<string>;
   };
   'pattern': {
     '0challenge': {
       '1max': string;
-      '1maxStringProperty': TReadOnlyProperty<string>;
+      '1maxStringProperty': LinkableProperty<string>;
     };
     '0hours': {
       '1minutes': {
         '2seconds': string;
-        '2secondsStringProperty': TReadOnlyProperty<string>;
+        '2secondsStringProperty': LinkableProperty<string>;
       }
     };
     '0minutes': {
       '1seconds': string;
-      '1secondsStringProperty': TReadOnlyProperty<string>;
+      '1secondsStringProperty': LinkableProperty<string>;
     };
     '0yourBest': string;
-    '0yourBestStringProperty': TReadOnlyProperty<string>;
+    '0yourBestStringProperty': LinkableProperty<string>;
     'score': {
       'number': string;
-      'numberStringProperty': TReadOnlyProperty<string>;
+      'numberStringProperty': LinkableProperty<string>;
     }
   };
   'keepTrying': string;
-  'keepTryingStringProperty': TReadOnlyProperty<string>;
+  'keepTryingStringProperty': LinkableProperty<string>;
   'good': string;
-  'goodStringProperty': TReadOnlyProperty<string>;
+  'goodStringProperty': LinkableProperty<string>;
   'great': string;
-  'greatStringProperty': TReadOnlyProperty<string>;
+  'greatStringProperty': LinkableProperty<string>;
   'excellent': string;
-  'excellentStringProperty': TReadOnlyProperty<string>;
+  'excellentStringProperty': LinkableProperty<string>;
   'yourNewBest': string;
-  'yourNewBestStringProperty': TReadOnlyProperty<string>;
+  'yourNewBestStringProperty': LinkableProperty<string>;
   'continue': string;
-  'continueStringProperty': TReadOnlyProperty<string>;
+  'continueStringProperty': LinkableProperty<string>;
   'label': {
     'level': string;
-    'levelStringProperty': TReadOnlyProperty<string>;
+    'levelStringProperty': LinkableProperty<string>;
     'scorePattern': string;
-    'scorePatternStringProperty': TReadOnlyProperty<string>;
+    'scorePatternStringProperty': LinkableProperty<string>;
     'time': string;
-    'timeStringProperty': TReadOnlyProperty<string>;
+    'timeStringProperty': LinkableProperty<string>;
     'score': {
       'max': string;
-      'maxStringProperty': TReadOnlyProperty<string>;
+      'maxStringProperty': LinkableProperty<string>;
     }
   };
   'check': string;
-  'checkStringProperty': TReadOnlyProperty<string>;
+  'checkStringProperty': LinkableProperty<string>;
   'next': string;
-  'nextStringProperty': TReadOnlyProperty<string>;
+  'nextStringProperty': LinkableProperty<string>;
   'button': {
     'newGame': string;
-    'newGameStringProperty': TReadOnlyProperty<string>;
+    'newGameStringProperty': LinkableProperty<string>;
   };
   'showAnswer': string;
-  'showAnswerStringProperty': TReadOnlyProperty<string>;
+  'showAnswerStringProperty': LinkableProperty<string>;
   'tryAgain': string;
-  'tryAgainStringProperty': TReadOnlyProperty<string>;
+  'tryAgainStringProperty': LinkableProperty<string>;
   'selectLevel': string;
-  'selectLevelStringProperty': TReadOnlyProperty<string>;
+  'selectLevelStringProperty': LinkableProperty<string>;
   'startOver': string;
-  'startOverStringProperty': TReadOnlyProperty<string>;
+  'startOverStringProperty': LinkableProperty<string>;
   'keepGoing': string;
-  'keepGoingStringProperty': TReadOnlyProperty<string>;
+  'keepGoingStringProperty': LinkableProperty<string>;
   'newLevel': string;
-  'newLevelStringProperty': TReadOnlyProperty<string>;
+  'newLevelStringProperty': LinkableProperty<string>;
   'score': string;
-  'scoreStringProperty': TReadOnlyProperty<string>;
+  'scoreStringProperty': LinkableProperty<string>;
   'done': string;
-  'doneStringProperty': TReadOnlyProperty<string>;
+  'doneStringProperty': LinkableProperty<string>;
   'youCompletedAllLevels': string;
-  'youCompletedAllLevelsStringProperty': TReadOnlyProperty<string>;
+  'youCompletedAllLevelsStringProperty': LinkableProperty<string>;
   'chooseYourLevel': string;
-  'chooseYourLevelStringProperty': TReadOnlyProperty<string>;
+  'chooseYourLevelStringProperty': LinkableProperty<string>;
 };
 
 const VegasStrings = getStringModule( 'VEGAS' ) as StringsType;
