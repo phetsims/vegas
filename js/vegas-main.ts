@@ -26,7 +26,7 @@ const simOptions: SimOptions = {
 };
 
 class VegasModel {
-  public step(): void { /* no stepping here */ }
+  public reset(): void { /* nothing to do */ }
 }
 
 function createEmptyModel(): VegasModel {
