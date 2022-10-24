@@ -115,9 +115,9 @@ export default class LevelCompletedNode extends Panel {
     } );
     children.push( scoreDisplayStars );
 
-    //TODO https://github.com/phetsims/vegas/issues/117 use DerivedProperty where StringUtils.format is used
     // Level (optional)
     if ( options.levelVisible ) {
+      //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
       children.push( new Text( StringUtils.format( VegasStrings.label.level, level ), {
         font: options.infoFont,
         maxWidth: options.contentMaxWidth
@@ -125,6 +125,7 @@ export default class LevelCompletedNode extends Panel {
     }
 
     // Score
+    //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
     children.push( new Text( StringUtils.format( VegasStrings.label.score.max, score, perfectScore ), {
       font: options.infoFont,
       maxWidth: options.contentMaxWidth
@@ -133,15 +134,18 @@ export default class LevelCompletedNode extends Panel {
     // Time (optional)
     let timeRichText: RichText | null = null;
     if ( timerEnabled ) {
+      //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
       timeRichText = new RichText( StringUtils.format( VegasStrings.label.time, GameTimer.formatTime( elapsedTime ) ), {
         font: options.infoFont,
         align: 'center',
         maxWidth: options.contentMaxWidth
       } );
       if ( isNewBestTime ) {
+        //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
         timeRichText.text = `${timeRichText.text}<br>${VegasStrings.yourNewBest}`;
       }
       else if ( bestTimeAtThisLevel !== null ) {
+        //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
         timeRichText.text = `${timeRichText.text}<br>${
           StringUtils.format( VegasStrings.pattern[ '0yourBest' ], GameTimer.formatTime( bestTimeAtThisLevel ) )}`;
       }

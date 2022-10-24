@@ -7,14 +7,16 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Multilink from '../../axon/js/Multilink.js';
 import TProperty from '../../axon/js/TProperty.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
-import { Font, HBox, TColor, Node, Rectangle, Text, TextOptions } from '../../scenery/js/imports.js';
+import { Font, HBox, Node, Rectangle, TColor, Text, TextOptions } from '../../scenery/js/imports.js';
 import TextPushButton, { TextPushButtonOptions } from '../../sun/js/buttons/TextPushButton.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
@@ -44,7 +46,7 @@ type SelfOptions = {
 
   // nested options for 'Start Over' button, filled in below
   startOverButtonOptions?: TextPushButtonOptions;
-  startOverButtonText?: string;
+  startOverButtonText?: string | TReadOnlyProperty<string>;
 
   // options for the timer node
   clockIconRadius?: number;
@@ -94,7 +96,7 @@ export default class FiniteStatusBar extends StatusBar {
         font: providedOptions && providedOptions.font ? providedOptions.font : StatusBar.DEFAULT_FONT,
         textFill: providedOptions && providedOptions.textFill ? providedOptions.textFill : StatusBar.DEFAULT_TEXT_FILL
       } ),
-      startOverButtonText: VegasStrings.startOver,
+      startOverButtonText: VegasStrings.startOverStringProperty,
       clockIconRadius: 15,
       xSpacing: 50,
       xMargin: 20,
@@ -153,6 +155,7 @@ export default class FiniteStatusBar extends StatusBar {
       leftChildren.push( levelText );
 
       levelListener = ( level: number ) => {
+        //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
         levelText.text = StringUtils.format( VegasStrings.label.level, level );
       };
       options.levelProperty.link( levelListener );
@@ -168,6 +171,7 @@ export default class FiniteStatusBar extends StatusBar {
       leftChildren.push( challengeNumberText );
 
       updateChallengeString = () => {
+        //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
         challengeNumberText.text = StringUtils.format( VegasStrings.pattern[ '0challenge' ][ '1max' ],
           options.challengeIndexProperty!.get() + 1, options.numberOfChallengesProperty!.get() );
       };
@@ -179,8 +183,8 @@ export default class FiniteStatusBar extends StatusBar {
     const scoreDisplay = options.createScoreDisplay( scoreProperty );
     leftChildren.push( scoreDisplay );
 
-    // Timer
-    let elapsedTimeNode: Node | null = null;
+    // Timer (optional)
+    let elapsedTimeNode: Node;
     let timerEnabledListener: ( ( timerEnabled: boolean ) => void ) | null = null;
     if ( options.elapsedTimeProperty && options.timerEnabledProperty ) {
 
@@ -206,7 +210,7 @@ export default class FiniteStatusBar extends StatusBar {
       // Because elapsedTimeNode needs to be considered regardless of whether it's visible,
       // see https://github.com/phetsims/vegas/issues/80
       excludeInvisibleChildrenFromBounds: false,
-      resize: false,
+      resize: false, //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
       spacing: options.xSpacing,
       children: leftChildren,
       maxWidth: ( layoutBounds.width - ( 2 * options.xMargin ) - startOverButton.width - options.xSpacing )
@@ -219,17 +223,19 @@ export default class FiniteStatusBar extends StatusBar {
     super( layoutBounds, visibleBoundsProperty, options );
 
     // Position components on the bar.
-    this.positioningBoundsProperty.link( positioningBounds => {
-      leftNodes.left = positioningBounds.left;
-      leftNodes.centerY = positioningBounds.centerY;
-      startOverButton.right = positioningBounds.right;
-      startOverButton.centerY = positioningBounds.centerY;
-    } );
+    Multilink.multilink( [ this.positioningBoundsProperty, leftNodes.boundsProperty, startOverButton.boundsProperty ],
+      ( positioningBounds: Bounds2, leftNodeBounds: Bounds2, startOverButtonBounds: Bounds2 ) => {
+        leftNodes.left = positioningBounds.left;
+        leftNodes.centerY = positioningBounds.centerY;
+        startOverButton.right = positioningBounds.right;
+        startOverButton.centerY = positioningBounds.centerY;
+      } );
 
     this.disposeFiniteStatusBar = () => {
 
       scoreDisplay.dispose();
       elapsedTimeNode && elapsedTimeNode.dispose();
+      startOverButton.dispose();
 
       if ( options.levelProperty && levelListener && options.levelProperty.hasListener( levelListener ) ) {
         options.levelProperty.unlink( levelListener );

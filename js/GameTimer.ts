@@ -83,10 +83,12 @@ export default class GameTimer {
     const secondsString = ( seconds > 9 ) ? seconds : ( `0${seconds}` );
 
     if ( hours > 0 ) {
+      //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
       return StringUtils.format( VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2seconds' ],
         hours, minutesString, secondsString );
     }
     else {
+      //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
       return StringUtils.format( VegasStrings.pattern[ '0minutes' ][ '1seconds' ],
         minutesString, secondsString );
     }
