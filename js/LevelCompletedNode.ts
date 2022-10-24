@@ -81,8 +81,7 @@ export default class LevelCompletedNode extends Panel {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
-    // nodes to be added to the panel
-    const children: Node[] = [];
+    const vBoxChildren: Node[] = [];
 
     // Title, which changes based on how the user did.
     const proportionCorrect = score / perfectScore;
@@ -100,7 +99,7 @@ export default class LevelCompletedNode extends Panel {
       font: options.titleFont,
       maxWidth: options.contentMaxWidth
     } );
-    children.push( title );
+    vBoxChildren.push( title );
 
     // Progress indicator
     const scoreDisplayStars = new ScoreDisplayStars( new Property( score ), {
@@ -114,47 +113,72 @@ export default class LevelCompletedNode extends Panel {
       },
       maxWidth: options.contentMaxWidth
     } );
-    children.push( scoreDisplayStars );
+    vBoxChildren.push( scoreDisplayStars );
 
     // Level (optional)
     if ( options.levelVisible ) {
 
-      const levelStringProperty = new DerivedProperty( [ VegasStrings.label.levelStringProperty ],
-        pattern => StringUtils.format( pattern, level ) );
+      const levelStringProperty = new DerivedProperty(
+        [ VegasStrings.label.levelStringProperty ],
+        pattern => StringUtils.format( pattern, level )
+      );
 
-      children.push( new Text( levelStringProperty, {
+      vBoxChildren.push( new Text( levelStringProperty, {
         font: options.infoFont,
         maxWidth: options.contentMaxWidth
       } ) );
     }
 
     // Score
-    const scoreStringProperty = new DerivedProperty( [ VegasStrings.label.score.maxStringProperty ],
-      pattern => StringUtils.format( pattern, score, perfectScore ) );
-    children.push( new Text( scoreStringProperty, {
+    const scoreStringProperty = new DerivedProperty(
+      [ VegasStrings.label.score.maxStringProperty ],
+      pattern => StringUtils.format( pattern, score, perfectScore )
+    );
+    vBoxChildren.push( new Text( scoreStringProperty, {
       font: options.infoFont,
       maxWidth: options.contentMaxWidth
     } ) );
 
     // Time (optional)
-    let timeRichText: RichText | null = null;
     if ( timerEnabled ) {
-      //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
-      timeRichText = new RichText( StringUtils.format( VegasStrings.label.time, GameTimer.formatTime( elapsedTime ) ), {
+
+      // Time: MM:SS
+      const elapsedTimeStringProperty = new DerivedProperty(
+        [ VegasStrings.label.timeStringProperty ],
+        pattern => StringUtils.format( pattern, GameTimer.formatTime( elapsedTime ) )
+      );
+
+      let timeStringProperty;
+      if ( isNewBestTime ) {
+
+        // Time: MM:SS
+        // (Your New Best!)
+        timeStringProperty = new DerivedProperty(
+          [ elapsedTimeStringProperty, VegasStrings.yourNewBestStringProperty ],
+          ( elapsedTime: string, yourNewBest: string ) => `${elapsedTime}<br>${yourNewBest}`
+        );
+      }
+      else if ( bestTimeAtThisLevel !== null ) {
+
+        // Time: MM:SS
+        // (Your Best: MM:SS)
+        timeStringProperty = new DerivedProperty(
+          [ elapsedTimeStringProperty, VegasStrings.pattern[ '0yourBestStringProperty' ] ],
+          ( elapsedTime: string, pattern: string ) =>
+            `${elapsedTime}<br>${StringUtils.format( pattern, GameTimer.formatTime( bestTimeAtThisLevel ) )}`
+        );
+      }
+      else {
+
+        // Time: MM:SS
+        timeStringProperty = elapsedTimeStringProperty;
+      }
+
+      vBoxChildren.push( new RichText( timeStringProperty, {
         font: options.infoFont,
         align: 'center',
         maxWidth: options.contentMaxWidth
-      } );
-      if ( isNewBestTime ) {
-        //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
-        timeRichText.text = `${timeRichText.text}<br>${VegasStrings.yourNewBest}`;
-      }
-      else if ( bestTimeAtThisLevel !== null ) {
-        //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
-        timeRichText.text = `${timeRichText.text}<br>${
-          StringUtils.format( VegasStrings.pattern[ '0yourBest' ], GameTimer.formatTime( bestTimeAtThisLevel ) )}`;
-      }
-      children.push( timeRichText );
+      } ) );
     }
 
     // Continue button
@@ -165,17 +189,19 @@ export default class LevelCompletedNode extends Panel {
       tandem: options.tandem.createTandem( 'continueButton' ),
       maxWidth: options.contentMaxWidth
     } );
-    children.push( continueButton );
+    vBoxChildren.push( continueButton );
 
     const content = new VBox( {
-      children: children,
+      children: vBoxChildren,
       spacing: options.ySpacing
     } );
 
     super( content, options );
 
     this.disposeLevelCompletedNode = () => {
-      children.forEach( child => child.dispose() );
+
+      // All VBox children are linked to dynamic string Properties, so must be disposed.
+      vBoxChildren.forEach( child => child.dispose() );
     };
   }
 
