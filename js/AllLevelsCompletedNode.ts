@@ -47,7 +47,7 @@ export default class AllLevelsCompletedNode extends Node {
     const faceNode = new FaceNode( options.faceDiameter );
 
     // create the dialog text
-    const textMessage = new RichText( VegasStrings.youCompletedAllLevels, {
+    const textMessage = new RichText( VegasStrings.youCompletedAllLevelsStringProperty, {
       font: new PhetFont( 25 ),
       lineWrap: 300,
       maxWidth: options.maxTextWidth,
@@ -56,7 +56,7 @@ export default class AllLevelsCompletedNode extends Node {
 
     // create the button
     const button = new RectangularPushButton( {
-      content: new Text( VegasStrings.done, {
+      content: new Text( VegasStrings.doneStringProperty, {
         font: new PhetFont( 30 ),
         maxWidth: options.maxTextWidth
       } ),

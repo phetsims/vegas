@@ -16,6 +16,7 @@ import { HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HSlider from '../../../../sun/js/HSlider.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import VegasStrings from '../../VegasStrings.js';
 
 const NUM_STARS = 5;
 
@@ -41,14 +42,16 @@ export default function demoScoreDisplay( layoutBounds: Bounds2 ): Node {
   } );
 
   const scoreSlider = new HBox( {
+    spacing: 8,
     children: [
-      new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
+      new Text( VegasStrings.scoreStringProperty, { font: new PhetFont( 20 ) } ),
       new HSlider( scoreProperty, scoreProperty.range )
     ]
   } );
 
   return new VBox( {
     spacing: 50,
+    align: 'left',
     children: [ scoreDisplays, scoreSlider ],
     center: layoutBounds.center
   } );

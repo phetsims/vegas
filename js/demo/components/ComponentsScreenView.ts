@@ -17,6 +17,8 @@ import demoLevelSelectionButton from './demoLevelSelectionButton.js';
 import demoLevelSelectionButtonGroup from './demoLevelSelectionButtonGroup.js';
 import demoRewardNode from './demoRewardNode.js';
 import demoScoreDisplays from './demoScoreDisplays.js';
+import demoLevelCompletedNode from './demoLevelCompletedNode.js';
+import demoAllLevelsCompletedNode from './demoAllLevelsCompletedNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type ComponentsScreenViewOptions = SelfOptions & DemosScreenViewOptions;
@@ -31,7 +33,9 @@ export default class ComponentsScreenView extends DemosScreenView {
 
     // To add a demo, add an entry here of type SunDemo.
     const demos = [
+      { label: 'AllLevelsCompletedNode', createNode: demoAllLevelsCompletedNode },
       { label: 'GameInfoDialog', createNode: demoGameInfoDialog },
+      { label: 'LevelCompletedNode', createNode: demoLevelCompletedNode },
       { label: 'LevelSelectionButton', createNode: demoLevelSelectionButton },
       { label: 'LevelSelectionButtonGroup', createNode: demoLevelSelectionButtonGroup },
       { label: 'RewardNode', createNode: demoRewardNode },

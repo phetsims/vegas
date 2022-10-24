@@ -38,7 +38,7 @@ export default class ScoreDisplayLabeledStars extends HBox {
       spacing: 5
     }, providedOptions );
 
-    const textNode = new Text( VegasStrings.score, {
+    const textNode = new Text( VegasStrings.scoreStringProperty, {
       font: options.font,
       fill: options.textFill
     } );
@@ -49,7 +49,8 @@ export default class ScoreDisplayLabeledStars extends HBox {
 
     super( options );
 
-    this.disposeScoreDisplayLabeledStars = function() {
+    this.disposeScoreDisplayLabeledStars = () => {
+      textNode.dispose();
       scoreDisplay.dispose();
     };
   }

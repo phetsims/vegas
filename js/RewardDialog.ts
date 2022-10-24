@@ -80,14 +80,14 @@ export default class RewardDialog extends Dialog {
 
     const newLevelButton = new RectangularPushButton(
       combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
-        content: new Text( VegasStrings.newLevel, { font: DEFAULT_BUTTONS_FONT } ),
+        content: new Text( VegasStrings.newLevelStringProperty, { font: DEFAULT_BUTTONS_FONT } ),
         listener: options.newLevelButtonListener,
         baseColor: PhetColorScheme.PHET_LOGO_YELLOW
       } ) );
 
     const keepGoingButton = new RectangularPushButton(
       combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
-        content: new Text( VegasStrings.keepGoing, { font: DEFAULT_BUTTONS_FONT } ),
+        content: new Text( VegasStrings.keepGoingStringProperty, { font: DEFAULT_BUTTONS_FONT } ),
         listener: options.keepGoingButtonListener,
         baseColor: 'white'
       } ) );

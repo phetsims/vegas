@@ -11,7 +11,7 @@ import Property from '../../axon/js/Property.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { Font, TColor, RichText, Text, VBox } from '../../scenery/js/imports.js';
+import { Font, Node, RichText, TColor, Text, VBox } from '../../scenery/js/imports.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import TextPushButton from '../../sun/js/buttons/TextPushButton.js';
 import Panel, { PanelOptions } from '../../sun/js/Panel.js';
@@ -81,21 +81,21 @@ export default class LevelCompletedNode extends Panel {
     }, providedOptions );
 
     // nodes to be added to the panel
-    const children = [];
+    const children: Node[] = [];
 
     // Title, which changes based on how the user did.
     const proportionCorrect = score / perfectScore;
-    let titleText = VegasStrings.keepTrying;
+    let titleTextStringProperty = VegasStrings.keepTryingStringProperty;
     if ( proportionCorrect > 0.95 ) {
-      titleText = VegasStrings.excellent;
+      titleTextStringProperty = VegasStrings.excellentStringProperty;
     }
     else if ( proportionCorrect > 0.75 ) {
-      titleText = VegasStrings.great;
+      titleTextStringProperty = VegasStrings.greatStringProperty;
     }
     else if ( proportionCorrect >= 0.5 ) {
-      titleText = VegasStrings.good;
+      titleTextStringProperty = VegasStrings.goodStringProperty;
     }
-    const title = new Text( titleText, {
+    const title = new Text( titleTextStringProperty, {
       font: options.titleFont,
       maxWidth: options.contentMaxWidth
     } );
@@ -115,6 +115,7 @@ export default class LevelCompletedNode extends Panel {
     } );
     children.push( scoreDisplayStars );
 
+    //TODO https://github.com/phetsims/vegas/issues/117 use DerivedProperty where StringUtils.format is used
     // Level (optional)
     if ( options.levelVisible ) {
       children.push( new Text( StringUtils.format( VegasStrings.label.level, level ), {
@@ -148,7 +149,7 @@ export default class LevelCompletedNode extends Panel {
     }
 
     // Continue button
-    const continueButton = new TextPushButton( VegasStrings.continue, {
+    const continueButton = new TextPushButton( VegasStrings.continueStringProperty, {
       listener: continueFunction,
       font: options.buttonFont,
       baseColor: options.buttonFill,
@@ -165,9 +166,7 @@ export default class LevelCompletedNode extends Panel {
     super( content, options );
 
     this.disposeLevelCompletedNode = () => {
-      timeRichText && timeRichText.dispose();
-      continueButton.dispose();
-      scoreDisplayStars.dispose();
+      children.forEach( child => child.dispose() );
     };
   }
 

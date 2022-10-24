@@ -9,13 +9,14 @@
 
 import Utils from '../../dot/js/Utils.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
-import { Font, HBoxOptions, TColor, Node, Text } from '../../scenery/js/imports.js';
+import { Font, HBoxOptions, Node, TColor, Text } from '../../scenery/js/imports.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 import TProperty from '../../axon/js/TProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import DerivedProperty from '../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
   font?: Font;
@@ -39,25 +40,24 @@ export default class ScoreDisplayLabeledNumber extends Node {
       scoreDecimalPlaces: 0
     }, providedOptions );
 
-    const scoreDisplayText = new Text( '', {
+    const scoreDisplayStringProperty = new DerivedProperty(
+      [ VegasStrings.pattern.score.numberStringProperty, scoreProperty ],
+      ( pattern: string, score: number ) => StringUtils.fillIn( pattern, {
+        score: Utils.toFixed( score, options.scoreDecimalPlaces )
+      } )
+    );
+
+    const scoreDisplayText = new Text( scoreDisplayStringProperty, {
       font: options.font,
       fill: options.textFill
     } );
 
     options.children = [ scoreDisplayText ];
 
-    // Update number displayed based on score.
-    const scorePropertyListener = ( score: number ) => {
-      scoreDisplayText.text = StringUtils.fillIn( VegasStrings.pattern.score.number, {
-        score: Utils.toFixed( score, options.scoreDecimalPlaces )
-      } );
-    };
-    scoreProperty.link( scorePropertyListener );
-
     super( options );
 
-    this.disposeScoreDisplayLabeledNumber = function() {
-      scoreProperty.unlink( scorePropertyListener );
+    this.disposeScoreDisplayLabeledNumber = () => {
+      scoreDisplayStringProperty.dispose();
     };
   }
 
