@@ -9,7 +9,7 @@
  * @author Andrea Lin
  */
 
-import TProperty from '../../axon/js/TProperty.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
@@ -28,7 +28,7 @@ export default class ScoreDisplayStars extends HBox {
 
   private readonly disposeScoreDisplayStars: () => void;
 
-  public constructor( scoreProperty: TProperty<number>, providedOptions?: ScoreDisplayStarsOptions ) {
+  public constructor( scoreProperty: TReadOnlyProperty<number>, providedOptions?: ScoreDisplayStarsOptions ) {
 
     const options = optionize<ScoreDisplayStarsOptions, SelfOptions, HBoxOptions>()( {
 
