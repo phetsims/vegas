@@ -7,6 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import DerivedProperty from '../../axon/js/DerivedProperty.js';
 import Multilink from '../../axon/js/Multilink.js';
 import TProperty from '../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
@@ -146,37 +147,34 @@ export default class FiniteStatusBar extends StatusBar {
     const leftChildren = [];
 
     // Level N
-    let levelListener: ( ( level: number ) => void ) | null = null;
+    let levelText: Node;
     if ( options.levelProperty && options.levelVisible ) {
 
-      const levelText = new Text( '', combineOptions<TextOptions>( {
+      const levelStringProperty = new DerivedProperty(
+        [ VegasStrings.label.levelStringProperty, options.levelProperty ],
+        ( pattern: string, level: number ) => StringUtils.format( VegasStrings.label.level, level )
+      );
+
+      levelText = new Text( levelStringProperty, combineOptions<TextOptions>( {
         tandem: options.tandem.createTandem( 'levelText' )
       }, options.levelTextOptions ) );
       leftChildren.push( levelText );
-
-      levelListener = ( level: number ) => {
-        //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
-        levelText.text = StringUtils.format( VegasStrings.label.level, level );
-      };
-      options.levelProperty.link( levelListener );
     }
 
     // Challenge N of M
-    let updateChallengeString: ( () => void ) | null = null;
+    let challengeNumberText: Node;
     if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
 
-      const challengeNumberText = new Text( '', combineOptions<TextOptions>( {
+      const challengeNumberStringProperty = new DerivedProperty(
+        [ VegasStrings.pattern[ '0challenge' ][ '1maxStringProperty' ], options.challengeIndexProperty, options.numberOfChallengesProperty ],
+        ( pattern: string, challengeIndex: number, numberOfChallenges: number ) =>
+          StringUtils.format( pattern, challengeIndex + 1, numberOfChallenges )
+      );
+
+      challengeNumberText = new Text( challengeNumberStringProperty, combineOptions<TextOptions>( {
         tandem: options.tandem.createTandem( 'challengeNumberText' )
       }, options.challengeTextOptions ) );
       leftChildren.push( challengeNumberText );
-
-      updateChallengeString = () => {
-        //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
-        challengeNumberText.text = StringUtils.format( VegasStrings.pattern[ '0challenge' ][ '1max' ],
-          options.challengeIndexProperty!.get() + 1, options.numberOfChallengesProperty!.get() );
-      };
-      options.challengeIndexProperty.link( updateChallengeString );
-      options.numberOfChallengesProperty.link( updateChallengeString );
     }
 
     // Score
@@ -185,20 +183,14 @@ export default class FiniteStatusBar extends StatusBar {
 
     // Timer (optional)
     let elapsedTimeNode: Node;
-    let timerEnabledListener: ( ( timerEnabled: boolean ) => void ) | null = null;
     if ( options.elapsedTimeProperty && options.timerEnabledProperty ) {
-
       elapsedTimeNode = new ElapsedTimeNode( options.elapsedTimeProperty, {
+        visibleProperty: options.timerEnabledProperty,
         clockIconRadius: options.clockIconRadius,
         font: options.font,
         textFill: options.textFill
       } );
       leftChildren.push( elapsedTimeNode );
-
-      timerEnabledListener = ( timerEnabled: boolean ) => {
-        elapsedTimeNode!.visible = ( !!options.timerEnabledProperty && timerEnabled );
-      };
-      options.timerEnabledProperty && options.timerEnabledProperty.link( timerEnabledListener );
     }
 
     // Start Over button
@@ -210,7 +202,6 @@ export default class FiniteStatusBar extends StatusBar {
       // Because elapsedTimeNode needs to be considered regardless of whether it's visible,
       // see https://github.com/phetsims/vegas/issues/80
       excludeInvisibleChildrenFromBounds: false,
-      resize: false, //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
       spacing: options.xSpacing,
       children: leftChildren,
       maxWidth: ( layoutBounds.width - ( 2 * options.xMargin ) - startOverButton.width - options.xSpacing )
@@ -222,7 +213,7 @@ export default class FiniteStatusBar extends StatusBar {
 
     super( layoutBounds, visibleBoundsProperty, options );
 
-    // Position components on the bar.
+    // Dynamically position components on the bar.
     Multilink.multilink( [ this.positioningBoundsProperty, leftNodes.boundsProperty, startOverButton.boundsProperty ],
       ( positioningBounds: Bounds2, leftNodeBounds: Bounds2, startOverButtonBounds: Bounds2 ) => {
         leftNodes.left = positioningBounds.left;
@@ -232,26 +223,12 @@ export default class FiniteStatusBar extends StatusBar {
       } );
 
     this.disposeFiniteStatusBar = () => {
-
+      levelText.dispose();
+      challengeNumberText.dispose();
       scoreDisplay.dispose();
       elapsedTimeNode && elapsedTimeNode.dispose();
       startOverButton.dispose();
-
-      if ( options.levelProperty && levelListener && options.levelProperty.hasListener( levelListener ) ) {
-        options.levelProperty.unlink( levelListener );
-      }
-
-      if ( options.challengeIndexProperty && updateChallengeString && options.challengeIndexProperty.hasListener( updateChallengeString ) ) {
-        options.challengeIndexProperty.unlink( updateChallengeString );
-      }
-
-      if ( options.numberOfChallengesProperty && updateChallengeString && options.numberOfChallengesProperty.hasListener( updateChallengeString ) ) {
-        options.numberOfChallengesProperty.link( updateChallengeString );
-      }
-
-      if ( options.timerEnabledProperty && timerEnabledListener && options.timerEnabledProperty.hasListener( timerEnabledListener ) ) {
-        options.timerEnabledProperty.unlink( timerEnabledListener );
-      }
+      elapsedTimeNode && elapsedTimeNode.dispose();
     };
   }
 
