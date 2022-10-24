@@ -7,6 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import DerivedProperty from '../../axon/js/DerivedProperty.js';
 import Property from '../../axon/js/Property.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
@@ -117,16 +118,20 @@ export default class LevelCompletedNode extends Panel {
 
     // Level (optional)
     if ( options.levelVisible ) {
-      //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
-      children.push( new Text( StringUtils.format( VegasStrings.label.level, level ), {
+
+      const levelStringProperty = new DerivedProperty( [ VegasStrings.label.levelStringProperty ],
+        pattern => StringUtils.format( pattern, level ) );
+
+      children.push( new Text( levelStringProperty, {
         font: options.infoFont,
         maxWidth: options.contentMaxWidth
       } ) );
     }
 
     // Score
-    //TODO https://github.com/phetsims/vegas/issues/117 dynamic locale
-    children.push( new Text( StringUtils.format( VegasStrings.label.score.max, score, perfectScore ), {
+    const scoreStringProperty = new DerivedProperty( [ VegasStrings.label.score.maxStringProperty ],
+      pattern => StringUtils.format( pattern, score, perfectScore ) );
+    children.push( new Text( scoreStringProperty, {
       font: options.infoFont,
       maxWidth: options.contentMaxWidth
     } ) );
