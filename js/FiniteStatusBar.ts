@@ -152,7 +152,7 @@ export default class FiniteStatusBar extends StatusBar {
 
       const levelStringProperty = new DerivedProperty(
         [ VegasStrings.label.levelStringProperty, options.levelProperty ],
-        ( pattern: string, level: number ) => StringUtils.format( VegasStrings.label.level, level )
+        ( pattern: string, level: number ) => StringUtils.format( pattern, level )
       );
 
       levelText = new Text( levelStringProperty, combineOptions<TextOptions>( {
