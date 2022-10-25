@@ -31,7 +31,8 @@ type SelfOptions = {
   createScoreDisplay?: ( scoreProperty: TProperty<number> ) => Node;
 };
 
-export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'> &
+export type InfiniteStatusBarOptions = SelfOptions &
+  StrictOmit<StatusBarOptions, 'children' | 'barHeight'> &
   PickRequired<StatusBarOptions, 'tandem'>;
 
 export default class InfiniteStatusBar extends StatusBar {
@@ -46,7 +47,7 @@ export default class InfiniteStatusBar extends StatusBar {
    * @param providedOptions
    */
   public constructor( layoutBounds: Bounds2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, messageNode: Node,
-                      scoreProperty: TProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
+                      scoreProperty: TProperty<number>, providedOptions: InfiniteStatusBarOptions ) {
 
     const options = optionize<InfiniteStatusBarOptions, SelfOptions, StatusBarOptions>()( {
 
