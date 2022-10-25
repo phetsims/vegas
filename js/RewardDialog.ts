@@ -22,6 +22,7 @@ import ScoreDisplayNumberAndStar, { ScoreDisplayNumberAndStarOptions } from './S
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
+import Tandem from '../../tandem/js/Tandem.js';
 
 // constants
 const DEFAULT_BUTTONS_FONT = new PhetFont( 20 );
@@ -64,7 +65,8 @@ export default class RewardDialog extends Dialog {
 
       // DialogOptions
       // pdom - Since we are setting the focusOnShowNode to be the first element in content, put the closeButton last
-      closeButtonLastInPDOM: true
+      closeButtonLastInPDOM: true,
+      tandem: Tandem.OPTIONAL
     }, providedOptions );
 
     const phetGirlNode = new Image( phetGirlJugglingStars_png, {
@@ -84,14 +86,16 @@ export default class RewardDialog extends Dialog {
       combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
         content: new Text( VegasStrings.newLevelStringProperty, { font: DEFAULT_BUTTONS_FONT } ),
         listener: options.newLevelButtonListener,
-        baseColor: PhetColorScheme.PHET_LOGO_YELLOW
+        baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+        tandem: options.tandem.createTandem( 'newLevelButton' )
       } ) );
 
     const keepGoingButton = new RectangularPushButton(
       combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
         content: new Text( VegasStrings.keepGoingStringProperty, { font: DEFAULT_BUTTONS_FONT } ),
         listener: options.keepGoingButtonListener,
-        baseColor: 'white'
+        baseColor: 'white',
+        tandem: options.tandem.createTandem( 'keepGoingButton' )
       } ) );
 
     const buttons = new VBox( {
