@@ -106,7 +106,7 @@ export default class FiniteStatusBar extends StatusBar {
       barStroke: null,
 
       // StatusBarOptions
-      tandem: Tandem.REQUIRED
+      tandem: Tandem.OPTIONAL
     }, providedOptions );
 
     // nested options for 'Start Over' button

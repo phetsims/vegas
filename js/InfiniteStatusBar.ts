@@ -12,12 +12,12 @@ import TProperty from '../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize from '../../phet-core/js/optionize.js';
-import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import BackButton from '../../scenery-phet/js/buttons/BackButton.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import { HBox, Node } from '../../scenery/js/imports.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
 
@@ -31,9 +31,7 @@ type SelfOptions = {
   createScoreDisplay?: ( scoreProperty: TProperty<number> ) => Node;
 };
 
-export type InfiniteStatusBarOptions = SelfOptions &
-  StrictOmit<StatusBarOptions, 'children' | 'barHeight'> &
-  PickRequired<StatusBarOptions, 'tandem'>;
+export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
 
 export default class InfiniteStatusBar extends StatusBar {
 
@@ -47,7 +45,7 @@ export default class InfiniteStatusBar extends StatusBar {
    * @param providedOptions
    */
   public constructor( layoutBounds: Bounds2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, messageNode: Node,
-                      scoreProperty: TProperty<number>, providedOptions: InfiniteStatusBarOptions ) {
+                      scoreProperty: TProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
 
     const options = optionize<InfiniteStatusBarOptions, SelfOptions, StatusBarOptions>()( {
 
@@ -56,7 +54,10 @@ export default class InfiniteStatusBar extends StatusBar {
       xMargin: 20,
       yMargin: 10,
       spacing: 10,
-      createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty )
+      createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty ),
+
+      // StatusBarOptions
+      tandem: Tandem.OPTIONAL
     }, providedOptions );
 
     // button that typically takes us back to the level-selection UI
