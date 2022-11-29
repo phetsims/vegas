@@ -57,8 +57,10 @@ export default class RewardDialog extends Dialog {
         font: DEFAULT_SCORE_DISPLAY_FONT,
         spacing: 8,
         starNodeOptions: {
-          outerRadius: 20,
-          innerRadius: 10,
+          starShapeOptions: {
+            outerRadius: 20,
+            innerRadius: 10
+          },
           filledLineWidth: 2
         }
       },
