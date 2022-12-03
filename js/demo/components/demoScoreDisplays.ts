@@ -24,7 +24,7 @@ export default function demoScoreDisplay( layoutBounds: Bounds2 ): Node {
 
   const scoreProperty = new NumberProperty( 0, {
     range: new Range( 0, 1000 )
-  } ).asRanged();
+  } );
 
   // Various options for displaying score.
   const scoreDisplays = new VBox( {

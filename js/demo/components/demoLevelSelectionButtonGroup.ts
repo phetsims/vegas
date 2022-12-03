@@ -8,7 +8,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
 import { GridBox, HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import NumberProperty, { RangedProperty } from '../../../../axon/js/NumberProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../../LevelSelectionButtonGroup.js';
 import ScoreDisplayStars from '../../ScoreDisplayStars.js';
@@ -22,11 +22,11 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ): 
   // Properties used by LevelSelectionButtonGroupItem
   const scoreProperty = new NumberProperty( 0, {
     range: new Range( 0, 1000 )
-  } ).asRanged();
+  } );
 
   const bestTimeProperty = new NumberProperty( 0, {
     range: new Range( 0, 10000 )
-  } ).asRanged();
+  } );
 
   const bestTimeVisibleProperty = new BooleanProperty( true );
 
@@ -59,7 +59,7 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ): 
  */
 class SingleRowButtonGroup extends LevelSelectionButtonGroup {
 
-  public constructor( scoreProperty: RangedProperty, bestTimeProperty: TProperty<number>, bestTimeVisibleProperty: TProperty<boolean> ) {
+  public constructor( scoreProperty: NumberProperty, bestTimeProperty: TProperty<number>, bestTimeVisibleProperty: TProperty<boolean> ) {
 
     const numberOfLevels = 3;
 
@@ -103,7 +103,7 @@ class SingleRowButtonGroup extends LevelSelectionButtonGroup {
  */
 class MultiRowButtonGroup extends LevelSelectionButtonGroup {
 
-  public constructor( scoreProperty: RangedProperty ) {
+  public constructor( scoreProperty: NumberProperty ) {
 
     const numberOfLevels = 5;
 
@@ -165,7 +165,7 @@ class MultiRowButtonGroup extends LevelSelectionButtonGroup {
  */
 class XButtonGroup extends LevelSelectionButtonGroup {
 
-  public constructor( scoreProperty: RangedProperty ) {
+  public constructor( scoreProperty: NumberProperty ) {
 
     const numberOfLevels = 5;
 

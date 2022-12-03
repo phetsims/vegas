@@ -13,7 +13,7 @@ import ScoreDisplayLabeledNumber from '../../ScoreDisplayLabeledNumber.js';
 import { HBox, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HSlider from '../../../../sun/js/HSlider.js';
-import NumberProperty, { RangedProperty } from '../../../../axon/js/NumberProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import LevelSelectionButton from '../../LevelSelectionButton.js';
@@ -27,12 +27,12 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ): Node 
   const scoreRange = new Range( 0, 1000 );
   const scoreProperty = new NumberProperty( 0, {
     range: scoreRange
-  } ).asRanged();
+  } );
 
   const bestTimeRange = new Range( 0, 10000 );
   const bestTimeProperty = new NumberProperty( 0, {
     range: bestTimeRange
-  } ).asRanged();
+  } );
 
   const bestTimeVisibleProperty = new BooleanProperty( true );
 
@@ -93,7 +93,7 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ): Node 
  * The controls for this demo and demoLevelSelectionButtonGroup
  */
 export class DemoLevelSelectionButtonControlPanel extends VBox {
-  public constructor( scoreProperty: RangedProperty, bestTimeProperty: RangedProperty, bestTimeVisibleProperty: Property<boolean> ) {
+  public constructor( scoreProperty: NumberProperty, bestTimeProperty: NumberProperty, bestTimeVisibleProperty: Property<boolean> ) {
 
     const textOptions = { font: new PhetFont( 20 ) };
     const textSpacing = 10;

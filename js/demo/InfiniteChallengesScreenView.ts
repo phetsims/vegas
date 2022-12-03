@@ -29,7 +29,7 @@ export default class InfiniteChallengesScreenView extends ScreenView {
 
     const scoreProperty = new NumberProperty( 0, {
       range: new Range( 0, 1000 )
-    } ).asRanged();
+    } );
 
     // bar across the top
     const messageNode = new Text( 'Your message goes here', {
