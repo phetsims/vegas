@@ -85,7 +85,8 @@ export default class LevelSelectionButtonGroup extends Node {
         orientation: 'horizontal',
         spacing: 10
       },
-      tandem: Tandem.REQUIRED // This default is provided for JavaScript simulations.
+      // @ts-expect-error This default is provided for JavaScript simulations.
+      tandem: Tandem.REQUIRED
     }, providedOptions );
 
     // All icons will have the same effective size.
