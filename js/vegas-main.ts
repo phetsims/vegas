@@ -15,6 +15,7 @@ import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
 import VegasStrings from './VegasStrings.js';
 import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
+import TModel from '../../joist/js/TModel.js';
 
 // constants
 const vegasTitleStringProperty = VegasStrings.vegas.titleStringProperty;
@@ -25,7 +26,7 @@ const simOptions: SimOptions = {
   }
 };
 
-class VegasModel {
+class VegasModel implements TModel {
   public reset(): void { /* nothing to do */ }
 }
 
