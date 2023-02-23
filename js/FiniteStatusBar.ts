@@ -28,11 +28,11 @@ import VegasStrings from './VegasStrings.js';
 type SelfOptions = {
 
   // optional Properties
-  challengeIndexProperty?: TProperty<number> | null;
-  numberOfChallengesProperty?: TProperty<number> | null;
-  levelProperty?: TProperty<number> | null;
-  elapsedTimeProperty?: TProperty<number> | null;
-  timerEnabledProperty?: TProperty<boolean> | null;
+  challengeIndexProperty?: TReadOnlyProperty<number> | null;
+  numberOfChallengesProperty?: TReadOnlyProperty<number> | null;
+  levelProperty?: TReadOnlyProperty<number> | null;
+  elapsedTimeProperty?: TReadOnlyProperty<number> | null;
+  timerEnabledProperty?: TReadOnlyProperty<boolean> | null;
 
   // things that can be hidden
   levelVisible?: boolean;
@@ -76,7 +76,7 @@ export default class FiniteStatusBar extends StatusBar {
    * @param scoreProperty
    * @param providedOptions
    */
-  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: TProperty<Bounds2>, scoreProperty: TProperty<number>,
+  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, scoreProperty: TProperty<number>,
                       providedOptions?: FiniteStatusBarOptions ) {
 
     const options = optionize<FiniteStatusBarOptions,
