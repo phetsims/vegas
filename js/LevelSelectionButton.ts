@@ -45,7 +45,7 @@ type SelfOptions = {
   iconToScoreDisplayYSpace?: number; // vertical space between icon and score display
 
   // best time (optional)
-  bestTimeProperty?: TProperty<number> | null; // best time in seconds, null if no best time
+  bestTimeProperty?: TProperty<number | null> | null; // best time in seconds, null if no best time
   bestTimeVisibleProperty?: TProperty<boolean> | null; // controls visibility of best time, null if no best time
   bestTimeFill?: TColor;
   bestTimeFont?: Font;
@@ -154,7 +154,7 @@ export default class LevelSelectionButton extends RectangularPushButton {
     super( options );
 
     // Variables that are set if options.bestTimeProperty is specified.
-    let bestTimeListener: ( ( bestTime: number ) => void ) | null = null;
+    let bestTimeListener: ( ( bestTime: number | null ) => void ) | null = null;
     let bestTimeVisibleListener: ( ( visible: boolean ) => void ) | null = null;
 
     // Best time decoration (optional), centered below the button, does not move when button is pressed
@@ -169,9 +169,11 @@ export default class LevelSelectionButton extends RectangularPushButton {
       bestTimeNode.top = this.bottom + options.bestTimeYSpacing;
       this.addChild( bestTimeNode );
 
-      bestTimeListener = ( bestTime: number ) => {
-        bestTimeNode.text = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
-        bestTimeNode.centerX = centerX;
+      bestTimeListener = ( bestTime: number | null ) => {
+        if ( bestTime !== null ) {
+          bestTimeNode.text = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
+          bestTimeNode.centerX = centerX;
+        }
       };
       options.bestTimeProperty.link( bestTimeListener );
 
