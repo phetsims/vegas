@@ -53,7 +53,7 @@ export default class ElapsedTimeNode extends HBox {
 
     // Update the time display.
     const elapsedTimeListener = ( elapsedTime: number ) => {
-      timeValue.text = GameTimer.formatTime( elapsedTime );
+      timeValue.string = GameTimer.formatTime( elapsedTime );
     };
     elapsedTimeProperty.link( elapsedTimeListener );
 

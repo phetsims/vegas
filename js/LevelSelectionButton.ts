@@ -171,7 +171,7 @@ export default class LevelSelectionButton extends RectangularPushButton {
 
       bestTimeListener = ( bestTime: number | null ) => {
         if ( bestTime !== null ) {
-          bestTimeNode.text = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
+          bestTimeNode.string = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
           bestTimeNode.centerX = centerX;
         }
       };
