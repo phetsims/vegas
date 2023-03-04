@@ -11,6 +11,7 @@ import DerivedProperty from '../../axon/js/DerivedProperty.js';
 import Property from '../../axon/js/Property.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
+import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import { Font, Node, RichText, TColor, Text, VBox } from '../../scenery/js/imports.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
@@ -67,7 +68,7 @@ export default class LevelCompletedNode extends Panel {
       titleFont: DEFAULT_TITLE_FONT,
       infoFont: DEFAULT_INFO_FONT,
       buttonFont: DEFAULT_BUTTON_FONT,
-      buttonFill: 'rgb( 255, 255, 0 )',
+      buttonFill: PhetColorScheme.BUTTON_YELLOW,
       starDiameter: 62,
       contentMaxWidth: null,
 
