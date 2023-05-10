@@ -20,7 +20,12 @@
       "supportsSound": true,
       "supportsDynamicLocale": true
     },
-    "supportsOutputJS": true
+    "supportsOutputJS": true,
+    "screenNameKeys": [
+      "VEGAS/screen.components",
+      "VEGAS/screen.finiteChallenges",
+      "VEGAS/screen.infiniteChallenges"
+    ]
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js",

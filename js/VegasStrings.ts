@@ -12,6 +12,11 @@ type StringsType = {
   'vegas': {
     'titleStringProperty': LinkableProperty<string>;
   };
+  'screen': {
+    'componentsStringProperty': LinkableProperty<string>;
+    'finiteChallengesStringProperty': LinkableProperty<string>;
+    'infiniteChallengesStringProperty': LinkableProperty<string>;
+  };
   'pattern': {
     '0challenge': {
       '1maxStringProperty': LinkableProperty<string>;

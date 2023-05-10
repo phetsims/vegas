@@ -40,7 +40,7 @@ simLauncher.launch( () => {
     new Screen(
       createEmptyModel,
       () => new ComponentsScreenView(), {
-        name: new Property( 'Components' ),
+        name: VegasStrings.screen.componentsStringProperty,
         backgroundColorProperty: new Property( 'white' ),
         tandem: Tandem.OPT_OUT
       } ),
@@ -48,7 +48,7 @@ simLauncher.launch( () => {
     new Screen(
       createEmptyModel,
       () => new FiniteChallengesScreenView(), {
-        name: new Property( 'Finite Challenges' ),
+        name: VegasStrings.screen.finiteChallengesStringProperty,
         backgroundColorProperty: new Property( 'white' ),
         tandem: Tandem.OPT_OUT
       } ),
@@ -56,7 +56,7 @@ simLauncher.launch( () => {
     new Screen(
       createEmptyModel,
       () => new InfiniteChallengesScreenView(), {
-        name: new Property( 'Infinite Challenges' ),
+        name: VegasStrings.screen.infiniteChallengesStringProperty,
         backgroundColorProperty: new Property( 'white' ),
         tandem: Tandem.OPT_OUT
       } )
