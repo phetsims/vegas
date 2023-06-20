@@ -5,64 +5,64 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
-import LinkableProperty from '../../axon/js/LinkableProperty.js';
+import type LocalizedStringProperty from '../../chipper/js/LocalizedStringProperty.js';
 import vegas from './vegas.js';
 
 type StringsType = {
   'vegas': {
-    'titleStringProperty': LinkableProperty<string>;
+    'titleStringProperty': LocalizedStringProperty;
   };
   'screen': {
-    'componentsStringProperty': LinkableProperty<string>;
-    'finiteChallengesStringProperty': LinkableProperty<string>;
-    'infiniteChallengesStringProperty': LinkableProperty<string>;
+    'componentsStringProperty': LocalizedStringProperty;
+    'finiteChallengesStringProperty': LocalizedStringProperty;
+    'infiniteChallengesStringProperty': LocalizedStringProperty;
   };
   'pattern': {
     '0challenge': {
-      '1maxStringProperty': LinkableProperty<string>;
+      '1maxStringProperty': LocalizedStringProperty;
     };
     '0hours': {
       '1minutes': {
-        '2secondsStringProperty': LinkableProperty<string>;
+        '2secondsStringProperty': LocalizedStringProperty;
       }
     };
     '0minutes': {
-      '1secondsStringProperty': LinkableProperty<string>;
+      '1secondsStringProperty': LocalizedStringProperty;
     };
-    '0yourBestStringProperty': LinkableProperty<string>;
+    '0yourBestStringProperty': LocalizedStringProperty;
     'score': {
-      'numberStringProperty': LinkableProperty<string>;
+      'numberStringProperty': LocalizedStringProperty;
     }
   };
-  'keepTryingStringProperty': LinkableProperty<string>;
-  'goodStringProperty': LinkableProperty<string>;
-  'greatStringProperty': LinkableProperty<string>;
-  'excellentStringProperty': LinkableProperty<string>;
-  'yourNewBestStringProperty': LinkableProperty<string>;
-  'continueStringProperty': LinkableProperty<string>;
+  'keepTryingStringProperty': LocalizedStringProperty;
+  'goodStringProperty': LocalizedStringProperty;
+  'greatStringProperty': LocalizedStringProperty;
+  'excellentStringProperty': LocalizedStringProperty;
+  'yourNewBestStringProperty': LocalizedStringProperty;
+  'continueStringProperty': LocalizedStringProperty;
   'label': {
-    'levelStringProperty': LinkableProperty<string>;
-    'scorePatternStringProperty': LinkableProperty<string>;
-    'timeStringProperty': LinkableProperty<string>;
+    'levelStringProperty': LocalizedStringProperty;
+    'scorePatternStringProperty': LocalizedStringProperty;
+    'timeStringProperty': LocalizedStringProperty;
     'score': {
-      'maxStringProperty': LinkableProperty<string>;
+      'maxStringProperty': LocalizedStringProperty;
     }
   };
-  'checkStringProperty': LinkableProperty<string>;
-  'nextStringProperty': LinkableProperty<string>;
+  'checkStringProperty': LocalizedStringProperty;
+  'nextStringProperty': LocalizedStringProperty;
   'button': {
-    'newGameStringProperty': LinkableProperty<string>;
+    'newGameStringProperty': LocalizedStringProperty;
   };
-  'showAnswerStringProperty': LinkableProperty<string>;
-  'tryAgainStringProperty': LinkableProperty<string>;
-  'selectLevelStringProperty': LinkableProperty<string>;
-  'startOverStringProperty': LinkableProperty<string>;
-  'keepGoingStringProperty': LinkableProperty<string>;
-  'newLevelStringProperty': LinkableProperty<string>;
-  'scoreStringProperty': LinkableProperty<string>;
-  'doneStringProperty': LinkableProperty<string>;
-  'youCompletedAllLevelsStringProperty': LinkableProperty<string>;
-  'chooseYourLevelStringProperty': LinkableProperty<string>;
+  'showAnswerStringProperty': LocalizedStringProperty;
+  'tryAgainStringProperty': LocalizedStringProperty;
+  'selectLevelStringProperty': LocalizedStringProperty;
+  'startOverStringProperty': LocalizedStringProperty;
+  'keepGoingStringProperty': LocalizedStringProperty;
+  'newLevelStringProperty': LocalizedStringProperty;
+  'scoreStringProperty': LocalizedStringProperty;
+  'doneStringProperty': LocalizedStringProperty;
+  'youCompletedAllLevelsStringProperty': LocalizedStringProperty;
+  'chooseYourLevelStringProperty': LocalizedStringProperty;
 };
 
 const VegasStrings = getStringModule( 'VEGAS' ) as StringsType;
