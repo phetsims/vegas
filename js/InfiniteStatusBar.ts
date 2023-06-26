@@ -17,7 +17,6 @@ import BackButton from '../../scenery-phet/js/buttons/BackButton.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import { HBox, Node } from '../../scenery/js/imports.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
-import Tandem from '../../tandem/js/Tandem.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
 
@@ -54,10 +53,7 @@ export default class InfiniteStatusBar extends StatusBar {
       xMargin: 20,
       yMargin: 10,
       spacing: 10,
-      createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty ),
-
-      // StatusBarOptions
-      tandem: Tandem.OPTIONAL
+      createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty )
     }, providedOptions );
 
     // button that typically takes us back to the level-selection UI
@@ -65,7 +61,7 @@ export default class InfiniteStatusBar extends StatusBar {
       listener: options.backButtonListener,
       xMargin: 8,
       yMargin: 10,
-      tandem: options.tandem.createTandem( 'backButton' )
+      tandem: options.tandem?.createTandem( 'backButton' )
     } );
 
     // Nodes on the left end of the bar

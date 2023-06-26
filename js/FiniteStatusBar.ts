@@ -19,7 +19,6 @@ import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import { Font, HBox, Node, Rectangle, TColor, Text, TextOptions } from '../../scenery/js/imports.js';
 import TextPushButton, { TextPushButtonOptions } from '../../sun/js/buttons/TextPushButton.js';
-import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import vegas from './vegas.js';
@@ -103,10 +102,7 @@ export default class FiniteStatusBar extends StatusBar {
       xMargin: 20,
       yMargin: 10,
       barFill: null,
-      barStroke: null,
-
-      // StatusBarOptions
-      tandem: Tandem.OPTIONAL
+      barStroke: null
     }, providedOptions );
 
     // nested options for 'Start Over' button
@@ -117,7 +113,7 @@ export default class FiniteStatusBar extends StatusBar {
       xMargin: 10,
       yMargin: 8,
       listener: _.noop,
-      tandem: options.tandem.createTandem( 'startOverButton' ),
+      tandem: options.tandem?.createTandem( 'startOverButton' ),
       maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ) // use 20% of available width
     }, options.startOverButtonOptions );
 
@@ -156,7 +152,7 @@ export default class FiniteStatusBar extends StatusBar {
       );
 
       levelText = new Text( levelStringProperty, combineOptions<TextOptions>( {
-        tandem: options.tandem.createTandem( 'levelText' )
+        tandem: options.tandem?.createTandem( 'levelText' )
       }, options.levelTextOptions ) );
       leftChildren.push( levelText );
     }
@@ -172,7 +168,7 @@ export default class FiniteStatusBar extends StatusBar {
       );
 
       challengeNumberText = new Text( challengeNumberStringProperty, combineOptions<TextOptions>( {
-        tandem: options.tandem.createTandem( 'challengeNumberText' )
+        tandem: options.tandem?.createTandem( 'challengeNumberText' )
       }, options.challengeTextOptions ) );
       leftChildren.push( challengeNumberText );
     }
