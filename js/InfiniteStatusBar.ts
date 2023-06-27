@@ -1,4 +1,4 @@
-// Copyright 2018-2022, University of Colorado Boulder
+// Copyright 2018-2023, University of Colorado Boulder
 
 /**
  * InfiniteStatusBar is the status bar for games that have an infinite (open-ended) number of challenges per level.
