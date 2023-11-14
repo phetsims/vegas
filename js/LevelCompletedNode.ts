@@ -146,7 +146,9 @@ export default class LevelCompletedNode extends Panel {
       // Time: MM:SS
       const elapsedTimeStringProperty = new DerivedProperty(
         [ VegasStrings.label.timeStringProperty ],
-        pattern => StringUtils.format( pattern, GameTimer.formatTime( elapsedTime ) )
+        pattern => StringUtils.format( pattern, GameTimer.formatTime( elapsedTime ) ), {
+          accessNonDependencies: true
+        }
       );
 
       let timeStringProperty;
