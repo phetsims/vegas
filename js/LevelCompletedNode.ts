@@ -147,7 +147,7 @@ export default class LevelCompletedNode extends Panel {
       const elapsedTimeStringProperty = new DerivedProperty(
         [ VegasStrings.label.timeStringProperty ],
         pattern => StringUtils.format( pattern, GameTimer.formatTime( elapsedTime ) ), {
-          accessNonDependencies: true
+          accessNonDependencies: true //TODO https://github.com/phetsims/axon/issues/441
         }
       );
 
