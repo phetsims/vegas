@@ -20,8 +20,8 @@
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
-import { AlignBox, AlignGroup, FlowBox, FlowBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
-import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
+import { FlowBox, FlowBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
+import LevelSelectionButton, { DEFAULT_BUTTON_DIMENSION, LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import TProperty from '../../axon/js/TProperty.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
@@ -40,14 +40,14 @@ export type LevelSelectionButtonGroupItem = {
 
   // Options for the button. These will override LevelSelectionButtonGroupOptions.levelSelectionButtonOptions.
   // Setting tandem is the responsibility of the group, so it is omitted here.
-  options?: StrictOmit<LevelSelectionButtonOptions, 'tandem'>;
+  options?: StrictOmit<LevelSelectionButtonOptions, 'tandem' | 'buttonHeight' | 'buttonWidth'>;
 };
 
 type SelfOptions = {
 
   // Options for all LevelSelectionButton instances in the group.
   // These can be overridden for specific button(s) via LevelSelectionButtonGroupItem.options.
-  levelSelectionButtonOptions?: StrictOmit<LevelSelectionButtonOptions, 'tandem'>;
+  levelSelectionButtonOptions?: StrictOmit<LevelSelectionButtonOptions, 'tandem' | 'buttonHeight' | 'buttonWidth'>;
 
   // Options for the default layout, which is a FlowBox. Ignored if createLayoutNode is provided.
   flowBoxOptions?: StrictOmit<FlowBoxOptions, 'children'>;
@@ -60,6 +60,9 @@ type SelfOptions = {
   // query parameter. Set this to the value of the gameLevels query parameter, if supported by your sim.
   // See getGameLevelsSchema.ts.
   gameLevels?: number[];
+
+  groupButtonHeight?: number;
+  groupButtonWidth?: number;
 };
 
 export type LevelSelectionButtonGroupOptions = SelfOptions & StrictOmit<NodeOptions, 'children'> & PickRequired<NodeOptions, 'tandem'>;
@@ -79,7 +82,8 @@ export default class LevelSelectionButtonGroup extends Node {
 
     const options = optionize<LevelSelectionButtonGroupOptions,
       StrictOmit<SelfOptions, 'createLayoutNode' | 'gameLevels' | 'levelSelectionButtonOptions'>, NodeOptions>()( {
-
+      groupButtonHeight: DEFAULT_BUTTON_DIMENSION,
+      groupButtonWidth: DEFAULT_BUTTON_DIMENSION,
       // The default layout is a single row of buttons.
       flowBoxOptions: {
         orientation: 'horizontal',
@@ -88,11 +92,6 @@ export default class LevelSelectionButtonGroup extends Node {
       // @ts-expect-error This default is provided for JavaScript simulations.
       tandem: Tandem.REQUIRED
     }, providedOptions );
-
-    // All icons will have the same effective size.
-    const alignBoxOptions = {
-      group: new AlignGroup()
-    };
 
     // Create the LevelSelectionButton instances.
     const buttons = items.map( ( item, index ) => {
@@ -103,10 +102,13 @@ export default class LevelSelectionButtonGroup extends Node {
         tandem = options.tandem.createTandem( tandemName );
       }
 
-      return new LevelSelectionButton( new AlignBox( item.icon, alignBoxOptions ), item.scoreProperty,
-        combineOptions<LevelSelectionButtonOptions>( {
-          tandem: tandem
-        }, options.levelSelectionButtonOptions, item.options ) );
+      const buttonOptions = combineOptions<LevelSelectionButtonOptions>( {
+        buttonHeight: options.groupButtonHeight,
+        buttonWidth: options.groupButtonWidth,
+        tandem: tandem
+      }, options.levelSelectionButtonOptions, item.options );
+
+      return new LevelSelectionButton( item.icon, item.scoreProperty, buttonOptions );
     } );
 
     // Hide buttons for levels that are not included in gameLevels.

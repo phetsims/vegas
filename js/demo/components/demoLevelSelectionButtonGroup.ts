@@ -85,13 +85,13 @@ class SingleRowButtonGroup extends LevelSelectionButtonGroup {
     super( items, {
       levelSelectionButtonOptions: {
         baseColor: 'pink',
-        buttonWidth: 100,
-        buttonHeight: 100,
         bestTimeFont: new PhetFont( 18 )
       },
       flowBoxOptions: {
         spacing: 30
       },
+      groupButtonHeight: 100,
+      groupButtonWidth: 100,
       tandem: Tandem.OPT_OUT
     } );
   }
@@ -142,8 +142,6 @@ class MultiRowButtonGroup extends LevelSelectionButtonGroup {
     super( items, {
       levelSelectionButtonOptions: {
         baseColor: 'lightGreen',
-        buttonWidth: buttonWidth,
-        buttonHeight: buttonHeight,
         lineWidth: buttonLineWidth,
         bestTimeFont: new PhetFont( 18 )
       },
@@ -154,6 +152,8 @@ class MultiRowButtonGroup extends LevelSelectionButtonGroup {
         wrap: true, // start a new row when preferredWidth is reached
         justify: 'center' // horizontal justification
       },
+      groupButtonHeight: buttonHeight,
+      groupButtonWidth: buttonWidth,
       tandem: Tandem.OPT_OUT
     } );
   }
@@ -188,10 +188,10 @@ class XButtonGroup extends LevelSelectionButtonGroup {
 
     super( items, {
       levelSelectionButtonOptions: {
-        baseColor: 'orange',
-        buttonWidth: 75,
-        buttonHeight: 75
+        baseColor: 'orange'
       },
+      groupButtonWidth: 75,
+      groupButtonHeight: 75,
 
       // Create a custom layout, not possible via the default FlowBox and flowBoxOptions.
       createLayoutNode: ( buttons: LevelSelectionButton[] ) => {

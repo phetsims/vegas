@@ -58,6 +58,7 @@ type SelfOptions = {
 
 export type LevelSelectionButtonOptions = SelfOptions & StrictOmit<RectangularPushButtonOptions, 'content'>;
 
+export const DEFAULT_BUTTON_DIMENSION = 150;
 export default class LevelSelectionButton extends RectangularPushButton {
 
   private readonly disposeLevelSelectionButton: () => void;
