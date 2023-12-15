@@ -15,20 +15,17 @@ import TProperty from '../../axon/js/TProperty.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { Font, TColor, Node, Rectangle, Text } from '../../scenery/js/imports.js';
+import { Node, Rectangle } from '../../scenery/js/imports.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../sun/js/buttons/RectangularPushButton.js';
 import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
 import soundConstants from '../../tambo/js/soundConstants.js';
 import soundManager from '../../tambo/js/soundManager.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import levelSelectionButton_mp3 from '../sounds/levelSelectionButton_mp3.js';
-import GameTimer from './GameTimer.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 
 // constants
-const DEFAULT_BEST_TIME_FONT = new PhetFont( 24 );
 const SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
 
 type SelfOptions = {
@@ -43,13 +40,6 @@ type SelfOptions = {
   scoreDisplayMinXMargin?: number; // horizontal margin between scoreDisplay and its background
   scoreDisplayMinYMargin?: number;  // vertical margin between scoreDisplay and its background
   iconToScoreDisplayYSpace?: number; // vertical space between icon and score display
-
-  // best time (optional)
-  bestTimeProperty?: TProperty<number | null> | null; // best time in seconds, null if no best time
-  bestTimeVisibleProperty?: TProperty<boolean> | null; // controls visibility of best time, null if no best time
-  bestTimeFill?: TColor;
-  bestTimeFont?: Font;
-  bestTimeYSpacing?: number;  // vertical space between drop shadow and best time
 
   // Configures the soundPlayer for a specific game level. Note that this assumes zero-based indexing for game level,
   // which is often not the case. This option is ignored if RectangularPushButtonOptions.soundPlayer is provided.
@@ -80,11 +70,6 @@ export default class LevelSelectionButton extends RectangularPushButton {
       scoreDisplayMinXMargin: 10,
       scoreDisplayMinYMargin: 5,
       iconToScoreDisplayYSpace: 10,
-      bestTimeProperty: null,
-      bestTimeVisibleProperty: null,
-      bestTimeFill: 'black',
-      bestTimeFont: DEFAULT_BEST_TIME_FONT,
-      bestTimeYSpacing: 10,
 
       // RectangularPushButton options
       cornerRadius: 10,
@@ -154,49 +139,8 @@ export default class LevelSelectionButton extends RectangularPushButton {
 
     super( options );
 
-    // Variables that are set if options.bestTimeProperty is specified.
-    let bestTimeListener: ( ( bestTime: number | null ) => void ) | null = null;
-    let bestTimeVisibleListener: ( ( visible: boolean ) => void ) | null = null;
-
-    // Best time decoration (optional), centered below the button, does not move when button is pressed
-    if ( options.bestTimeProperty ) {
-
-      const bestTimeNode = new Text( '', {
-        font: options.bestTimeFont,
-        fill: options.bestTimeFill,
-        maxWidth: this.width // constrain to width of the push button
-      } );
-      const centerX = this.centerX;
-      bestTimeNode.top = this.bottom + options.bestTimeYSpacing;
-      this.addChild( bestTimeNode );
-
-      bestTimeListener = ( bestTime: number | null ) => {
-        if ( bestTime !== null ) {
-          bestTimeNode.string = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
-          bestTimeNode.centerX = centerX;
-        }
-      };
-      options.bestTimeProperty.link( bestTimeListener );
-
-      if ( options.bestTimeVisibleProperty ) {
-        bestTimeVisibleListener = ( visible: boolean ) => {
-          bestTimeNode.visible = visible;
-        };
-        options.bestTimeVisibleProperty.link( bestTimeVisibleListener );
-      }
-    }
-
     this.disposeLevelSelectionButton = () => {
-
       scoreDisplay.dispose();
-
-      if ( options.bestTimeProperty && bestTimeListener && options.bestTimeProperty.hasListener( bestTimeListener ) ) {
-        options.bestTimeProperty.unlink( bestTimeListener );
-      }
-
-      if ( options.bestTimeVisibleProperty && bestTimeVisibleListener && options.bestTimeVisibleProperty.hasListener( bestTimeVisibleListener ) ) {
-        options.bestTimeVisibleProperty.unlink( bestTimeVisibleListener );
-      }
     };
   }
 

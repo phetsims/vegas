@@ -69,8 +69,6 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ): Node 
   const buttonWithLabeledNumber = new LevelSelectionButton( buttonIcon, scoreProperty, {
     createScoreDisplay: scoreProperty => new ScoreDisplayLabeledNumber( scoreProperty ),
     listener: () => console.log( 'level start' ),
-    bestTimeProperty: bestTimeProperty,
-    bestTimeVisibleProperty: bestTimeVisibleProperty,
     soundPlayerIndex: 3
   } );
 

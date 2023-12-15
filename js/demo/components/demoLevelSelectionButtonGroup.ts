@@ -13,7 +13,6 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../../LevelSelectionButtonGroup.js';
 import ScoreDisplayStars from '../../ScoreDisplayStars.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import TProperty from '../../../../axon/js/TProperty.js';
 import LevelSelectionButton from '../../LevelSelectionButton.js';
 import { DemoLevelSelectionButtonControlPanel } from './demoLevelSelectionButton.js';
 
@@ -31,7 +30,7 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ): 
   const bestTimeVisibleProperty = new BooleanProperty( true );
 
   // A few examples of LevelSelectionButtonGroup, all wired to the above Properties
-  const singleRowButtonGroup = new SingleRowButtonGroup( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
+  const singleRowButtonGroup = new SingleRowButtonGroup( scoreProperty );
   const multiRowButtonGroup = new MultiRowButtonGroup( scoreProperty );
   const xButtonGroup = new XButtonGroup( scoreProperty );
 
@@ -59,7 +58,7 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ): 
  */
 class SingleRowButtonGroup extends LevelSelectionButtonGroup {
 
-  public constructor( scoreProperty: NumberProperty, bestTimeProperty: TProperty<number>, bestTimeVisibleProperty: TProperty<boolean> ) {
+  public constructor( scoreProperty: NumberProperty ) {
 
     const numberOfLevels = 3;
 
@@ -75,17 +74,14 @@ class SingleRowButtonGroup extends LevelSelectionButtonGroup {
         options: {
           createScoreDisplay: () => new ScoreDisplayStars( scoreProperty, {
             perfectScore: scoreProperty.range.max
-          } ),
-          bestTimeProperty: bestTimeProperty,
-          bestTimeVisibleProperty: bestTimeVisibleProperty
+          } )
         }
       } );
     }
 
     super( items, {
       levelSelectionButtonOptions: {
-        baseColor: 'pink',
-        bestTimeFont: new PhetFont( 18 )
+        baseColor: 'pink'
       },
       flowBoxOptions: {
         spacing: 30
@@ -142,8 +138,7 @@ class MultiRowButtonGroup extends LevelSelectionButtonGroup {
     super( items, {
       levelSelectionButtonOptions: {
         baseColor: 'lightGreen',
-        lineWidth: buttonLineWidth,
-        bestTimeFont: new PhetFont( 18 )
+        lineWidth: buttonLineWidth
       },
       flowBoxOptions: {
         spacing: xSpacing, // horizontal spacing
