@@ -9,12 +9,11 @@ import Range from '../../../../dot/js/Range.js';
 import { GridBox, HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../../LevelSelectionButtonGroup.js';
 import ScoreDisplayStars from '../../ScoreDisplayStars.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import LevelSelectionButton from '../../LevelSelectionButton.js';
-import { DemoLevelSelectionButtonControlPanel } from './demoLevelSelectionButton.js';
+import HSlider from '../../../../sun/js/HSlider.js';
 
 export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ): Node {
 
@@ -23,19 +22,18 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ): 
     range: new Range( 0, 1000 )
   } );
 
-  const bestTimeProperty = new NumberProperty( 0, {
-    range: new Range( 0, 10000 )
-  } );
-
-  const bestTimeVisibleProperty = new BooleanProperty( true );
-
-  // A few examples of LevelSelectionButtonGroup, all wired to the above Properties
+  // A few examples of LevelSelectionButtonGroup, all wired to scoreProperty
   const singleRowButtonGroup = new SingleRowButtonGroup( scoreProperty );
   const multiRowButtonGroup = new MultiRowButtonGroup( scoreProperty );
   const xButtonGroup = new XButtonGroup( scoreProperty );
 
-  // Controls that modify the above Properties
-  const controlPanel = new DemoLevelSelectionButtonControlPanel( scoreProperty, bestTimeProperty, bestTimeVisibleProperty );
+  const scoreSlider = new HBox( {
+    spacing: 10,
+    children: [
+      new Text( 'Score: ', { font: new PhetFont( 20 ) } ),
+      new HSlider( scoreProperty, scoreProperty.range )
+    ]
+  } );
 
   return new HBox( {
     children: [
@@ -45,7 +43,7 @@ export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ): 
       } ),
       new VBox( {
         spacing: 50,
-        children: [ xButtonGroup, controlPanel ]
+        children: [ xButtonGroup, scoreSlider ]
       } )
     ],
     spacing: 100,
