@@ -18,7 +18,8 @@
     ],
     "simFeatures": {
       "supportsSound": true,
-      "supportsDynamicLocale": true
+      "supportsDynamicLocale": true,
+      "supportsInteractiveDescription": true
     },
     "supportsOutputJS": true,
     "screenNameKeys": [
