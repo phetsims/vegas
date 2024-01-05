@@ -1,5 +1,9 @@
 // Copyright 2022, University of Colorado Boulder
 
+/**
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ */
+
 import vegas from './vegas.js';
 
 import './AllLevelsCompletedNode.js';
