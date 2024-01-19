@@ -147,11 +147,14 @@ export default class LevelCompletedNode extends Panel {
     if ( timerEnabled ) {
 
       // Time: MM:SS
-      const elapsedTimeStringProperty = new DerivedProperty(
-        [ VegasStrings.label.timeStringProperty ],
-        pattern => StringUtils.format( pattern, GameTimer.formatTime( elapsedTime ) ), {
-          strictAxonDependencies: false //TODO https://github.com/phetsims/axon/issues/441
-        }
+      const elapsedTimeStringProperty = new DerivedProperty( [
+          VegasStrings.label.timeStringProperty,
+
+          // used by GameTimer.formatTime
+          VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2secondsStringProperty' ],
+          VegasStrings.pattern[ '0minutes' ][ '1secondsStringProperty' ]
+        ],
+        pattern => StringUtils.format( pattern, GameTimer.formatTime( elapsedTime ) )
       );
 
       let timeStringProperty;
