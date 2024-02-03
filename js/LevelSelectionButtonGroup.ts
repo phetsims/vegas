@@ -56,10 +56,10 @@ type SelfOptions = {
   // Use this option if you have a custom layout that cannot be achieved using the default FlowBox.
   createLayoutNode?: ( buttons: LevelSelectionButton[] ) => LayoutNode<NodeLayoutConstraint>;
 
-  // Game levels whose buttons should be visible. Levels are numbered starting from 1, to comply with the gameLevels
-  // query parameter. Set this to the value of the gameLevels query parameter, if supported by your sim.
-  // See getGameLevelsSchema.ts.
-  gameLevels?: number[];
+  // Game levels whose buttons should be visible. Levels are numbered starting from 1.
+  // Set this to the value of the gameLevels query parameter, a required query parameter.
+  // See getGameLevelsSchema.ts and example use in FMWQueryParameters.
+  gameLevels: number[];
 
   groupButtonHeight?: number;
   groupButtonWidth?: number;
@@ -113,12 +113,13 @@ export default class LevelSelectionButtonGroup extends Node {
 
     // Hide buttons for levels that are not included in gameLevels.
     // All buttons must be instantiated so that the PhET-iO API is not changed conditionally.
+    // While options.gameLevels is required, this guard is provided for .js sims that do not comply.
     if ( options.gameLevels ) {
       assert && assert( options.gameLevels.length > 0, 'at least 1 gameLevel must be visible' );
       assert && assert( _.every( options.gameLevels, gameLevel => ( Number.isInteger( gameLevel ) && gameLevel > 0 ) ),
         'gameLevels must be positive integers' );
       buttons.forEach( ( button, index ) => {
-        button.visible = options.gameLevels!.includes( index + 1 );
+        button.visible = options.gameLevels.includes( index + 1 );
       } );
     }
 

@@ -23,8 +23,9 @@ const DEFAULT_DESCRIPTION_TEXT_FONT = new PhetFont( 24 );
 type SelfOptions = {
 
   // Game levels whose descriptions should be visible in the dialog. Levels are numbered starting from 1.
-  // This is typically set to the value of the gameLevels query parameter. See getGameLevelsSchema.ts.
-  gameLevels?: number[];
+  // Set this to the value of the gameLevels query parameter, a required query parameter.
+  // See getGameLevelsSchema.ts and example use in WaveGameInfoDialog.
+  gameLevels: number[];
 
   // Options for the description text nodes
   descriptionTextOptions?: StrictOmit<RichTextOptions, 'tandem'>;
@@ -76,11 +77,12 @@ export default class GameInfoDialog extends Dialog {
 
     // Hide descriptions for levels that are not included in options.gameLevels.
     // We must still create these Nodes so that the PhET-iO API is not changed.
+    // While options.gameLevels is required, this guard is provided for .js sims that do not comply.
     if ( options.gameLevels ) {
       assert && assert( _.every( options.gameLevels, gameLevel => ( Number.isInteger( gameLevel ) && gameLevel > 0 ) ),
         'gameLevels must be positive integers' );
       descriptionNodes.forEach( ( node, index ) => {
-        node.visible = options.gameLevels!.includes( index + 1 );
+        node.visible = options.gameLevels.includes( index + 1 );
       } );
     }
 

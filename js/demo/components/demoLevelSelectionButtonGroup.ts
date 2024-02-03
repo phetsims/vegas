@@ -16,6 +16,10 @@ import ScoreDisplayStars from '../../ScoreDisplayStars.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import LevelSelectionButton from '../../LevelSelectionButton.js';
 import HSlider from '../../../../sun/js/HSlider.js';
+import vegasQueryParameters, { NUMBER_OF_GAME_LEVELS } from '../../vegasQueryParameters.js';
+
+const BUTTON_WIDTH = 75;
+const BUTTON_HEIGHT = 75;
 
 export default function demoLevelSelectionButtonGroup( layoutBounds: Bounds2 ): Node {
 
@@ -60,12 +64,10 @@ class SingleRowButtonGroup extends LevelSelectionButtonGroup {
 
   public constructor( scoreProperty: NumberProperty ) {
 
-    const numberOfLevels = 3;
-
     // Describe the buttons. For demonstration purposes, all buttons are associated with the same scoreProperty and
     // bestTimeProperty. In a real game, each level would have its own scoreProperty and bestTimeProperty.
     const items: LevelSelectionButtonGroupItem[] = [];
-    for ( let level = 1; level <= numberOfLevels; level++ ) {
+    for ( let level = 1; level <= NUMBER_OF_GAME_LEVELS; level++ ) {
       items.push( {
 
         // The button icon is simply its level number.
@@ -86,8 +88,9 @@ class SingleRowButtonGroup extends LevelSelectionButtonGroup {
       flowBoxOptions: {
         spacing: 30
       },
-      groupButtonHeight: 100,
-      groupButtonWidth: 100,
+      groupButtonWidth: BUTTON_WIDTH,
+      groupButtonHeight: BUTTON_HEIGHT,
+      gameLevels: vegasQueryParameters.gameLevels,
       tandem: Tandem.OPT_OUT
     } );
   }
@@ -101,12 +104,10 @@ class MultiRowButtonGroup extends LevelSelectionButtonGroup {
 
   public constructor( scoreProperty: NumberProperty ) {
 
-    const numberOfLevels = 5;
-
     // Describe the buttons. For demonstration purposes, all buttons are associated with the same scoreProperty and
     // bestTimeProperty. In a real game, each level would have its own scoreProperty and bestTimeProperty.
     const items: LevelSelectionButtonGroupItem[] = [];
-    for ( let level = 1; level <= numberOfLevels; level++ ) {
+    for ( let level = 1; level <= NUMBER_OF_GAME_LEVELS; level++ ) {
       items.push( {
 
         // The button icon is simply its level number.
@@ -122,8 +123,6 @@ class MultiRowButtonGroup extends LevelSelectionButtonGroup {
 
     // constants related to the buttons and their layout
     const buttonsPerRow = 3;
-    const buttonWidth = 100;
-    const buttonHeight = 100;
     const buttonLineWidth = 3;
     const xSpacing = 20;
     const ySpacing = 20;
@@ -131,7 +130,7 @@ class MultiRowButtonGroup extends LevelSelectionButtonGroup {
     // preferredWidth is used to limit the width of the FlowBox, so that it displays a maximum number of buttons
     // per row. When combined with wrap:true, this causes buttons to wrap to a new line.
     // It would also be acceptable to set this value empirically.
-    const preferredWidth = ( buttonsPerRow * buttonWidth ) +  // width of the buttons
+    const preferredWidth = ( buttonsPerRow * BUTTON_WIDTH ) +  // width of the buttons
                            ( ( buttonsPerRow - 1 ) * xSpacing ) + // space between the buttons
                            ( 2 * buttonsPerRow * buttonLineWidth ); // lineWidth of the buttons
 
@@ -147,8 +146,9 @@ class MultiRowButtonGroup extends LevelSelectionButtonGroup {
         wrap: true, // start a new row when preferredWidth is reached
         justify: 'center' // horizontal justification
       },
-      groupButtonHeight: buttonHeight,
-      groupButtonWidth: buttonWidth,
+      groupButtonWidth: BUTTON_WIDTH,
+      groupButtonHeight: BUTTON_HEIGHT,
+      gameLevels: vegasQueryParameters.gameLevels,
       tandem: Tandem.OPT_OUT
     } );
   }
@@ -162,12 +162,10 @@ class XButtonGroup extends LevelSelectionButtonGroup {
 
   public constructor( scoreProperty: NumberProperty ) {
 
-    const numberOfLevels = 5;
-
     // Describe the buttons. For demonstration purposes, all buttons are associated with the same scoreProperty and
     // bestTimeProperty. In a real game, each level would have its own scoreProperty and bestTimeProperty.
     const items: LevelSelectionButtonGroupItem[] = [];
-    for ( let level = 1; level <= numberOfLevels; level++ ) {
+    for ( let level = 1; level <= NUMBER_OF_GAME_LEVELS; level++ ) {
       items.push( {
 
         // The button icon is simply its level number.
@@ -185,8 +183,8 @@ class XButtonGroup extends LevelSelectionButtonGroup {
       levelSelectionButtonOptions: {
         baseColor: 'orange'
       },
-      groupButtonWidth: 75,
-      groupButtonHeight: 75,
+      groupButtonWidth: BUTTON_WIDTH,
+      groupButtonHeight: BUTTON_HEIGHT,
 
       // Create a custom layout, not possible via the default FlowBox and flowBoxOptions.
       createLayoutNode: ( buttons: LevelSelectionButton[] ) => {
@@ -204,6 +202,7 @@ class XButtonGroup extends LevelSelectionButtonGroup {
           ]
         } );
       },
+      gameLevels: vegasQueryParameters.gameLevels,
       tandem: Tandem.OPT_OUT
     } );
   }

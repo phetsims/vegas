@@ -11,17 +11,17 @@ import { Node, Text } from '../../../../scenery/js/imports.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import GameInfoDialog from '../../GameInfoDialog.js';
+import vegasQueryParameters, { NUMBER_OF_GAME_LEVELS } from '../../vegasQueryParameters.js';
 
 export default function demoGameInfoDialog( layoutBounds: Bounds2 ): Node {
 
-  const levelDescriptions = [
-    'Description of level 1',
-    'Description of level 2',
-    'Description of level 3',
-    'Description of level 4'
-  ];
+  const levelDescriptions: string[] = [];
+  for ( let i = 1; i <= NUMBER_OF_GAME_LEVELS; i++ ) {
+    levelDescriptions.push( `Description of level ${i}` );
+  }
 
   const dialog = new GameInfoDialog( levelDescriptions, {
+    gameLevels: vegasQueryParameters.gameLevels,
     title: new Text( 'Your Title', {
       font: new PhetFont( { size: 30, weight: 'bold' } )
     } ),
