@@ -21,7 +21,7 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import { FlowBox, FlowBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
-import LevelSelectionButton, { DEFAULT_BUTTON_DIMENSION, LevelSelectionButtonOptions } from './LevelSelectionButton.js';
+import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import TProperty from '../../axon/js/TProperty.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
@@ -82,8 +82,6 @@ export default class LevelSelectionButtonGroup extends Node {
 
     const options = optionize<LevelSelectionButtonGroupOptions,
       StrictOmit<SelfOptions, 'createLayoutNode' | 'gameLevels' | 'levelSelectionButtonOptions'>, NodeOptions>()( {
-      groupButtonHeight: DEFAULT_BUTTON_DIMENSION,
-      groupButtonWidth: DEFAULT_BUTTON_DIMENSION,
       // The default layout is a single row of buttons.
       flowBoxOptions: {
         orientation: 'horizontal',
