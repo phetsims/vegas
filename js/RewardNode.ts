@@ -68,7 +68,7 @@ type SelfOptions = {
   // Scale things up for rasterization, then back down for rendering, so they have nice quality on retina displays.
   scaleForResolution?: number;
 
-  // If you pass in a clock {Emitter}, it will drive the animation
+  // If you pass in a stepEmitter {Emitter}, it will drive the animation
   stepEmitter?: TEmitter<[ number ]> | null;
 };
 
@@ -99,7 +99,7 @@ export default class RewardNode extends CanvasNode {
   // Set by initialize, so not readonly.
   private isInitialized: boolean;
 
-  // If you provide RewardNodeOptions.clock, it will call this method to drive animation
+  // If you provide RewardNodeOptions.stepEmitter, it will call this method to drive animation
   private readonly stepEmitterListener: ( dt: number ) => void;
 
   // For PhET-iO brand only: make sure this Node is initialized when state is being set for PhET-iO
