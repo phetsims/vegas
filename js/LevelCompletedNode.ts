@@ -35,7 +35,7 @@ type SelfOptions = {
   buttonFont?: Font;
   buttonFill?: TColor;
   starDiameter?: number;
-  halfStarScores?: Array<number>;
+  useHalfStarScores?: boolean;
   contentMaxWidth?: number | null; // applied as maxWidth to every subcomponent individually, not Panel's content
 };
 
@@ -71,7 +71,7 @@ export default class LevelCompletedNode extends Panel {
       buttonFont: DEFAULT_BUTTON_FONT,
       buttonFill: PhetColorScheme.BUTTON_YELLOW,
       starDiameter: 62,
-      halfStarScores: [],
+      useHalfStarScores: false,
       contentMaxWidth: null,
 
       // PanelOptions
@@ -108,7 +108,7 @@ export default class LevelCompletedNode extends Panel {
     const scoreDisplayStars = new ScoreDisplayStars( new Property( score ), {
       numberOfStars: numberOfStars,
       perfectScore: perfectScore,
-      halfStarScores: options.halfStarScores,
+      useHalfStarScores: options.useHalfStarScores,
       starNodeOptions: {
         starShapeOptions: {
           innerRadius: options.starDiameter / 4,
