@@ -22,7 +22,6 @@ import GameTimer from './GameTimer.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
-import Range from '../../dot/js/Range.js';
 
 const DEFAULT_TITLE_FONT = new PhetFont( { size: 28, weight: 'bold' } );
 const DEFAULT_INFO_FONT = new PhetFont( { size: 22, weight: 'bold' } );
@@ -36,7 +35,6 @@ type SelfOptions = {
   buttonFont?: Font;
   buttonFill?: TColor;
   starDiameter?: number;
-  halfStarScoreRange?: Range | null;
   contentMaxWidth?: number | null; // applied as maxWidth to every subcomponent individually, not Panel's content
 };
 
@@ -72,7 +70,6 @@ export default class LevelCompletedNode extends Panel {
       buttonFont: DEFAULT_BUTTON_FONT,
       buttonFill: PhetColorScheme.BUTTON_YELLOW,
       starDiameter: 62,
-      halfStarScoreRange: null,
       contentMaxWidth: null,
 
       // PanelOptions
@@ -109,7 +106,6 @@ export default class LevelCompletedNode extends Panel {
     const scoreDisplayStars = new ScoreDisplayStars( new Property( score ), {
       numberOfStars: numberOfStars,
       perfectScore: perfectScore,
-      halfStarScoreRange: options.halfStarScoreRange,
       starNodeOptions: {
         starShapeOptions: {
           innerRadius: options.starDiameter / 4,
