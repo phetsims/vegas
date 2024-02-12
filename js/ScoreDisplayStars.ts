@@ -15,13 +15,14 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
 import { HBox, HBoxOptions } from '../../scenery/js/imports.js';
 import vegas from './vegas.js';
+import Range from '../../dot/js/Range.js';
 
 type SelfOptions = {
   numberOfStars?: number;
   perfectScore?: number;
 
-  // Scores required to fill in the stars in half-star increments.
-  halfStarScores?: Array<number>;
+  // keep the last star at a maximum of half-full while the score is in this score range
+  halfStarScoreRange?: Range | null;
 
   starNodeOptions?: StarNodeOptions;
 };
@@ -39,7 +40,7 @@ export default class ScoreDisplayStars extends HBox {
       // SelfOptions
       numberOfStars: 1,
       perfectScore: 1,
-      halfStarScores: [],
+      halfStarScoreRange: null,
       starNodeOptions: {
         starShapeOptions: {
           outerRadius: 10,
@@ -58,11 +59,6 @@ export default class ScoreDisplayStars extends HBox {
 
     super( options );
 
-    // Return a star node filled to the proportion of the given fill value.
-    const createStarNode = ( fillValue: number ) => {
-      return new StarNode( combineOptions<StarNodeOptions>( { value: fillValue }, options.starNodeOptions ) );
-    };
-
     // Update visibility of filled and half-filled stars based on score.
     const scorePropertyListener = ( score: number ) => {
 
@@ -71,51 +67,24 @@ export default class ScoreDisplayStars extends HBox {
       const children = [];
 
       const proportion = score / perfectScore;
-      let numFilledStars = Math.floor( proportion * numberOfStars );
-      let remainder = proportion * numberOfStars - numFilledStars;
+      const numFilledStars = Math.floor( proportion * numberOfStars );
 
-      // Fill stars in using half-star increments.
-      if ( options.halfStarScores.length !== 0 && numberOfStars === 5 ) {
-
-        // Set the remainder for scores that would have a half-star fill, otherwise, no half-stars (remainder = 0).
-        remainder = 0;
-        const scoreArray = options.halfStarScores;
-        if ( score >= scoreArray[ 0 ] && score < scoreArray[ 1 ] ||
-             score >= scoreArray[ 2 ] && score < scoreArray[ 3 ] ||
-             score >= scoreArray[ 4 ] && score < scoreArray[ 5 ] ||
-             score >= scoreArray[ 6 ] && score < scoreArray[ 7 ] ||
-             score >= scoreArray[ 8 ] && score < scoreArray[ 9 ] ) {
-          remainder = 0.5;
-        }
-
-        // Set the number of filled stars.
-        if ( score >= scoreArray[ 1 ] && score < scoreArray[ 3 ] ) {
-          numFilledStars = 1;
-        }
-        else if ( score >= scoreArray[ 3 ] && score < scoreArray[ 5 ] ) {
-          numFilledStars = 2;
-        }
-        else if ( score >= scoreArray[ 5 ] && score < scoreArray[ 7 ] ) {
-          numFilledStars = 3;
-        }
-        else if ( score >= scoreArray[ 7 ] && score < scoreArray[ 9 ] ) {
-          numFilledStars = 4;
-        }
-        else if ( score === scoreArray[ 9 ] ) {
-          numFilledStars = numberOfStars;
-        }
-      }
-
-      // Fill stars in.
       for ( let i = 0; i < numFilledStars; i++ ) {
-        children.push( createStarNode( 1 ) );
+        children.push( new StarNode( combineOptions<StarNodeOptions>( { value: 1 }, options.starNodeOptions ) ) );
       }
-      if ( remainder > 1E-6 ) {
-        children.push( createStarNode( remainder ) );
+
+      let remainder = proportion * numberOfStars - numFilledStars;
+      const inHalfStarScoreRange = options.halfStarScoreRange && options.halfStarScoreRange.contains( score );
+      if ( inHalfStarScoreRange || remainder > 1E-6 ) {
+        if ( inHalfStarScoreRange ) {
+          remainder = ( ( options.halfStarScoreRange!.min - 1 ) / perfectScore ) * numberOfStars - numFilledStars;
+        }
+        children.push( new StarNode( combineOptions<StarNodeOptions>( { value: remainder }, options.starNodeOptions ) ) );
       }
+
       const numEmptyStars = numberOfStars - children.length;
       for ( let i = 0; i < numEmptyStars; i++ ) {
-        children.push( createStarNode( 0 ) );
+        children.push( new StarNode( combineOptions<StarNodeOptions>( { value: 0 }, options.starNodeOptions ) ) );
       }
 
       this.children = children;
