@@ -15,15 +15,10 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
 import { HBox, HBoxOptions } from '../../scenery/js/imports.js';
 import vegas from './vegas.js';
-import Range from '../../dot/js/Range.js';
 
 type SelfOptions = {
   numberOfStars?: number;
   perfectScore?: number;
-
-  // keep the last star at a maximum of half-full while the score is in this score range
-  halfStarScoreRange?: Range | null;
-
   starNodeOptions?: StarNodeOptions;
 };
 
@@ -40,7 +35,6 @@ export default class ScoreDisplayStars extends HBox {
       // SelfOptions
       numberOfStars: 1,
       perfectScore: 1,
-      halfStarScoreRange: null,
       starNodeOptions: {
         starShapeOptions: {
           outerRadius: 10,
@@ -73,12 +67,8 @@ export default class ScoreDisplayStars extends HBox {
         children.push( new StarNode( combineOptions<StarNodeOptions>( { value: 1 }, options.starNodeOptions ) ) );
       }
 
-      let remainder = proportion * numberOfStars - numFilledStars;
-      const inHalfStarScoreRange = options.halfStarScoreRange && options.halfStarScoreRange.contains( score );
-      if ( inHalfStarScoreRange || remainder > 1E-6 ) {
-        if ( inHalfStarScoreRange ) {
-          remainder = ( ( options.halfStarScoreRange!.min - 1 ) / perfectScore ) * numberOfStars - numFilledStars;
-        }
+      const remainder = proportion * numberOfStars - numFilledStars;
+      if ( remainder > 1E-6 ) {
         children.push( new StarNode( combineOptions<StarNodeOptions>( { value: remainder }, options.starNodeOptions ) ) );
       }
 
