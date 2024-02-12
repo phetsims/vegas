@@ -20,8 +20,8 @@ type SelfOptions = {
   numberOfStars?: number;
   perfectScore?: number;
 
-  // Set this option to true when we want to show score increments through half stars.
-  useHalfStarScores?: boolean;
+  // Scores required to fill in the stars in half-star increments.
+  halfStarScores?: Array<number>;
 
   starNodeOptions?: StarNodeOptions;
 };
@@ -39,7 +39,7 @@ export default class ScoreDisplayStars extends HBox {
       // SelfOptions
       numberOfStars: 1,
       perfectScore: 1,
-      useHalfStarScores: false,
+      halfStarScores: [],
       starNodeOptions: {
         starShapeOptions: {
           outerRadius: 10,
@@ -75,13 +75,35 @@ export default class ScoreDisplayStars extends HBox {
       let remainder = proportion * numberOfStars - numFilledStars;
 
       // Fill stars in using half-star increments.
-      if ( options.useHalfStarScores && remainder !== 0 ) {
-        const numberOfHalves = numberOfStars * 2 - 1;
-        const halfStarValue = perfectScore / numberOfHalves;
-        numFilledStars = this.scoreStarsRound( score / ( halfStarValue * 2 ) );
-        numFilledStars = numFilledStars === numberOfStars && score !== perfectScore ?
-                         numberOfStars - 1 : numFilledStars;
-        remainder = score / ( halfStarValue * 2 ) - numFilledStars > 0 ? 0.5 : 0;
+      if ( options.halfStarScores.length !== 0 && numberOfStars === 5 ) {
+
+        // Set the remainder for scores that would have a half-star fill, otherwise, no half-stars (remainder = 0).
+        remainder = 0;
+        const scoreArray = options.halfStarScores;
+        if ( score >= scoreArray[ 0 ] && score < scoreArray[ 1 ] ||
+             score >= scoreArray[ 2 ] && score < scoreArray[ 3 ] ||
+             score >= scoreArray[ 4 ] && score < scoreArray[ 5 ] ||
+             score >= scoreArray[ 6 ] && score < scoreArray[ 7 ] ||
+             score >= scoreArray[ 8 ] && score < scoreArray[ 9 ] ) {
+          remainder = 0.5;
+        }
+
+        // Set the number of filled stars.
+        if ( score >= scoreArray[ 1 ] && score < scoreArray[ 3 ] ) {
+          numFilledStars = 1;
+        }
+        else if ( score >= scoreArray[ 3 ] && score < scoreArray[ 5 ] ) {
+          numFilledStars = 2;
+        }
+        else if ( score >= scoreArray[ 5 ] && score < scoreArray[ 7 ] ) {
+          numFilledStars = 3;
+        }
+        else if ( score >= scoreArray[ 7 ] && score < scoreArray[ 9 ] ) {
+          numFilledStars = 4;
+        }
+        else if ( score === scoreArray[ 9 ] ) {
+          numFilledStars = numberOfStars;
+        }
       }
 
       // Fill stars in.
@@ -104,30 +126,6 @@ export default class ScoreDisplayStars extends HBox {
       scoreProperty.unlink( scorePropertyListener );
     };
   }
-
-  /**
-   * Custom rounding function that rounds to the nearest integer, but rounds down if the decimal part is exactly 0.5.
-   * We use this to calculate the number of filled stars. A star should remain at half-filled even if the number's tenth
-   * value is 5. Once it crosses that boundary (0.5), we can fill a full star.
-   *
-   * // Examples
-   *   console.log(customRound(0.5));  // Should round to 0
-   *   console.log(customRound(1.5));  // Should round to 1
-   *   console.log(customRound(2.51)); // Should round to 3
-   *   console.log(customRound(2.4));  // Should round to 2
-   */
-  private scoreStarsRound( number: number ): number {
-    const integerPart = Math.floor( number );
-    const decimalPart = number - integerPart;
-
-    if ( decimalPart > 0.5 ) {
-      return Math.ceil( number );
-    }
-    else {
-      return integerPart; // Round down if the decimal part is less than or equal to 0.5
-    }
-  }
-
 
   public override dispose(): void {
     this.disposeScoreDisplayStars();
