@@ -1,7 +1,7 @@
 // Copyright 2022-2024, University of Colorado Boulder
 
 /**
- * Query parameters for the sun demo application.
+ * Query parameters for the vegas demo application.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
