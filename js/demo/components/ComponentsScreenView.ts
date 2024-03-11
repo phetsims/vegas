@@ -8,9 +8,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import vegasQueryParameters from '../../vegasQueryParameters.js';
 import vegas from '../../vegas.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DemosScreenView, { DemosScreenViewOptions } from '../../../../sun/js/demo/DemosScreenView.js';
 import demoGameInfoDialog from './demoGameInfoDialog.js';
 import demoLevelSelectionButton from './demoLevelSelectionButton.js';
@@ -25,11 +24,7 @@ type ComponentsScreenViewOptions = SelfOptions & DemosScreenViewOptions;
 
 export default class ComponentsScreenView extends DemosScreenView {
 
-  public constructor( providedOptions?: ComponentsScreenViewOptions ) {
-
-    const options = optionize<ComponentsScreenViewOptions, SelfOptions, DemosScreenViewOptions>()( {
-      selectedDemoLabel: vegasQueryParameters.component
-    }, providedOptions );
+  public constructor( options?: ComponentsScreenViewOptions ) {
 
     // To add a demo, add an entry here of type DemoItemData.
     const demos = [

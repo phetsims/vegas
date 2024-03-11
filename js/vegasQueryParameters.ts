@@ -15,13 +15,7 @@ export { NUMBER_OF_GAME_LEVELS };
 const vegasQueryParameters = QueryStringMachine.getAll( {
 
   // The levels to show in demoGameInfoDialog.
-  gameLevels: getGameLevelsSchema( NUMBER_OF_GAME_LEVELS ),
-
-  // initial selection on the Components screen, values are the same as the labels on combo box items
-  component: {
-    type: 'string',
-    defaultValue: null
-  }
+  gameLevels: getGameLevelsSchema( NUMBER_OF_GAME_LEVELS )
 } );
 
 vegas.register( 'vegasQueryParameters', vegasQueryParameters );
