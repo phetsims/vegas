@@ -11,7 +11,15 @@ import { Node } from '../../../../scenery/js/imports.js';
 import LevelCompletedNode from '../../LevelCompletedNode.js';
 
 export default function demoLevelCompletedNode( layoutBounds: Bounds2 ): Node {
-  return new LevelCompletedNode( 1, 10, 10, 5, true, 2000, null, true, _.noop, {
-    center: layoutBounds.center
+
+  const levelCompletedNode = new LevelCompletedNode( 1, 10, 10, 5, true, 2000, null, true, _.noop, {
+    contentMaxWidth: 500
   } );
+
+  // LevelCompletedNode has dynamic strings, so requires dynamic layout.
+  levelCompletedNode.boundsProperty.link( () => {
+    levelCompletedNode.center = layoutBounds.center;
+  } );
+
+  return levelCompletedNode;
 }
