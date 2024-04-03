@@ -11,7 +11,9 @@ import { Node } from '../../../../scenery/js/imports.js';
 import AllLevelsCompletedNode from '../../AllLevelsCompletedNode.js';
 
 export default function demoAllLevelsCompletedNode( layoutBounds: Bounds2 ): Node {
-  return new AllLevelsCompletedNode( () => _.noop, {
-    center: layoutBounds.center
+  const allLevelsCompletedNode = new AllLevelsCompletedNode( () => _.noop );
+  allLevelsCompletedNode.boundsProperty.link( () => {
+    allLevelsCompletedNode.center = layoutBounds.center;
   } );
+  return allLevelsCompletedNode;
 }
