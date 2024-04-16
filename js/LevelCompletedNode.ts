@@ -169,7 +169,13 @@ export default class LevelCompletedNode extends Panel {
         // Time: MM:SS
         // (Your Best: MM:SS)
         timeStringProperty = new DerivedProperty(
-          [ elapsedTimeStringProperty, VegasStrings.pattern[ '0yourBestStringProperty' ] ],
+          [ elapsedTimeStringProperty,
+            VegasStrings.pattern[ '0yourBestStringProperty' ],
+
+            // used by GameTimer.formatTime
+            VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2secondsStringProperty' ],
+            VegasStrings.pattern[ '0minutes' ][ '1secondsStringProperty' ]
+          ],
           ( elapsedTime: string, pattern: string ) =>
             `${elapsedTime}<br>${StringUtils.format( pattern, GameTimer.formatTime( bestTimeAtThisLevel ) )}`
         );
