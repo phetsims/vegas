@@ -14,6 +14,8 @@ import vegas from './vegas.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
+import Multilink from '../../axon/js/Multilink.js';
+import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {
   clockIconRadius?: number;
@@ -52,15 +54,18 @@ export default class ElapsedTimeNode extends HBox {
     super( options );
 
     // Update the time display.
-    const elapsedTimeListener = ( elapsedTime: number ) => {
+    const multilink = new Multilink( [
+      elapsedTimeProperty,
+
+      // Dynamic strings used by GameTimer.formatTime
+      VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2secondsStringProperty' ],
+      VegasStrings.pattern[ '0minutes' ][ '1secondsStringProperty' ]
+    ], ( elapsedTime, pattern1, pattern2 ) => {
       timeValue.string = GameTimer.formatTime( elapsedTime );
-    };
-    elapsedTimeProperty.link( elapsedTimeListener );
+    } );
 
     this.disposeElapsedTimeNode = () => {
-      if ( elapsedTimeProperty.hasListener( elapsedTimeListener ) ) {
-        elapsedTimeProperty.unlink( elapsedTimeListener );
-      }
+      multilink.dispose();
     };
   }
 
