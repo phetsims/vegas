@@ -199,8 +199,7 @@ export default class FiniteStatusBar extends StatusBar {
       // see https://github.com/phetsims/vegas/issues/80
       excludeInvisibleChildrenFromBounds: false,
       spacing: options.xSpacing,
-      children: leftChildren,
-      maxWidth: ( layoutBounds.width - ( 2 * options.xMargin ) - startOverButton.width - options.xSpacing )
+      children: leftChildren
     } );
 
     options.children = [ barNode, leftNodes, startOverButton ];
@@ -212,6 +211,7 @@ export default class FiniteStatusBar extends StatusBar {
     // Dynamically position components on the bar.
     Multilink.multilink( [ this.positioningBoundsProperty, leftNodes.boundsProperty, startOverButton.boundsProperty ],
       ( positioningBounds: Bounds2, leftNodeBounds: Bounds2, startOverButtonBounds: Bounds2 ) => {
+        leftNodes.maxWidth = ( layoutBounds.width - ( 2 * options.xMargin ) - startOverButtonBounds.width - options.xSpacing );
         leftNodes.left = positioningBounds.left;
         leftNodes.centerY = positioningBounds.centerY;
         startOverButton.right = positioningBounds.right;
