@@ -25,9 +25,6 @@ import levelSelectionButton_mp3 from '../sounds/levelSelectionButton_mp3.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 
-// constants
-const SCALING_TOLERANCE = 1E-4; // Empirically chosen as something the human eye is unlikely to notice.
-
 type SelfOptions = {
 
   // Used to size the content
@@ -144,23 +141,23 @@ export default class LevelSelectionButton extends RectangularPushButton {
   }
 
   /**
-   * Creates a new icon with the same dimensions as the specified icon. The new icon will be scaled to fit,
-   * and a background with the specified size may be added to ensure that the bounds of the returned node are correct.
+   * Creates a new icon with specific dimensions. The provided icon is scaled to fit, and a background with the
+   * specified size is added to ensure that the size of the returned Node is correct.
    */
   public static createSizedImageNode( icon: Node, size: Dimension2 ): Node {
-    icon.scale( Math.min( size.width / icon.bounds.width, size.height / icon.bounds.height ) );
-    if ( Math.abs( icon.bounds.width - size.width ) < SCALING_TOLERANCE &&
-         Math.abs( icon.bounds.height - size.height ) < SCALING_TOLERANCE ) {
 
-      // The aspect ratio of the icon matched that of the specified size, so no padding is necessary.
-      return icon;
-    }
+    const backgroundNode = Rectangle.dimension( size );
 
-    // else padding is needed in either the horizontal or vertical direction.
-    const background = Rectangle.dimension( size );
-    icon.center = background.center;
-    background.addChild( icon );
-    return background;
+    // The icon's size may change dynamically, for example if it includes localized text.
+    // See https://github.com/phetsims/vegas/issues/129.
+    icon.localBoundsProperty.link( () => {
+      icon.scale( Math.min( size.width / icon.bounds.width, size.height / icon.bounds.height ) );
+      icon.center = backgroundNode.center;
+    } );
+
+    return new Node( {
+      children: [ backgroundNode, icon ]
+    } );
   }
 
   public override dispose(): void {
