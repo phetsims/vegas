@@ -24,8 +24,8 @@ import optionize from '../../phet-core/js/optionize.js';
 import FaceNode from '../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
 import { CanvasNode, CanvasNodeOptions, Display, Node, TransformTracker } from '../../scenery/js/imports.js';
-import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
+import phetioStateSetEmitter from '../../tandem/js/phetioStateSetEmitter.js';
 
 // constants
 const DEBUG_CANVAS_NODE_BOUNDS = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
@@ -158,12 +158,12 @@ export default class RewardNode extends CanvasNode {
     } );
 
     this.initializer = () => this.initialize();
-    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( this.initializer );
+    phetioStateSetEmitter.addListener( this.initializer );
 
     this.disposeRewardNode = () => {
       options.stepEmitter && options.stepEmitter.removeListener( this.stepEmitterListener );
       this.transformTracker && this.transformTracker.dispose();
-      Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.removeListener( this.initializer );
+      phetioStateSetEmitter.removeListener( this.initializer );
     };
   }
 
