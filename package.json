@@ -45,6 +45,11 @@
               "ts-nocheck": true
             }
           ]
+        },
+        "parserOptions": {
+          "project": [
+            "../vegas/tsconfig.json"
+          ]
         }
       }
     ]
