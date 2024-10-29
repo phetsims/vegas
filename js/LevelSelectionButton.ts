@@ -1,10 +1,13 @@
 // Copyright 2014-2024, University of Colorado Boulder
 
 /**
- * Button for selecting a game level.
- * Includes an icon, score display, and (optional) 'best time' display.
- * See specification in https://github.com/phetsims/vegas/issues/59.
- * Originally named LevelSelectionItemNode, renamed to LevelSelectionButton on 4/10/2018.
+ * LevelSelectionButton is a push button for selecting a game level. It is typically created by LevelSelectionButtonGroup.
+ * The original specification was done in https://github.com/phetsims/vegas/issues/59, but there have been numerous
+ * changes since then.
+ *
+ * Note that LevelSelectionButton originally supported an optional 'best time' display. That display was intentionally
+ * removed from LevelSelectionButton, and from the level-selection user-interface in general, as the result of
+ * a design meeting on 10/15/2023. See https://github.com/phetsims/vegas/issues/120#issuecomment-1858310218.
  *
  * @author John Blanco
  * @author Chris Malley (PixelZoom, Inc.)
