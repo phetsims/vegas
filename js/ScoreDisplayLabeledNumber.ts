@@ -7,16 +7,16 @@
  * @author Andrea Lin
  */
 
-import Utils from '../../dot/js/Utils.js';
-import StringUtils from '../../phetcommon/js/util/StringUtils.js';
-import { Font, HBoxOptions, Node, TColor, Text } from '../../scenery/js/imports.js';
-import StatusBar from '../../scenery-phet/js/StatusBar.js';
-import vegas from './vegas.js';
-import VegasStrings from './VegasStrings.js';
-import optionize from '../../phet-core/js/optionize.js';
-import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import DerivedProperty from '../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
+import Utils from '../../dot/js/Utils.js';
+import optionize from '../../phet-core/js/optionize.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import StringUtils from '../../phetcommon/js/util/StringUtils.js';
+import StatusBar from '../../scenery-phet/js/StatusBar.js';
+import { Font, HBoxOptions, Node, TColor, Text } from '../../scenery/js/imports.js';
+import vegas from './vegas.js';
+import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {
   font?: Font;

@@ -6,18 +6,18 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Range from '../../../dot/js/Range.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { HBox, Text } from '../../../scenery/js/imports.js';
-import HSlider from '../../../sun/js/HSlider.js';
-import InfiniteStatusBar from '../InfiniteStatusBar.js';
 import StatusBar from '../../../scenery-phet/js/StatusBar.js';
-import vegas from '../vegas.js';
-import Tandem from '../../../tandem/js/Tandem.js';
-import RewardDialog from '../RewardDialog.js';
+import { HBox, Text } from '../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../sun/js/buttons/RectangularPushButton.js';
-import NumberProperty from '../../../axon/js/NumberProperty.js';
+import HSlider from '../../../sun/js/HSlider.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import InfiniteStatusBar from '../InfiniteStatusBar.js';
+import RewardDialog from '../RewardDialog.js';
+import vegas from '../vegas.js';
 
 export default class InfiniteChallengesScreenView extends ScreenView {
 

@@ -8,16 +8,16 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import vegas from '../../vegas.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DemosScreenView, { DemosScreenViewOptions } from '../../../../sun/js/demo/DemosScreenView.js';
+import vegas from '../../vegas.js';
+import demoAllLevelsCompletedNode from './demoAllLevelsCompletedNode.js';
 import demoGameInfoDialog from './demoGameInfoDialog.js';
+import demoLevelCompletedNode from './demoLevelCompletedNode.js';
 import demoLevelSelectionButton from './demoLevelSelectionButton.js';
 import demoLevelSelectionButtonGroup from './demoLevelSelectionButtonGroup.js';
 import demoRewardNode from './demoRewardNode.js';
 import demoScoreDisplays from './demoScoreDisplays.js';
-import demoLevelCompletedNode from './demoLevelCompletedNode.js';
-import demoAllLevelsCompletedNode from './demoAllLevelsCompletedNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type ComponentsScreenViewOptions = SelfOptions & DemosScreenViewOptions;

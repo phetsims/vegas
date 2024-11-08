@@ -9,8 +9,9 @@
  */
 
 import NumberProperty from '../../axon/js/NumberProperty.js';
-import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import { Font, HBox, Image, Text, VBox } from '../../scenery/js/imports.js';
@@ -21,7 +22,6 @@ import phetGirlJugglingStars_png from '../images/phetGirlJugglingStars_png.js';
 import ScoreDisplayNumberAndStar, { ScoreDisplayNumberAndStarOptions } from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 
 // constants
 const DEFAULT_BUTTONS_FONT = new PhetFont( 20 );

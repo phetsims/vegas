@@ -6,12 +6,12 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import stepTimer from '../../../../axon/js/stepTimer.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import RewardNode from '../../RewardNode.js';
-import stepTimer from '../../../../axon/js/stepTimer.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 
 export default function demoRewardNode( layoutBounds: Bounds2 ): Node {
   return new DemoNode( layoutBounds );

@@ -17,13 +17,13 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import PickRequired from '../../phet-core/js/types/PickRequired.js';
-import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
-import { FlowBox, FlowBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
-import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import TProperty from '../../axon/js/TProperty.js';
+import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
+import PickRequired from '../../phet-core/js/types/PickRequired.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import { FlowBox, FlowBoxOptions, LayoutNode, Node, NodeLayoutConstraint, NodeOptions } from '../../scenery/js/imports.js';
 import Tandem from '../../tandem/js/Tandem.js';
+import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import vegas from './vegas.js';
 
 // Describes one LevelSelectionButton

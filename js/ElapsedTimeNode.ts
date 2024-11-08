@@ -6,15 +6,15 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import SimpleClockIcon from '../../scenery-phet/js/SimpleClockIcon.js';
-import { Font, HBox, HBoxOptions, TColor, Text } from '../../scenery/js/imports.js';
-import GameTimer from './GameTimer.js';
-import StatusBar from '../../scenery-phet/js/StatusBar.js';
-import vegas from './vegas.js';
+import Multilink from '../../axon/js/Multilink.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
-import Multilink from '../../axon/js/Multilink.js';
+import SimpleClockIcon from '../../scenery-phet/js/SimpleClockIcon.js';
+import StatusBar from '../../scenery-phet/js/StatusBar.js';
+import { Font, HBox, HBoxOptions, TColor, Text } from '../../scenery/js/imports.js';
+import GameTimer from './GameTimer.js';
+import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {

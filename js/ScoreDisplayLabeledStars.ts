@@ -7,14 +7,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import { Font, HBox, HBoxOptions, TColor, Text } from '../../scenery/js/imports.js';
-import ScoreDisplayStars, { ScoreDisplayStarsOptions } from './ScoreDisplayStars.js';
-import StatusBar from '../../scenery-phet/js/StatusBar.js';
-import vegas from './vegas.js';
-import VegasStrings from './VegasStrings.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
+import StatusBar from '../../scenery-phet/js/StatusBar.js';
+import { Font, HBox, HBoxOptions, TColor, Text } from '../../scenery/js/imports.js';
+import ScoreDisplayStars, { ScoreDisplayStarsOptions } from './ScoreDisplayStars.js';
+import vegas from './vegas.js';
+import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {
   font?: Font;

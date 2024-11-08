@@ -10,12 +10,12 @@ import Property from '../../axon/js/Property.js';
 import Screen from '../../joist/js/Screen.js';
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
+import TModel from '../../joist/js/TModel.js';
 import Tandem from '../../tandem/js/Tandem.js';
+import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
 import VegasStrings from './VegasStrings.js';
-import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
-import TModel from '../../joist/js/TModel.js';
 
 // constants
 const vegasTitleStringProperty = VegasStrings.vegas.titleStringProperty;

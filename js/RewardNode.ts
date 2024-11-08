@@ -24,8 +24,8 @@ import optionize from '../../phet-core/js/optionize.js';
 import FaceNode from '../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
 import { CanvasNode, CanvasNodeOptions, Display, Node, TransformTracker } from '../../scenery/js/imports.js';
-import vegas from './vegas.js';
 import phetioStateSetEmitter from '../../tandem/js/phetioStateSetEmitter.js';
+import vegas from './vegas.js';
 
 // constants
 const DEBUG_CANVAS_NODE_BOUNDS = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate

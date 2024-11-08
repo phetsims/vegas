@@ -6,8 +6,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import vegas from './vegas.js';
 import getGameLevelsSchema from './getGameLevelsSchema.js';
+import vegas from './vegas.js';
 
 const NUMBER_OF_GAME_LEVELS = 5;
 export { NUMBER_OF_GAME_LEVELS };

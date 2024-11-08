@@ -6,16 +6,16 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
-import { GridBox, HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../../LevelSelectionButtonGroup.js';
-import ScoreDisplayStars from '../../ScoreDisplayStars.js';
+import { GridBox, HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import HSlider from '../../../../sun/js/HSlider.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import LevelSelectionButton from '../../LevelSelectionButton.js';
-import HSlider from '../../../../sun/js/HSlider.js';
+import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../../LevelSelectionButtonGroup.js';
+import ScoreDisplayStars from '../../ScoreDisplayStars.js';
 import vegasQueryParameters, { NUMBER_OF_GAME_LEVELS } from '../../vegasQueryParameters.js';
 
 const BUTTON_WIDTH = 75;

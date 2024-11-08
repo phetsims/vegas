@@ -6,17 +6,17 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
-import ScoreDisplayStars from '../../ScoreDisplayStars.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { HBox, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import HSlider from '../../../../sun/js/HSlider.js';
+import LevelSelectionButton from '../../LevelSelectionButton.js';
+import ScoreDisplayLabeledNumber from '../../ScoreDisplayLabeledNumber.js';
 import ScoreDisplayLabeledStars from '../../ScoreDisplayLabeledStars.js';
 import ScoreDisplayNumberAndStar from '../../ScoreDisplayNumberAndStar.js';
-import ScoreDisplayLabeledNumber from '../../ScoreDisplayLabeledNumber.js';
-import { HBox, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import HSlider from '../../../../sun/js/HSlider.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import LevelSelectionButton from '../../LevelSelectionButton.js';
+import ScoreDisplayStars from '../../ScoreDisplayStars.js';
 
 const NUM_STARS = 5;
 
