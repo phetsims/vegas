@@ -83,11 +83,15 @@ export default class GameTimer {
     const secondsString = ( seconds > 9 ) ? seconds : ( `0${seconds}` );
 
     if ( hours > 0 ) {
-      return StringUtils.format( VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2secondsStringProperty' ].value,
+      // avoid putting the .value just after the pattern string, because of how we are parsing string keys
+      const patternStringProperty = VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2secondsStringProperty' ];
+      return StringUtils.format( patternStringProperty.value,
         hours, minutesString, secondsString );
     }
     else {
-      return StringUtils.format( VegasStrings.pattern[ '0minutes' ][ '1secondsStringProperty' ].value,
+      // avoid putting the .value just after the pattern string, because of how we are parsing string keys
+      const patternStringProperty = VegasStrings.pattern[ '0minutes' ][ '1secondsStringProperty' ];
+      return StringUtils.format( patternStringProperty.value,
         minutesString, secondsString );
     }
   }
