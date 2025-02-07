@@ -23,7 +23,10 @@ import getGlobal from '../../phet-core/js/getGlobal.js';
 import optionize from '../../phet-core/js/optionize.js';
 import FaceNode from '../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../scenery-phet/js/StarNode.js';
-import { CanvasNode, CanvasNodeOptions, Display, Node, TransformTracker } from '../../scenery/js/imports.js';
+import Display from '../../scenery/js/display/Display.js';
+import CanvasNode, { CanvasNodeOptions } from '../../scenery/js/nodes/CanvasNode.js';
+import Node from '../../scenery/js/nodes/Node.js';
+import TransformTracker from '../../scenery/js/util/TransformTracker.js';
 import phetioStateSetEmitter from '../../tandem/js/phetioStateSetEmitter.js';
 import vegas from './vegas.js';
 

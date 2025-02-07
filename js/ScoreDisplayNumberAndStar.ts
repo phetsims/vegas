@@ -14,7 +14,10 @@ import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
-import { Font, HBox, HBoxOptions, TColor, Text } from '../../scenery/js/imports.js';
+import HBox, { HBoxOptions } from '../../scenery/js/layout/nodes/HBox.js';
+import Text from '../../scenery/js/nodes/Text.js';
+import Font from '../../scenery/js/util/Font.js';
+import TColor from '../../scenery/js/util/TColor.js';
 import vegas from './vegas.js';
 
 type SelfOptions = {

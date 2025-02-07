@@ -9,7 +9,8 @@
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Node, Text } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import GameInfoDialog from '../../GameInfoDialog.js';
 import vegasQueryParameters, { NUMBER_OF_GAME_LEVELS } from '../../vegasQueryParameters.js';
 

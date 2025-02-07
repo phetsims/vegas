@@ -7,7 +7,7 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import LevelCompletedNode from '../../LevelCompletedNode.js';
 
 export default function demoLevelCompletedNode( layoutBounds: Bounds2 ): Node {

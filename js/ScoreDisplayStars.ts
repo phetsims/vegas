@@ -13,7 +13,7 @@ import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
-import { HBox, HBoxOptions } from '../../scenery/js/imports.js';
+import HBox, { HBoxOptions } from '../../scenery/js/layout/nodes/HBox.js';
 import vegas from './vegas.js';
 
 type SelfOptions = {

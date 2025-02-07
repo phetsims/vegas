@@ -9,7 +9,10 @@
 import optionize from '../../phet-core/js/optionize.js';
 import FaceNode from '../../scenery-phet/js/FaceNode.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { Node, NodeOptions, RichText, Text, VBox } from '../../scenery/js/imports.js';
+import VBox from '../../scenery/js/layout/nodes/VBox.js';
+import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
+import RichText from '../../scenery/js/nodes/RichText.js';
+import Text from '../../scenery/js/nodes/Text.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../sun/js/Panel.js';
