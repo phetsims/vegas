@@ -1,4 +1,4 @@
-// Copyright 2018-2022, University of Colorado Boulder
+// Copyright 2018-2025, University of Colorado Boulder
 
 /**
  * Display a score as 'N *', where N is a number and '*' is a star.

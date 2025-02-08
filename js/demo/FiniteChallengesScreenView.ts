@@ -1,4 +1,4 @@
-// Copyright 2018-2022, University of Colorado Boulder
+// Copyright 2018-2025, University of Colorado Boulder
 
 /**
  * Demonstrates UI components that typically appear in a game level that has a finite number of challenges.

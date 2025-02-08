@@ -1,4 +1,4 @@
-// Copyright 2014-2024, University of Colorado Boulder
+// Copyright 2014-2025, University of Colorado Boulder
 
 /**
  * LevelSelectionButton is a push button for selecting a game level. It is typically created by LevelSelectionButtonGroup.

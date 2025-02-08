@@ -1,4 +1,4 @@
-// Copyright 2013-2024, University of Colorado Boulder
+// Copyright 2013-2025, University of Colorado Boulder
 
 /**
  * Display a score as '* * * *', where '*' are stars, which may be fully or partially filled in.
