@@ -9,7 +9,6 @@
  */
 
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
-import Utils from '../../dot/js/Utils.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
@@ -19,6 +18,7 @@ import Text from '../../scenery/js/nodes/Text.js';
 import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
 import vegas from './vegas.js';
+import { toFixed } from '../../dot/js/util/toFixed.js';
 
 type SelfOptions = {
   font?: Font;
@@ -64,7 +64,7 @@ export default class ScoreDisplayNumberAndStar extends HBox {
         children.push( new StarNode( combineOptions<StarNodeOptions>( { value: 0 }, options.starNodeOptions ) ) );
       }
       else {
-        children.push( new Text( Utils.toFixed( score, options.scoreDecimalPlaces ), {
+        children.push( new Text( toFixed( score, options.scoreDecimalPlaces ), {
           font: options.font,
           fill: options.textFill
         } ) );

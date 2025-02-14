@@ -9,7 +9,6 @@
 
 import DerivedProperty from '../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
-import Utils from '../../dot/js/Utils.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
@@ -21,6 +20,7 @@ import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
+import { toFixed } from '../../dot/js/util/toFixed.js';
 
 type SelfOptions = {
   font?: Font;
@@ -47,7 +47,7 @@ export default class ScoreDisplayLabeledNumber extends Node {
     const scoreDisplayStringProperty = new DerivedProperty(
       [ VegasStrings.pattern.score.numberStringProperty, scoreProperty ],
       ( pattern: string, score: number ) => StringUtils.fillIn( pattern, {
-        score: Utils.toFixed( score, options.scoreDecimalPlaces )
+        score: toFixed( score, options.scoreDecimalPlaces )
       } )
     );
 
