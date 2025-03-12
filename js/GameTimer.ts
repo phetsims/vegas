@@ -20,7 +20,8 @@ import PhetioObject from '../../tandem/js/PhetioObject.js';
 
 export default class GameTimer extends PhetioObject {
 
-  // whether the timer is running
+  // Whether the timer is running. This should typically only be set by GameTimer. But there are some sims that
+  // set it to restore a specific time, for example see arithmetic.ArithmeticModel.
   private readonly isRunningProperty: Property<boolean>;
 
   // seconds since the timer was started
@@ -38,7 +39,7 @@ export default class GameTimer extends PhetioObject {
     this.isRunningProperty = new BooleanProperty( false, {
       tandem: tandem.createTandem( 'isRunningProperty' ),
       phetioFeatured: true,
-      phetioReadOnly: true // sims use start() and stop() to change isRunningProperty.
+      phetioReadOnly: true // Sims use start() and stop() to change isRunningProperty.
     } );
 
     this.elapsedTimeProperty = new NumberProperty( 0, {
