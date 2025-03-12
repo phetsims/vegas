@@ -13,13 +13,15 @@ import Property from '../../axon/js/Property.js';
 import stepTimer from '../../axon/js/stepTimer.js';
 import { TimerListener } from '../../axon/js/Timer.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
+import PhetioObject from '../../tandem/js/PhetioObject.js';
 
-export default class GameTimer {
+export default class GameTimer extends PhetioObject {
 
   // whether the timer is running
-  public readonly isRunningProperty: Property<boolean>;
+  private readonly isRunningProperty: Property<boolean>;
 
   // seconds since the timer was started
   public readonly elapsedTimeProperty: Property<number>;
@@ -27,15 +29,37 @@ export default class GameTimer {
   // see Timer.setInterval and clearInterval
   private intervalId: TimerListener | null;
 
-  public constructor() {
-    this.isRunningProperty = new BooleanProperty( false );
-    this.elapsedTimeProperty = new NumberProperty( 0 );
+  public constructor( tandem = Tandem.OPT_OUT ) {
+
+    super( {
+      phetioState: false
+    } );
+
+    this.isRunningProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'isRunningProperty' ),
+      phetioFeatured: true,
+      phetioReadOnly: true // sims use start() and stop() to change isRunningProperty.
+    } );
+
+    this.elapsedTimeProperty = new NumberProperty( 0, {
+      numberType: 'Integer',
+      units: 's',
+      isValidValue: elapsedTime => ( elapsedTime >= 0 ),
+      tandem: tandem.createTandem( 'elapsedTimeProperty' ),
+      phetioFeatured: true,
+      phetioReadOnly: true
+    } );
+
     this.intervalId = null;
   }
 
   public reset(): void {
     this.isRunningProperty.reset();
     this.elapsedTimeProperty.reset();
+  }
+
+  public get isRunning(): boolean {
+    return this.isRunningProperty.value;
   }
 
   /**
