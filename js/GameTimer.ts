@@ -39,7 +39,7 @@ export default class GameTimer extends PhetioObject {
     this.isRunningProperty = new BooleanProperty( false, {
       tandem: tandem.createTandem( 'isRunningProperty' ),
       phetioFeatured: true,
-      phetioReadOnly: true // Sims use start() and stop() to change isRunningProperty.
+      phetioReadOnly: true // Sims use start(), stop(), or restart() to change isRunningProperty.
     } );
 
     this.elapsedTimeProperty = new NumberProperty( 0, {
