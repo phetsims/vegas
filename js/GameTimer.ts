@@ -57,6 +57,10 @@ export default class GameTimer extends PhetioObject {
   public reset(): void {
     this.isRunningProperty.reset();
     this.elapsedTimeProperty.reset();
+    if ( this.intervalId ) {
+      stepTimer.clearInterval( this.intervalId );
+      this.intervalId = null;
+    }
   }
 
   public get isRunning(): boolean {
