@@ -111,17 +111,14 @@ export default class GameTimer extends PhetioObject {
     const minutesString = ( minutes > 9 || hours === 0 ) ? minutes : ( `0${minutes}` );
     const secondsString = ( seconds > 9 ) ? seconds : ( `0${seconds}` );
 
+    // Factor out patternStringProperty here, because [...].value confuses the chipper build process.
     if ( hours > 0 ) {
-      // avoid putting the .value just after the pattern string, because of how we are parsing string keys
       const patternStringProperty = VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2secondsStringProperty' ];
-      return StringUtils.format( patternStringProperty.value,
-        hours, minutesString, secondsString );
+      return StringUtils.format( patternStringProperty.value, hours, minutesString, secondsString );
     }
     else {
-      // avoid putting the .value just after the pattern string, because of how we are parsing string keys
       const patternStringProperty = VegasStrings.pattern[ '0minutes' ][ '1secondsStringProperty' ];
-      return StringUtils.format( patternStringProperty.value,
-        minutesString, secondsString );
+      return StringUtils.format( patternStringProperty.value, minutesString, secondsString );
     }
   }
 }
