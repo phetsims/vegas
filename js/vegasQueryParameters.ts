@@ -6,6 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import { QueryStringMachine } from '../../query-string-machine/js/QueryStringMachineModule.js';
 import getGameLevelsSchema from './getGameLevelsSchema.js';
 import vegas from './vegas.js';
 
