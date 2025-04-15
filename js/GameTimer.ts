@@ -17,6 +17,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 import PhetioObject from '../../tandem/js/PhetioObject.js';
+import phetioStateSetEmitter from '../../tandem/js/phetioStateSetEmitter.js';
 
 export default class GameTimer extends PhetioObject {
 
@@ -52,6 +53,13 @@ export default class GameTimer extends PhetioObject {
     } );
 
     this.intervalId = null;
+
+    // After setting PhET-iO state, the Timer listener may need to be restored.
+    phetioStateSetEmitter.addListener( () => {
+      if ( this.isRunningProperty.value && this.intervalId === null ) {
+        this.intervalId = this.setTimerListener();
+      }
+    } );
   }
 
   public reset(): void {
@@ -73,11 +81,19 @@ export default class GameTimer extends PhetioObject {
   public start(): void {
     if ( !this.isRunningProperty.value ) {
       this.elapsedTimeProperty.value = 0;
-      this.intervalId = stepTimer.setInterval( () => {
-        this.elapsedTimeProperty.value = this.elapsedTimeProperty.value + 1;
-      }, 1000 ); // fire once per second
+      this.intervalId = this.setTimerListener();
       this.isRunningProperty.value = true;
     }
+  }
+
+  /**
+   * Adds a listener to stepTimer to advance elapsed time in increments of 1 second.
+   */
+  private setTimerListener(): TimerListener {
+    assert && assert( !this.intervalId, 'stepTimer already has a listener.' );
+    return stepTimer.setInterval( () => {
+      this.elapsedTimeProperty.value = this.elapsedTimeProperty.value + 1;
+    }, 1000 ); // fire once per second
   }
 
   /**
