@@ -28,6 +28,7 @@ import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
+import VStrut from '../../scenery/js/nodes/VStrut.js';
 
 type SelfOptions = {
 
@@ -197,17 +198,22 @@ export default class FiniteStatusBar extends StatusBar {
     // Start Over button
     const startOverButton = new TextPushButton( options.startOverButtonText, options.startOverButtonOptions );
 
+    // Add a vertical strut so that barNode will be the correct height when we show/hide the timer.
+    // See https://github.com/phetsims/vegas/issues/80
+    const maxHeightLeftChildren = _.maxBy( leftChildren, child => child.height )!.height;
+    leftChildren.push( new VStrut( maxHeightLeftChildren ) );
+
     // Nodes on the left end of the bar
     const leftNodes = new HBox( {
-
-      // Because elapsedTimeNode needs to be considered regardless of whether it's visible,
-      // see https://github.com/phetsims/vegas/issues/80
-      excludeInvisibleChildrenFromBounds: false,
       spacing: options.xSpacing,
       children: leftChildren
     } );
 
-    options.children = [ barNode, leftNodes, startOverButton ];
+    options.children = [
+      barNode,
+      leftNodes,
+      startOverButton
+    ];
 
     options.barHeight = Math.max( leftNodes.height, scoreDisplay.height ) + ( 2 * options.yMargin );
 
