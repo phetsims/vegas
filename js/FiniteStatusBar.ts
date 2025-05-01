@@ -115,18 +115,6 @@ export default class FiniteStatusBar extends StatusBar {
       tandem: Tandem.OPTIONAL
     }, providedOptions );
 
-    // nested options for 'Start Over' button
-    options.startOverButtonOptions = combineOptions<TextPushButtonOptions>( {
-      font: options.font,
-      textFill: options.textFill,
-      baseColor: PhetColorScheme.BUTTON_YELLOW,
-      xMargin: 10,
-      yMargin: 8,
-      listener: _.noop,
-      maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ), // use 20% of available width
-      tandem: options.tandem.createTandem( 'startOverButton' )
-    }, options.startOverButtonOptions );
-
     assert && assert( ( options.challengeIndexProperty && options.numberOfChallengesProperty ) ||
                       ( !options.challengeIndexProperty && !options.numberOfChallengesProperty ),
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
@@ -199,7 +187,16 @@ export default class FiniteStatusBar extends StatusBar {
     }
 
     // Start Over button
-    const startOverButton = new TextPushButton( options.startOverButtonText, options.startOverButtonOptions );
+    const startOverButton = new TextPushButton( options.startOverButtonText, combineOptions<TextPushButtonOptions>( {
+      font: options.font,
+      textFill: options.textFill,
+      baseColor: PhetColorScheme.BUTTON_YELLOW,
+      xMargin: 10,
+      yMargin: 8,
+      listener: _.noop,
+      maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ), // use 20% of available width
+      tandem: options.tandem.createTandem( 'startOverButton' )
+    }, options.startOverButtonOptions ) );
 
     // Add a vertical strut so that barNode will be the correct height when we show/hide the timer.
     // See https://github.com/phetsims/vegas/issues/80
