@@ -39,7 +39,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
     } );
 
     // 1-based
-    const levelProperty = new NumberProperty( 1, {
+    const levelNumberProperty = new NumberProperty( 1, {
       numberType: 'Integer',
       range: new Range( 1, 5 )
     } );
@@ -64,7 +64,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
     const statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreProperty, {
       barFill: 'pink',
       font: new PhetFont( 20 ),
-      levelProperty: levelProperty,
+      levelNumberProperty: levelNumberProperty,
       challengeIndexProperty: challengeIndexProperty,
       numberOfChallengesProperty: numberOfChallengesProperty,
       elapsedTimeProperty: elapsedTimeProperty,
@@ -78,7 +78,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
     const levelSlider = new HBox( {
       children: [
         new Text( 'Level: ', { font: DEFAULT_FONT } ),
-        new HSlider( levelProperty, levelProperty.range, {
+        new HSlider( levelNumberProperty, levelNumberProperty.range, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]
@@ -123,7 +123,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
     const timerEnabledCheckbox = new Checkbox( timerEnabledProperty, new Text( 'Timer enabled', { font: DEFAULT_FONT } ) );
 
     const levelCompletedNode = new LevelCompletedNode(
-      levelProperty.get(), // level
+      levelNumberProperty.get(), // level
       scoreProperty.value, // score
       PERFECT_SCORE, // maxScore
       4, // numberOfStars

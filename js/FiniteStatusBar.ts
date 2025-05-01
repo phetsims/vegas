@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import DerivedProperty from '../../axon/js/DerivedProperty.js';
 import Multilink from '../../axon/js/Multilink.js';
 import TProperty from '../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
@@ -29,18 +28,21 @@ import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 import VStrut from '../../scenery/js/nodes/VStrut.js';
+import Tandem from '../../tandem/js/Tandem.js';
+import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 type SelfOptions = {
 
   // optional Properties
   challengeIndexProperty?: TReadOnlyProperty<number> | null;
   numberOfChallengesProperty?: TReadOnlyProperty<number> | null;
-  levelProperty?: TReadOnlyProperty<number> | null;
-  elapsedTimeProperty?: TReadOnlyProperty<number> | null;
+  levelNumberProperty?: TReadOnlyProperty<number> | null;
+  elapsedTimeProperty?: ReadOnlyProperty<number> | null;
   timerEnabledProperty?: TReadOnlyProperty<boolean> | null;
 
   // things that can be hidden
-  levelVisible?: boolean;
+  levelNumberVisible?: boolean;
   challengeNumberVisible?: boolean;
 
   // all text
@@ -48,10 +50,10 @@ type SelfOptions = {
   textFill?: TColor;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: TProperty<number> ) => Node;
+  createScoreDisplay?: ( scoreProperty: TProperty<number>, tandem?: Tandem ) => Node;
 
   // nested options for 'Start Over' button, filled in below
-  startOverButtonOptions?: TextPushButtonOptions;
+  startOverButtonOptions?: StrictOmit<TextPushButtonOptions, 'tandem'>;
   startOverButtonText?: string | TReadOnlyProperty<string>;
 
   // options for the timer node
@@ -62,8 +64,8 @@ type SelfOptions = {
   xMargin?: number;
   yMargin?: number;
 
-  levelTextOptions?: TextOptions; // passed to the "Level N" text
-  challengeTextOptions?: TextOptions; // passed to the "Challenge N of M" text
+  levelTextOptions?: StrictOmit<TextOptions, 'tandem'>; // passed to the "Level N" text
+  challengeTextOptions?: StrictOmit<TextOptions, 'tandem'>; // passed to the "Challenge N of M" text
 
   barFill?: TColor;
   barStroke?: TColor;
@@ -91,16 +93,17 @@ export default class FiniteStatusBar extends StatusBar {
       // SelfOptions
       challengeIndexProperty: null,
       numberOfChallengesProperty: null,
-      levelProperty: null,
+      levelNumberProperty: null,
       elapsedTimeProperty: null,
       timerEnabledProperty: null,
-      levelVisible: true,
+      levelNumberVisible: true,
       challengeNumberVisible: true,
       font: StatusBar.DEFAULT_FONT,
       textFill: StatusBar.DEFAULT_TEXT_FILL,
-      createScoreDisplay: scoreProperty => new ScoreDisplayLabeledNumber( scoreProperty, {
+      createScoreDisplay: ( scoreProperty, tandem ) => new ScoreDisplayLabeledNumber( scoreProperty, {
         font: providedOptions && providedOptions.font ? providedOptions.font : StatusBar.DEFAULT_FONT,
-        textFill: providedOptions && providedOptions.textFill ? providedOptions.textFill : StatusBar.DEFAULT_TEXT_FILL
+        textFill: providedOptions && providedOptions.textFill ? providedOptions.textFill : StatusBar.DEFAULT_TEXT_FILL,
+        tandem: tandem ? tandem : Tandem.OPT_OUT
       } ),
       startOverButtonText: VegasStrings.startOverStringProperty,
       clockIconRadius: 15,
@@ -108,7 +111,8 @@ export default class FiniteStatusBar extends StatusBar {
       xMargin: 20,
       yMargin: 10,
       barFill: null,
-      barStroke: null
+      barStroke: null,
+      tandem: Tandem.OPTIONAL
     }, providedOptions );
 
     // nested options for 'Start Over' button
@@ -119,25 +123,13 @@ export default class FiniteStatusBar extends StatusBar {
       xMargin: 10,
       yMargin: 8,
       listener: _.noop,
-      tandem: options.tandem?.createTandem( 'startOverButton' ),
-      maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ) // use 20% of available width
+      maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ), // use 20% of available width
+      tandem: options.tandem.createTandem( 'startOverButton' )
     }, options.startOverButtonOptions );
 
     assert && assert( ( options.challengeIndexProperty && options.numberOfChallengesProperty ) ||
                       ( !options.challengeIndexProperty && !options.numberOfChallengesProperty ),
       'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
-
-    // nested options for 'Level N' text
-    options.levelTextOptions = combineOptions<TextOptions>( {
-      fill: options.textFill,
-      font: options.font
-    }, options.levelTextOptions );
-
-    // nested options for 'Challenge N of M' text
-    options.challengeTextOptions = combineOptions<TextOptions>( {
-      fill: options.textFill,
-      font: options.font
-    }, options.challengeTextOptions );
 
     // the rectangular bar, size will be set by visibleBoundsListener
     const barNode = new Rectangle( {
@@ -149,38 +141,48 @@ export default class FiniteStatusBar extends StatusBar {
     const leftChildren = [];
 
     // Level N
-    let levelText: Node;
-    if ( options.levelProperty && options.levelVisible ) {
+    let levelNumberText: Node;
+    if ( options.levelNumberProperty && options.levelNumberVisible ) {
 
-      const levelStringProperty = new DerivedProperty(
-        [ VegasStrings.label.levelStringProperty, options.levelProperty ],
+      const levelStringProperty = new DerivedStringProperty(
+        [ VegasStrings.label.levelStringProperty, options.levelNumberProperty ],
         ( pattern: string, level: number ) => StringUtils.format( pattern, level )
       );
 
-      levelText = new Text( levelStringProperty, combineOptions<TextOptions>( {
-        tandem: options.tandem?.createTandem( 'levelText' )
+      levelNumberText = new Text( levelStringProperty, combineOptions<TextOptions>( {
+        fill: options.textFill,
+        font: options.font,
+        tandem: options.tandem.createTandem( 'levelNumberText' ),
+        phetioVisiblePropertyInstrumented: true,
+        phetioFeatured: true
       }, options.levelTextOptions ) );
-      leftChildren.push( levelText );
+
+      leftChildren.push( levelNumberText );
     }
 
     // Challenge N of M
     let challengeNumberText: Node;
     if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
 
-      const challengeNumberStringProperty = new DerivedProperty(
+      const challengeNumberStringProperty = new DerivedStringProperty(
         [ VegasStrings.pattern[ '0challenge' ][ '1maxStringProperty' ], options.challengeIndexProperty, options.numberOfChallengesProperty ],
         ( pattern: string, challengeIndex: number, numberOfChallenges: number ) =>
           StringUtils.format( pattern, challengeIndex + 1, numberOfChallenges )
       );
 
       challengeNumberText = new Text( challengeNumberStringProperty, combineOptions<TextOptions>( {
-        tandem: options.tandem?.createTandem( 'challengeNumberText' )
+        fill: options.textFill,
+        font: options.font,
+        tandem: options.tandem.createTandem( 'challengeNumberText' ),
+        phetioVisiblePropertyInstrumented: true,
+        phetioFeatured: true
       }, options.challengeTextOptions ) );
+
       leftChildren.push( challengeNumberText );
     }
 
     // Score
-    const scoreDisplay = options.createScoreDisplay( scoreProperty );
+    const scoreDisplay = options.createScoreDisplay( scoreProperty, options.tandem.createTandem( 'scoreDisplay' ) );
     leftChildren.push( scoreDisplay );
 
     // Timer (optional)
@@ -190,7 +192,8 @@ export default class FiniteStatusBar extends StatusBar {
         visibleProperty: options.timerEnabledProperty,
         clockIconRadius: options.clockIconRadius,
         font: options.font,
-        textFill: options.textFill
+        textFill: options.textFill,
+        tandem: options.tandem.createTandem( 'elapsedTimeNode' )
       } );
       leftChildren.push( elapsedTimeNode );
     }
@@ -230,7 +233,7 @@ export default class FiniteStatusBar extends StatusBar {
       } );
 
     this.disposeFiniteStatusBar = () => {
-      levelText.dispose();
+      levelNumberText.dispose();
       challengeNumberText.dispose();
       scoreDisplay.dispose();
       elapsedTimeNode && elapsedTimeNode.dispose();

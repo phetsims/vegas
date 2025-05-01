@@ -7,7 +7,6 @@
  * @author Andrea Lin
  */
 
-import DerivedProperty from '../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -21,6 +20,8 @@ import TColor from '../../scenery/js/util/TColor.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 import { toFixed } from '../../dot/js/util/toFixed.js';
+import Tandem from '../../tandem/js/Tandem.js';
+import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
 
 type SelfOptions = {
   font?: Font;
@@ -41,19 +42,23 @@ export default class ScoreDisplayLabeledNumber extends Node {
       // SelfOptions
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
-      scoreDecimalPlaces: 0
+      scoreDecimalPlaces: 0,
+      tandem: Tandem.OPTIONAL,
+      phetioFeatured: true
     }, providedOptions );
 
-    const scoreDisplayStringProperty = new DerivedProperty(
+    const scoreDisplayStringProperty = new DerivedStringProperty(
       [ VegasStrings.pattern.score.numberStringProperty, scoreProperty ],
       ( pattern: string, score: number ) => StringUtils.fillIn( pattern, {
         score: toFixed( score, options.scoreDecimalPlaces )
-      } )
-    );
+      } ) );
 
     const scoreDisplayText = new Text( scoreDisplayStringProperty, {
       font: options.font,
-      fill: options.textFill
+      fill: options.textFill,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
 
     options.children = [ scoreDisplayText ];

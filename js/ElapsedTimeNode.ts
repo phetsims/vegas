@@ -7,7 +7,6 @@
  */
 
 import Multilink from '../../axon/js/Multilink.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import SimpleClockIcon from '../../scenery-phet/js/SimpleClockIcon.js';
@@ -19,6 +18,8 @@ import TColor from '../../scenery/js/util/TColor.js';
 import GameTimer from './GameTimer.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import Tandem from '../../tandem/js/Tandem.js';
 
 type SelfOptions = {
   clockIconRadius?: number;
@@ -32,7 +33,7 @@ export default class ElapsedTimeNode extends HBox {
 
   private readonly disposeElapsedTimeNode: () => void;
 
-  public constructor( elapsedTimeProperty: TReadOnlyProperty<number>, providedOptions?: ElapsedTimeNodeOptions ) {
+  public constructor( elapsedTimeProperty: ReadOnlyProperty<number>, providedOptions?: ElapsedTimeNodeOptions ) {
 
     const options = optionize<ElapsedTimeNodeOptions, SelfOptions, HBoxOptions>()( {
 
@@ -42,7 +43,8 @@ export default class ElapsedTimeNode extends HBox {
       textFill: 'black',
 
       // HBoxOptions
-      spacing: 8
+      spacing: 8,
+      tandem: Tandem.OPTIONAL
     }, providedOptions );
 
     const clockIcon = new SimpleClockIcon( options.clockIconRadius );
@@ -66,6 +68,10 @@ export default class ElapsedTimeNode extends HBox {
     ], ( elapsedTime, pattern1, pattern2 ) => {
       timeValue.string = GameTimer.formatTime( elapsedTime );
     } );
+
+    if ( this.isPhetioInstrumented() && elapsedTimeProperty.isPhetioInstrumented() ) {
+      this.addLinkedElement( elapsedTimeProperty );
+    }
 
     this.disposeElapsedTimeNode = () => {
       multilink.dispose();
