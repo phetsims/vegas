@@ -8,7 +8,6 @@
  */
 
 import Multilink from '../../axon/js/Multilink.js';
-import TProperty from '../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
@@ -35,9 +34,9 @@ import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 type SelfOptions = {
 
   // optional Properties
-  challengeNumberProperty?: TReadOnlyProperty<number> | null;
-  numberOfChallengesProperty?: TReadOnlyProperty<number> | null;
-  levelNumberProperty?: TReadOnlyProperty<number> | null;
+  challengeNumberProperty?: ReadOnlyProperty<number> | null;
+  numberOfChallengesProperty?: ReadOnlyProperty<number> | null;
+  levelNumberProperty?: ReadOnlyProperty<number> | null;
   elapsedTimeProperty?: ReadOnlyProperty<number> | null;
   timerEnabledProperty?: TReadOnlyProperty<boolean> | null;
 
@@ -50,7 +49,7 @@ type SelfOptions = {
   textFill?: TColor;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: TProperty<number>, tandem?: Tandem ) => Node;
+  createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number>, tandem?: Tandem ) => Node;
 
   // nested options for 'Start Over' button, filled in below
   startOverButtonOptions?: StrictOmit<TextPushButtonOptions, 'tandem'>;
@@ -83,7 +82,9 @@ export default class FiniteStatusBar extends StatusBar {
    * @param scoreProperty
    * @param providedOptions
    */
-  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, scoreProperty: TProperty<number>,
+  public constructor( layoutBounds: Bounds2,
+                      visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
+                      scoreProperty: ReadOnlyProperty<number>,
                       providedOptions?: FiniteStatusBarOptions ) {
 
     const options = optionize<FiniteStatusBarOptions,
@@ -146,6 +147,10 @@ export default class FiniteStatusBar extends StatusBar {
       }, options.levelTextOptions ) );
 
       leftChildren.push( levelNumberText );
+
+      if ( levelNumberText.isPhetioInstrumented() && options.levelNumberProperty.isPhetioInstrumented() ) {
+        levelNumberText.addLinkedElement( options.levelNumberProperty );
+      }
     }
 
     // Challenge N of M
@@ -167,6 +172,14 @@ export default class FiniteStatusBar extends StatusBar {
       }, options.challengeTextOptions ) );
 
       leftChildren.push( challengeNumberText );
+
+      if ( challengeNumberText.isPhetioInstrumented() && options.challengeNumberProperty.isPhetioInstrumented() ) {
+        challengeNumberText.addLinkedElement( options.challengeNumberProperty );
+      }
+
+      if ( challengeNumberText.isPhetioInstrumented() && options.numberOfChallengesProperty.isPhetioInstrumented() ) {
+        challengeNumberText.addLinkedElement( options.numberOfChallengesProperty );
+      }
     }
 
     // Score

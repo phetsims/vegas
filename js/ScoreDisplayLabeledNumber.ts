@@ -7,7 +7,6 @@
  * @author Andrea Lin
  */
 
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
@@ -22,6 +21,7 @@ import VegasStrings from './VegasStrings.js';
 import { toFixed } from '../../dot/js/util/toFixed.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 type SelfOptions = {
   font?: Font;
@@ -35,7 +35,7 @@ export default class ScoreDisplayLabeledNumber extends Node {
 
   private readonly disposeScoreDisplayLabeledNumber: () => void;
 
-  public constructor( scoreProperty: TReadOnlyProperty<number>, providedOptions?: ScoreDisplayLabeledNumberOptions ) {
+  public constructor( scoreProperty: ReadOnlyProperty<number>, providedOptions?: ScoreDisplayLabeledNumberOptions ) {
 
     const options = optionize<ScoreDisplayLabeledNumberOptions, SelfOptions, HBoxOptions>()( {
 
@@ -64,6 +64,10 @@ export default class ScoreDisplayLabeledNumber extends Node {
     options.children = [ scoreDisplayText ];
 
     super( options );
+
+    if ( this.isPhetioInstrumented() && scoreProperty.isPhetioInstrumented() ) {
+      this.addLinkedElement( scoreProperty );
+    }
 
     this.disposeScoreDisplayLabeledNumber = () => {
       scoreDisplayStringProperty.dispose();

@@ -14,7 +14,6 @@
  * @author Andrea Lin
  */
 
-import TProperty from '../../axon/js/TProperty.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -28,6 +27,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import levelSelectionButton_mp3 from '../sounds/levelSelectionButton_mp3.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 type SelfOptions = {
 
@@ -36,7 +36,7 @@ type SelfOptions = {
   buttonHeight?: number;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: TProperty<number> ) => Node;
+  createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number> ) => Node;
   scoreDisplayProportion?: number; // percentage of the button height occupied by scoreDisplay, (0,0.5]
   scoreDisplayMinXMargin?: number; // horizontal margin between scoreDisplay and its background
   scoreDisplayMinYMargin?: number;  // vertical margin between scoreDisplay and its background
@@ -58,7 +58,7 @@ export default class LevelSelectionButton extends RectangularPushButton {
    * @param scoreProperty
    * @param providedOptions
    */
-  public constructor( icon: Node, scoreProperty: TProperty<number>, providedOptions?: LevelSelectionButtonOptions ) {
+  public constructor( icon: Node, scoreProperty: ReadOnlyProperty<number>, providedOptions?: LevelSelectionButtonOptions ) {
 
     const options = optionize<LevelSelectionButtonOptions, SelfOptions, RectangularPushButtonOptions>()( {
 

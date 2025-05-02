@@ -17,7 +17,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import TProperty from '../../axon/js/TProperty.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -28,6 +27,7 @@ import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import vegas from './vegas.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 // Describes one LevelSelectionButton
 export type LevelSelectionButtonGroupItem = {
@@ -36,7 +36,7 @@ export type LevelSelectionButtonGroupItem = {
   icon: Node;
 
   // The score displayed on the button
-  scoreProperty: TProperty<number>;
+  scoreProperty: ReadOnlyProperty<number>;
 
   // Name used when creating the button's tandem, defaults to `level${N}Button`
   tandemName?: string;
