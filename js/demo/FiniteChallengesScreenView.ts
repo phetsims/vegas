@@ -43,9 +43,9 @@ export default class FiniteChallengesScreenView extends ScreenView {
       numberType: 'Integer',
       range: new Range( 1, 5 )
     } );
-    const challengeIndexProperty = new NumberProperty( 0, {
+    const challengeNumberProperty = new NumberProperty( 1, {
       numberType: 'Integer',
-      range: new Range( 0, NUMBER_OF_CHALLENGES - 1 )
+      range: new Range( 1, NUMBER_OF_CHALLENGES )
     } );
     const numberOfChallengesProperty = new NumberProperty( NUMBER_OF_CHALLENGES, {
       numberType: 'Integer',
@@ -65,7 +65,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
       barFill: 'pink',
       font: new PhetFont( 20 ),
       levelNumberProperty: levelNumberProperty,
-      challengeIndexProperty: challengeIndexProperty,
+      challengeNumberProperty: challengeNumberProperty,
       numberOfChallengesProperty: numberOfChallengesProperty,
       elapsedTimeProperty: elapsedTimeProperty,
       timerEnabledProperty: timerEnabledProperty,
@@ -87,7 +87,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
     const challengeIndexSlider = new HBox( {
       children: [
         new Text( 'Challenge: ', { font: DEFAULT_FONT } ),
-        new HSlider( challengeIndexProperty, challengeIndexProperty.range, {
+        new HSlider( challengeNumberProperty, challengeNumberProperty.range, {
           constrainValue: value => Utils.roundSymmetric( value )
         } )
       ]

@@ -35,7 +35,7 @@ import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 type SelfOptions = {
 
   // optional Properties
-  challengeIndexProperty?: TReadOnlyProperty<number> | null;
+  challengeNumberProperty?: TReadOnlyProperty<number> | null;
   numberOfChallengesProperty?: TReadOnlyProperty<number> | null;
   levelNumberProperty?: TReadOnlyProperty<number> | null;
   elapsedTimeProperty?: ReadOnlyProperty<number> | null;
@@ -91,7 +91,7 @@ export default class FiniteStatusBar extends StatusBar {
       StatusBarOptions>()( {
 
       // SelfOptions
-      challengeIndexProperty: null,
+      challengeNumberProperty: null,
       numberOfChallengesProperty: null,
       levelNumberProperty: null,
       elapsedTimeProperty: null,
@@ -115,9 +115,9 @@ export default class FiniteStatusBar extends StatusBar {
       tandem: Tandem.OPTIONAL
     }, providedOptions );
 
-    assert && assert( ( options.challengeIndexProperty && options.numberOfChallengesProperty ) ||
-                      ( !options.challengeIndexProperty && !options.numberOfChallengesProperty ),
-      'challengeIndexProperty and numberOfChallengesProperty are both or neither' );
+    assert && assert( ( options.challengeNumberProperty && options.numberOfChallengesProperty ) ||
+                      ( !options.challengeNumberProperty && !options.numberOfChallengesProperty ),
+      'challengeNumberProperty and numberOfChallengesProperty are both or neither' );
 
     // the rectangular bar, size will be set by visibleBoundsListener
     const barNode = new Rectangle( {
@@ -150,12 +150,12 @@ export default class FiniteStatusBar extends StatusBar {
 
     // Challenge N of M
     let challengeNumberText: Node;
-    if ( options.challengeIndexProperty && options.numberOfChallengesProperty ) {
+    if ( options.challengeNumberProperty && options.numberOfChallengesProperty ) {
 
       const challengeNumberStringProperty = new DerivedStringProperty(
-        [ VegasStrings.pattern[ '0challenge' ][ '1maxStringProperty' ], options.challengeIndexProperty, options.numberOfChallengesProperty ],
-        ( pattern: string, challengeIndex: number, numberOfChallenges: number ) =>
-          StringUtils.format( pattern, challengeIndex + 1, numberOfChallenges )
+        [ VegasStrings.pattern[ '0challenge' ][ '1maxStringProperty' ], options.challengeNumberProperty, options.numberOfChallengesProperty ],
+        ( pattern: string, challengeNumber: number, numberOfChallenges: number ) =>
+          StringUtils.format( pattern, challengeNumber, numberOfChallenges )
       );
 
       challengeNumberText = new Text( challengeNumberStringProperty, combineOptions<TextOptions>( {
