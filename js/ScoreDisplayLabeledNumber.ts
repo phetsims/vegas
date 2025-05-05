@@ -44,7 +44,10 @@ export default class ScoreDisplayLabeledNumber extends Node {
       textFill: 'black',
       scoreDecimalPlaces: 0,
       tandem: Tandem.OPTIONAL,
-      phetioFeatured: true
+      phetioFeatured: true,
+      visiblePropertyOptions: {
+        phetioFeatured: true // See https://github.com/phetsims/balancing-chemical-equations/issues/201
+      }
     }, providedOptions );
 
     const scoreDisplayStringProperty = new DerivedStringProperty(

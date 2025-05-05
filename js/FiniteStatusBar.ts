@@ -113,7 +113,10 @@ export default class FiniteStatusBar extends StatusBar {
       yMargin: 10,
       barFill: null,
       barStroke: null,
-      tandem: Tandem.OPTIONAL
+      tandem: Tandem.OPTIONAL,
+      visiblePropertyOptions: {
+        phetioFeatured: true // See https://github.com/phetsims/balancing-chemical-equations/issues/201
+      }
     }, providedOptions );
 
     assert && assert( ( options.challengeNumberProperty && options.numberOfChallengesProperty ) ||
@@ -142,8 +145,11 @@ export default class FiniteStatusBar extends StatusBar {
         fill: options.textFill,
         font: options.font,
         tandem: options.tandem.createTandem( 'levelNumberText' ),
+        phetioFeatured: true,
         phetioVisiblePropertyInstrumented: true,
-        phetioFeatured: true
+        visiblePropertyOptions: {
+          phetioFeatured: true // See https://github.com/phetsims/balancing-chemical-equations/issues/201
+        }
       }, options.levelTextOptions ) );
 
       leftChildren.push( levelNumberText );
@@ -167,8 +173,11 @@ export default class FiniteStatusBar extends StatusBar {
         fill: options.textFill,
         font: options.font,
         tandem: options.tandem.createTandem( 'challengeNumberText' ),
+        phetioFeatured: true,
         phetioVisiblePropertyInstrumented: true,
-        phetioFeatured: true
+        visiblePropertyOptions: {
+          phetioFeatured: true // See https://github.com/phetsims/balancing-chemical-equations/issues/201
+        }
       }, options.challengeTextOptions ) );
 
       leftChildren.push( challengeNumberText );
