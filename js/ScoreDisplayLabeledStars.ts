@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
@@ -18,27 +17,37 @@ import TColor from '../../scenery/js/util/TColor.js';
 import ScoreDisplayStars, { ScoreDisplayStarsOptions } from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
+import Tandem from '../../tandem/js/Tandem.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 type SelfOptions = {
   font?: Font;
   textFill?: TColor;
   spacing?: number;
+  scoreDisplayStarsOptions?: ScoreDisplayStarsOptions;
 };
 
-export type ScoreDisplayLabeledStarsOptions = SelfOptions & ScoreDisplayStarsOptions & StrictOmit<HBoxOptions, 'children'>;
+export type ScoreDisplayLabeledStarsOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
 export default class ScoreDisplayLabeledStars extends HBox {
 
   private readonly disposeScoreDisplayLabeledStars: () => void;
 
-  public constructor( scoreProperty: TReadOnlyProperty<number>, providedOptions?: ScoreDisplayLabeledStarsOptions ) {
+  public constructor( scoreProperty: ReadOnlyProperty<number>, providedOptions?: ScoreDisplayLabeledStarsOptions ) {
 
-    const options = optionize<ScoreDisplayLabeledStarsOptions, SelfOptions, HBoxOptions>()( {
+    const options = optionize<ScoreDisplayLabeledStarsOptions, StrictOmit<SelfOptions, 'scoreDisplayStarsOptions'>, HBoxOptions>()( {
 
       // SelfOptions
       font: StatusBar.DEFAULT_FONT,
       textFill: 'black',
-      spacing: 5
+      spacing: 5,
+
+      // HBoxOptions
+      tandem: Tandem.OPTIONAL,
+      phetioFeatured: true,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     }, providedOptions );
 
     const textNode = new Text( VegasStrings.scoreStringProperty, {
@@ -46,11 +55,15 @@ export default class ScoreDisplayLabeledStars extends HBox {
       fill: options.textFill
     } );
 
-    const scoreDisplay = new ScoreDisplayStars( scoreProperty, options );
+    const scoreDisplay = new ScoreDisplayStars( scoreProperty, options.scoreDisplayStarsOptions );
 
     options.children = [ textNode, scoreDisplay ];
 
     super( options );
+
+    if ( this.isPhetioInstrumented() && scoreProperty.isPhetioInstrumented() ) {
+      this.addLinkedElement( scoreProperty );
+    }
 
     this.disposeScoreDisplayLabeledStars = () => {
       textNode.dispose();

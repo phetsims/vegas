@@ -9,7 +9,6 @@
  */
 
 import NumberProperty from '../../axon/js/NumberProperty.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
@@ -26,6 +25,7 @@ import phetGirlJugglingStars_png from '../images/phetGirlJugglingStars_png.js';
 import ScoreDisplayNumberAndStar, { ScoreDisplayNumberAndStarOptions } from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 // constants
 const DEFAULT_BUTTONS_FONT = new PhetFont( 20 );
@@ -45,7 +45,7 @@ export type RewardDialogOptions = SelfOptions & StrictOmit<DialogOptions, 'focus
 
 export default class RewardDialog extends Dialog {
 
-  public constructor( score: number | TReadOnlyProperty<number>, providedOptions?: RewardDialogOptions ) {
+  public constructor( score: number | ReadOnlyProperty<number>, providedOptions?: RewardDialogOptions ) {
 
     const options = optionize<RewardDialogOptions, SelfOptions, DialogOptions>()( {
 

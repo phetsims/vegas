@@ -48,8 +48,10 @@ export default function demoLevelSelectionButton( layoutBounds: Bounds2 ): Node 
 
   const buttonWithLabeledStars = new LevelSelectionButton( buttonIcon, scoreProperty, {
     createScoreDisplay: scoreProperty => new ScoreDisplayLabeledStars( scoreProperty, {
-      numberOfStars: NUM_STARS,
-      perfectScore: scoreRange.max
+      scoreDisplayStarsOptions: {
+        numberOfStars: NUM_STARS,
+        perfectScore: scoreRange.max
+      }
     } ),
     listener: () => console.log( 'level start' ),
     soundPlayerIndex: 1

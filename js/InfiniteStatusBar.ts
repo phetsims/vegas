@@ -8,8 +8,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import TProperty from '../../axon/js/TProperty.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -20,6 +18,8 @@ import Node from '../../scenery/js/nodes/Node.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
   backButtonListener?: PushButtonListener;
@@ -28,7 +28,7 @@ type SelfOptions = {
   spacing?: number;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: TProperty<number> ) => Node;
+  createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number> ) => Node;
 };
 
 export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
@@ -44,8 +44,11 @@ export default class InfiniteStatusBar extends StatusBar {
    * @param scoreProperty
    * @param providedOptions
    */
-  public constructor( layoutBounds: Bounds2, visibleBoundsProperty: TReadOnlyProperty<Bounds2>, messageNode: Node,
-                      scoreProperty: TProperty<number>, providedOptions?: InfiniteStatusBarOptions ) {
+  public constructor( layoutBounds: Bounds2,
+                      visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
+                      messageNode: Node,
+                      scoreProperty: ReadOnlyProperty<number>,
+                      providedOptions?: InfiniteStatusBarOptions ) {
 
     const options = optionize<InfiniteStatusBarOptions, SelfOptions, StatusBarOptions>()( {
 
@@ -54,7 +57,7 @@ export default class InfiniteStatusBar extends StatusBar {
       xMargin: 20,
       yMargin: 10,
       spacing: 10,
-      createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty )
+      createScoreDisplay: ( scoreProperty: ReadOnlyProperty<number> ) => new ScoreDisplayNumberAndStar( scoreProperty )
     }, providedOptions );
 
     // button that typically takes us back to the level-selection UI

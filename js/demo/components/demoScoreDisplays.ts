@@ -38,7 +38,11 @@ export default function demoScoreDisplays( layoutBounds: Bounds2 ): Node {
     top: layoutBounds.top + 20,
     children: [
       new ScoreDisplayStars( scoreProperty, { numberOfStars: NUM_STARS, perfectScore: scoreProperty.range.max } ),
-      new ScoreDisplayLabeledStars( scoreProperty, { numberOfStars: NUM_STARS, perfectScore: scoreProperty.range.max } ),
+      new ScoreDisplayLabeledStars( scoreProperty, {
+        scoreDisplayStarsOptions: {
+          numberOfStars: NUM_STARS, perfectScore: scoreProperty.range.max
+        }
+      } ),
       new ScoreDisplayNumberAndStar( scoreProperty ),
       new ScoreDisplayLabeledNumber( scoreProperty )
     ]

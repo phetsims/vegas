@@ -8,7 +8,6 @@
  * @author Andrea Lin
  */
 
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
@@ -19,6 +18,8 @@ import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
 import vegas from './vegas.js';
 import { toFixed } from '../../dot/js/util/toFixed.js';
+import Tandem from '../../tandem/js/Tandem.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 type SelfOptions = {
   font?: Font;
@@ -33,7 +34,7 @@ export default class ScoreDisplayNumberAndStar extends HBox {
 
   private readonly disposeScoreDisplayNumberAndStar: () => void;
 
-  public constructor( scoreProperty: TReadOnlyProperty<number>, providedOptions?: ScoreDisplayNumberAndStarOptions ) {
+  public constructor( scoreProperty: ReadOnlyProperty<number>, providedOptions?: ScoreDisplayNumberAndStarOptions ) {
 
     const options = optionize<ScoreDisplayNumberAndStarOptions, SelfOptions, HBoxOptions>()( {
 
@@ -51,7 +52,12 @@ export default class ScoreDisplayNumberAndStar extends HBox {
       },
 
       // HBoxOptions
-      spacing: 5
+      spacing: 5,
+      tandem: Tandem.OPTIONAL,
+      phetioFeatured: true,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     }, providedOptions );
 
     super( options );
@@ -74,6 +80,10 @@ export default class ScoreDisplayNumberAndStar extends HBox {
       this.children = children;
     };
     scoreProperty.link( scorePropertyListener );
+
+    if ( this.isPhetioInstrumented() && scoreProperty.isPhetioInstrumented() ) {
+      this.addLinkedElement( scoreProperty );
+    }
 
     this.disposeScoreDisplayNumberAndStar = function() {
       scoreProperty.unlink( scorePropertyListener );
