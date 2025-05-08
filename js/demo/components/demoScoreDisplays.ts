@@ -26,7 +26,7 @@ const NUM_STARS = 5;
 export default function demoScoreDisplays( layoutBounds: Bounds2 ): Node {
 
   const scoreProperty = new NumberProperty( 0, {
-    range: new Range( 0, 1000 )
+    range: new Range( 0, 10 )
   } );
 
   // Various options for displaying score.
