@@ -10,6 +10,7 @@
 import BooleanProperty from '../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../axon/js/NumberProperty.js';
 import Property from '../../axon/js/Property.js';
+import Range from '../../dot/js/Range.js';
 import stepTimer from '../../axon/js/stepTimer.js';
 import { TimerListener } from '../../axon/js/Timer.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
@@ -46,7 +47,7 @@ export default class GameTimer extends PhetioObject {
     this.elapsedTimeProperty = new NumberProperty( 0, {
       numberType: 'Integer',
       units: 's',
-      isValidValue: elapsedTime => ( elapsedTime >= 0 ),
+      range: new Range( 0, Infinity ),
       tandem: tandem.createTandem( 'elapsedTimeProperty' ),
       phetioFeatured: true,
       phetioReadOnly: true
