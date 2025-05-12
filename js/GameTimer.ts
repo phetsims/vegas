@@ -40,6 +40,7 @@ export default class GameTimer extends PhetioObject {
 
     this.isRunningProperty = new BooleanProperty( false, {
       tandem: tandem.createTandem( 'isRunningProperty' ),
+      phetioDocumentation: 'Whether the timer is currently running. This is true when the timer is enabled and the user is playing a level.',
       phetioFeatured: true,
       phetioReadOnly: true // Sims use start(), stop(), or restart() to change isRunningProperty.
     } );
@@ -49,6 +50,7 @@ export default class GameTimer extends PhetioObject {
       units: 's',
       range: new Range( 0, Infinity ),
       tandem: tandem.createTandem( 'elapsedTimeProperty' ),
+      phetioDocumentation: 'The elapsed time since the user started playing the current level.',
       phetioFeatured: true,
       phetioReadOnly: true
     } );
