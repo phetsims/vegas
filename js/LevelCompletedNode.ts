@@ -27,6 +27,7 @@ import GameTimer from './GameTimer.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
+import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
 
 const DEFAULT_TITLE_FONT = new PhetFont( { size: 28, weight: 'bold' } );
 const DEFAULT_INFO_FONT = new PhetFont( { size: 22, weight: 'bold' } );
@@ -149,7 +150,7 @@ export default class LevelCompletedNode extends Panel {
     if ( timerEnabled ) {
 
       // Time: MM:SS
-      const elapsedTimeStringProperty = new DerivedProperty( [
+      const elapsedTimeStringProperty = new DerivedStringProperty( [
           VegasStrings.label.timeStringProperty,
 
           // used by GameTimer.formatTime
@@ -164,7 +165,7 @@ export default class LevelCompletedNode extends Panel {
 
         // Time: MM:SS
         // (Your New Best!)
-        timeStringProperty = new DerivedProperty(
+        timeStringProperty = new DerivedStringProperty(
           [ elapsedTimeStringProperty, VegasStrings.yourNewBestStringProperty ],
           ( elapsedTime: string, yourNewBest: string ) => `${elapsedTime}<br>${yourNewBest}`
         );
@@ -173,7 +174,7 @@ export default class LevelCompletedNode extends Panel {
 
         // Time: MM:SS
         // (Your Best: MM:SS)
-        timeStringProperty = new DerivedProperty(
+        timeStringProperty = new DerivedStringProperty(
           [ elapsedTimeStringProperty,
             VegasStrings.pattern[ '0yourBestStringProperty' ],
 
