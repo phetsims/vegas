@@ -223,7 +223,9 @@ export default class LevelCompletedNode extends Panel {
       // DerivedStringProperty instances
       scoreStringProperty.dispose();
       elapsedTimeStringProperty && elapsedTimeStringProperty.dispose();
-      timeStringProperty && timeStringProperty.dispose();
+      if ( timeStringProperty && timeStringProperty !== elapsedTimeStringProperty ) {
+        timeStringProperty.dispose();
+      }
 
       // All VBox children are linked to dynamic string Properties, so must be disposed.
       vBoxChildren.forEach( child => child.dispose() );
