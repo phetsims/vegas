@@ -28,6 +28,7 @@ import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 
 const DEFAULT_TITLE_FONT = new PhetFont( { size: 28, weight: 'bold' } );
 const DEFAULT_INFO_FONT = new PhetFont( { size: 22, weight: 'bold' } );
@@ -137,7 +138,7 @@ export default class LevelCompletedNode extends Panel {
     }
 
     // Score
-    const scoreStringProperty = new DerivedProperty(
+    const scoreStringProperty = new DerivedStringProperty(
       [ VegasStrings.label.score.maxStringProperty ],
       pattern => StringUtils.format( pattern, score, perfectScore )
     );
@@ -147,10 +148,12 @@ export default class LevelCompletedNode extends Panel {
     } ) );
 
     // Time (optional)
+    let elapsedTimeStringProperty: TReadOnlyProperty<string>;
+    let timeStringProperty: TReadOnlyProperty<string>;
     if ( timerEnabled ) {
 
       // Time: MM:SS
-      const elapsedTimeStringProperty = new DerivedStringProperty( [
+      elapsedTimeStringProperty = new DerivedStringProperty( [
           VegasStrings.label.timeStringProperty,
 
           // used by GameTimer.formatTime
@@ -160,7 +163,6 @@ export default class LevelCompletedNode extends Panel {
         pattern => StringUtils.format( pattern, GameTimer.formatTime( elapsedTime ) )
       );
 
-      let timeStringProperty;
       if ( isNewBestTime ) {
 
         // Time: MM:SS
@@ -217,6 +219,11 @@ export default class LevelCompletedNode extends Panel {
     super( content, options );
 
     this.disposeLevelCompletedNode = () => {
+
+      // DerivedStringProperty instances
+      scoreStringProperty.dispose();
+      elapsedTimeStringProperty && elapsedTimeStringProperty.dispose();
+      timeStringProperty && timeStringProperty.dispose();
 
       // All VBox children are linked to dynamic string Properties, so must be disposed.
       vBoxChildren.forEach( child => child.dispose() );
