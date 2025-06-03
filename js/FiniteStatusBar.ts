@@ -7,7 +7,9 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
 import Multilink from '../../axon/js/Multilink.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
@@ -19,17 +21,15 @@ import HBox from '../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Rectangle from '../../scenery/js/nodes/Rectangle.js';
 import Text, { TextOptions } from '../../scenery/js/nodes/Text.js';
+import VStrut from '../../scenery/js/nodes/VStrut.js';
 import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
 import TextPushButton, { TextPushButtonOptions } from '../../sun/js/buttons/TextPushButton.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
-import VStrut from '../../scenery/js/nodes/VStrut.js';
-import Tandem from '../../tandem/js/Tandem.js';
-import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
-import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 type SelfOptions = {
 
@@ -68,6 +68,8 @@ type SelfOptions = {
 
   barFill?: TColor;
   barStroke?: TColor;
+
+  levelVisible?: boolean;
 };
 
 export type FiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
@@ -114,6 +116,7 @@ export default class FiniteStatusBar extends StatusBar {
       barFill: null,
       barStroke: null,
       tandem: Tandem.OPTIONAL,
+      levelVisible: true,
       visiblePropertyOptions: {
         phetioFeatured: true // See https://github.com/phetsims/balancing-chemical-equations/issues/201
       }
