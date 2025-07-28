@@ -8,7 +8,9 @@
  */
 
 import DerivedProperty from '../../axon/js/DerivedProperty.js';
+import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
 import Property from '../../axon/js/Property.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
@@ -27,8 +29,6 @@ import GameTimer from './GameTimer.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
-import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 
 const DEFAULT_TITLE_FONT = new PhetFont( { size: 28, weight: 'bold' } );
 const DEFAULT_INFO_FONT = new PhetFont( { size: 22, weight: 'bold' } );
@@ -77,7 +77,7 @@ export default class LevelCompletedNode extends Panel {
       buttonFont: DEFAULT_BUTTON_FONT,
       buttonFill: PhetColorScheme.BUTTON_YELLOW,
       starDiameter: 62,
-      contentMaxWidth: null,
+      contentMaxWidth: 400,
 
       // PanelOptions
       fill: 'rgb( 180, 205, 255 )',
