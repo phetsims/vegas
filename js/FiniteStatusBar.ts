@@ -70,6 +70,9 @@ type SelfOptions = {
   barStroke?: TColor;
 
   levelVisible?: boolean;
+
+  // String for the level label, if null the default will be used (if levelVisible is true)
+  levelLabelStringProperty?: TReadOnlyProperty<string> | null;
 };
 
 export type FiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
@@ -100,6 +103,7 @@ export default class FiniteStatusBar extends StatusBar {
       elapsedTimeProperty: null,
       timerEnabledProperty: null,
       levelNumberVisible: true,
+      levelLabelStringProperty: null,
       challengeNumberVisible: true,
       font: StatusBar.DEFAULT_FONT,
       textFill: StatusBar.DEFAULT_TEXT_FILL,
@@ -139,8 +143,9 @@ export default class FiniteStatusBar extends StatusBar {
     let levelNumberText: Node;
     if ( options.levelNumberProperty && options.levelNumberVisible ) {
 
+      const labelStringProperty = options.levelLabelStringProperty || VegasStrings.label.levelStringProperty;
       const levelStringProperty = new DerivedStringProperty(
-        [ VegasStrings.label.levelStringProperty, options.levelNumberProperty ],
+        [ labelStringProperty, options.levelNumberProperty ],
         ( pattern: string, level: number ) => StringUtils.format( pattern, level )
       );
 
