@@ -25,6 +25,7 @@ import VStrut from '../../scenery/js/nodes/VStrut.js';
 import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
 import TextPushButton, { TextPushButtonOptions } from '../../sun/js/buttons/TextPushButton.js';
+import sharedSoundPlayers from '../../tambo/js/sharedSoundPlayers.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
@@ -225,6 +226,7 @@ export default class FiniteStatusBar extends StatusBar {
       yMargin: 8,
       listener: _.noop,
       maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ), // use 20% of available width
+      soundPlayer: sharedSoundPlayers.get( 'goBack' ),
       tandem: options.tandem.createTandem( 'startOverButton' )
     }, options.startOverButtonOptions ) );
 
