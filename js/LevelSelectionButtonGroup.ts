@@ -17,6 +17,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -27,7 +28,6 @@ import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import vegas from './vegas.js';
-import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 // Describes one LevelSelectionButton
 export type LevelSelectionButtonGroupItem = {
@@ -74,7 +74,7 @@ export default class LevelSelectionButtonGroup extends Node {
 
   // Buttons, ordered by increasing level number.
   // Note that level numbering starts from 1, to match the gameLevels query parameter.
-  private readonly buttons: LevelSelectionButton[];
+  public readonly buttons: LevelSelectionButton[];
 
   /**
    * @param items - descriptions of the LevelSelectionButtons, ordered by increasing level number

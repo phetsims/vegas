@@ -32,6 +32,9 @@ type SelfOptions = {
   // Options for the description text nodes
   descriptionTextOptions?: StrictOmit<RichTextOptions, 'tandem'>;
 
+  // Visible properties for the game levels, used to control visibility of the descriptions.
+  descriptionVisibleProperties?: TReadOnlyProperty<boolean>[];
+
   // Options for the layout (VBox)
   vBoxOptions?: StrictOmit<VBoxOptions, 'children' | 'maxWidth'>;
 
@@ -55,6 +58,7 @@ export default class GameInfoDialog extends Dialog {
       descriptionTextOptions: {
         font: DEFAULT_DESCRIPTION_TEXT_FONT
       },
+      descriptionVisibleProperties: [],
       vBoxOptions: {
         align: 'left',
         spacing: 20
@@ -73,7 +77,11 @@ export default class GameInfoDialog extends Dialog {
 
     const descriptionNodes = levelDescriptions.map( ( levelDescription, index ) =>
       new RichText( levelDescription, optionize<RichTextOptions, EmptySelfOptions, RichTextOptions>()( {
-        tandem: options.tandem.createTandem( `level${index}DescriptionText` )
+        tandem: options.tandem.createTandem( `level${index}DescriptionText` ),
+
+        // If visibleProperties are provided, use them to control visibility of the description.
+        visibleProperty: options.descriptionVisibleProperties && options.descriptionVisibleProperties[ index ] ?
+                         options.descriptionVisibleProperties[ index ] : null
       }, options.descriptionTextOptions ) )
     );
 
