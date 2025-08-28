@@ -10,7 +10,7 @@
 import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
 import Multilink from '../../axon/js/Multilink.js';
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';

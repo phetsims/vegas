@@ -19,7 +19,7 @@ import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
   backButtonListener?: PushButtonListener;
