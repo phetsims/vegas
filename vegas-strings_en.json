@@ -1,6 +1,6 @@
 {
   "vegas.title": {
-   "value": "vegas demo"
+    "value": "vegas demo"
   },
   "screen.components": {
     "value": "Components"
@@ -94,5 +94,27 @@
   },
   "chooseYourLevel": {
     "value": "Choose Your Level!"
+  },
+  "a11y": {
+    "statusBar": {
+      "backButton": {
+        "accessibleName": {
+          "value": "Back"
+        },
+        "accessibleHelpText": {
+          "value": "Go back to the level selection screen."
+        },
+        "accessibleContextResponse": {
+          "value": "You are on the level selection screen."
+        }
+      }
+    },
+    "levelSelectionScreen": {
+      "levelButton": {
+        "accessibleName": {
+          "value": "Level { $levelNumber }, Score: { $score }"
+        }
+      }
+    }
   }
 }

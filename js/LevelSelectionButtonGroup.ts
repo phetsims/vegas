@@ -28,6 +28,7 @@ import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 
 // Describes one LevelSelectionButton
 export type LevelSelectionButtonGroupItem = {
@@ -106,7 +107,11 @@ export default class LevelSelectionButtonGroup extends Node {
       const buttonOptions = combineOptions<LevelSelectionButtonOptions>( {
         buttonHeight: options.groupButtonHeight,
         buttonWidth: options.groupButtonWidth,
-        tandem: tandem
+        tandem: tandem,
+        accessibleName: VegasFluent.a11y.levelSelectionScreen.levelButton.accessibleName.createProperty( {
+          levelNumber: index + 1,
+          score: item.scoreProperty
+        } )
       }, options.levelSelectionButtonOptions, item.options );
 
       return new LevelSelectionButton( item.icon, item.scoreProperty, buttonOptions );

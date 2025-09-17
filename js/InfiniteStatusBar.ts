@@ -8,6 +8,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -18,8 +20,7 @@ import Node from '../../scenery/js/nodes/Node.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
-import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
-import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
+import VegasFluent from './VegasFluent.js';
 
 type SelfOptions = {
   backButtonListener?: PushButtonListener;
@@ -62,6 +63,9 @@ export default class InfiniteStatusBar extends StatusBar {
 
     // button that typically takes us back to the level-selection UI
     const backButton = new BackButton( {
+      accessibleName: VegasFluent.a11y.statusBar.backButton.accessibleNameStringProperty,
+      accessibleHelpText: VegasFluent.a11y.statusBar.backButton.accessibleHelpTextStringProperty,
+      accessibleContextResponse: VegasFluent.a11y.statusBar.backButton.accessibleContextResponseStringProperty,
       listener: options.backButtonListener,
       xMargin: 8,
       yMargin: 10,

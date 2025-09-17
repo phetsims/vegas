@@ -1,0 +1,42 @@
+vegas.title:                      vegas demo
+screen.components:                Components
+screen.finiteChallenges:          Finite Challenges
+screen.infiniteChallenges:        Infinite Challenges
+pattern.0challenge.1max:          Challenge {0} of {1}
+pattern.0hours.1minutes.2seconds: '{0}:{1}:{2}'
+pattern.0minutes.1seconds:        '{0}:{1}'
+keepTrying:                       Keep Trying
+good:                             Good!
+great:                            Great!
+excellent:                        Excellent!
+yourNewBest:                      (Your New Best!)
+pattern.0yourBest:                '(Your Best: {0})'
+continue:                         Continue
+label.level:                      'Level: {0}'
+label.scorePattern:               'Score: {0}'
+check:                            Check
+next:                             Next
+button.newGame:                   New Game
+showAnswer:                       Show Answer
+label.time:                       'Time: {0}'
+label.score.max:                  'Score: {0} out of {1}'
+tryAgain:                         Try Again
+selectLevel:                      Select Level
+startOver:                        Start Over
+pattern.score.number:             'Score: {{score}}'
+keepGoing:                        Keep Going
+newLevel:                         New Level
+score:                            'Score:'
+done:                             Done
+youCompletedAllLevels:            You completed all levels!
+chooseYourLevel:                  Choose Your Level!
+
+a11y:
+  statusBar:
+    backButton:
+      accessibleName:            Back
+      accessibleHelpText:        Go back to the level selection screen.
+      accessibleContextResponse: You are on the level selection screen.
+  levelSelectionScreen:
+    levelButton:
+      accessibleName: 'Level { $levelNumber }, Score: { $score }'

@@ -66,6 +66,20 @@ type StringsType = {
   'doneStringProperty': LocalizedStringProperty;
   'youCompletedAllLevelsStringProperty': LocalizedStringProperty;
   'chooseYourLevelStringProperty': LocalizedStringProperty;
+  'a11y': {
+    'statusBar': {
+      'backButton': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+        'accessibleContextResponseStringProperty': LocalizedStringProperty;
+      }
+    };
+    'levelSelectionScreen': {
+      'levelButton': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      }
+    }
+  }
 };
 
 const VegasStrings = getStringModule( 'VEGAS' ) as StringsType;
