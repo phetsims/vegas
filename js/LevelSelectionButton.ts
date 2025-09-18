@@ -14,9 +14,11 @@
  * @author Andrea Lin
  */
 
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import { findStringProperty } from '../../scenery/js/accessibility/pdom/findStringProperty.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Rectangle from '../../scenery/js/nodes/Rectangle.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../sun/js/buttons/RectangularPushButton.js';
@@ -27,7 +29,6 @@ import Tandem from '../../tandem/js/Tandem.js';
 import levelSelectionButton_mp3 from '../sounds/levelSelectionButton_mp3.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
-import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 type SelfOptions = {
 
@@ -138,6 +139,11 @@ export default class LevelSelectionButton extends RectangularPushButton {
     }
 
     super( options );
+
+    // If no accessibleName is provided, look for one in the content Node
+    if ( !options.accessibleName ) {
+      this.accessibleName = findStringProperty( icon );
+    }
 
     this.disposeLevelSelectionButton = () => {
       scoreDisplay.dispose();
