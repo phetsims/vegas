@@ -43,6 +43,10 @@ const FONT = new PhetFont( 25 );
 export default class LevelsScreenView extends ScreenView {
   public constructor() {
     super( {
+
+      // Game screens will not have the usual "play area" and "control area" content.
+      includePDOMNodes: false,
+
       tandem: Tandem.OPT_OUT
     } );
 
