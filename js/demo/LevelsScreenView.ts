@@ -45,7 +45,7 @@ export default class LevelsScreenView extends ScreenView {
     super( {
 
       // Game screens will not have the usual "play area" and "control area" content.
-      includePDOMNodes: false,
+      includeAccessibleSectionNodes: false,
 
       tandem: Tandem.OPT_OUT
     } );
