@@ -86,6 +86,10 @@ type StringsType = {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
+    'gameScreenNode': {
+      'accessibleAnswerSectionStringProperty': LocalizedStringProperty;
+      'accessibleProgressSectionStringProperty': LocalizedStringProperty;
+    };
     'units': {
       'stars': {
         'patternStringProperty': LocalizedStringProperty;

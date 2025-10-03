@@ -133,6 +133,14 @@
         "value": "If needed, read brief details for each level."
       }
     },
+    "gameScreenNode": {
+      "accessibleAnswerSection": {
+        "value": "Answer Submission"
+      },
+      "accessibleProgressSection": {
+        "value": "Level { $levelNumber } Progress"
+      }
+    },
     "units": {
       "stars": {
         "pattern": {

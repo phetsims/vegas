@@ -59,6 +59,8 @@ addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOn', 'a1
 addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOff', 'a11y.gameTimerToggleButton.accessibleContextResponseOffStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleName', 'a11y.gameInfoButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleHelpText', 'a11y.gameInfoButton.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_gameScreenNode_accessibleAnswerSection', 'a11y.gameScreenNode.accessibleAnswerSectionStringProperty' );
+addToMapIfDefined( 'a11y_gameScreenNode_accessibleProgressSection', 'a11y.gameScreenNode.accessibleProgressSectionStringProperty' );
 addToMapIfDefined( 'a11y_units_stars_pattern', 'a11y.units.stars.patternStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleName', 'a11y.levelSelectionButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleNameWithLevelName', 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' );
@@ -152,6 +154,10 @@ const VegasFluent = {
       _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameInfoButton_accessibleName', _.get( VegasStrings, 'a11y.gameInfoButton.accessibleNameStringProperty' ) ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameInfoButton_accessibleHelpText', _.get( VegasStrings, 'a11y.gameInfoButton.accessibleHelpTextStringProperty' ) )
+    },
+    gameScreenNode: {
+      accessibleAnswerSectionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleAnswerSection', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleAnswerSectionStringProperty' ) ),
+      accessibleProgressSection: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleProgressSection', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleProgressSectionStringProperty' ), [{"name":"levelNumber"}] )
     },
     units: {
       stars: {

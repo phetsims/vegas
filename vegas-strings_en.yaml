@@ -47,6 +47,10 @@ a11y:
   gameInfoButton:
     accessibleName:     Game Info
     accessibleHelpText: If needed, read brief details for each level.
+
+  gameScreenNode:
+    accessibleAnswerSection: Answer Submission
+    accessibleProgressSection: Level { $levelNumber } Progress
   units:
     stars:
       pattern: |-
