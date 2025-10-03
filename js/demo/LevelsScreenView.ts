@@ -12,13 +12,16 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import DerivedProperty from '../../../axon/js/DerivedProperty.js';
+import DerivedProperty, { DerivedProperty3 } from '../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Property from '../../../axon/js/Property.js';
+import StringProperty from '../../../axon/js/StringProperty.js';
 import { TReadOnlyProperty } from '../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import Range from '../../../dot/js/Range.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
+import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
+import PDOMSectionNode from '../../../scenery-phet/js/accessibility/PDOMSectionNode.js';
 import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import FocusStack from '../../../scenery/js/accessibility/FocusStack.js';
@@ -28,11 +31,17 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import TextPushButton from '../../../sun/js/buttons/TextPushButton.js';
 import Tandem from '../../../tandem/js/Tandem.js';
+import CheckButton from '../buttons/CheckButton.js';
+import GameInfoButton from '../buttons/GameInfoButton.js';
+import GameTimerToggleButton from '../buttons/GameTimerToggleButton.js';
+import ShowAnswerButton from '../buttons/ShowAnswerButton.js';
+import TryAgainButton from '../buttons/TryAgainButton.js';
 import FiniteStatusBar from '../FiniteStatusBar.js';
 import GameTimer from '../GameTimer.js';
 import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../LevelSelectionButtonGroup.js';
 import ScoreDisplayStars from '../ScoreDisplayStars.js';
 import vegas from '../vegas.js';
+import VegasStrings from '../VegasStrings.js';
 
 // Testing a global structure for managing focus between screens.
 const focusStack = new FocusStack();
@@ -61,6 +70,9 @@ export default class LevelsScreenView extends ScreenView {
       return score === scoreProperty.range.max;
     } );
     const gameTimer = new GameTimer();
+    const timerEnabledProperty = new Property( true );
+
+    const numberOfChallengesProperty = new Property( NUMBER_OF_LEVELS );
 
     // Even levels will put focus on the accessible heading when the level is shown, odd levels will put focus on
     // a game button.
@@ -71,6 +83,8 @@ export default class LevelsScreenView extends ScreenView {
     //-------------------- Create level screens -------------------
     const levelNodes: GameScreenNode[] = [];
     for ( let level = 0; level < NUMBER_OF_LEVELS; level++ ) {
+      const challengeNumberProperty = new Property( level + 1 );
+
       const levelNode = new MyGameScreenNode(
         level,
         this.layoutBounds,
@@ -78,7 +92,10 @@ export default class LevelsScreenView extends ScreenView {
         scoreProperty,
         gameOverProperty,
         gameTimer,
+        timerEnabledProperty,
         selectedLevelIndexProperty,
+        challengeNumberProperty,
+        numberOfChallengesProperty,
         focusHeadingWhenVisible( level )
       );
 
@@ -90,7 +107,9 @@ export default class LevelsScreenView extends ScreenView {
       scoreProperty,
       selectedLevelIndexProperty,
       this.layoutBounds,
-      focusHeadingWhenVisible
+      focusHeadingWhenVisible,
+      numberOfChallengesProperty,
+      timerEnabledProperty
     );
     const levelNodesParent = new Node(); // parent for all level scenes
     levelNodesParent.children = [ ...levelNodes ];
@@ -177,14 +196,19 @@ class MyGameScreenNode extends GameScreenNode {
     scoreProperty: NumberProperty,
     gameOverProperty: TReadOnlyProperty<boolean>,
     gameTimer: GameTimer,
+    timerEnabledProperty: Property<boolean>,
     selectedLevelIndexProperty: Property<number | null>,
+    challengeNumberProperty: Property<number>,
+    numberOfChallengesProperty: Property<number>,
     focusHeadingWhenVisible: boolean
   ) {
     super();
 
     const statusBar = new FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, {
+      challengeNumberProperty: challengeNumberProperty,
+      numberOfChallengesProperty: numberOfChallengesProperty,
       elapsedTimeProperty: gameTimer.elapsedTimeProperty,
-      timerEnabledProperty: new Property( true ),
+      timerEnabledProperty: timerEnabledProperty,
       startOverButtonOptions: {
         listener: () => {
           selectedLevelIndexProperty.value = null;
@@ -192,13 +216,12 @@ class MyGameScreenNode extends GameScreenNode {
       }
     } );
 
-    const accessibleHeadingString = `This is level ${level + 1} 😎`;
     const accessibleHeadingNode = new FocusableHeadingNode( {
-      accessibleName: accessibleHeadingString
+      accessibleName: new ChallengeNumberStringProperty( challengeNumberProperty, numberOfChallengesProperty )
     } );
 
-    const levelText = new Text( accessibleHeadingString, {
-      font: FONT
+    const accessibleParagraphForChallenge = new Node( {
+      accessibleParagraph: 'Given the button, how many times can you press it?'
     } );
 
     const addPointButton = new TextPushButton( 'You are a ★', {
@@ -211,6 +234,10 @@ class MyGameScreenNode extends GameScreenNode {
       font: FONT
     } );
 
+    const checkAnswerButton = new CheckButton();
+    const tryAgainButton = new TryAgainButton();
+    const showAnswerButton = new ShowAnswerButton();
+
     const winnerNode = new Text( '😲 😀 ☺️ 😀 😲', {
       font: new PhetFont( 50 ),
       visibleProperty: gameOverProperty,
@@ -218,20 +245,29 @@ class MyGameScreenNode extends GameScreenNode {
     } );
 
     // layout - status bar manages layout at the top
-    levelText.center = layoutBounds.center;
-    addPointButton.centerTop = levelText.centerBottom.plusXY( 0, 20 );
+    addPointButton.center = layoutBounds.center;
     winnerNode.centerTop = addPointButton.centerBottom.plusXY( 0, 20 );
+    checkAnswerButton.centerTop = winnerNode.centerBottom.plusXY( 0, 20 );
+    tryAgainButton.centerTop = checkAnswerButton.centerBottom.plusXY( 0, 20 );
+    showAnswerButton.centerTop = tryAgainButton.centerBottom.plusXY( 0, 20 );
 
     this.addChild( accessibleHeadingNode );
-    this.addChild( levelText );
+    this.addChild( accessibleParagraphForChallenge );
     this.addChild( winnerNode );
+    this.addChild( checkAnswerButton );
+    this.addChild( tryAgainButton );
+    this.addChild( showAnswerButton );
     this.addChild( addPointButton );
     this.addChild( statusBar );
 
     this.pdomOrder = [
       accessibleHeadingNode,
+      accessibleParagraphForChallenge,
       addPointButton,
       winnerNode,
+      checkAnswerButton,
+      tryAgainButton,
+      showAnswerButton,
       statusBar
     ];
 
@@ -263,24 +299,47 @@ class MyGameScreenNode extends GameScreenNode {
 class LevelSelectionScreenNode extends GameScreenNode {
   private transientButton: Node | null = null;
   private readonly layoutBounds: Bounds2;
+  protected readonly pdomLevelsSectionNode: PDOMSectionNode;
+  protected readonly pdomControlsSectionNode: PDOMSectionNode;
 
   public constructor(
     scoreProperty: NumberProperty,
     selectedLevelIndexProperty: Property<number | null>,
     layoutBounds: Bounds2,
-    focusHeadingWhenVisible: ( levelNumber: number ) => boolean
+    focusHeadingWhenVisible: ( levelNumber: number ) => boolean,
+    numberOfChallengesProperty: Property<number>,
+    timerEnabledProperty: Property<boolean>
   ) {
     super();
     this.layoutBounds = layoutBounds;
+
+    const leadingParagraphNode = new Node( {
+
+      // The "Levels" would be the name of the screen.
+      accessibleParagraph: 'Welcome to the Levels Screen. Choose a level to start earning stars. Additionally, choose game options for all levels. Use reset all to clear the game and start over.'
+    } );
+
+    // Accessibility sections. Content should be placed into these using pdomOrder.
+    const levelsSection = new PDOMSectionNode( new StringProperty( 'Choose Your Level' ), {
+      accessibleHeadingIncrement: 2
+    } );
+
+    const controlsSection = new PDOMSectionNode( new StringProperty( 'Choose Game Options' ), {
+      accessibleHeadingIncrement: 2
+    } );
 
     //-------------------- Level selection buttons -------------------
     const levelButtonsItems: LevelSelectionButtonGroupItem[] = [];
     for ( let level = 0; level < NUMBER_OF_LEVELS; level++ ) {
 
+
       levelButtonsItems.push( {
         icon: new Text( `Level ${level + 1}`, { font: FONT } ),
         scoreProperty: scoreProperty,
+
+        // Example of customizing a custom brief accessible name for the button.
         options: {
+          accessibleHelpText: 'Identify number of reactants needed to create the products and leftovers.',
           listener: () => {
 
             // The last level screen returns focus to a transient button. Note that the transient button
@@ -311,6 +370,9 @@ class LevelSelectionScreenNode extends GameScreenNode {
     }
     const levelSelectionButtonGroup = new LevelSelectionButtonGroup( levelButtonsItems );
 
+    const gameInfoButton = new GameInfoButton();
+    const timerButton = new GameTimerToggleButton( timerEnabledProperty );
+
     const resetButton = new ResetAllButton( {
       listener: () => {
         scoreProperty.value = 0;
@@ -320,19 +382,40 @@ class LevelSelectionScreenNode extends GameScreenNode {
 
     //------------------- Add to scene graph -------------------
     this.children = [
+      leadingParagraphNode,
+      levelsSection,
+      controlsSection,
       levelSelectionButtonGroup,
+      gameInfoButton,
+      timerButton,
+      resetButton
+    ];
+
+    this.pdomLevelsSectionNode = levelsSection;
+    this.pdomControlsSectionNode = controlsSection;
+
+    // This is what clients might do in their LevelsScreenView.
+    this.pdomLevelsSectionNode.pdomOrder = [
+      levelSelectionButtonGroup
+    ];
+
+    this.pdomControlsSectionNode.pdomOrder = [
+      gameInfoButton,
+      timerButton,
       resetButton
     ];
 
     this.pdomOrder = [
-      levelSelectionButtonGroup,
-      null,
-      resetButton
+      leadingParagraphNode,
+      this.pdomLevelsSectionNode,
+      this.pdomControlsSectionNode
     ];
 
     //------------------- Layout -------------------
     levelSelectionButtonGroup.center = layoutBounds.center;
     resetButton.rightBottom = layoutBounds.rightBottom.minusXY( 20, 20 );
+    gameInfoButton.rightCenter = resetButton.leftCenter.minusXY( 20, 0 );
+    timerButton.rightCenter = gameInfoButton.leftCenter.minusXY( 20, 0 );
   }
 
   public override show(): void {
@@ -365,6 +448,17 @@ class LevelSelectionScreenNode extends GameScreenNode {
 
   public override hide(): void {
     super.hide();
+  }
+}
+
+class ChallengeNumberStringProperty extends DerivedProperty3<string, string, number, number> {
+  public constructor( challengeNumberProperty: TReadOnlyProperty<number>, challengeCountProperty: TReadOnlyProperty<number> ) {
+    super( [ VegasStrings.pattern[ '0challenge' ][ '1maxStringProperty' ], challengeNumberProperty, challengeCountProperty ],
+      ( pattern: string, challengeNumber: number, challengeCount: number ) => {
+        return StringUtils.format( pattern, challengeNumber, challengeCount );
+      }, {
+        tandem: Tandem.OPT_OUT
+      } );
   }
 }
 
