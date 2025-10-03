@@ -5,9 +5,6 @@
  *
  * This button provides default accessibility content, including an accessible name.
  *
- * NOTE: When this button is pressed, the next challenge loads and focus should move to the
- * h2 of the next game challenge.
- *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
