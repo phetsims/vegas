@@ -56,7 +56,10 @@ export default class GameInfoDialog extends Dialog {
 
     const options = optionize<GameInfoDialogOptions, StrictOmit<SelfOptions, 'gameLevels'>, DialogOptions>()( {
       descriptionTextOptions: {
-        font: DEFAULT_DESCRIPTION_TEXT_FONT
+        font: DEFAULT_DESCRIPTION_TEXT_FONT,
+
+        // pdom - each description is a list item under a parent unordered list
+        tagName: 'li'
       },
       descriptionVisibleProperties: [],
       vBoxOptions: {
@@ -78,6 +81,7 @@ export default class GameInfoDialog extends Dialog {
     const descriptionNodes = levelDescriptions.map( ( levelDescription, index ) =>
       new RichText( levelDescription, optionize<RichTextOptions, EmptySelfOptions, RichTextOptions>()( {
         tandem: options.tandem.createTandem( `level${index}DescriptionText` ),
+        accessibleName: levelDescription,
 
         // If visibleProperties are provided, use them to control visibility of the description.
         visibleProperty: options.descriptionVisibleProperties && options.descriptionVisibleProperties[ index ] ?
@@ -99,7 +103,10 @@ export default class GameInfoDialog extends Dialog {
     // Vertical layout
     const content = new VBox( optionize<VBoxOptions, EmptySelfOptions, VBoxOptions>()( {
       children: descriptionNodes,
-      maxWidth: options.maxContentWidth // scale all descriptions uniformly
+      maxWidth: options.maxContentWidth, // scale all descriptions uniformly
+
+      // pdom - the descriptions are listed in an unordered list
+      tagName: 'ul'
     }, options.vBoxOptions ) );
 
     super( content, options );
