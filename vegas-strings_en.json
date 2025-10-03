@@ -156,10 +156,16 @@
         "value": "Level { $levelNumber }: { $levelName }, { a11y_units_stars_pattern }"
       }
     },
-    "levelSelectionScreen": {
-      "levelButton": {
-        "accessibleName": {
-          "value": "Level { $levelNumber }, Score: { $score }"
+    "levelSelectionScreenNode": {
+      "screenSummary": {
+        "useResetDescription": {
+          "value": "Use reset all to clear the game and start over."
+        },
+        "intro": {
+          "value": "Welcome to the { $screenName } Screen. { a11y_levelSelectionScreenNode_screenSummary_useResetDescription }"
+        },
+        "introWithSummary": {
+          "value": "Welcome to the { $screenName } Screen. { $summary } { a11y_levelSelectionScreenNode_screenSummary_useResetDescription }"
         }
       }
     }

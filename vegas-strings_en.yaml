@@ -64,6 +64,10 @@ a11y:
     # The accessible name has two variants - with and without a descriptive name.
     accessibleName:              'Level { $levelNumber }, { a11y.units.stars.pattern }'
     accessibleNameWithLevelName: 'Level { $levelNumber }: { $levelName }, { a11y.units.stars.pattern }'
-  levelSelectionScreen:
-    levelButton:
-      accessibleName: 'Level { $levelNumber }, Score: { $score }'
+  levelSelectionScreenNode:
+    screenSummary:
+      useResetDescription: Use reset all to clear the game and start over.
+
+      # The leading paragraph has a different pattern when there is a custom summary about the game.
+      intro: Welcome to the { $screenName } Screen. { a11y.levelSelectionScreenNode.screenSummary.useResetDescription }
+      introWithSummary: Welcome to the { $screenName } Screen. { $summary } { a11y.levelSelectionScreenNode.screenSummary.useResetDescription }

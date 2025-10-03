@@ -12,10 +12,27 @@
  */
 import StringProperty from '../../axon/js/StringProperty.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
+import optionize from '../../phet-core/js/optionize.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';
-import Node from '../../scenery/js/nodes/Node.js';
+import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 import VegasScreenNode from './VegasScreenNode.js';
+
+type SelfOptions = {
+
+  // An optional summary string that describes the game and guides the user toward what is expected.
+  // The default content will include a welcome statement and a description of the Reset All button:
+  //
+  // Welcome to the {{NAME}} Screen. {{accessibleGameSummary}} Use reset all to clear the game and start over."
+  //
+  // Here is an example value:
+  // "Choose a level to start earning stars. Additionally, choose game options for all levels.
+  accessibleGameSummary?: TReadOnlyProperty<string> | null;
+};
+
+type ParentOptions = NodeOptions;
+export type LevelSelectionScreenNodeOptions = SelfOptions & ParentOptions;
 
 export default class LevelSelectionScreenNode extends VegasScreenNode {
 
@@ -27,13 +44,28 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
   // Assign control components to this section using pdomOrder.
   public readonly accessibleControlsSectionNode: PDOMSectionNode;
 
-  public constructor( screenNameProperty: TReadOnlyProperty<string> ) {
+  public constructor( screenNameProperty: TReadOnlyProperty<string>, providedOptions?: LevelSelectionScreenNodeOptions ) {
+    const options = optionize<LevelSelectionScreenNodeOptions, SelfOptions, ParentOptions>()( {
+      accessibleGameSummary: null
+    }, providedOptions );
+
     super();
 
+    // The leading paragraph has a different pattern when there is a custom summary about the game.
+    let leadingParagraphStringProperty: TReadOnlyProperty<string>;
+    if ( options.accessibleGameSummary ) {
+      leadingParagraphStringProperty = VegasFluent.a11y.levelSelectionScreenNode.screenSummary.introWithSummary.createProperty( {
+        screenName: screenNameProperty,
+        summary: options.accessibleGameSummary
+      } );
+    }
+    else {
+      leadingParagraphStringProperty = VegasFluent.a11y.levelSelectionScreenNode.screenSummary.intro.createProperty( {
+        screenName: screenNameProperty
+      } );
+    }
     const leadingParagraphNode = new Node( {
-
-      // The "Levels" would be the name of the screen.
-      accessibleParagraph: `Welcome to the ${screenNameProperty.value} Screen. Choose a level to start earning stars. Additionally, choose game options for all levels. Use reset all to clear the game and start over.`
+      accessibleParagraph: leadingParagraphStringProperty
     } );
 
     const sectionOptions = { accessibleHeadingIncrement: 2 };

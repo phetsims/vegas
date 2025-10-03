@@ -99,9 +99,11 @@ type StringsType = {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleNameWithLevelNameStringProperty': LocalizedStringProperty;
     };
-    'levelSelectionScreen': {
-      'levelButton': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
+    'levelSelectionScreenNode': {
+      'screenSummary': {
+        'useResetDescriptionStringProperty': LocalizedStringProperty;
+        'introStringProperty': LocalizedStringProperty;
+        'introWithSummaryStringProperty': LocalizedStringProperty;
       }
     }
   }
