@@ -12,7 +12,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import DerivedProperty, { DerivedProperty3 } from '../../../axon/js/DerivedProperty.js';
+import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Property from '../../../axon/js/Property.js';
 import StringProperty from '../../../axon/js/StringProperty.js';
@@ -20,12 +20,9 @@ import { TReadOnlyProperty } from '../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import Range from '../../../dot/js/Range.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
-import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
-import PDOMSectionNode from '../../../scenery-phet/js/accessibility/PDOMSectionNode.js';
 import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import FocusStack from '../../../scenery/js/accessibility/FocusStack.js';
-import FocusableHeadingNode from '../../../scenery/js/accessibility/pdom/FocusableHeadingNode.js';
 import VBox from '../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
@@ -37,11 +34,13 @@ import GameTimerToggleButton from '../buttons/GameTimerToggleButton.js';
 import ShowAnswerButton from '../buttons/ShowAnswerButton.js';
 import TryAgainButton from '../buttons/TryAgainButton.js';
 import FiniteStatusBar from '../FiniteStatusBar.js';
+import GameScreenNode from '../GameScreenNode.js';
 import GameTimer from '../GameTimer.js';
 import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../LevelSelectionButtonGroup.js';
+import LevelSelectionScreenNode from '../LevelSelectionScreenNode.js';
 import ScoreDisplayStars from '../ScoreDisplayStars.js';
 import vegas from '../vegas.js';
-import VegasStrings from '../VegasStrings.js';
+import VegasScreenNode from '../VegasScreenNode.js';
 
 // Testing a global structure for managing focus between screens.
 const focusStack = new FocusStack();
@@ -81,7 +80,7 @@ export default class LevelsScreenView extends ScreenView {
     };
 
     //-------------------- Create level screens -------------------
-    const levelNodes: GameScreenNode[] = [];
+    const levelNodes: VegasScreenNode[] = [];
     for ( let level = 0; level < NUMBER_OF_LEVELS; level++ ) {
       const challengeNumberProperty = new Property( level + 1 );
 
@@ -103,7 +102,7 @@ export default class LevelsScreenView extends ScreenView {
     }
 
     //------------------- Add to scene graph -------------------
-    const levelSelectionNode = new LevelSelectionScreenNode(
+    const levelSelectionNode = new TestLevelSelectionScreenNode(
       scoreProperty,
       selectedLevelIndexProperty,
       this.layoutBounds,
@@ -134,9 +133,9 @@ export default class LevelsScreenView extends ScreenView {
    */
   private updateVisibility(
     selectedLevelIndex: number | null,
-    levelSelectionNode: GameScreenNode,
+    levelSelectionNode: VegasScreenNode,
     levelNodesParent: Node,
-    levelNodes: GameScreenNode[],
+    levelNodes: VegasScreenNode[],
     gameTimer: GameTimer
   ): void {
 
@@ -169,22 +168,7 @@ export default class LevelsScreenView extends ScreenView {
   }
 }
 
-class GameScreenNode extends Node {
-  public constructor() {
-    super();
-  }
-
-  public show(): void {
-    this.visible = true;
-  }
-
-  public hide(): void {
-    this.visible = false;
-  }
-}
-
 class MyGameScreenNode extends GameScreenNode {
-  private readonly accessibleHeadingNode: Node;
   private readonly addPointButton: Node;
   private readonly focusHeadingWhenVisible: boolean;
   private readonly level: number;
@@ -202,7 +186,7 @@ class MyGameScreenNode extends GameScreenNode {
     numberOfChallengesProperty: Property<number>,
     focusHeadingWhenVisible: boolean
   ) {
-    super();
+    super( challengeNumberProperty, numberOfChallengesProperty );
 
     const statusBar = new FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, {
       challengeNumberProperty: challengeNumberProperty,
@@ -214,14 +198,6 @@ class MyGameScreenNode extends GameScreenNode {
           selectedLevelIndexProperty.value = null;
         }
       }
-    } );
-
-    const accessibleHeadingNode = new FocusableHeadingNode( {
-      accessibleName: new ChallengeNumberStringProperty( challengeNumberProperty, numberOfChallengesProperty )
-    } );
-
-    const accessibleParagraphForChallenge = new Node( {
-      accessibleParagraph: 'Given the button, how many times can you press it?'
     } );
 
     const addPointButton = new TextPushButton( 'You are a ★', {
@@ -251,8 +227,6 @@ class MyGameScreenNode extends GameScreenNode {
     tryAgainButton.centerTop = checkAnswerButton.centerBottom.plusXY( 0, 20 );
     showAnswerButton.centerTop = tryAgainButton.centerBottom.plusXY( 0, 20 );
 
-    this.addChild( accessibleHeadingNode );
-    this.addChild( accessibleParagraphForChallenge );
     this.addChild( winnerNode );
     this.addChild( checkAnswerButton );
     this.addChild( tryAgainButton );
@@ -260,35 +234,24 @@ class MyGameScreenNode extends GameScreenNode {
     this.addChild( addPointButton );
     this.addChild( statusBar );
 
-    this.pdomOrder = [
-      accessibleHeadingNode,
-      accessibleParagraphForChallenge,
-      addPointButton,
+    this.accessibleChallengeSectionNode.pdomOrder = [
+      addPointButton
+    ];
+
+    this.accessibleAnswerSectionNode.pdomOrder = [
       winnerNode,
       checkAnswerButton,
       tryAgainButton,
-      showAnswerButton,
+      showAnswerButton
+    ];
+
+    this.accessibleProgressSectionNode.pdomOrder = [
       statusBar
     ];
 
-    this.accessibleHeadingNode = accessibleHeadingNode;
     this.addPointButton = addPointButton;
     this.level = level;
     this.focusHeadingWhenVisible = focusHeadingWhenVisible;
-  }
-
-  public override show(): void {
-    super.show();
-
-    if ( this.focusHeadingWhenVisible ) {
-
-      // Focus the heading when this level is shown
-      this.accessibleHeadingNode.focus();
-    }
-    else {
-      // Focus the button when this level is shown
-      this.addPointButton.focus();
-    }
   }
 
   public override hide(): void {
@@ -296,11 +259,9 @@ class MyGameScreenNode extends GameScreenNode {
   }
 }
 
-class LevelSelectionScreenNode extends GameScreenNode {
+class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
   private transientButton: Node | null = null;
   private readonly layoutBounds: Bounds2;
-  protected readonly pdomLevelsSectionNode: PDOMSectionNode;
-  protected readonly pdomControlsSectionNode: PDOMSectionNode;
 
   public constructor(
     scoreProperty: NumberProperty,
@@ -310,23 +271,8 @@ class LevelSelectionScreenNode extends GameScreenNode {
     numberOfChallengesProperty: Property<number>,
     timerEnabledProperty: Property<boolean>
   ) {
-    super();
+    super( new StringProperty( 'Levels' ) );
     this.layoutBounds = layoutBounds;
-
-    const leadingParagraphNode = new Node( {
-
-      // The "Levels" would be the name of the screen.
-      accessibleParagraph: 'Welcome to the Levels Screen. Choose a level to start earning stars. Additionally, choose game options for all levels. Use reset all to clear the game and start over.'
-    } );
-
-    // Accessibility sections. Content should be placed into these using pdomOrder.
-    const levelsSection = new PDOMSectionNode( new StringProperty( 'Choose Your Level' ), {
-      accessibleHeadingIncrement: 2
-    } );
-
-    const controlsSection = new PDOMSectionNode( new StringProperty( 'Choose Game Options' ), {
-      accessibleHeadingIncrement: 2
-    } );
 
     //-------------------- Level selection buttons -------------------
     const levelButtonsItems: LevelSelectionButtonGroupItem[] = [];
@@ -382,33 +328,21 @@ class LevelSelectionScreenNode extends GameScreenNode {
 
     //------------------- Add to scene graph -------------------
     this.children = [
-      leadingParagraphNode,
-      levelsSection,
-      controlsSection,
       levelSelectionButtonGroup,
       gameInfoButton,
       timerButton,
       resetButton
     ];
 
-    this.pdomLevelsSectionNode = levelsSection;
-    this.pdomControlsSectionNode = controlsSection;
-
     // This is what clients might do in their LevelsScreenView.
-    this.pdomLevelsSectionNode.pdomOrder = [
+    this.accessibleLevelsSectionNode.pdomOrder = [
       levelSelectionButtonGroup
     ];
 
-    this.pdomControlsSectionNode.pdomOrder = [
+    this.accessibleControlsSectionNode.pdomOrder = [
       gameInfoButton,
       timerButton,
       resetButton
-    ];
-
-    this.pdomOrder = [
-      leadingParagraphNode,
-      this.pdomLevelsSectionNode,
-      this.pdomControlsSectionNode
     ];
 
     //------------------- Layout -------------------
@@ -448,17 +382,6 @@ class LevelSelectionScreenNode extends GameScreenNode {
 
   public override hide(): void {
     super.hide();
-  }
-}
-
-class ChallengeNumberStringProperty extends DerivedProperty3<string, string, number, number> {
-  public constructor( challengeNumberProperty: TReadOnlyProperty<number>, challengeCountProperty: TReadOnlyProperty<number> ) {
-    super( [ VegasStrings.pattern[ '0challenge' ][ '1maxStringProperty' ], challengeNumberProperty, challengeCountProperty ],
-      ( pattern: string, challengeNumber: number, challengeCount: number ) => {
-        return StringUtils.format( pattern, challengeNumber, challengeCount );
-      }, {
-        tandem: Tandem.OPT_OUT
-      } );
   }
 }
 
