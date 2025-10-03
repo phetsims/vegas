@@ -37,6 +37,29 @@ a11y:
       accessibleName:            Back
       accessibleHelpText:        Go back to the level selection screen.
       accessibleContextResponse: You are on the level selection screen.
+  checkButton:
+    accessibleName:     Check Answer
+    accessibleHelpText: Read challenge details carefully.
+  gameTimerToggleButton:
+    accessibleContextResponseOn:  Play game with Timer on.
+    accessibleContextResponseOff: Play game without Timer.
+
+  gameInfoButton:
+    accessibleName:     Game Info
+    accessibleHelpText: If needed, read brief details for each level.
+  units:
+    stars:
+      pattern: |-
+               { $value ->
+                 [one] { $value } star
+                 *[other] { $value } stars
+               }
+
+  levelSelectionButton:
+
+    # The accessible name has two variants - with and without a descriptive name.
+    accessibleName:              'Level { $levelNumber }, { a11y.units.stars.pattern }'
+    accessibleNameWithLevelName: 'Level { $levelNumber }: { $levelName }, { a11y.units.stars.pattern }'
   levelSelectionScreen:
     levelButton:
       accessibleName: 'Level { $levelNumber }, Score: { $score }'

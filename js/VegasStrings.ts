@@ -74,6 +74,27 @@ type StringsType = {
         'accessibleContextResponseStringProperty': LocalizedStringProperty;
       }
     };
+    'checkButton': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+    };
+    'gameTimerToggleButton': {
+      'accessibleContextResponseOnStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseOffStringProperty': LocalizedStringProperty;
+    };
+    'gameInfoButton': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+    };
+    'units': {
+      'stars': {
+        'patternStringProperty': LocalizedStringProperty;
+      }
+    };
+    'levelSelectionButton': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleNameWithLevelNameStringProperty': LocalizedStringProperty;
+    };
     'levelSelectionScreen': {
       'levelButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;

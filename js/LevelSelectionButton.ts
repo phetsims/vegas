@@ -15,6 +15,7 @@
  */
 
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -29,6 +30,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import levelSelectionButton_mp3 from '../sounds/levelSelectionButton_mp3.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 
 type SelfOptions = {
 
@@ -46,9 +48,18 @@ type SelfOptions = {
   // Configures the soundPlayer for a specific game level. Note that this assumes zero-based indexing for game level,
   // which is often not the case. This option is ignored if RectangularPushButtonOptions.soundPlayer is provided.
   soundPlayerIndex?: number;
+
+  // A brief accessible name for the level. It is added to the accessibleName after the level number.
+  // For example, if the value is "Beginner", the accessibleName will be:
+  // "Level 1: Beginner, 2 stars".
+  accessibleNameForLevel?: TReadOnlyProperty<string> | null;
+
+  // The number for the level. This is used in the accessibleName for the button. 1-based.
+  accessibleLevelNumber?: number;
 };
 
-export type LevelSelectionButtonOptions = SelfOptions & StrictOmit<RectangularPushButtonOptions, 'content'>;
+// Cannot provide a custom accessibleName, see options in SelfOptions which are used in a pattern for this button's accessibleName.
+export type LevelSelectionButtonOptions = SelfOptions & StrictOmit<RectangularPushButtonOptions, 'content' | 'accessibleName'>;
 
 export default class LevelSelectionButton extends RectangularPushButton {
 
@@ -71,6 +82,8 @@ export default class LevelSelectionButton extends RectangularPushButton {
       scoreDisplayMinXMargin: 10,
       scoreDisplayMinYMargin: 5,
       iconToScoreDisplayYSpace: 10,
+      accessibleNameForLevel: null,
+      accessibleLevelNumber: 1,
 
       // RectangularPushButton options
       cornerRadius: 10,
@@ -119,6 +132,25 @@ export default class LevelSelectionButton extends RectangularPushButton {
     options.content = new Node( {
       children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ]
     } );
+
+    // The accessibleName pattern depends on whether there is a brief descriptor.
+    // TODO: The score Property needs to be a value describing the number of stars - so the scoreDisplay
+    //   will need to provide that, see https://github.com/phetsims/vegas/issues/138
+    let accessibleNameStringProperty;
+    if ( options.accessibleNameForLevel ) {
+      accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelName.createProperty( {
+        levelNumber: options.accessibleLevelNumber,
+        levelName: options.accessibleNameForLevel,
+        value: scoreProperty
+      } );
+    }
+    else {
+      accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleName.createProperty( {
+        levelNumber: options.accessibleLevelNumber,
+        value: scoreProperty
+      } );
+    }
+    options.accessibleName = accessibleNameStringProperty;
 
     // If no sound player was provided, create the default.
     if ( options.soundPlayer === undefined ) {

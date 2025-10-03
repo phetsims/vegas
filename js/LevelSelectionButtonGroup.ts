@@ -28,7 +28,6 @@ import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import vegas from './vegas.js';
-import VegasFluent from './VegasFluent.js';
 
 // Describes one LevelSelectionButton
 export type LevelSelectionButtonGroupItem = {
@@ -44,7 +43,7 @@ export type LevelSelectionButtonGroupItem = {
 
   // Options for the button. These will override LevelSelectionButtonGroupOptions.levelSelectionButtonOptions.
   // Setting tandem is the responsibility of the group, so it is omitted here.
-  options?: StrictOmit<LevelSelectionButtonOptions, 'tandem' | 'buttonHeight' | 'buttonWidth'>;
+  options?: StrictOmit<LevelSelectionButtonOptions, 'tandem' | 'buttonHeight' | 'buttonWidth' | 'accessibleLevelNumber'>;
 };
 
 type SelfOptions = {
@@ -92,7 +91,10 @@ export default class LevelSelectionButtonGroup extends Node {
         spacing: 10
       },
       // @ts-expect-error This default is provided for JavaScript simulations.
-      tandem: Tandem.REQUIRED
+      tandem: Tandem.REQUIRED,
+
+      // pdom - buttons are contained in an ordered list, see the containerTagName for each button
+      tagName: 'ol'
     }, providedOptions );
 
     // Create the LevelSelectionButton instances.
@@ -108,10 +110,10 @@ export default class LevelSelectionButtonGroup extends Node {
         buttonHeight: options.groupButtonHeight,
         buttonWidth: options.groupButtonWidth,
         tandem: tandem,
-        accessibleName: VegasFluent.a11y.levelSelectionScreen.levelButton.accessibleName.createProperty( {
-          levelNumber: index + 1,
-          score: item.scoreProperty
-        } )
+
+        // pdom - this combined with the tagName on the parent Node creates an ordered list of buttons
+        containerTagName: 'li',
+        accessibleLevelNumber: index + 1
       }, options.levelSelectionButtonOptions, item.options );
 
       return new LevelSelectionButton( item.icon, item.scoreProperty, buttonOptions );

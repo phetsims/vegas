@@ -109,6 +109,45 @@
         }
       }
     },
+    "checkButton": {
+      "accessibleName": {
+        "value": "Check Answer"
+      },
+      "accessibleHelpText": {
+        "value": "Read challenge details carefully."
+      }
+    },
+    "gameTimerToggleButton": {
+      "accessibleContextResponseOn": {
+        "value": "Play game with Timer on."
+      },
+      "accessibleContextResponseOff": {
+        "value": "Play game without Timer."
+      }
+    },
+    "gameInfoButton": {
+      "accessibleName": {
+        "value": "Game Info"
+      },
+      "accessibleHelpText": {
+        "value": "If needed, read brief details for each level."
+      }
+    },
+    "units": {
+      "stars": {
+        "pattern": {
+          "value": "{ $value ->\n  [one] { $value } star\n  *[other] { $value } stars\n}"
+        }
+      }
+    },
+    "levelSelectionButton": {
+      "accessibleName": {
+        "value": "Level { $levelNumber }, { a11y_units_stars_pattern }"
+      },
+      "accessibleNameWithLevelName": {
+        "value": "Level { $levelNumber }: { $levelName }, { a11y_units_stars_pattern }"
+      }
+    },
     "levelSelectionScreen": {
       "levelButton": {
         "accessibleName": {
