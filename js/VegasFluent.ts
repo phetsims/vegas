@@ -55,10 +55,13 @@ addToMapIfDefined( 'a11y_statusBar_accessibleHeadingWithLevelNumber', 'a11y.stat
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleName', 'a11y.statusBar.backButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleHelpText', 'a11y.statusBar.backButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleContextResponse', 'a11y.statusBar.backButton.accessibleContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_statusBar_startOver_accessibleHelpText', 'a11y.statusBar.startOver.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_statusBar_startOver_accessibleContextResponse', 'a11y.statusBar.startOver.accessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_checkButton_accessibleName', 'a11y.checkButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_checkButton_accessibleHelpText', 'a11y.checkButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOn', 'a11y.gameTimerToggleButton.accessibleContextResponseOnStringProperty' );
 addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOff', 'a11y.gameTimerToggleButton.accessibleContextResponseOffStringProperty' );
+addToMapIfDefined( 'a11y_levelCompletedNode_continueButton_accessibleHelpText', 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleName', 'a11y.gameInfoButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleHelpText', 'a11y.gameInfoButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_gameScreenNode_accessibleAnswerSection', 'a11y.gameScreenNode.accessibleAnswerSectionStringProperty' );
@@ -145,6 +148,10 @@ const VegasFluent = {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_backButton_accessibleName', _.get( VegasStrings, 'a11y.statusBar.backButton.accessibleNameStringProperty' ) ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_backButton_accessibleHelpText', _.get( VegasStrings, 'a11y.statusBar.backButton.accessibleHelpTextStringProperty' ) ),
         accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_backButton_accessibleContextResponse', _.get( VegasStrings, 'a11y.statusBar.backButton.accessibleContextResponseStringProperty' ) )
+      },
+      startOver: {
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_startOver_accessibleHelpText', _.get( VegasStrings, 'a11y.statusBar.startOver.accessibleHelpTextStringProperty' ) ),
+        accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_startOver_accessibleContextResponse', _.get( VegasStrings, 'a11y.statusBar.startOver.accessibleContextResponseStringProperty' ) )
       }
     },
     checkButton: {
@@ -155,6 +162,11 @@ const VegasFluent = {
     gameTimerToggleButton: {
       accessibleContextResponseOnStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameTimerToggleButton_accessibleContextResponseOn', _.get( VegasStrings, 'a11y.gameTimerToggleButton.accessibleContextResponseOnStringProperty' ) ),
       accessibleContextResponseOffStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameTimerToggleButton_accessibleContextResponseOff', _.get( VegasStrings, 'a11y.gameTimerToggleButton.accessibleContextResponseOffStringProperty' ) )
+    },
+    levelCompletedNode: {
+      continueButton: {
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_continueButton_accessibleHelpText', _.get( VegasStrings, 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' ) )
+      }
     },
     gameInfoButton: {
       _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),

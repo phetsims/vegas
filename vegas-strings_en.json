@@ -113,6 +113,14 @@
         "accessibleContextResponse": {
           "value": "You are on the level selection screen."
         }
+      },
+      "startOver": {
+        "accessibleHelpText": {
+          "value": "Erase game progress and begin again."
+        },
+        "accessibleContextResponse": {
+          "value": "Choose your level!"
+        }
       }
     },
     "checkButton": {
@@ -129,6 +137,13 @@
       },
       "accessibleContextResponseOff": {
         "value": "Play game without Timer."
+      }
+    },
+    "levelCompletedNode": {
+      "continueButton": {
+        "accessibleHelpText": {
+          "value": "Return to level selection screen and keep playing."
+        }
       }
     },
     "gameInfoButton": {

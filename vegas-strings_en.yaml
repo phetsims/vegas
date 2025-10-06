@@ -33,14 +33,14 @@ chooseYourLevel:                  Choose Your Level!
 
 a11y:
   statusBar:
-    accessibleHeading: Level Progress
+    accessibleHeading:                Level Progress
     accessibleHeadingWithLevelNumber: Level { $levelNumber } Progress
     backButton:
       accessibleName:            Back
       accessibleHelpText:        Go back to the level selection screen.
       accessibleContextResponse: You are on the level selection screen.
     startOver:
-      accessibleHelpText: Erase game progress and begin again.
+      accessibleHelpText:        Erase game progress and begin again.
       accessibleContextResponse: Choose your level!
   checkButton:
     accessibleName:     Check Answer
@@ -48,13 +48,15 @@ a11y:
   gameTimerToggleButton:
     accessibleContextResponseOn:  Play game with Timer on.
     accessibleContextResponseOff: Play game without Timer.
-
+  levelCompletedNode:
+    continueButton:
+      accessibleHelpText: Return to level selection screen and keep playing.
   gameInfoButton:
     accessibleName:     Game Info
     accessibleHelpText: If needed, read brief details for each level.
 
   gameScreenNode:
-    accessibleAnswerSection: Answer Submission
+    accessibleAnswerSection:   Answer Submission
     accessibleProgressSection: Level { $levelNumber } Progress
   units:
     stars:
@@ -74,5 +76,5 @@ a11y:
       useResetDescription: Use reset all to clear the game and start over.
 
       # The leading paragraph has a different pattern when there is a custom summary about the game.
-      intro: Welcome to the { $screenName } Screen. { a11y.levelSelectionScreenNode.screenSummary.useResetDescription }
-      introWithSummary: Welcome to the { $screenName } Screen. { $summary } { a11y.levelSelectionScreenNode.screenSummary.useResetDescription }
+      intro:               Welcome to the { $screenName } Screen. { a11y.levelSelectionScreenNode.screenSummary.useResetDescription }
+      introWithSummary:    Welcome to the { $screenName } Screen. { $summary } { a11y.levelSelectionScreenNode.screenSummary.useResetDescription }

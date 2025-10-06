@@ -28,6 +28,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import GameTimer from './GameTimer.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
 
 const DEFAULT_TITLE_FONT = new PhetFont( { size: 28, weight: 'bold' } );
@@ -86,7 +87,10 @@ export default class LevelCompletedNode extends Panel {
       cornerRadius: 35,
       xMargin: 20,
       yMargin: 20,
-      tandem: Tandem.REQUIRED
+      tandem: Tandem.REQUIRED,
+
+      // pdom - the information in this dialog is contained in a list
+      tagName: 'ul'
     }, providedOptions );
 
     const vBoxChildren: Node[] = [];
@@ -105,7 +109,10 @@ export default class LevelCompletedNode extends Panel {
     }
     const title = new Text( titleTextStringProperty, {
       font: options.titleFont,
-      maxWidth: options.contentMaxWidth
+      maxWidth: options.contentMaxWidth,
+
+      tagName: 'li',
+      innerContent: titleTextStringProperty
     } );
     vBoxChildren.push( title );
 
@@ -119,7 +126,12 @@ export default class LevelCompletedNode extends Panel {
           outerRadius: options.starDiameter / 2
         }
       },
-      maxWidth: options.contentMaxWidth
+      maxWidth: options.contentMaxWidth,
+
+      // TODO: the score display should be responsible for providing its accessible string, see https://github.com/phetsims/vegas/issues/138
+      //  Convert the score to number of stars for the accessible text.
+      tagName: 'li',
+      innerContent: 'Stars: ' + score
     } );
     vBoxChildren.push( scoreDisplayStars );
 
@@ -131,6 +143,7 @@ export default class LevelCompletedNode extends Panel {
         pattern => StringUtils.format( pattern, level )
       );
 
+      // TODO: The level is not included in the list, is that correct? See https://github.com/phetsims/vegas/issues/138
       vBoxChildren.push( new Text( levelStringProperty, {
         font: options.infoFont,
         maxWidth: options.contentMaxWidth
@@ -144,7 +157,10 @@ export default class LevelCompletedNode extends Panel {
     );
     vBoxChildren.push( new Text( scoreStringProperty, {
       font: options.infoFont,
-      maxWidth: options.contentMaxWidth
+      maxWidth: options.contentMaxWidth,
+
+      tagName: 'li',
+      innerContent: scoreStringProperty
     } ) );
 
     // Time (optional)
@@ -197,7 +213,9 @@ export default class LevelCompletedNode extends Panel {
       vBoxChildren.push( new RichText( timeStringProperty, {
         font: options.infoFont,
         align: 'center',
-        maxWidth: options.contentMaxWidth
+        maxWidth: options.contentMaxWidth,
+        tagName: 'li',
+        innerContent: timeStringProperty
       } ) );
     }
 
@@ -207,7 +225,8 @@ export default class LevelCompletedNode extends Panel {
       font: options.buttonFont,
       baseColor: options.buttonFill,
       tandem: options.tandem.createTandem( 'continueButton' ),
-      maxWidth: options.contentMaxWidth
+      maxWidth: options.contentMaxWidth,
+      accessibleHelpText: VegasFluent.a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty
     } );
     vBoxChildren.push( continueButton );
 

@@ -74,6 +74,10 @@ type StringsType = {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
         'accessibleContextResponseStringProperty': LocalizedStringProperty;
+      };
+      'startOver': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+        'accessibleContextResponseStringProperty': LocalizedStringProperty;
       }
     };
     'checkButton': {
@@ -83,6 +87,11 @@ type StringsType = {
     'gameTimerToggleButton': {
       'accessibleContextResponseOnStringProperty': LocalizedStringProperty;
       'accessibleContextResponseOffStringProperty': LocalizedStringProperty;
+    };
+    'levelCompletedNode': {
+      'continueButton': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      }
     };
     'gameInfoButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
