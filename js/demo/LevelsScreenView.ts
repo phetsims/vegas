@@ -189,6 +189,7 @@ class MyGameScreenNode extends GameScreenNode {
     super( challengeNumberProperty, numberOfChallengesProperty );
 
     const statusBar = new FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, {
+      levelNumberProperty: new Property( level + 1 ),
       challengeNumberProperty: challengeNumberProperty,
       numberOfChallengesProperty: numberOfChallengesProperty,
       elapsedTimeProperty: gameTimer.elapsedTimeProperty,

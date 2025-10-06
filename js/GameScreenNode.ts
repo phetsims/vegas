@@ -26,11 +26,16 @@ export default class GameScreenNode extends VegasScreenNode {
   public readonly accessibleChallengeSectionNode: PDOMSectionNode;
 
   // Section node for answer submission and results components.
+  // TODO: This needs to be added/hidden based on whether there are answer components.
+  //   I can't think of a way to automate that. It will likely be a manual instrumentation to show/hide this.
+  //   See https://github.com/phetsims/vegas/issues/138
   public readonly accessibleAnswerSectionNode: PDOMSectionNode;
 
   // Section node for progress/status information.
-  public readonly accessibleProgressSectionNode: PDOMSectionNode;
+  public readonly accessibleProgressSectionNode: Node;
 
+  // TODO: The level number may not exist for infinite games. Review content that includes it and decide how it should behave.
+  //  See https://github.com/phetsims/vegas/issues/138
   public constructor( levelNumberProperty: TReadOnlyProperty<number>, levelCountProperty: TReadOnlyProperty<number> ) {
     super();
 
@@ -54,9 +59,20 @@ export default class GameScreenNode extends VegasScreenNode {
     this.accessibleAnswerSectionNode = new PDOMSectionNode( VegasFluent.a11y.gameScreenNode.accessibleAnswerSectionStringProperty, {
       accessibleHeadingIncrement: 2
     } );
-    this.accessibleProgressSectionNode = new PDOMSectionNode( VegasFluent.a11y.gameScreenNode.accessibleProgressSection.createProperty( {
-      levelNumber: levelNumberProperty
-    } ), {
+
+    // TODO: Right now, this does NOT include the heading for "Level 2 Progress". It seems like it
+    //  should be built into the status bars. Will this section ever appear if there is no
+    //  progress/status information?
+    //  However, it is hear so that clients can add content (including status bars) if they want for
+    //  consistent ordering.
+    //  See https://github.com/phetsims/vegas/issues/138
+    this.accessibleProgressSectionNode = new Node( {
+      tagName: 'section',
+
+      // TODO: Right now this increment does nothing. We need all children under this to behave as though they
+      //   are under an h2, even though this Node cannot have the heading. Either improve this or make it so
+      //   that accessibleHeading can receive focus without FocusableHeadingNode workaround.
+      //   See https://github.com/phetsims/vegas/issues/138
       accessibleHeadingIncrement: 2
     } );
 

@@ -17,6 +17,8 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
+import { findStringProperty } from '../../scenery/js/accessibility/pdom/findStringProperty.js';
+import { PDOMValueType } from '../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import HBox from '../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Rectangle from '../../scenery/js/nodes/Rectangle.js';
@@ -30,6 +32,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {
@@ -108,6 +111,9 @@ export default class FiniteStatusBar extends StatusBar {
       challengeNumberVisible: true,
       font: StatusBar.DEFAULT_FONT,
       textFill: StatusBar.DEFAULT_TEXT_FILL,
+
+      // TODO: This score display needs to be responsible for creating a formatted accessible string representing its content.
+      //  See https://github.com/phetsims/vegas/issues/138.
       createScoreDisplay: ( scoreProperty, tandem ) => new ScoreDisplayLabeledNumber( scoreProperty, {
         font: providedOptions && providedOptions.font ? providedOptions.font : StatusBar.DEFAULT_FONT,
         textFill: providedOptions && providedOptions.textFill ? providedOptions.textFill : StatusBar.DEFAULT_TEXT_FILL,
@@ -124,7 +130,11 @@ export default class FiniteStatusBar extends StatusBar {
       levelVisible: true,
       visiblePropertyOptions: {
         phetioFeatured: true // See https://github.com/phetsims/balancing-chemical-equations/issues/201
-      }
+      },
+
+      // pdom - this content is usually a sibling of the accessible h1 of the simulation but
+      // accessible headings should start from the next level
+      accessibleHeadingIncrement: 2
     }, providedOptions );
 
     assert && assert( ( options.challengeNumberProperty && options.numberOfChallengesProperty ) ||
@@ -136,6 +146,9 @@ export default class FiniteStatusBar extends StatusBar {
       fill: options.barFill,
       stroke: options.barStroke
     } );
+
+    // The accessible heading will be built dynamically as the pattern depends on provided options.
+    let accessibleHeading: PDOMValueType;
 
     // Nodes on the left end of the bar
     const leftChildren = [];
@@ -166,6 +179,13 @@ export default class FiniteStatusBar extends StatusBar {
       if ( levelNumberText.isPhetioInstrumented() && options.levelNumberProperty.isPhetioInstrumented() ) {
         levelNumberText.addLinkedElement( options.levelNumberProperty );
       }
+
+      accessibleHeading = VegasFluent.a11y.statusBar.accessibleHeadingWithLevelNumber.createProperty( {
+        levelNumber: options.levelNumberProperty
+      } );
+    }
+    else {
+      accessibleHeading = VegasFluent.a11y.statusBar.accessibleHeadingStringProperty;
     }
 
     // Challenge N of M
@@ -186,7 +206,11 @@ export default class FiniteStatusBar extends StatusBar {
         phetioVisiblePropertyInstrumented: true,
         visiblePropertyOptions: {
           phetioFeatured: true // See https://github.com/phetsims/balancing-chemical-equations/issues/201
-        }
+        },
+
+        // pdom - the challenge number is a list item in the list of left items
+        tagName: 'li',
+        innerContent: challengeNumberStringProperty
       }, options.challengeTextOptions ) );
 
       leftChildren.push( challengeNumberText );
@@ -202,6 +226,12 @@ export default class FiniteStatusBar extends StatusBar {
 
     // Score
     const scoreDisplay = options.createScoreDisplay( scoreProperty, options.tandem.createTandem( 'scoreDisplay' ) );
+
+    // TODO: The scoreDisplay be responsible for creating a formatted accessible string representing its content?
+    //  See https://github.com/phetsims/vegas/issues/138
+    scoreDisplay.tagName = 'li';
+    scoreDisplay.innerContent = findStringProperty( scoreDisplay );
+
     leftChildren.push( scoreDisplay );
 
     // Timer (optional)
@@ -212,12 +242,18 @@ export default class FiniteStatusBar extends StatusBar {
         clockIconRadius: options.clockIconRadius,
         font: options.font,
         textFill: options.textFill,
-        tandem: options.tandem.createTandem( 'elapsedTimeNode' )
+        tandem: options.tandem.createTandem( 'elapsedTimeNode' ),
+
+        // The elapsed time is a list item in the list of left items.
+        tagName: 'li'
       } );
       leftChildren.push( elapsedTimeNode );
     }
 
     // Start Over button
+    // TODO: Is it true that all start over buttons go back to the level selection screen?
+    //  Just making sure  "Choose Your Level!" is general enough.
+    //  See https://github.com/phetsims/vegas/issues/138
     const startOverButton = new TextPushButton( options.startOverButtonText, combineOptions<TextPushButtonOptions>( {
       font: options.font,
       textFill: options.textFill,
@@ -238,7 +274,10 @@ export default class FiniteStatusBar extends StatusBar {
     // Nodes on the left end of the bar
     const leftNodes = new HBox( {
       spacing: options.xSpacing,
-      children: leftChildren
+      children: leftChildren,
+
+      // pdom - the information on the left side of the bar is contained in a list
+      tagName: 'ul'
     } );
 
     options.children = [
@@ -250,6 +289,9 @@ export default class FiniteStatusBar extends StatusBar {
     options.barHeight = Math.max( leftNodes.height, scoreDisplay.height ) + ( 2 * options.yMargin );
 
     super( layoutBounds, visibleBoundsProperty, options );
+
+    // Apply computed content
+    this.accessibleHeading = accessibleHeading;
 
     // Dynamically position components on the bar.
     Multilink.multilink( [ this.positioningBoundsProperty, leftNodes.boundsProperty, startOverButton.boundsProperty ],
@@ -263,6 +305,7 @@ export default class FiniteStatusBar extends StatusBar {
 
     this.disposeFiniteStatusBar = () => {
       levelNumberText.dispose();
+      accessibleHeading.dispose();
       challengeNumberText.dispose();
       scoreDisplay.dispose();
       elapsedTimeNode && elapsedTimeNode.dispose();

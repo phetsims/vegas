@@ -33,10 +33,15 @@ chooseYourLevel:                  Choose Your Level!
 
 a11y:
   statusBar:
+    accessibleHeading: Level Progress
+    accessibleHeadingWithLevelNumber: Level { $levelNumber } Progress
     backButton:
       accessibleName:            Back
       accessibleHelpText:        Go back to the level selection screen.
       accessibleContextResponse: You are on the level selection screen.
+    startOver:
+      accessibleHelpText: Erase game progress and begin again.
+      accessibleContextResponse: Choose your level!
   checkButton:
     accessibleName:     Check Answer
     accessibleHelpText: Read challenge details carefully.

@@ -4,6 +4,10 @@
  * InfiniteStatusBar is the status bar for games that have an infinite (open-ended) number of challenges per level.
  * See specification in https://github.com/phetsims/vegas/issues/59.
  *
+ * TODO: I took a stab at accessibility for this one.
+ *   - The messageNode is provided by the client so it will be their responsibility to instrument it.
+ *   - The score display is presented as an accessibleParagraph.
+ *
  * @author Andrea Lin
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -58,7 +62,13 @@ export default class InfiniteStatusBar extends StatusBar {
       xMargin: 20,
       yMargin: 10,
       spacing: 10,
-      createScoreDisplay: ( scoreProperty: ReadOnlyProperty<number> ) => new ScoreDisplayNumberAndStar( scoreProperty )
+      createScoreDisplay: ( scoreProperty: ReadOnlyProperty<number> ) => new ScoreDisplayNumberAndStar( scoreProperty ),
+
+      // pdom - this content is usually a sibling of the accessible h1 of the simulation but
+      // accessible headings should start from the next level
+      accessibleHeadingIncrement: 2,
+      accessibleHeading: VegasFluent.a11y.statusBar.accessibleHeadingStringProperty
+
     }, providedOptions );
 
     // button that typically takes us back to the level-selection UI
@@ -83,6 +93,10 @@ export default class InfiniteStatusBar extends StatusBar {
     // Create the score display.
     const scoreDisplay = options.createScoreDisplay( scoreProperty );
     scoreDisplay.maxWidth = 0.2 * layoutBounds.width;
+
+    // TODO: The score Display will need to be responsible for creating its
+    //  own PDOM representation. See https://github.com/phetsims/vegas/issues/138
+    // scoreDisplay.accessibleParagraph = findStringProperty( scoreDisplay );
 
     options.children = [ leftNodes, scoreDisplay ];
 

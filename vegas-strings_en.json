@@ -97,6 +97,12 @@
   },
   "a11y": {
     "statusBar": {
+      "accessibleHeading": {
+        "value": "Level Progress"
+      },
+      "accessibleHeadingWithLevelNumber": {
+        "value": "Level { $levelNumber } Progress"
+      },
       "backButton": {
         "accessibleName": {
           "value": "Back"

@@ -50,6 +50,8 @@ addToMapIfDefined( 'score', 'scoreStringProperty' );
 addToMapIfDefined( 'done', 'doneStringProperty' );
 addToMapIfDefined( 'youCompletedAllLevels', 'youCompletedAllLevelsStringProperty' );
 addToMapIfDefined( 'chooseYourLevel', 'chooseYourLevelStringProperty' );
+addToMapIfDefined( 'a11y_statusBar_accessibleHeading', 'a11y.statusBar.accessibleHeadingStringProperty' );
+addToMapIfDefined( 'a11y_statusBar_accessibleHeadingWithLevelNumber', 'a11y.statusBar.accessibleHeadingWithLevelNumberStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleName', 'a11y.statusBar.backButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleHelpText', 'a11y.statusBar.backButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleContextResponse', 'a11y.statusBar.backButton.accessibleContextResponseStringProperty' );
@@ -136,6 +138,8 @@ const VegasFluent = {
   chooseYourLevelStringProperty: _.get( VegasStrings, 'chooseYourLevelStringProperty' ),
   a11y: {
     statusBar: {
+      accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_accessibleHeading', _.get( VegasStrings, 'a11y.statusBar.accessibleHeadingStringProperty' ) ),
+      accessibleHeadingWithLevelNumber: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_statusBar_accessibleHeadingWithLevelNumber', _.get( VegasStrings, 'a11y.statusBar.accessibleHeadingWithLevelNumberStringProperty' ), [{"name":"levelNumber"}] ),
       backButton: {
         _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_backButton_accessibleName', _.get( VegasStrings, 'a11y.statusBar.backButton.accessibleNameStringProperty' ) ),

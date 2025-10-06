@@ -68,6 +68,8 @@ type StringsType = {
   'chooseYourLevelStringProperty': LocalizedStringProperty;
   'a11y': {
     'statusBar': {
+      'accessibleHeadingStringProperty': LocalizedStringProperty;
+      'accessibleHeadingWithLevelNumberStringProperty': LocalizedStringProperty;
       'backButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;

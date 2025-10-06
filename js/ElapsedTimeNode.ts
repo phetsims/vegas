@@ -27,7 +27,7 @@ type SelfOptions = {
   textFill?: TColor;
 };
 
-export type ElapsedTimeNodeOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
+export type ElapsedTimeNodeOptions = SelfOptions & StrictOmit<HBoxOptions, 'children' | 'accessibleName' | 'innerContent'>;
 
 export default class ElapsedTimeNode extends HBox {
 
@@ -44,7 +44,11 @@ export default class ElapsedTimeNode extends HBox {
 
       // HBoxOptions
       spacing: 8,
-      tandem: Tandem.OPTIONAL
+      tandem: Tandem.OPTIONAL,
+
+      // pdom - A paragraph tag so that it is included in the accessible content. But this can be
+      // overridden if you need to contain this in a list or other structure.
+      tagName: 'p'
     }, providedOptions );
 
     const clockIcon = new SimpleClockIcon( options.clockIconRadius );
@@ -66,7 +70,9 @@ export default class ElapsedTimeNode extends HBox {
       VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2secondsStringProperty' ],
       VegasStrings.pattern[ '0minutes' ][ '1secondsStringProperty' ]
     ], ( elapsedTime, pattern1, pattern2 ) => {
-      timeValue.string = GameTimer.formatTime( elapsedTime );
+      const timeValueString = GameTimer.formatTime( elapsedTime );
+      timeValue.string = timeValueString;
+      this.innerContent = timeValueString;
     } );
 
     if ( this.isPhetioInstrumented() && elapsedTimeProperty.isPhetioInstrumented() ) {
