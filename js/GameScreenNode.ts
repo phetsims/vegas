@@ -49,15 +49,13 @@ export default class GameScreenNode extends VegasScreenNode {
     this.accessibleChallengeSectionNode = new Node( {
       tagName: 'section',
 
-      // TODO: Right now this increment does nothing. We need all children under this to behave as though they
-      //   are under an h2, even though this Node cannot have the heading. Either improve this or make it so
-      //   that accessibleHeading can receive focus without FocusableHeadingNode workaround.
-      //   See https://github.com/phetsims/vegas/issues/138
-      accessibleHeadingIncrement: 2
+      // This section does not have an accessibleHeading because the heading is provided as the focusable one.
+      // However, headings below this section should be incremented as if they are below the h2 for the "Challenge" section.
+      accessibleHeadingIncrement: 3
     } );
 
     this.accessibleAnswerSectionNode = new PDOMSectionNode( VegasFluent.a11y.gameScreenNode.accessibleAnswerSectionStringProperty, {
-      accessibleHeadingIncrement: 2
+      accessibleHeadingIncrement: 3
     } );
 
     // TODO: Right now, this does NOT include the heading for "Level 2 Progress". It seems like it
@@ -69,11 +67,9 @@ export default class GameScreenNode extends VegasScreenNode {
     this.accessibleProgressSectionNode = new Node( {
       tagName: 'section',
 
-      // TODO: Right now this increment does nothing. We need all children under this to behave as though they
-      //   are under an h2, even though this Node cannot have the heading. Either improve this or make it so
-      //   that accessibleHeading can receive focus without FocusableHeadingNode workaround.
-      //   See https://github.com/phetsims/vegas/issues/138
-      accessibleHeadingIncrement: 2
+      // This section does not have an accessibleHeading because we expect the heading to be set on the status bar.
+      // However, headings below this section should be incremented as if they are below the h2 for the "Progress" section.
+      accessibleHeadingIncrement: 3
     } );
 
     // Add the sections to the scene graph so that their content will be in the

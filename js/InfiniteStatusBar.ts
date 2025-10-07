@@ -66,12 +66,7 @@ export default class InfiniteStatusBar extends StatusBar {
       yMargin: 10,
       spacing: 10,
       createScoreDisplay: ( scoreProperty: ReadOnlyProperty<number> ) => new ScoreDisplayNumberAndStar( scoreProperty ),
-
-      // pdom - this content is usually a sibling of the accessible h1 of the simulation but
-      // accessible headings should start from the next level
-      accessibleHeadingIncrement: 2,
       accessibleHeading: VegasFluent.a11y.statusBar.accessibleHeadingStringProperty
-
     }, providedOptions );
 
     // button that typically takes us back to the level-selection UI

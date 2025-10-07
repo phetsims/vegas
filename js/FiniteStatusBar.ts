@@ -131,11 +131,7 @@ export default class FiniteStatusBar extends StatusBar {
       levelVisible: true,
       visiblePropertyOptions: {
         phetioFeatured: true // See https://github.com/phetsims/balancing-chemical-equations/issues/201
-      },
-
-      // pdom - this content is usually a sibling of the accessible h1 of the simulation but
-      // accessible headings should start from the next level
-      accessibleHeadingIncrement: 2
+      }
     }, providedOptions );
 
     assert && assert( ( options.challengeNumberProperty && options.numberOfChallengesProperty ) ||
