@@ -96,6 +96,23 @@
     "value": "Choose Your Level!"
   },
   "a11y": {
+    "scoreDisplays": {
+      "scoreDisplayStars": {
+        "accessibleScore": {
+          "value": "{ $stars ->\n  [one] { $stars } star\n  *[other] { $stars } stars\n }"
+        }
+      },
+      "scoreDisplayLabelledStars": {
+        "accessibleScore": {
+          "value": "Score: { $stars ->\n  [one] { $stars } star\n  *[other] { $stars } stars\n }"
+        }
+      },
+      "scoreDisplayNumberAndStar": {
+        "accessibleScore": {
+          "value": "{ $stars ->\n  [one] { $stars } star\n  *[other] { $stars } stars\n }"
+        }
+      }
+    },
     "statusBar": {
       "accessibleHeading": {
         "value": "Level Progress"

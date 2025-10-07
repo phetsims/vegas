@@ -32,6 +32,25 @@ youCompletedAllLevels:            You completed all levels!
 chooseYourLevel:                  Choose Your Level!
 
 a11y:
+  scoreDisplays:
+    scoreDisplayStars:
+      accessibleScore: |-
+                       { $stars ->
+                         [one] { $stars } star
+                         *[other] { $stars } stars
+                        }
+    scoreDisplayLabelledStars:
+      accessibleScore: |-
+                       Score: { $stars ->
+                         [one] { $stars } star
+                         *[other] { $stars } stars
+                        }
+    scoreDisplayNumberAndStar:
+      accessibleScore: |-
+                       { $stars ->
+                         [one] { $stars } star
+                         *[other] { $stars } stars
+                        }
   statusBar:
     accessibleHeading:                Level Progress
     accessibleHeadingWithLevelNumber: Level { $levelNumber } Progress

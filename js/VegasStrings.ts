@@ -67,6 +67,17 @@ type StringsType = {
   'youCompletedAllLevelsStringProperty': LocalizedStringProperty;
   'chooseYourLevelStringProperty': LocalizedStringProperty;
   'a11y': {
+    'scoreDisplays': {
+      'scoreDisplayStars': {
+        'accessibleScoreStringProperty': LocalizedStringProperty;
+      };
+      'scoreDisplayLabelledStars': {
+        'accessibleScoreStringProperty': LocalizedStringProperty;
+      };
+      'scoreDisplayNumberAndStar': {
+        'accessibleScoreStringProperty': LocalizedStringProperty;
+      }
+    };
     'statusBar': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
       'accessibleHeadingWithLevelNumberStringProperty': LocalizedStringProperty;
