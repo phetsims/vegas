@@ -10,7 +10,7 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import Node from '../../scenery/js/nodes/Node.js';
+import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import vegas from './vegas.js';
 
 class VegasScreenNode extends Node {
@@ -19,8 +19,8 @@ class VegasScreenNode extends Node {
   // This ensures a consistent heading structure for screen readers.
   protected readonly pdomParentNode: Node;
 
-  public constructor() {
-    super();
+  public constructor( providedOptions?: NodeOptions ) {
+    super( providedOptions );
 
     this.pdomParentNode = new Node();
     this.addChild( this.pdomParentNode );

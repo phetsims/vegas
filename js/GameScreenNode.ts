@@ -10,7 +10,7 @@
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';
 import FocusableHeadingNode from '../../scenery/js/accessibility/pdom/FocusableHeadingNode.js';
-import Node from '../../scenery/js/nodes/Node.js';
+import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import ChallengeNumberStringProperty from './ChallengeNumberStringProperty.js';
 import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
@@ -36,8 +36,8 @@ export default class GameScreenNode extends VegasScreenNode {
 
   // TODO: The level number may not exist for infinite games. Review content that includes it and decide how it should behave.
   //  See https://github.com/phetsims/vegas/issues/138
-  public constructor( levelNumberProperty: TReadOnlyProperty<number>, levelCountProperty: TReadOnlyProperty<number> ) {
-    super();
+  public constructor( levelNumberProperty: TReadOnlyProperty<number>, levelCountProperty: TReadOnlyProperty<number>, providedOptions?: NodeOptions ) {
+    super( providedOptions );
 
     // Although the logical heading of the challenge section, it is not a child of that section
     // because we expect clients to assign other UI components to the pdom order under it.

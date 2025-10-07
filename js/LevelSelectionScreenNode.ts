@@ -49,7 +49,7 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
       accessibleGameSummary: null
     }, providedOptions );
 
-    super();
+    super( options );
 
     // The leading paragraph has a different pattern when there is a custom summary about the game.
     let leadingParagraphStringProperty: TReadOnlyProperty<string>;
