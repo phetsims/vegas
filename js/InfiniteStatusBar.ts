@@ -23,6 +23,7 @@ import HBox from '../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
+import { TScoreDisplayNode } from './TScoreDisplayNode.js';
 import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 
@@ -33,7 +34,7 @@ type SelfOptions = {
   spacing?: number;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number> ) => Node;
+  createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number> ) => TScoreDisplayNode;
 };
 
 export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;

@@ -31,6 +31,7 @@ import sharedSoundPlayers from '../../tambo/js/sharedSoundPlayers.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
+import { TScoreDisplayNode } from './TScoreDisplayNode.js';
 import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
@@ -53,7 +54,7 @@ type SelfOptions = {
   textFill?: TColor;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number>, tandem?: Tandem ) => Node;
+  createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number>, tandem?: Tandem ) => TScoreDisplayNode;
 
   // nested options for 'Start Over' button, filled in below
   startOverButtonOptions?: StrictOmit<TextPushButtonOptions, 'tandem'>;

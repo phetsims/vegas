@@ -29,6 +29,7 @@ import soundManager from '../../tambo/js/soundManager.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import levelSelectionButton_mp3 from '../sounds/levelSelectionButton_mp3.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
+import { TScoreDisplayNode } from './TScoreDisplayNode.js';
 import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 
@@ -39,7 +40,7 @@ type SelfOptions = {
   buttonHeight?: number;
 
   // score display
-  createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number> ) => Node;
+  createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number> ) => TScoreDisplayNode;
   scoreDisplayProportion?: number; // percentage of the button height occupied by scoreDisplay, (0,0.5]
   scoreDisplayMinXMargin?: number; // horizontal margin between scoreDisplay and its background
   scoreDisplayMinYMargin?: number;  // vertical margin between scoreDisplay and its background
