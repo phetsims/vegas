@@ -36,13 +36,13 @@ export default class GameScreenNode extends VegasScreenNode {
 
   // TODO: The level number may not exist for infinite games. Review content that includes it and decide how it should behave.
   //  See https://github.com/phetsims/vegas/issues/138
-  public constructor( levelNumberProperty: TReadOnlyProperty<number>, levelCountProperty: TReadOnlyProperty<number>, providedOptions?: NodeOptions ) {
+  public constructor( challengeNumberProperty: TReadOnlyProperty<number>, challengeCountProperty: TReadOnlyProperty<number>, providedOptions?: NodeOptions ) {
     super( providedOptions );
 
     // Although the logical heading of the challenge section, it is not a child of that section
     // because we expect clients to assign other UI components to the pdom order under it.
     this.accessibleFocusableHeadingNode = new FocusableHeadingNode( {
-      accessibleName: new ChallengeNumberStringProperty( levelNumberProperty, levelCountProperty ),
+      accessibleName: new ChallengeNumberStringProperty( challengeNumberProperty, challengeCountProperty ),
       headingLevel: 2
     } );
 
