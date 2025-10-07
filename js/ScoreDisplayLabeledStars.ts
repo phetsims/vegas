@@ -7,6 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StatusBar from '../../scenery-phet/js/StatusBar.js';
@@ -14,11 +15,11 @@ import HBox, { HBoxOptions } from '../../scenery/js/layout/nodes/HBox.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import ScoreDisplayStars, { ScoreDisplayStarsOptions } from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
-import Tandem from '../../tandem/js/Tandem.js';
-import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 type SelfOptions = {
   font?: Font;
@@ -30,6 +31,10 @@ type SelfOptions = {
 export type ScoreDisplayLabeledStarsOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
 export default class ScoreDisplayLabeledStars extends HBox {
+
+  // A Property containing the accessible string representation of the display. For example,
+  // "Score: 0 stars", "Score: 1 star", "Score: 1.5 stars".
+  public readonly accessibleScoreStringProperty: ReadOnlyProperty<string>;
 
   private readonly disposeScoreDisplayLabeledStars: () => void;
 
@@ -61,6 +66,10 @@ export default class ScoreDisplayLabeledStars extends HBox {
 
     super( options );
 
+    this.accessibleScoreStringProperty = VegasFluent.a11y.scoreDisplays.scoreDisplayLabelledStars.accessibleScore.createProperty( {
+      stars: scoreDisplay.accessibleNumberOfStarsProperty
+    } );
+
     if ( this.isPhetioInstrumented() && scoreProperty.isPhetioInstrumented() ) {
       this.addLinkedElement( scoreProperty );
     }
@@ -68,6 +77,7 @@ export default class ScoreDisplayLabeledStars extends HBox {
     this.disposeScoreDisplayLabeledStars = () => {
       textNode.dispose();
       scoreDisplay.dispose();
+      this.accessibleScoreStringProperty.dispose();
     };
   }
 
