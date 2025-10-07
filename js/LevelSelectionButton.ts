@@ -135,20 +135,18 @@ export default class LevelSelectionButton extends RectangularPushButton {
     } );
 
     // The accessibleName pattern depends on whether there is a brief descriptor.
-    // TODO: The score Property needs to be a value describing the number of stars - so the scoreDisplay
-    //   will need to provide that, see https://github.com/phetsims/vegas/issues/138
     let accessibleNameStringProperty;
     if ( options.accessibleNameForLevel ) {
       accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelName.createProperty( {
         levelNumber: options.accessibleLevelNumber,
         levelName: options.accessibleNameForLevel,
-        value: scoreProperty
+        scoreDescription: scoreDisplay.accessibleScoreStringProperty
       } );
     }
     else {
       accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleName.createProperty( {
         levelNumber: options.accessibleLevelNumber,
-        value: scoreProperty
+        scoreDescription: scoreDisplay.accessibleScoreStringProperty
       } );
     }
     options.accessibleName = accessibleNameStringProperty;

@@ -198,8 +198,8 @@ const VegasFluent = {
     },
     levelSelectionButton: {
       _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
-      accessibleName: new FluentPattern<{ levelNumber: FluentVariable, value: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_levelSelectionButton_accessibleName', _.get( VegasStrings, 'a11y.levelSelectionButton.accessibleNameStringProperty' ), [{"name":"levelNumber"},{"name":"value","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] ),
-      accessibleNameWithLevelName: new FluentPattern<{ levelName: FluentVariable, levelNumber: FluentVariable, value: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_levelSelectionButton_accessibleNameWithLevelName', _.get( VegasStrings, 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' ), [{"name":"levelName"},{"name":"levelNumber"},{"name":"value","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] )
+      accessibleName: new FluentPattern<{ levelNumber: FluentVariable, scoreDescription: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionButton_accessibleName', _.get( VegasStrings, 'a11y.levelSelectionButton.accessibleNameStringProperty' ), [{"name":"levelNumber"},{"name":"scoreDescription"}] ),
+      accessibleNameWithLevelName: new FluentPattern<{ levelName: FluentVariable, levelNumber: FluentVariable, scoreDescription: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionButton_accessibleNameWithLevelName', _.get( VegasStrings, 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' ), [{"name":"levelName"},{"name":"levelNumber"},{"name":"scoreDescription"}] )
     },
     levelSelectionScreenNode: {
       screenSummary: {
