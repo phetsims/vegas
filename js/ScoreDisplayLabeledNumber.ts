@@ -7,6 +7,9 @@
  * @author Andrea Lin
  */
 
+import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import { toFixed } from '../../dot/js/util/toFixed.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
@@ -16,12 +19,9 @@ import Node from '../../scenery/js/nodes/Node.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
-import { toFixed } from '../../dot/js/util/toFixed.js';
-import Tandem from '../../tandem/js/Tandem.js';
-import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
-import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 type SelfOptions = {
   font?: Font;
@@ -33,6 +33,9 @@ export type ScoreDisplayLabeledNumberOptions = SelfOptions & StrictOmit<HBoxOpti
 
 export default class ScoreDisplayLabeledNumber extends Node {
 
+  // A Property containing the accessible string representation of the display.
+  // For example, "Score: 0", "Score: 1", "Score: 1.5".
+  public readonly accessibleScoreStringProperty: ReadOnlyProperty<string>;
   private readonly disposeScoreDisplayLabeledNumber: () => void;
 
   public constructor( scoreProperty: ReadOnlyProperty<number>, providedOptions?: ScoreDisplayLabeledNumberOptions ) {
@@ -67,6 +70,10 @@ export default class ScoreDisplayLabeledNumber extends Node {
     options.children = [ scoreDisplayText ];
 
     super( options );
+
+    // For this score display, the accessible string is the same as the visual string.
+    // Do not dispose of the accessibleScoreStringProperty, its just a reference to scoreDisplayStringProperty.
+    this.accessibleScoreStringProperty = scoreDisplayStringProperty;
 
     if ( this.isPhetioInstrumented() && scoreProperty.isPhetioInstrumented() ) {
       this.addLinkedElement( scoreProperty );
