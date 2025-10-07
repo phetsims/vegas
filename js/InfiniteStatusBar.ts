@@ -4,12 +4,14 @@
  * InfiniteStatusBar is the status bar for games that have an infinite (open-ended) number of challenges per level.
  * See specification in https://github.com/phetsims/vegas/issues/59.
  *
- * TODO: I took a stab at accessibility for this one.
- *   - The messageNode is provided by the client so it will be their responsibility to instrument it.
- *   - The score display is presented as an accessibleParagraph.
- *
  * @author Andrea Lin
  * @author Chris Malley (PixelZoom, Inc.)
+ */
+
+/**
+ * TODO: I took a stab at accessibility for this one. See https://github.com/phetsims/vegas/issues/138.
+ *   - The messageNode is provided by the client so it will be their responsibility to instrument it.
+ *   - The score display is presented as an accessibleParagraph.
  */
 
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
