@@ -9,13 +9,17 @@
  * @author Andrea Lin
  */
 
+import NumberProperty from '../../axon/js/NumberProperty.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
+import { toFixedNumber } from '../../dot/js/util/toFixedNumber.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
 import HBox, { HBoxOptions } from '../../scenery/js/layout/nodes/HBox.js';
-import vegas from './vegas.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 
 type SelfOptions = {
   numberOfStars?: number;
@@ -26,6 +30,13 @@ type SelfOptions = {
 export type ScoreDisplayStarsOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
 export default class ScoreDisplayStars extends HBox {
+
+  // A Property containing the accessible string representation of the display.
+  // For example, "3 stars" or "1 star". For use in isolation or in other string patterns.
+  public readonly accessibleScoreStringProperty: TReadOnlyProperty<string>;
+
+  // For the accessible string, a readable number of displayed stars.
+  private readonly _accessibleNumberOfStarsProperty = new NumberProperty( 0 );
 
   private readonly disposeScoreDisplayStars: () => void;
 
@@ -83,9 +94,16 @@ export default class ScoreDisplayStars extends HBox {
         children.push( new StarNode( combineOptions<StarNodeOptions>( { value: 0 }, options.starNodeOptions ) ) );
       }
 
+      // Set the accessible number of stars, rounded to one decimal place for clarity in accessibility.
+      this._accessibleNumberOfStarsProperty.value = toFixedNumber( numFilledStars + remainder, 1 );
+
       this.children = children;
     };
     scoreProperty.link( scorePropertyListener );
+
+    this.accessibleScoreStringProperty = VegasFluent.a11y.scoreDisplays.scoreDisplayStars.accessibleScore.createProperty( {
+      stars: this._accessibleNumberOfStarsProperty
+    } );
 
     if ( this.isPhetioInstrumented() && scoreProperty.isPhetioInstrumented() ) {
       this.addLinkedElement( scoreProperty );
@@ -93,7 +111,17 @@ export default class ScoreDisplayStars extends HBox {
 
     this.disposeScoreDisplayStars = function() {
       scoreProperty.unlink( scorePropertyListener );
+      this.accessibleScoreStringProperty.dispose();
+      this._accessibleNumberOfStarsProperty.dispose();
     };
+  }
+
+  /**
+   * Returns the readonly Property that contains the number of stars in a readable format for the
+   * accessible string.
+   */
+  public get accessibleNumberOfStarsProperty(): TReadOnlyProperty<number> {
+    return this._accessibleNumberOfStarsProperty;
   }
 
   public override dispose(): void {
