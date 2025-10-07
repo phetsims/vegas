@@ -8,6 +8,11 @@
  * @author Andrea Lin
  */
 
+import DerivedProperty from '../../axon/js/DerivedProperty.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
+import { toFixed } from '../../dot/js/util/toFixed.js';
+import { toFixedNumber } from '../../dot/js/util/toFixedNumber.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
@@ -16,10 +21,9 @@ import HBox, { HBoxOptions } from '../../scenery/js/layout/nodes/HBox.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
-import vegas from './vegas.js';
-import { toFixed } from '../../dot/js/util/toFixed.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 
 type SelfOptions = {
   font?: Font;
@@ -31,6 +35,10 @@ type SelfOptions = {
 export type ScoreDisplayNumberAndStarOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
 export default class ScoreDisplayNumberAndStar extends HBox {
+
+  // Property containing the accessible string representation of the score display.
+  // For example, "0 stars", "1 star", "1.5 stars".
+  public readonly accessibleScoreStringProperty: TReadOnlyProperty<string>;
 
   private readonly disposeScoreDisplayNumberAndStar: () => void;
 
@@ -81,12 +89,19 @@ export default class ScoreDisplayNumberAndStar extends HBox {
     };
     scoreProperty.link( scorePropertyListener );
 
+    const accessibleStarsProperty = new DerivedProperty( [ scoreProperty ], score => toFixedNumber( score, options.scoreDecimalPlaces ) );
+    this.accessibleScoreStringProperty = VegasFluent.a11y.scoreDisplays.scoreDisplayNumberAndStar.accessibleScore.createProperty( {
+      stars: accessibleStarsProperty
+    } );
+
     if ( this.isPhetioInstrumented() && scoreProperty.isPhetioInstrumented() ) {
       this.addLinkedElement( scoreProperty );
     }
 
     this.disposeScoreDisplayNumberAndStar = function() {
       scoreProperty.unlink( scorePropertyListener );
+      accessibleStarsProperty.dispose();
+      this.accessibleScoreStringProperty.dispose();
     };
   }
 
