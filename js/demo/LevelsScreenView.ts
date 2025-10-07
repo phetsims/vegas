@@ -23,7 +23,6 @@ import ScreenView from '../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import FocusStack from '../../../scenery/js/accessibility/FocusStack.js';
-import VBox from '../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import TextPushButton from '../../../sun/js/buttons/TextPushButton.js';
@@ -300,16 +299,9 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
           },
           scoreDisplayProportion: 0.5,
           createScoreDisplay: () => {
-
-            return new VBox( {
-              spacing: 25,
-              children: [
-                new ScoreDisplayStars( scoreProperty, {
-                  perfectScore: scoreProperty.range.max,
-                  numberOfStars: 5
-                } ),
-                new Text( focusHeadingWhenVisible( level ) ? 'Focus heading...' : 'Focus button...', { font: FONT } )
-              ]
+            return new ScoreDisplayStars( scoreProperty, {
+              perfectScore: scoreProperty.range.max,
+              numberOfStars: 5
             } );
           }
         }
