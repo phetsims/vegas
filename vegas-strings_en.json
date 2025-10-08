@@ -172,6 +172,9 @@
       }
     },
     "gameScreenNode": {
+      "accessibleHeadingChallenge": {
+        "value": "Challenge"
+      },
       "accessibleAnswerSection": {
         "value": "Answer Submission"
       },

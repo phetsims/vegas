@@ -67,6 +67,7 @@ addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOff', 'a
 addToMapIfDefined( 'a11y_levelCompletedNode_continueButton_accessibleHelpText', 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleName', 'a11y.gameInfoButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleHelpText', 'a11y.gameInfoButton.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_gameScreenNode_accessibleHeadingChallenge', 'a11y.gameScreenNode.accessibleHeadingChallengeStringProperty' );
 addToMapIfDefined( 'a11y_gameScreenNode_accessibleAnswerSection', 'a11y.gameScreenNode.accessibleAnswerSectionStringProperty' );
 addToMapIfDefined( 'a11y_gameScreenNode_accessibleProgressSection', 'a11y.gameScreenNode.accessibleProgressSectionStringProperty' );
 addToMapIfDefined( 'a11y_units_stars_pattern', 'a11y.units.stars.patternStringProperty' );
@@ -188,6 +189,9 @@ const VegasFluent = {
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameInfoButton_accessibleHelpText', _.get( VegasStrings, 'a11y.gameInfoButton.accessibleHelpTextStringProperty' ) )
     },
     gameScreenNode: {
+      _comment_0: new FluentComment( {"comment":"Simple accessibleHeading when a game does not have a defined number of challenges. If it does, the accessibleHeading","associatedKey":"accessibleHeadingChallenge"} ),
+      _comment_1: new FluentComment( {"comment":"will use the visual pattern for challenge like \"Challenge 1 of 5\".","associatedKey":"accessibleHeadingChallenge"} ),
+      accessibleHeadingChallengeStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleHeadingChallenge', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleHeadingChallengeStringProperty' ) ),
       accessibleAnswerSectionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleAnswerSection', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleAnswerSectionStringProperty' ) ),
       accessibleProgressSection: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleProgressSection', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleProgressSectionStringProperty' ), [{"name":"levelNumber"}] )
     },

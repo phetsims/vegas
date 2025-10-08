@@ -185,7 +185,10 @@ class MyGameScreenNode extends GameScreenNode {
     numberOfChallengesProperty: Property<number>,
     focusHeadingWhenVisible: boolean
   ) {
-    super( challengeNumberProperty, numberOfChallengesProperty );
+    super( {
+      challengeNumberProperty: challengeNumberProperty,
+      challengeCountProperty: numberOfChallengesProperty
+    } );
 
     const statusBar = new FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, {
       levelNumberProperty: new Property( level + 1 ),

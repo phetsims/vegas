@@ -75,8 +75,12 @@ a11y:
     accessibleHelpText: If needed, read brief details for each level.
 
   gameScreenNode:
-    accessibleAnswerSection:   Answer Submission
-    accessibleProgressSection: Level { $levelNumber } Progress
+
+    # Simple accessibleHeading when a game does not have a defined number of challenges. If it does, the accessibleHeading
+    # will use the visual pattern for challenge like "Challenge 1 of 5".
+    accessibleHeadingChallenge: Challenge
+    accessibleAnswerSection:    Answer Submission
+    accessibleProgressSection:  Level { $levelNumber } Progress
   units:
     stars:
       pattern: |-
@@ -93,5 +97,5 @@ a11y:
   levelSelectionScreenNode:
     accessibleContextResponseShow: Choose Your Level!
     screenSummary:
-      intro:               Welcome to the { $screenName } Screen. Choose a level to start earning stars. Use reset all to clear game and start over.
-      introWithOptions:    Welcome to the { $screenName } Screen. Choose a level to start earning stars. Set available game options to your liking. Use reset all to clear game and start over.
+      intro:            Welcome to the { $screenName } Screen. Choose a level to start earning stars. Use reset all to clear game and start over.
+      introWithOptions: Welcome to the { $screenName } Screen. Choose a level to start earning stars. Set available game options to your liking. Use reset all to clear game and start over.

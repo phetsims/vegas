@@ -11,6 +11,7 @@
 //  to the challenge screen. See https://github.com/phetsims/vegas/issues/138
 
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
+import optionize from '../../phet-core/js/optionize.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';
 import FocusableHeadingNode from '../../scenery/js/accessibility/pdom/FocusableHeadingNode.js';
 import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
@@ -18,6 +19,19 @@ import ChallengeNumberStringProperty from './ChallengeNumberStringProperty.js';
 import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasScreenNode from './VegasScreenNode.js';
+
+type SelfOptions = {
+
+  // Property for the current challenge number. If provided, is used in the accessible heading
+  // for the challenge section. If provided, the challengeCountProperty must also be provided.
+  challengeNumberProperty?: TReadOnlyProperty<number> | null;
+
+  // Property for the total number of challenges. If provided, is used in the accessible heading
+  // for the challenge section. If provided, the challengeNumberProperty must also be provided.
+  challengeCountProperty?: TReadOnlyProperty<number> | null;
+};
+type ParentOptions = NodeOptions;
+export type GameScreenNodeOptions = SelfOptions & ParentOptions;
 
 export default class GameScreenNode extends VegasScreenNode {
 
@@ -38,18 +52,42 @@ export default class GameScreenNode extends VegasScreenNode {
   // Section node for progress/status information.
   public readonly accessibleProgressSectionNode: Node;
 
-  // TODO: Is it OK for the challenge Number and challenge count to be required? Do all challenge screens have both of these? What should it be
-  //  for infinite levels? See https://github.com/phetsims/vegas/issues/138
-  //  DISCUSSION:
-  //   - For infinite challenges, just use "Challenge".
-  //   - That means that challengeNumberProperty and challengeCountProperty should be optional, and if one is used BOTH must be used.
-  public constructor( challengeNumberProperty: TReadOnlyProperty<number>, challengeCountProperty: TReadOnlyProperty<number>, providedOptions?: NodeOptions ) {
-    super( providedOptions );
+  private readonly disposeGameScreenNode: () => void;
+
+  public constructor( providedOptions?: GameScreenNodeOptions ) {
+
+    const options = optionize<GameScreenNodeOptions, SelfOptions, ParentOptions>()( {
+      challengeNumberProperty: null,
+      challengeCountProperty: null
+    }, providedOptions );
+
+    // Affirm that if one is provided, both are provided.
+    assert && assert( ( options.challengeNumberProperty === null ) === ( options.challengeCountProperty === null ),
+      'If one of challengeNumberProperty or challengeCountProperty are provided, both must be provided' );
+
+    super( options );
+
+    // Use a local variable to track if we need to dispose challengeStringProperty
+    let challengeStringProperty: TReadOnlyProperty<string> | null = null;
+    let accessibleHeadingContentProperty: TReadOnlyProperty<string>;
+
+    if ( options.challengeNumberProperty && options.challengeCountProperty ) {
+
+      // Both properties are provided, so use them to create a ChallengeNumberStringProperty. The challengeStringProperty
+      // itself must be disposed.
+      challengeStringProperty = new ChallengeNumberStringProperty( options.challengeNumberProperty, options.challengeCountProperty );
+      accessibleHeadingContentProperty = challengeStringProperty;
+    }
+    else {
+
+      // Use the default property from VegasFluent
+      accessibleHeadingContentProperty = VegasFluent.a11y.gameScreenNode.accessibleHeadingChallengeStringProperty;
+    }
 
     // Although the logical heading of the challenge section, it is not a child of that section
     // because we expect clients to assign other UI components to the pdom order under it.
     this.accessibleFocusableHeadingNode = new FocusableHeadingNode( {
-      accessibleName: new ChallengeNumberStringProperty( challengeNumberProperty, challengeCountProperty ),
+      accessibleName: accessibleHeadingContentProperty,
       headingLevel: 2
     } );
 
@@ -94,6 +132,22 @@ export default class GameScreenNode extends VegasScreenNode {
       this.accessibleAnswerSectionNode,
       this.accessibleProgressSectionNode
     ];
+
+    this.disposeGameScreenNode = () => {
+      challengeStringProperty && challengeStringProperty.dispose();
+      this.accessibleFocusableHeadingNode.dispose();
+      this.accessibleChallengeSectionNode.dispose();
+      this.accessibleAnswerSectionNode.dispose();
+      this.accessibleProgressSectionNode.dispose();
+    };
+  }
+
+  /**
+   * Free for garbage collection.
+   */
+  public override dispose(): void {
+    this.disposeGameScreenNode();
+    super.dispose();
   }
 
   /**

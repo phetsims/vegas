@@ -16,6 +16,7 @@ import Text from '../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../sun/js/buttons/RectangularPushButton.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
+import GameScreenNode from '../GameScreenNode.js';
 import InfiniteStatusBar from '../InfiniteStatusBar.js';
 import RewardDialog from '../RewardDialog.js';
 import vegas from '../vegas.js';
@@ -25,8 +26,11 @@ export default class InfiniteChallengesScreenView extends ScreenView {
   public constructor() {
 
     super( {
-      tandem: Tandem.OPT_OUT
+      tandem: Tandem.OPT_OUT,
+      includeAccessibleSectionNodes: false
     } );
+
+    const gameScreenNode = new GameScreenNode();
 
     const scoreProperty = new NumberProperty( 0, {
       range: new Range( 0, 1000 )
@@ -70,9 +74,19 @@ export default class InfiniteChallengesScreenView extends ScreenView {
     } );
 
     this.children = [
+      gameScreenNode,
       statusBar,
       scoreSlider,
       openButton
+    ];
+
+    gameScreenNode.accessibleChallengeSectionNode.pdomOrder = [
+      scoreSlider,
+      openButton
+    ];
+
+    gameScreenNode.accessibleProgressSectionNode.pdomOrder = [
+      statusBar
     ];
   }
 }
