@@ -69,8 +69,10 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
     } );
 
     const sectionOptions = { accessibleHeadingIncrement: 2 };
+
+    // TODO: Move to yaml, see https://github.com/phetsims/vegas/issues/138
     const levelsSection = new PDOMSectionNode( new StringProperty( 'Choose Your Level' ), sectionOptions );
-    const controlsSection = new PDOMSectionNode( new StringProperty( 'Choose Game Options' ), sectionOptions );
+    const controlsSection = new PDOMSectionNode( new StringProperty( 'Game Options' ), sectionOptions );
 
     this.pdomParentNode.children = [
       leadingParagraphNode,

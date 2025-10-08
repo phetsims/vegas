@@ -8,8 +8,6 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-// QUESTION: Are these classes redundant? They are all just buttons with different labels.
-
 import TextPushButton, { TextPushButtonOptions } from '../../../sun/js/buttons/TextPushButton.js';
 import vegas from '../vegas.js';
 import VegasStrings from '../VegasStrings.js';

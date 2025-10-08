@@ -17,7 +17,8 @@ export type ShowAnswerButtonOptions = TextPushButtonOptions;
 export default class ShowAnswerButton extends TextPushButton {
   public constructor( providedOptions?: ShowAnswerButtonOptions ) {
 
-    // QUESTION: Is this an alternative accessible name? "Show answer to move on."
+    // TODO: Is this an alternative accessible name? "Show answer to move on."
+    //   See https://github.com/phetsims/vegas/issues/138
     super( VegasStrings.showAnswerStringProperty, providedOptions );
   }
 }

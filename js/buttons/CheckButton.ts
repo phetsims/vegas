@@ -20,6 +20,8 @@ export type CheckButtonOptions = SelfOptions & ParentOptions;
 export default class CheckButton extends TextPushButton {
   public constructor( providedOptions?: CheckButtonOptions ) {
     super( VegasStrings.checkStringProperty, optionize<CheckButtonOptions, SelfOptions, ParentOptions>()( {
+
+      // TODO: This should be "Check Answer", see https://github.com/phetsims/vegas/issues/138
       accessibleName: VegasStrings.a11y.checkButton.accessibleNameStringProperty,
       accessibleHelpText: VegasStrings.a11y.checkButton.accessibleHelpTextStringProperty
     }, providedOptions ) );
