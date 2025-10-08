@@ -81,7 +81,7 @@ type SelfOptions = {
   levelLabelStringProperty?: TReadOnlyProperty<string> | null;
 };
 
-export type FiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
+export type FiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight' | 'accessibleHeading'>;
 
 export default class FiniteStatusBar extends StatusBar {
 
@@ -144,6 +144,7 @@ export default class FiniteStatusBar extends StatusBar {
 
     // The accessible heading will be built dynamically as the pattern depends on provided options.
     let accessibleHeading: PDOMValueType;
+    let disposableHeading: TReadOnlyProperty<string> | null; // If a Property is created, it will need to be disposed.
 
     // The described components of the status bar will be combined into an AccessibleListNode.
     const accessibleListItems: ( TReadOnlyProperty<string> | AccessibleListItem )[] = [];
@@ -181,6 +182,7 @@ export default class FiniteStatusBar extends StatusBar {
       accessibleHeading = VegasFluent.a11y.statusBar.accessibleHeadingWithLevelNumber.createProperty( {
         levelNumber: options.levelNumberProperty
       } );
+      disposableHeading = accessibleHeading;
     }
     else {
       accessibleHeading = VegasFluent.a11y.statusBar.accessibleHeadingStringProperty;
@@ -299,6 +301,7 @@ export default class FiniteStatusBar extends StatusBar {
       accessibleHeading.dispose();
       challengeNumberText.dispose();
       challengeNumberStringProperty && challengeNumberStringProperty.dispose();
+      disposableHeading && disposableHeading.dispose();
       scoreDisplay.dispose();
       elapsedTimeNode && elapsedTimeNode.dispose();
       startOverButton.dispose();

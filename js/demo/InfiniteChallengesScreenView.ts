@@ -41,6 +41,7 @@ export default class InfiniteChallengesScreenView extends ScreenView {
       font: StatusBar.DEFAULT_FONT
     } );
     const statusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, messageNode, scoreProperty, {
+      levelNumberProperty: new NumberProperty( 1 ),
       backButtonListener: () => console.log( 'back' ),
       tandem: Tandem.OPT_OUT
     } );
@@ -80,8 +81,12 @@ export default class InfiniteChallengesScreenView extends ScreenView {
       openButton
     ];
 
+    // pdom order - assign components into sections
     gameScreenNode.accessibleChallengeSectionNode.pdomOrder = [
-      scoreSlider,
+      scoreSlider
+    ];
+
+    gameScreenNode.accessibleAnswerSectionNode.pdomOrder = [
       openButton
     ];
 
