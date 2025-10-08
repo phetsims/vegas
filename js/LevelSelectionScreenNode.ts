@@ -10,7 +10,6 @@
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
-import StringProperty from '../../axon/js/StringProperty.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';
@@ -57,9 +56,8 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
 
     const sectionOptions = { accessibleHeadingIncrement: 2 };
 
-    // TODO: Move to yaml, see https://github.com/phetsims/vegas/issues/138
-    const levelsSection = new PDOMSectionNode( new StringProperty( 'Choose Your Level' ), sectionOptions );
-    const controlsSection = new PDOMSectionNode( new StringProperty( 'Game Options' ), sectionOptions );
+    const levelsSection = new PDOMSectionNode( VegasFluent.a11y.levelSelectionScreenNode.accessibleHeadingChooseLevelStringProperty, sectionOptions );
+    const controlsSection = new PDOMSectionNode( VegasFluent.a11y.levelSelectionScreenNode.accessibleHeadingOptionsStringProperty, sectionOptions );
 
     this.pdomParentNode.children = [
       leadingParagraphNode,

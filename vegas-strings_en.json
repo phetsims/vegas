@@ -198,6 +198,12 @@
       }
     },
     "levelSelectionScreenNode": {
+      "accessibleHeadingChooseLevel": {
+        "value": "Choose Your Level"
+      },
+      "accessibleHeadingOptions": {
+        "value": "Game Options"
+      },
       "accessibleContextResponseShow": {
         "value": "Choose Your Level!"
       },

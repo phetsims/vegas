@@ -73,6 +73,8 @@ addToMapIfDefined( 'a11y_gameScreenNode_accessibleProgressSection', 'a11y.gameSc
 addToMapIfDefined( 'a11y_units_stars_pattern', 'a11y.units.stars.patternStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleName', 'a11y.levelSelectionButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleNameWithLevelName', 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' );
+addToMapIfDefined( 'a11y_levelSelectionScreenNode_accessibleHeadingChooseLevel', 'a11y.levelSelectionScreenNode.accessibleHeadingChooseLevelStringProperty' );
+addToMapIfDefined( 'a11y_levelSelectionScreenNode_accessibleHeadingOptions', 'a11y.levelSelectionScreenNode.accessibleHeadingOptionsStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_accessibleContextResponseShow', 'a11y.levelSelectionScreenNode.accessibleContextResponseShowStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_screenSummary_intro', 'a11y.levelSelectionScreenNode.screenSummary.introStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_screenSummary_introWithOptions', 'a11y.levelSelectionScreenNode.screenSummary.introWithOptionsStringProperty' );
@@ -206,6 +208,8 @@ const VegasFluent = {
       accessibleNameWithLevelName: new FluentPattern<{ levelName: FluentVariable, levelNumber: FluentVariable, scoreDescription: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionButton_accessibleNameWithLevelName', _.get( VegasStrings, 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' ), [{"name":"levelName"},{"name":"levelNumber"},{"name":"scoreDescription"}] )
     },
     levelSelectionScreenNode: {
+      accessibleHeadingChooseLevelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_accessibleHeadingChooseLevel', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.accessibleHeadingChooseLevelStringProperty' ) ),
+      accessibleHeadingOptionsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_accessibleHeadingOptions', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.accessibleHeadingOptionsStringProperty' ) ),
       accessibleContextResponseShowStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_accessibleContextResponseShow', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.accessibleContextResponseShowStringProperty' ) ),
       screenSummary: {
         intro: new FluentPattern<{ screenName: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_screenSummary_intro', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.screenSummary.introStringProperty' ), [{"name":"screenName"}] ),

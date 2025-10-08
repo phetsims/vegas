@@ -95,6 +95,8 @@ a11y:
     accessibleName:              'Level { $levelNumber }, { $scoreDescription }'
     accessibleNameWithLevelName: 'Level { $levelNumber }: { $levelName }, { $scoreDescription }'
   levelSelectionScreenNode:
+    accessibleHeadingChooseLevel: Choose Your Level
+    accessibleHeadingOptions: Game Options
     accessibleContextResponseShow: Choose Your Level!
     screenSummary:
       intro:            Welcome to the { $screenName } Screen. Choose a level to start earning stars. Use reset all to clear game and start over.
