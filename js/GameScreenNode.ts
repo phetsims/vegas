@@ -103,15 +103,8 @@ export default class GameScreenNode extends VegasScreenNode {
       accessibleHeadingIncrement: 2
     } );
 
-    // TODO: Right now, this does NOT include the heading for "Level 2 Progress". It seems like it
-    //    should be built into the status bars. Will this section ever appear if there is no
-    //    progress/status information?
-    //    However, it is here so that clients can add content (including status bars) if they want for
-    //    consistent ordering.
-    //    This will ONLY be used for the status bar. And it should only be seen if there is a status bar.
-    //    https://github.com/phetsims/vegas/issues/138
-    //
-
+    // This section does not have an accessible heading. It is only used to contain the status bars. Keeping it here allows the status bars
+    // to be placed in a section and has symmetry with the other sections.
     this.accessibleStatusSectionNode = new Node( {
       tagName: 'section',
 
