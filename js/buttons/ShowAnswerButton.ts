@@ -3,27 +3,28 @@
 /**
  * A button component for showing the answer in a game.
  *
- * This button provides default accessibility content, including an accessible name.
+ * This button provides default accessibility content.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import TextPushButton, { TextPushButtonOptions } from '../../../sun/js/buttons/TextPushButton.js';
 import vegas from '../vegas.js';
+import VegasFluent from '../VegasFluent.js';
 import VegasStrings from '../VegasStrings.js';
 
-export type ShowAnswerButtonOptions = TextPushButtonOptions;
+type SelfOptions = EmptySelfOptions;
+type ParentOptions = TextPushButtonOptions;
+export type ShowAnswerButtonOptions = SelfOptions & ParentOptions;
+
 
 export default class ShowAnswerButton extends TextPushButton {
   public constructor( providedOptions?: ShowAnswerButtonOptions ) {
-
-    // TODO: Is this an alternative accessible name? "Show answer to move on."
-    //   See https://github.com/phetsims/vegas/issues/138
-    //   Discussion: Here is the content:
-    //   Accessible Name: "Show Answer"
-    //   Accessible Help Text: "Review answer to move on."
-    //   Accessible Context Response: "Answer displayed. Review and move on."
-    super( VegasStrings.showAnswerStringProperty, providedOptions );
+    super( VegasStrings.showAnswerStringProperty, optionize<ShowAnswerButtonOptions, SelfOptions, ParentOptions>()( {
+      accessibleHelpText: VegasFluent.a11y.showAnswerButton.accessibleHelpTextStringProperty,
+      accessibleContextResponse: VegasFluent.a11y.showAnswerButton.accessibleContextResponseStringProperty
+    }, providedOptions ) );
   }
 }
 

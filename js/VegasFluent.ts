@@ -67,6 +67,8 @@ addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOff', 'a
 addToMapIfDefined( 'a11y_levelCompletedNode_continueButton_accessibleHelpText', 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleName', 'a11y.gameInfoButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleHelpText', 'a11y.gameInfoButton.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_showAnswerButton_accessibleHelpText', 'a11y.showAnswerButton.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_showAnswerButton_accessibleContextResponse', 'a11y.showAnswerButton.accessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_gameScreenNode_accessibleHeadingChallenge', 'a11y.gameScreenNode.accessibleHeadingChallengeStringProperty' );
 addToMapIfDefined( 'a11y_gameScreenNode_accessibleAnswerSection', 'a11y.gameScreenNode.accessibleAnswerSectionStringProperty' );
 addToMapIfDefined( 'a11y_gameScreenNode_accessibleProgressSection', 'a11y.gameScreenNode.accessibleProgressSectionStringProperty' );
@@ -189,6 +191,10 @@ const VegasFluent = {
       _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameInfoButton_accessibleName', _.get( VegasStrings, 'a11y.gameInfoButton.accessibleNameStringProperty' ) ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameInfoButton_accessibleHelpText', _.get( VegasStrings, 'a11y.gameInfoButton.accessibleHelpTextStringProperty' ) )
+    },
+    showAnswerButton: {
+      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_showAnswerButton_accessibleHelpText', _.get( VegasStrings, 'a11y.showAnswerButton.accessibleHelpTextStringProperty' ) ),
+      accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_showAnswerButton_accessibleContextResponse', _.get( VegasStrings, 'a11y.showAnswerButton.accessibleContextResponseStringProperty' ) )
     },
     gameScreenNode: {
       _comment_0: new FluentComment( {"comment":"Simple accessibleHeading when a game does not have a defined number of challenges. If it does, the accessibleHeading","associatedKey":"accessibleHeadingChallenge"} ),

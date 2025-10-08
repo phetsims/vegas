@@ -74,6 +74,9 @@ a11y:
     accessibleName:     Game Info
     accessibleHelpText: If needed, read brief details for each level.
 
+  showAnswerButton:
+    accessibleHelpText: Review answer to move on.
+    accessibleContextResponse: Answer displayed. Review and move on.
   gameScreenNode:
 
     # Simple accessibleHeading when a game does not have a defined number of challenges. If it does, the accessibleHeading
