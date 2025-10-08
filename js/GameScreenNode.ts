@@ -38,9 +38,11 @@ export default class GameScreenNode extends VegasScreenNode {
   // Section node for progress/status information.
   public readonly accessibleProgressSectionNode: Node;
 
-  // NOTE: START HERE NEXT TIME
   // TODO: Is it OK for the challenge Number and challenge count to be required? Do all challenge screens have both of these? What should it be
   //  for infinite levels? See https://github.com/phetsims/vegas/issues/138
+  //  DISCUSSION:
+  //   - For infinite challenges, just use "Challenge".
+  //   - That means that challengeNumberProperty and challengeCountProperty should be optional, and if one is used BOTH must be used.
   public constructor( challengeNumberProperty: TReadOnlyProperty<number>, challengeCountProperty: TReadOnlyProperty<number>, providedOptions?: NodeOptions ) {
     super( providedOptions );
 
@@ -64,11 +66,18 @@ export default class GameScreenNode extends VegasScreenNode {
     } );
 
     // TODO: Right now, this does NOT include the heading for "Level 2 Progress". It seems like it
-    //  should be built into the status bars. Will this section ever appear if there is no
-    //  progress/status information?
-    //  However, it is hear so that clients can add content (including status bars) if they want for
-    //  consistent ordering.
-    //  See https://github.com/phetsims/vegas/issues/138
+    //    should be built into the status bars. Will this section ever appear if there is no
+    //    progress/status information?
+    //    However, it is here so that clients can add content (including status bars) if they want for
+    //    consistent ordering.
+    //    This will ONLY be used for the status bar. And it should only be seen if there is a status bar.
+    //    https://github.com/phetsims/vegas/issues/138
+    //
+    // TODO: Rename to accessibleStatusSectionNode, see https://github.com/phetsims/vegas/issues/138
+    // const myStatusBar = new FiniteStatusBar( ... );
+    // this.accessibleStatusSectionNode.pdomOrder = [ myStatusBar ];
+
+
     this.accessibleProgressSectionNode = new Node( {
       tagName: 'section',
 
