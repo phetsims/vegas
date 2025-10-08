@@ -7,6 +7,9 @@
  */
 
 import Multilink from '../../axon/js/Multilink.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import StringProperty from '../../axon/js/StringProperty.js';
+import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import SimpleClockIcon from '../../scenery-phet/js/SimpleClockIcon.js';
@@ -15,11 +18,10 @@ import HBox, { HBoxOptions } from '../../scenery/js/layout/nodes/HBox.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import GameTimer from './GameTimer.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
-import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
-import Tandem from '../../tandem/js/Tandem.js';
 
 type SelfOptions = {
   clockIconRadius?: number;
@@ -27,11 +29,15 @@ type SelfOptions = {
   textFill?: TColor;
 };
 
-export type ElapsedTimeNodeOptions = SelfOptions & StrictOmit<HBoxOptions, 'children' | 'accessibleName' | 'innerContent'>;
+export type ElapsedTimeNodeOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
 export default class ElapsedTimeNode extends HBox {
 
   private readonly disposeElapsedTimeNode: () => void;
+
+  // The time value, in a readable format for display.
+  private readonly _timeValueStringProperty = new StringProperty( '' );
+  public readonly timeValueStringProperty: TReadOnlyProperty<string>;
 
   public constructor( elapsedTimeProperty: ReadOnlyProperty<number>, providedOptions?: ElapsedTimeNodeOptions ) {
 
@@ -44,11 +50,7 @@ export default class ElapsedTimeNode extends HBox {
 
       // HBoxOptions
       spacing: 8,
-      tandem: Tandem.OPTIONAL,
-
-      // pdom - A paragraph tag so that it is included in the accessible content. But this can be
-      // overridden if you need to contain this in a list or other structure.
-      tagName: 'p'
+      tandem: Tandem.OPTIONAL
     }, providedOptions );
 
     const clockIcon = new SimpleClockIcon( options.clockIconRadius );
@@ -62,6 +64,8 @@ export default class ElapsedTimeNode extends HBox {
 
     super( options );
 
+    this.timeValueStringProperty = this._timeValueStringProperty;
+
     // Update the time display.
     const multilink = new Multilink( [
       elapsedTimeProperty,
@@ -72,7 +76,7 @@ export default class ElapsedTimeNode extends HBox {
     ], ( elapsedTime, pattern1, pattern2 ) => {
       const timeValueString = GameTimer.formatTime( elapsedTime );
       timeValue.string = timeValueString;
-      this.innerContent = timeValueString;
+      this._timeValueStringProperty.value = timeValueString;
     } );
 
     if ( this.isPhetioInstrumented() && elapsedTimeProperty.isPhetioInstrumented() ) {
@@ -80,6 +84,7 @@ export default class ElapsedTimeNode extends HBox {
     }
 
     this.disposeElapsedTimeNode = () => {
+      this._timeValueStringProperty.dispose();
       multilink.dispose();
     };
   }
