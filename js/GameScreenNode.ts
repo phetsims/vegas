@@ -7,6 +7,9 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
+// TODO: The LevelSelectionScreenNode should manage restoring focus to whatever had focus before switching
+//  to the challenge screen. See https://github.com/phetsims/vegas/issues/138
+
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';
 import FocusableHeadingNode from '../../scenery/js/accessibility/pdom/FocusableHeadingNode.js';
@@ -29,13 +32,14 @@ export default class GameScreenNode extends VegasScreenNode {
   // TODO: This needs to be added/hidden based on whether there are answer components.
   //   I can't think of a way to automate that. It will likely be a manual instrumentation to show/hide this.
   //   See https://github.com/phetsims/vegas/issues/138
+  //   Discussed - this is rare and it is OK to set visibility on these manually when we need to.
   public readonly accessibleAnswerSectionNode: PDOMSectionNode;
 
   // Section node for progress/status information.
   public readonly accessibleProgressSectionNode: Node;
 
-  // TODO: The level number may not exist for infinite games. Review content that includes it and decide how it should behave.
-  //  See https://github.com/phetsims/vegas/issues/138
+  // TODO: Is it OK for the challenge Number and challenge count to be required? Do all challenge screens have both of these? What should it be
+  //  for infinite levels? See https://github.com/phetsims/vegas/issues/138
   public constructor( challengeNumberProperty: TReadOnlyProperty<number>, challengeCountProperty: TReadOnlyProperty<number>, providedOptions?: NodeOptions ) {
     super( providedOptions );
 
@@ -51,11 +55,11 @@ export default class GameScreenNode extends VegasScreenNode {
 
       // This section does not have an accessibleHeading because the heading is provided as the focusable one.
       // However, headings below this section should be incremented as if they are below the h2 for the "Challenge" section.
-      accessibleHeadingIncrement: 3
+      accessibleHeadingIncrement: 2
     } );
 
     this.accessibleAnswerSectionNode = new PDOMSectionNode( VegasFluent.a11y.gameScreenNode.accessibleAnswerSectionStringProperty, {
-      accessibleHeadingIncrement: 3
+      accessibleHeadingIncrement: 2
     } );
 
     // TODO: Right now, this does NOT include the heading for "Level 2 Progress". It seems like it
@@ -69,7 +73,7 @@ export default class GameScreenNode extends VegasScreenNode {
 
       // This section does not have an accessibleHeading because we expect the heading to be set on the status bar.
       // However, headings below this section should be incremented as if they are below the h2 for the "Progress" section.
-      accessibleHeadingIncrement: 3
+      accessibleHeadingIncrement: 2
     } );
 
     // Add the sections to the scene graph so that their content will be in the
