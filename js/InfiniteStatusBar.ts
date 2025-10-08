@@ -8,12 +8,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-/**
- * TODO: Next steps for accessibility. See https://github.com/phetsims/vegas/issues/138.
- *   - DISCUSSION:
- *   - The level number should be included in the accessible heading for the status bar.
- */
-
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
