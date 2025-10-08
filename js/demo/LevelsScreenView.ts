@@ -248,7 +248,7 @@ class MyGameScreenNode extends GameScreenNode {
       showAnswerButton
     ];
 
-    this.accessibleProgressSectionNode.pdomOrder = [
+    this.accessibleStatusSectionNode.pdomOrder = [
       statusBar
     ];
 

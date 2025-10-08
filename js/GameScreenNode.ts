@@ -50,7 +50,7 @@ export default class GameScreenNode extends VegasScreenNode {
   public readonly accessibleAnswerSectionNode: PDOMSectionNode;
 
   // Section node for progress/status information.
-  public readonly accessibleProgressSectionNode: Node;
+  public readonly accessibleStatusSectionNode: Node;
 
   private readonly disposeGameScreenNode: () => void;
 
@@ -111,12 +111,8 @@ export default class GameScreenNode extends VegasScreenNode {
     //    This will ONLY be used for the status bar. And it should only be seen if there is a status bar.
     //    https://github.com/phetsims/vegas/issues/138
     //
-    // TODO: Rename to accessibleStatusSectionNode, see https://github.com/phetsims/vegas/issues/138
-    // const myStatusBar = new FiniteStatusBar( ... );
-    // this.accessibleStatusSectionNode.pdomOrder = [ myStatusBar ];
 
-
-    this.accessibleProgressSectionNode = new Node( {
+    this.accessibleStatusSectionNode = new Node( {
       tagName: 'section',
 
       // This section does not have an accessibleHeading because we expect the heading to be set on the status bar.
@@ -130,7 +126,7 @@ export default class GameScreenNode extends VegasScreenNode {
       this.accessibleFocusableHeadingNode,
       this.accessibleChallengeSectionNode,
       this.accessibleAnswerSectionNode,
-      this.accessibleProgressSectionNode
+      this.accessibleStatusSectionNode
     ];
 
     this.disposeGameScreenNode = () => {
@@ -138,7 +134,7 @@ export default class GameScreenNode extends VegasScreenNode {
       this.accessibleFocusableHeadingNode.dispose();
       this.accessibleChallengeSectionNode.dispose();
       this.accessibleAnswerSectionNode.dispose();
-      this.accessibleProgressSectionNode.dispose();
+      this.accessibleStatusSectionNode.dispose();
     };
   }
 

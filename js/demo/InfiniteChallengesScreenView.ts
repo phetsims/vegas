@@ -85,7 +85,7 @@ export default class InfiniteChallengesScreenView extends ScreenView {
       openButton
     ];
 
-    gameScreenNode.accessibleProgressSectionNode.pdomOrder = [
+    gameScreenNode.accessibleStatusSectionNode.pdomOrder = [
       statusBar
     ];
   }
