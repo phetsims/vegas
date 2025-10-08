@@ -42,9 +42,7 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
 
   public constructor( screenNameProperty: TReadOnlyProperty<string>, providedOptions?: LevelSelectionScreenNodeOptions ) {
     const options = optionize<LevelSelectionScreenNodeOptions, SelfOptions, ParentOptions>()( {
-
-      // TODO: What should the default be? See https://github.com/phetsims/vegas/issues/138
-      accessibleIncludeOptionsDescription: true
+      accessibleIncludeOptionsDescription: false
     }, providedOptions );
 
     super( options );
