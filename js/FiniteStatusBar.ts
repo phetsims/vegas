@@ -15,9 +15,9 @@ import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
+import AccessibleListNode, { AccessibleListItem } from '../../scenery-phet/js/accessibility/AccessibleListNode.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
-import { findStringProperty } from '../../scenery/js/accessibility/pdom/findStringProperty.js';
 import { PDOMValueType } from '../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import HBox from '../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../scenery/js/nodes/Node.js';
@@ -29,6 +29,7 @@ import TColor from '../../scenery/js/util/TColor.js';
 import TextPushButton, { TextPushButtonOptions } from '../../sun/js/buttons/TextPushButton.js';
 import sharedSoundPlayers from '../../tambo/js/sharedSoundPlayers.js';
 import Tandem from '../../tandem/js/Tandem.js';
+import ChallengeNumberStringProperty from './ChallengeNumberStringProperty.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import { TScoreDisplayNode } from './TScoreDisplayNode.js';
@@ -147,6 +148,9 @@ export default class FiniteStatusBar extends StatusBar {
     // The accessible heading will be built dynamically as the pattern depends on provided options.
     let accessibleHeading: PDOMValueType;
 
+    // The described components of the status bar will be combined into an AccessibleListNode.
+    const accessibleListItems: ( TReadOnlyProperty<string> | AccessibleListItem )[] = [];
+
     // Nodes on the left end of the bar
     const leftChildren = [];
 
@@ -187,12 +191,12 @@ export default class FiniteStatusBar extends StatusBar {
 
     // Challenge N of M
     let challengeNumberText: Node;
+    let challengeNumberStringProperty: TReadOnlyProperty<string>;
     if ( options.challengeNumberProperty && options.numberOfChallengesProperty ) {
 
-      const challengeNumberStringProperty = new DerivedStringProperty(
-        [ VegasStrings.pattern[ '0challenge' ][ '1maxStringProperty' ], options.challengeNumberProperty, options.numberOfChallengesProperty ],
-        ( pattern: string, challengeNumber: number, numberOfChallenges: number ) =>
-          StringUtils.format( pattern, challengeNumber, numberOfChallenges )
+      challengeNumberStringProperty = new ChallengeNumberStringProperty(
+        options.challengeNumberProperty,
+        options.numberOfChallengesProperty
       );
 
       challengeNumberText = new Text( challengeNumberStringProperty, combineOptions<TextOptions>( {
@@ -203,14 +207,12 @@ export default class FiniteStatusBar extends StatusBar {
         phetioVisiblePropertyInstrumented: true,
         visiblePropertyOptions: {
           phetioFeatured: true // See https://github.com/phetsims/balancing-chemical-equations/issues/201
-        },
-
-        // pdom - the challenge number is a list item in the list of left items
-        tagName: 'li',
-        innerContent: challengeNumberStringProperty
+        }
       }, options.challengeTextOptions ) );
 
       leftChildren.push( challengeNumberText );
+
+      accessibleListItems.push( challengeNumberStringProperty );
 
       if ( challengeNumberText.isPhetioInstrumented() && options.challengeNumberProperty.isPhetioInstrumented() ) {
         challengeNumberText.addLinkedElement( options.challengeNumberProperty );
@@ -223,28 +225,26 @@ export default class FiniteStatusBar extends StatusBar {
 
     // Score
     const scoreDisplay = options.createScoreDisplay( scoreProperty, options.tandem.createTandem( 'scoreDisplay' ) );
-
-    // TODO: The scoreDisplay be responsible for creating a formatted accessible string representing its content?
-    //  See https://github.com/phetsims/vegas/issues/138
-    scoreDisplay.tagName = 'li';
-    scoreDisplay.innerContent = findStringProperty( scoreDisplay );
+    accessibleListItems.push( scoreDisplay.accessibleScoreStringProperty );
 
     leftChildren.push( scoreDisplay );
 
     // Timer (optional)
-    let elapsedTimeNode: Node;
+    let elapsedTimeNode: ElapsedTimeNode;
     if ( options.elapsedTimeProperty && options.timerEnabledProperty ) {
       elapsedTimeNode = new ElapsedTimeNode( options.elapsedTimeProperty, {
         visibleProperty: options.timerEnabledProperty,
         clockIconRadius: options.clockIconRadius,
         font: options.font,
         textFill: options.textFill,
-        tandem: options.tandem.createTandem( 'elapsedTimeNode' ),
-
-        // The elapsed time is a list item in the list of left items.
-        tagName: 'li'
+        tandem: options.tandem.createTandem( 'elapsedTimeNode' )
       } );
       leftChildren.push( elapsedTimeNode );
+
+      accessibleListItems.push( {
+        stringProperty: elapsedTimeNode.timeValueStringProperty,
+        visibleProperty: options.timerEnabledProperty
+      } );
     }
 
     // Start Over button
@@ -271,13 +271,13 @@ export default class FiniteStatusBar extends StatusBar {
     const maxHeightLeftChildren = _.maxBy( leftChildren, child => child.height )!.height;
     leftChildren.push( new VStrut( maxHeightLeftChildren ) );
 
+    const accessibleListNode = new AccessibleListNode( accessibleListItems );
+    leftChildren.push( accessibleListNode );
+
     // Nodes on the left end of the bar
     const leftNodes = new HBox( {
       spacing: options.xSpacing,
-      children: leftChildren,
-
-      // pdom - the information on the left side of the bar is contained in a list
-      tagName: 'ul'
+      children: leftChildren
     } );
 
     options.children = [
@@ -307,10 +307,12 @@ export default class FiniteStatusBar extends StatusBar {
       levelNumberText.dispose();
       accessibleHeading.dispose();
       challengeNumberText.dispose();
+      challengeNumberStringProperty && challengeNumberStringProperty.dispose();
       scoreDisplay.dispose();
       elapsedTimeNode && elapsedTimeNode.dispose();
       startOverButton.dispose();
       elapsedTimeNode && elapsedTimeNode.dispose();
+      accessibleListNode.dispose();
     };
   }
 
