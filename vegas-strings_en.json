@@ -195,6 +195,9 @@
       }
     },
     "levelSelectionScreenNode": {
+      "accessibleContextResponseShow": {
+        "value": "Choose Your Level!"
+      },
       "screenSummary": {
         "intro": {
           "value": "Welcome to the { $screenName } Screen. Choose a level to start earning stars. Use reset all to clear game and start over."

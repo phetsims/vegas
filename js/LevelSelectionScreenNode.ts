@@ -73,6 +73,7 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
 
   public override show(): void {
     super.show();
+    this.addAccessibleContextResponse( VegasFluent.a11y.levelSelectionScreenNode.accessibleContextResponseShowStringProperty );
   }
 
   public override hide(): void {

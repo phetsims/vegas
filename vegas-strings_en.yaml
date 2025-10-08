@@ -91,6 +91,7 @@ a11y:
     accessibleName:              'Level { $levelNumber }, { $scoreDescription }'
     accessibleNameWithLevelName: 'Level { $levelNumber }: { $levelName }, { $scoreDescription }'
   levelSelectionScreenNode:
+    accessibleContextResponseShow: Choose Your Level!
     screenSummary:
       intro:               Welcome to the { $screenName } Screen. Choose a level to start earning stars. Use reset all to clear game and start over.
       introWithOptions:    Welcome to the { $screenName } Screen. Choose a level to start earning stars. Set available game options to your liking. Use reset all to clear game and start over.

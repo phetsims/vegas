@@ -122,6 +122,7 @@ type StringsType = {
       'accessibleNameWithLevelNameStringProperty': LocalizedStringProperty;
     };
     'levelSelectionScreenNode': {
+      'accessibleContextResponseShowStringProperty': LocalizedStringProperty;
       'screenSummary': {
         'introStringProperty': LocalizedStringProperty;
         'introWithOptionsStringProperty': LocalizedStringProperty;
