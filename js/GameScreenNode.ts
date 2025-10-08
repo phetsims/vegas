@@ -38,6 +38,7 @@ export default class GameScreenNode extends VegasScreenNode {
   // Section node for progress/status information.
   public readonly accessibleProgressSectionNode: Node;
 
+  // NOTE: START HERE NEXT TIME
   // TODO: Is it OK for the challenge Number and challenge count to be required? Do all challenge screens have both of these? What should it be
   //  for infinite levels? See https://github.com/phetsims/vegas/issues/138
   public constructor( challengeNumberProperty: TReadOnlyProperty<number>, challengeCountProperty: TReadOnlyProperty<number>, providedOptions?: NodeOptions ) {
