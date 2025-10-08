@@ -72,9 +72,8 @@ addToMapIfDefined( 'a11y_gameScreenNode_accessibleProgressSection', 'a11y.gameSc
 addToMapIfDefined( 'a11y_units_stars_pattern', 'a11y.units.stars.patternStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleName', 'a11y.levelSelectionButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleNameWithLevelName', 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' );
-addToMapIfDefined( 'a11y_levelSelectionScreenNode_screenSummary_useResetDescription', 'a11y.levelSelectionScreenNode.screenSummary.useResetDescriptionStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_screenSummary_intro', 'a11y.levelSelectionScreenNode.screenSummary.introStringProperty' );
-addToMapIfDefined( 'a11y_levelSelectionScreenNode_screenSummary_introWithSummary', 'a11y.levelSelectionScreenNode.screenSummary.introWithSummaryStringProperty' );
+addToMapIfDefined( 'a11y_levelSelectionScreenNode_screenSummary_introWithOptions', 'a11y.levelSelectionScreenNode.screenSummary.introWithOptionsStringProperty' );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
 const createFluentFile = (): string => {
@@ -203,10 +202,9 @@ const VegasFluent = {
     },
     levelSelectionScreenNode: {
       screenSummary: {
-        useResetDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_screenSummary_useResetDescription', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.screenSummary.useResetDescriptionStringProperty' ) ),
-        _comment_0: new FluentComment( {"comment":"The leading paragraph has a different pattern when there is a custom summary about the game.","associatedKey":"intro"} ),
+        _comment_0: new FluentComment( {"comment":"TODO: These strings wre changed and the pattern removed. Modulify and update option from the the LevelSelectionScreenNode.","associatedKey":"intro"} ),
         intro: new FluentPattern<{ screenName: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_screenSummary_intro', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.screenSummary.introStringProperty' ), [{"name":"screenName"}] ),
-        introWithSummary: new FluentPattern<{ screenName: FluentVariable, summary: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_screenSummary_introWithSummary', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.screenSummary.introWithSummaryStringProperty' ), [{"name":"screenName"},{"name":"summary"}] )
+        introWithOptions: new FluentPattern<{ screenName: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_screenSummary_introWithOptions', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.screenSummary.introWithOptionsStringProperty' ), [{"name":"screenName"}] )
       }
     }
   }

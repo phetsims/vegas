@@ -21,14 +21,10 @@ import VegasScreenNode from './VegasScreenNode.js';
 
 type SelfOptions = {
 
-  // An optional summary string that describes the game and guides the user toward what is expected.
-  // The default content will include a welcome statement and a description of the Reset All button:
-  //
-  // Welcome to the {{NAME}} Screen. {{accessibleGameSummary}} Use reset all to clear the game and start over."
-  //
-  // Here is an example value:
-  // "Choose a level to start earning stars. Additionally, choose game options for all levels.
-  accessibleGameSummary?: TReadOnlyProperty<string> | null;
+  // Determines which summary string pattern to use for the game introduction.
+  // If true, uses a pattern that includes a description of game options.
+  // If false, uses a simpler pattern without the description.
+  accessibleIncludeOptionsDescription?: boolean;
 };
 
 type ParentOptions = NodeOptions;
@@ -46,24 +42,17 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
 
   public constructor( screenNameProperty: TReadOnlyProperty<string>, providedOptions?: LevelSelectionScreenNodeOptions ) {
     const options = optionize<LevelSelectionScreenNodeOptions, SelfOptions, ParentOptions>()( {
-      accessibleGameSummary: null
+
+      // TODO: What should the default be? See https://github.com/phetsims/vegas/issues/138
+      accessibleIncludeOptionsDescription: true
     }, providedOptions );
 
     super( options );
 
     // The leading paragraph has a different pattern when there is a custom summary about the game.
-    let leadingParagraphStringProperty: TReadOnlyProperty<string>;
-    if ( options.accessibleGameSummary ) {
-      leadingParagraphStringProperty = VegasFluent.a11y.levelSelectionScreenNode.screenSummary.introWithSummary.createProperty( {
-        screenName: screenNameProperty,
-        summary: options.accessibleGameSummary
-      } );
-    }
-    else {
-      leadingParagraphStringProperty = VegasFluent.a11y.levelSelectionScreenNode.screenSummary.intro.createProperty( {
-        screenName: screenNameProperty
-      } );
-    }
+    const leadingParagraphStringProperty = options.accessibleIncludeOptionsDescription ?
+                                           VegasFluent.a11y.levelSelectionScreenNode.screenSummary.introWithOptions.createProperty( { screenName: screenNameProperty } ) :
+                                           VegasFluent.a11y.levelSelectionScreenNode.screenSummary.intro.createProperty( { screenName: screenNameProperty } );
     const leadingParagraphNode = new Node( {
       accessibleParagraph: leadingParagraphStringProperty
     } );

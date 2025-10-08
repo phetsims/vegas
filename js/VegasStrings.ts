@@ -123,9 +123,8 @@ type StringsType = {
     };
     'levelSelectionScreenNode': {
       'screenSummary': {
-        'useResetDescriptionStringProperty': LocalizedStringProperty;
         'introStringProperty': LocalizedStringProperty;
-        'introWithSummaryStringProperty': LocalizedStringProperty;
+        'introWithOptionsStringProperty': LocalizedStringProperty;
       }
     }
   }

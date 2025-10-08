@@ -92,8 +92,5 @@ a11y:
     accessibleNameWithLevelName: 'Level { $levelNumber }: { $levelName }, { $scoreDescription }'
   levelSelectionScreenNode:
     screenSummary:
-      useResetDescription: Use reset all to clear the game and start over.
-
-      # The leading paragraph has a different pattern when there is a custom summary about the game.
-      intro:               Welcome to the { $screenName } Screen. { a11y.levelSelectionScreenNode.screenSummary.useResetDescription }
-      introWithSummary:    Welcome to the { $screenName } Screen. { $summary } { a11y.levelSelectionScreenNode.screenSummary.useResetDescription }
+      intro:               Welcome to the { $screenName } Screen. Choose a level to start earning stars. Use reset all to clear game and start over.
+      introWithOptions:    Welcome to the { $screenName } Screen. Choose a level to start earning stars. Set available game options to your liking. Use reset all to clear game and start over.
