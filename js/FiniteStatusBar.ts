@@ -113,9 +113,6 @@ export default class FiniteStatusBar extends StatusBar {
       challengeNumberVisible: true,
       font: StatusBar.DEFAULT_FONT,
       textFill: StatusBar.DEFAULT_TEXT_FILL,
-
-      // TODO: This score display needs to be responsible for creating a formatted accessible string representing its content.
-      //  See https://github.com/phetsims/vegas/issues/138.
       createScoreDisplay: ( scoreProperty, tandem ) => new ScoreDisplayLabeledNumber( scoreProperty, {
         font: providedOptions && providedOptions.font ? providedOptions.font : StatusBar.DEFAULT_FONT,
         textFill: providedOptions && providedOptions.textFill ? providedOptions.textFill : StatusBar.DEFAULT_TEXT_FILL,
@@ -248,12 +245,6 @@ export default class FiniteStatusBar extends StatusBar {
     }
 
     // Start Over button
-    // TODO: Is it true that all start over buttons go back to the level selection screen?
-    //  Just making sure  "Choose Your Level!" is general enough.
-    //  This should be triggered by the level selection screen when it is shown. Otherwise, it will not be heard when the
-    //  start over button becomes invisible.
-    //  Is it OK if this response is heard even the first time it becomes visible? Yes, that is OK.
-    //  See https://github.com/phetsims/vegas/issues/138
     const startOverButton = new TextPushButton( options.startOverButtonText, combineOptions<TextPushButtonOptions>( {
       font: options.font,
       textFill: options.textFill,
