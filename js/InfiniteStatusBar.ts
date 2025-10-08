@@ -12,6 +12,10 @@
  * TODO: I took a stab at accessibility for this one. See https://github.com/phetsims/vegas/issues/138.
  *   - The messageNode is provided by the client so it will be their responsibility to instrument it.
  *   - The score display is presented as an accessibleParagraph.
+ *   - DISCUSSION:
+ *   - The level number should be included in the accessible heading for the status bar.
+ *   - Ideally, it should be a list of two items. item 1 is the content of the message Node, item 2 is the score display.
+ *   -   If the messageNode is Text, we can try to find its stringProperty by default and use that.
  */
 
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';

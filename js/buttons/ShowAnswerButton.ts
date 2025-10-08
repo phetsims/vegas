@@ -19,6 +19,10 @@ export default class ShowAnswerButton extends TextPushButton {
 
     // TODO: Is this an alternative accessible name? "Show answer to move on."
     //   See https://github.com/phetsims/vegas/issues/138
+    //   Discussion: Here is the content:
+    //   Accessible Name: "Show Answer"
+    //   Accessible Help Text: "Review answer to move on."
+    //   Accessible Context Response: "Answer displayed. Review and move on."
     super( VegasStrings.showAnswerStringProperty, providedOptions );
   }
 }

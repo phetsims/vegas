@@ -144,6 +144,7 @@ export default class LevelCompletedNode extends Panel {
       );
 
       // TODO: The level is not included in the list, is that correct? See https://github.com/phetsims/vegas/issues/138
+      //  The level number will be in the accessible heading for this node (or section?) And it will also be included in a context response.
       vBoxChildren.push( new Text( levelStringProperty, {
         font: options.infoFont,
         maxWidth: options.contentMaxWidth
@@ -183,6 +184,9 @@ export default class LevelCompletedNode extends Panel {
 
         // Time: MM:SS
         // (Your New Best!)
+        // TODO: Create a new string pattern for the accessible content that removes breaks and parens, see https://github.com/phetsims/vegas/issues/138
+        // Your new best: MM:SS (if new best)
+        // Time: MM:SS (if not new best)
         timeStringProperty = new DerivedStringProperty(
           [ elapsedTimeStringProperty, VegasStrings.yourNewBestStringProperty ],
           ( elapsedTime: string, yourNewBest: string ) => `${elapsedTime}<br>${yourNewBest}`
