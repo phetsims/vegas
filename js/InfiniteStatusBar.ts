@@ -9,13 +9,9 @@
  */
 
 /**
- * TODO: I took a stab at accessibility for this one. See https://github.com/phetsims/vegas/issues/138.
- *   - The messageNode is provided by the client so it will be their responsibility to instrument it.
- *   - The score display is presented as an accessibleParagraph.
+ * TODO: Next steps for accessibility. See https://github.com/phetsims/vegas/issues/138.
  *   - DISCUSSION:
  *   - The level number should be included in the accessible heading for the status bar.
- *   - Ideally, it should be a list of two items. item 1 is the content of the message Node, item 2 is the score display.
- *   -   If the messageNode is Text, we can try to find its stringProperty by default and use that.
  */
 
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
@@ -23,8 +19,10 @@ import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import AccessibleListNode, { AccessibleListItem } from '../../scenery-phet/js/accessibility/AccessibleListNode.js';
 import BackButton from '../../scenery-phet/js/buttons/BackButton.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
+import { findStringProperty } from '../../scenery/js/accessibility/pdom/findStringProperty.js';
 import HBox from '../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
@@ -41,6 +39,11 @@ type SelfOptions = {
 
   // score display
   createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number> ) => TScoreDisplayNode;
+
+  // An optional accessible string for the message of this bar. By default, we try to find a stringProperty
+  // from the messageNode. But if you need the accessible content to be different or if the messageNode
+  // is not Text, you can provide it here.
+  accessibleMessageStringProperty?: TReadOnlyProperty<string> | null;
 };
 
 export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
@@ -70,8 +73,16 @@ export default class InfiniteStatusBar extends StatusBar {
       yMargin: 10,
       spacing: 10,
       createScoreDisplay: ( scoreProperty: ReadOnlyProperty<number> ) => new ScoreDisplayNumberAndStar( scoreProperty ),
-      accessibleHeading: VegasFluent.a11y.statusBar.accessibleHeadingStringProperty
+      accessibleHeading: VegasFluent.a11y.statusBar.accessibleHeadingStringProperty,
+      accessibleMessageStringProperty: null
     }, providedOptions );
+
+    // The accessible content for the infinite status bar display is composed of a list including
+    // the content of the messageNode, and the score.
+    const accessibleListItems: ( TReadOnlyProperty<string> | AccessibleListItem )[] = [];
+
+    const messageStringProperty = options.accessibleMessageStringProperty || findStringProperty( messageNode );
+    messageStringProperty && accessibleListItems.push( messageStringProperty );
 
     // button that typically takes us back to the level-selection UI
     const backButton = new BackButton( {
@@ -95,12 +106,12 @@ export default class InfiniteStatusBar extends StatusBar {
     // Create the score display.
     const scoreDisplay = options.createScoreDisplay( scoreProperty );
     scoreDisplay.maxWidth = 0.2 * layoutBounds.width;
+    accessibleListItems.push( scoreDisplay.accessibleScoreStringProperty );
 
-    // TODO: The score Display will need to be responsible for creating its
-    //  own PDOM representation. See https://github.com/phetsims/vegas/issues/138
-    // scoreDisplay.accessibleParagraph = findStringProperty( scoreDisplay );
+    // Assemble the accessible list.
+    const accessibleListNode = new AccessibleListNode( accessibleListItems );
 
-    options.children = [ leftNodes, scoreDisplay ];
+    options.children = [ leftNodes, scoreDisplay, accessibleListNode ];
 
     options.barHeight = Math.max( leftNodes.height, scoreDisplay.height ) + ( 2 * options.yMargin );
 
@@ -119,8 +130,12 @@ export default class InfiniteStatusBar extends StatusBar {
       scoreDisplay.right = this.positioningBoundsProperty.value.right;
     } );
 
+    // pdom order - list before everything else
+    this.setPDOMOrder( [ accessibleListNode ] );
+
     this.disposeInfiniteStatusBar = () => {
       scoreDisplay.dispose();
+      accessibleListNode.dispose();
     };
   }
 
