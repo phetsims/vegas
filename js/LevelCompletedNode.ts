@@ -127,13 +127,10 @@ export default class LevelCompletedNode extends Panel {
         }
       },
       maxWidth: options.contentMaxWidth,
-
-      // TODO: the score display should be responsible for providing its accessible string, see https://github.com/phetsims/vegas/issues/138
-      //  Convert the score to number of stars for the accessible text.
-      tagName: 'li',
-      innerContent: 'Stars: ' + score
+      tagName: 'li'
     } );
     vBoxChildren.push( scoreDisplayStars );
+    scoreDisplayStars.innerContent = scoreDisplayStars.accessibleScoreStringProperty;
 
     // Level (optional)
     if ( options.levelVisible ) {
