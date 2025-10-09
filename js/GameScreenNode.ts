@@ -43,10 +43,6 @@ export default class GameScreenNode extends VegasScreenNode {
   public readonly accessibleChallengeSectionNode: PDOMSectionNode;
 
   // Section node for answer submission and results components.
-  // TODO: This needs to be added/hidden based on whether there are answer components.
-  //   I can't think of a way to automate that. It will likely be a manual instrumentation to show/hide this.
-  //   See https://github.com/phetsims/vegas/issues/138
-  //   Discussed - this is rare and it is OK to set visibility on these manually when we need to.
   public readonly accessibleAnswerSectionNode: PDOMSectionNode;
 
   // Section node for progress/status information.
