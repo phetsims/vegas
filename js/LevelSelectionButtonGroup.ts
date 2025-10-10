@@ -18,6 +18,7 @@
  */
 
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
+import affirm from '../../perennial-alias/js/browser-and-node/affirm.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -25,6 +26,7 @@ import NodeLayoutConstraint from '../../scenery/js/layout/constraints/NodeLayout
 import FlowBox, { FlowBoxOptions } from '../../scenery/js/layout/nodes/FlowBox.js';
 import LayoutNode from '../../scenery/js/layout/nodes/LayoutNode.js';
 import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
+import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
 import vegas from './vegas.js';
@@ -41,16 +43,20 @@ export type LevelSelectionButtonGroupItem = {
   // Name used when creating the button's tandem, defaults to `level${N}Button`
   tandemName?: string;
 
+  // Listener function invoked when this button is pressed.
+  // Note: Do not use `options.listener` for this purpose, as the group manages additional logic beyond the game's requirements.
+  buttonListener?: PushButtonListener;
+
   // Options for the button. These will override LevelSelectionButtonGroupOptions.levelSelectionButtonOptions.
   // Setting tandem is the responsibility of the group, so it is omitted here.
-  options?: StrictOmit<LevelSelectionButtonOptions, 'tandem' | 'buttonHeight' | 'buttonWidth' | 'accessibleLevelNumber'>;
+  options?: StrictOmit<LevelSelectionButtonOptions, 'tandem' | 'buttonHeight' | 'buttonWidth' | 'accessibleLevelNumber' | 'listener'>;
 };
 
 type SelfOptions = {
 
   // Options for all LevelSelectionButton instances in the group.
   // These can be overridden for specific button(s) via LevelSelectionButtonGroupItem.options.
-  levelSelectionButtonOptions?: StrictOmit<LevelSelectionButtonOptions, 'tandem' | 'buttonHeight' | 'buttonWidth'>;
+  levelSelectionButtonOptions?: StrictOmit<LevelSelectionButtonOptions, 'tandem' | 'buttonHeight' | 'buttonWidth' | 'listener'>;
 
   // Options for the default layout, which is a FlowBox. Ignored if createLayoutNode is provided.
   flowBoxOptions?: StrictOmit<FlowBoxOptions, 'children'>;
@@ -75,6 +81,9 @@ export default class LevelSelectionButtonGroup extends Node {
   // Buttons, ordered by increasing level number.
   // Note that level numbering starts from 1, to match the gameLevels query parameter.
   public readonly buttons: LevelSelectionButton[];
+
+  // The index of the last button that was pressed. Used to help restore focus to the button that was last pressed.
+  private pressedButtonIndex = -1;
 
   /**
    * @param items - descriptions of the LevelSelectionButtons, ordered by increasing level number
@@ -106,10 +115,23 @@ export default class LevelSelectionButtonGroup extends Node {
         tandem = options.tandem.createTandem( tandemName );
       }
 
+      // Make sure that options.listener is not defined because item buttonListener should be used
+      // instead. Some usages (like with .map()) are not caught by StrictOmit.
+      if ( item.options ) {
+
+        // @ts-expect-error - this helps us catch js usages and what TS cannot
+        affirm( item.options.listener === undefined, 'Use buttonListener of LevelSelectionButtonGroupItem' );
+      }
+
       const buttonOptions = combineOptions<LevelSelectionButtonOptions>( {
         buttonHeight: options.groupButtonHeight,
         buttonWidth: options.groupButtonWidth,
         tandem: tandem,
+
+        listener: () => {
+          this.pressedButtonIndex = index;
+          item.buttonListener && item.buttonListener();
+        },
 
         // pdom - this combined with the tagName on the parent Node creates an ordered list of buttons
         containerTagName: 'li',
@@ -148,6 +170,18 @@ export default class LevelSelectionButtonGroup extends Node {
     super( options );
 
     this.buttons = buttons;
+  }
+
+  /**
+   * Sets focus to the last LevelSelectionButton that was pressed.
+   * This should be called after displaying the level selection screen to restore user context.
+   * Note: If using LevelSelectionScreenNode, focus management is handled automatically.
+   */
+  public focusPressedButton(): void {
+    const pressedButton = this.buttons[ this.pressedButtonIndex ];
+    if ( pressedButton ) {
+      pressedButton.focus();
+    }
   }
 
   /**

@@ -14,6 +14,7 @@ import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';
 import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
+import LevelSelectionButtonGroup from './LevelSelectionButtonGroup.js';
 import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasScreenNode from './VegasScreenNode.js';
@@ -39,7 +40,16 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
   // Assign control components to this section using pdomOrder.
   public readonly accessibleControlsSectionNode: PDOMSectionNode;
 
-  public constructor( screenNameProperty: TReadOnlyProperty<string>, providedOptions?: LevelSelectionScreenNodeOptions ) {
+  // Reference to the level selection button group, enabling automatic restoration of focus to the previously selected button when this screen is displayed.
+  // Note: It is the developer's responsibility to add these buttons to the scene graph and configure their pdomOrder.
+  // The buttons should be placed within the `accessibleLevelsSectionNode`.
+  private readonly levelSelectionButtonGroup: LevelSelectionButtonGroup;
+
+  public constructor(
+    screenNameProperty: TReadOnlyProperty<string>,
+    levelSelectionButtonGroup: LevelSelectionButtonGroup,
+    providedOptions?: LevelSelectionScreenNodeOptions
+  ) {
     const options = optionize<LevelSelectionScreenNodeOptions, SelfOptions, ParentOptions>()( {
       accessibleIncludeOptionsDescription: false
     }, providedOptions );
@@ -67,10 +77,12 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
 
     this.accessibleLevelsSectionNode = levelsSection;
     this.accessibleControlsSectionNode = controlsSection;
+    this.levelSelectionButtonGroup = levelSelectionButtonGroup;
   }
 
   public override show(): void {
     super.show();
+    this.levelSelectionButtonGroup.focusPressedButton();
     this.addAccessibleContextResponse( VegasFluent.a11y.levelSelectionScreenNode.accessibleContextResponseShowStringProperty );
   }
 

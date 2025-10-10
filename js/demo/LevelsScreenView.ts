@@ -5,7 +5,6 @@
  * scenery Nodes.
  *
  * Testing some building blocks for focus management and PDOM content.
- * - FocusStack for managing focus between screens.
  * - FocusableHeadingNode for accessible headings.
  * - GameScreenNode as a base class for game screens, with show/hide callbacks for focus management.
  *
@@ -24,7 +23,6 @@ import Range from '../../../dot/js/Range.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import FocusStack from '../../../scenery/js/accessibility/FocusStack.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import TextPushButton from '../../../sun/js/buttons/TextPushButton.js';
@@ -44,9 +42,6 @@ import RewardScreenNode from '../RewardScreenNode.js';
 import ScoreDisplayStars from '../ScoreDisplayStars.js';
 import vegas from '../vegas.js';
 import VegasScreenNode from '../VegasScreenNode.js';
-
-// Testing a global structure for managing focus between screens.
-const focusStack = new FocusStack();
 
 const NUMBER_OF_LEVELS = 5;
 const FONT = new PhetFont( 25 );
@@ -353,8 +348,6 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
     numberOfChallengesProperty: Property<number>,
     timerEnabledProperty: Property<boolean>
   ) {
-    super( new StringProperty( 'Levels' ) );
-    this.layoutBounds = layoutBounds;
 
     //-------------------- Level selection buttons -------------------
     const levelButtonsItems: LevelSelectionButtonGroupItem[] = [];
@@ -365,21 +358,15 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
         icon: new Text( `Level ${level + 1}`, { font: FONT } ),
         scoreProperty: scoreProperty,
 
+        buttonListener: () => {
+          levelNumberProperty.value = level + 1;
+          gameStateProperty.value = 'challenge';
+        },
+
         // Example of customizing a custom brief accessible name for the button.
         options: {
           accessibleHelpText: 'Identify number of reactants needed to create the products and leftovers.',
-          listener: () => {
 
-            // The last level screen returns focus to a transient button. Note that the transient button
-            // is created/destroyed every time the level selection screen is shown. So the reference
-            // is correct in the callback, but would be stale if assigned in this listener.
-            focusStack.push( () => {
-              return level === 4 ? this.transientButton! : levelSelectionButtonGroup.buttons[ level ];
-            } );
-
-            levelNumberProperty.value = level + 1;
-            gameStateProperty.value = 'challenge';
-          },
           scoreDisplayProportion: 0.5,
           createScoreDisplay: () => {
             return new ScoreDisplayStars( scoreProperty, {
@@ -391,6 +378,9 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
       } );
     }
     const levelSelectionButtonGroup = new LevelSelectionButtonGroup( levelButtonsItems );
+
+    super( new StringProperty( 'Levels' ), levelSelectionButtonGroup );
+    this.layoutBounds = layoutBounds;
 
     const gameInfoButton = new GameInfoButton();
     const timerButton = new GameTimerToggleButton( timerEnabledProperty );
@@ -451,10 +441,6 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
       leftBottom: this.layoutBounds.leftBottom.plusXY( 20, -20 )
     } );
     this.addChild( this.transientButton );
-
-    // Restore focus to the last focused button on the level selection screen, or the transient button
-    // depending on the focusStack callback.
-    focusStack.popFocus();
   }
 
   public override hide(): void {
