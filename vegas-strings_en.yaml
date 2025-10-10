@@ -85,7 +85,7 @@ a11y:
     accessibleAnswerSection:    Answer Submission
     accessibleProgressSection:  Level { $levelNumber } Progress
   rewardScreenNode:
-    accessibleHeading: Level { $levelNumber } Complete
+    accessibleHeading: Level { $levelNumber } Summary
   units:
     stars:
       pattern: |-

@@ -7,9 +7,6 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-// TODO: The LevelSelectionScreenNode should manage restoring focus to whatever had focus before switching
-//  to the challenge screen. See https://github.com/phetsims/vegas/issues/138
-
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';

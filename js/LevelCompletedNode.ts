@@ -7,9 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-// TODO: This needs to be put into a its own game screen. Like a sibling of LevelSelectionScreenNode and GameScreenNode. See https://github.com/phetsims/vegas/issues/138
-//  It needs to have its own heading for its content like "Level 1 Summary".
-
 import DerivedProperty from '../../axon/js/DerivedProperty.js';
 import DerivedStringProperty from '../../axon/js/DerivedStringProperty.js';
 import Property from '../../axon/js/Property.js';
