@@ -72,6 +72,7 @@ addToMapIfDefined( 'a11y_showAnswerButton_accessibleContextResponse', 'a11y.show
 addToMapIfDefined( 'a11y_gameScreenNode_accessibleHeadingChallenge', 'a11y.gameScreenNode.accessibleHeadingChallengeStringProperty' );
 addToMapIfDefined( 'a11y_gameScreenNode_accessibleAnswerSection', 'a11y.gameScreenNode.accessibleAnswerSectionStringProperty' );
 addToMapIfDefined( 'a11y_gameScreenNode_accessibleProgressSection', 'a11y.gameScreenNode.accessibleProgressSectionStringProperty' );
+addToMapIfDefined( 'a11y_rewardScreenNode_accessibleHeading', 'a11y.rewardScreenNode.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_units_stars_pattern', 'a11y.units.stars.patternStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleName', 'a11y.levelSelectionButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleNameWithLevelName', 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' );
@@ -202,6 +203,9 @@ const VegasFluent = {
       accessibleHeadingChallengeStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleHeadingChallenge', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleHeadingChallengeStringProperty' ) ),
       accessibleAnswerSectionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleAnswerSection', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleAnswerSectionStringProperty' ) ),
       accessibleProgressSection: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleProgressSection', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleProgressSectionStringProperty' ), [{"name":"levelNumber"}] )
+    },
+    rewardScreenNode: {
+      accessibleHeading: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardScreenNode_accessibleHeading', _.get( VegasStrings, 'a11y.rewardScreenNode.accessibleHeadingStringProperty' ), [{"name":"levelNumber"}] )
     },
     units: {
       stars: {

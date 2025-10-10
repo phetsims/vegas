@@ -54,6 +54,7 @@ export type LevelCompletedNodeOptions = SelfOptions & PanelOptions;
 export default class LevelCompletedNode extends Panel {
 
   private readonly disposeLevelCompletedNode: () => void;
+  private readonly continueButton: Node;
 
   /**
    * @param level - the game level that has been completed
@@ -241,6 +242,8 @@ export default class LevelCompletedNode extends Panel {
 
     super( content, options );
 
+    this.continueButton = continueButton;
+
     this.disposeLevelCompletedNode = () => {
 
       // DerivedStringProperty instances
@@ -253,6 +256,10 @@ export default class LevelCompletedNode extends Panel {
       // All VBox children are linked to dynamic string Properties, so must be disposed.
       vBoxChildren.forEach( child => child.dispose() );
     };
+  }
+
+  public focusContinueButton(): void {
+    this.continueButton.focus();
   }
 
   public override dispose(): void {

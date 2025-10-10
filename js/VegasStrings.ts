@@ -117,6 +117,9 @@ type StringsType = {
       'accessibleAnswerSectionStringProperty': LocalizedStringProperty;
       'accessibleProgressSectionStringProperty': LocalizedStringProperty;
     };
+    'rewardScreenNode': {
+      'accessibleHeadingStringProperty': LocalizedStringProperty;
+    };
     'units': {
       'stars': {
         'patternStringProperty': LocalizedStringProperty;

@@ -190,6 +190,11 @@
         "value": "Level { $levelNumber } Progress"
       }
     },
+    "rewardScreenNode": {
+      "accessibleHeading": {
+        "value": "Level { $levelNumber } Complete"
+      }
+    },
     "units": {
       "stars": {
         "pattern": {

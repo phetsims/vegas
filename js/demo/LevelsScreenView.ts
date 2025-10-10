@@ -13,8 +13,10 @@
  */
 
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
+import Multilink from '../../../axon/js/Multilink.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Property from '../../../axon/js/Property.js';
+import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import StringProperty from '../../../axon/js/StringProperty.js';
 import { TReadOnlyProperty } from '../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
@@ -35,8 +37,10 @@ import TryAgainButton from '../buttons/TryAgainButton.js';
 import FiniteStatusBar from '../FiniteStatusBar.js';
 import GameScreenNode from '../GameScreenNode.js';
 import GameTimer from '../GameTimer.js';
+import LevelCompletedNode from '../LevelCompletedNode.js';
 import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../LevelSelectionButtonGroup.js';
 import LevelSelectionScreenNode from '../LevelSelectionScreenNode.js';
+import RewardScreenNode from '../RewardScreenNode.js';
 import ScoreDisplayStars from '../ScoreDisplayStars.js';
 import vegas from '../vegas.js';
 import VegasScreenNode from '../VegasScreenNode.js';
@@ -46,6 +50,8 @@ const focusStack = new FocusStack();
 
 const NUMBER_OF_LEVELS = 5;
 const FONT = new PhetFont( 25 );
+
+type GameState = 'level-selection' | 'challenge' | 'reward';
 
 export default class LevelsScreenView extends ScreenView {
   public constructor() {
@@ -58,9 +64,11 @@ export default class LevelsScreenView extends ScreenView {
     } );
 
     //-------------------- "Model" components -------------------
-    const selectedLevelIndexProperty = new Property<null | number>( null, {} );
+    const gameStateProperty = new Property<GameState>( 'level-selection' );
+    const levelNumberProperty = new NumberProperty( 1 );
+
     const scoreProperty = new NumberProperty( 0, {
-      range: new Range( 0, 50 )
+      range: new Range( 0, 5 )
     } );
     const gameOverProperty = new DerivedProperty( [
       scoreProperty
@@ -79,19 +87,19 @@ export default class LevelsScreenView extends ScreenView {
     };
 
     //-------------------- Create level screens -------------------
-    const levelNodes: VegasScreenNode[] = [];
+    const levelNodes: GameScreenNode[] = [];
     for ( let level = 0; level < NUMBER_OF_LEVELS; level++ ) {
       const challengeNumberProperty = new Property( level + 1 );
 
       const levelNode = new MyGameScreenNode(
-        level,
+        levelNumberProperty,
         this.layoutBounds,
         this.visibleBoundsProperty,
         scoreProperty,
         gameOverProperty,
         gameTimer,
         timerEnabledProperty,
-        selectedLevelIndexProperty,
+        gameStateProperty,
         challengeNumberProperty,
         numberOfChallengesProperty,
         focusHeadingWhenVisible( level )
@@ -100,10 +108,53 @@ export default class LevelsScreenView extends ScreenView {
       levelNodes.push( levelNode );
     }
 
+    const rewardScreenNode = new MyRewardScreenNode( levelNumberProperty );
+
+    let oldCompletedNode: Node | null;
+
+    scoreProperty.link( score => {
+      if ( score === scoreProperty.range.max ) {
+
+        if ( oldCompletedNode ) {
+          oldCompletedNode.dispose();
+          oldCompletedNode = null;
+        }
+
+        // create a level completed node to show the level completion dialog
+        const levelCompletedNode = new LevelCompletedNode(
+          levelNumberProperty.value,
+          scoreProperty.value,
+          scoreProperty.range.max,
+          5,
+          timerEnabledProperty.value,
+          gameTimer.elapsedTimeProperty.value,
+          null,
+          true,
+          () => {
+            gameStateProperty.value = 'level-selection';
+
+            levelCompletedNode.dispose();
+            oldCompletedNode = null;
+          }
+        );
+        this.addChild( levelCompletedNode );
+
+        levelCompletedNode.center = this.layoutBounds.center;
+
+        rewardScreenNode.accessibleRewardSectionNode.pdomOrder = [ levelCompletedNode ];
+        gameStateProperty.value = 'reward';
+
+        levelCompletedNode.focusContinueButton();
+
+        oldCompletedNode = levelCompletedNode;
+      }
+    } );
+
     //------------------- Add to scene graph -------------------
     const levelSelectionNode = new TestLevelSelectionScreenNode(
+      levelNumberProperty,
       scoreProperty,
-      selectedLevelIndexProperty,
+      gameStateProperty,
       this.layoutBounds,
       focusHeadingWhenVisible,
       numberOfChallengesProperty,
@@ -113,74 +164,101 @@ export default class LevelsScreenView extends ScreenView {
     levelNodesParent.children = [ ...levelNodes ];
     this.addChild( levelSelectionNode );
     this.addChild( levelNodesParent );
+    this.addChild( rewardScreenNode );
 
 
     //------------------- Visibility management -------------------
-    selectedLevelIndexProperty.link( selectedLevelIndex => {
-      this.updateVisibility( selectedLevelIndex, levelSelectionNode, levelNodesParent, levelNodes, gameTimer );
+    Multilink.multilink( [
+      gameStateProperty,
+      levelNumberProperty
+    ], ( gameState, levelNumber ) => {
+      this.updateVisibility( gameState, levelNumber, levelSelectionNode, levelNodesParent, levelNodes, rewardScreenNode, gameTimer );
     } );
   }
 
   /**
    * Update which nodes are visible based on the selected level index.
    *
-   * @param selectedLevelIndex - the selected level, or null for level selection
+   * @param gameState - state of gameplay
+   * @param levelNumber - 1-based level number
    * @param levelSelectionNode - node containing level selection UI
    * @param levelNodesParent - parent for all level nodes, to hide everything for level selection
    * @param levelNodes - all level nodes, to individually set level visibility
+   * @param rewardScreenNode - node containing reward screen UI
    * @param gameTimer - to reset game time when switching levels
    */
   private updateVisibility(
-    selectedLevelIndex: number | null,
+    gameState: GameState,
+    levelNumber: number,
     levelSelectionNode: VegasScreenNode,
     levelNodesParent: Node,
-    levelNodes: VegasScreenNode[],
+    levelNodes: GameScreenNode[],
+    rewardScreenNode: VegasScreenNode,
     gameTimer: GameTimer
   ): void {
 
     gameTimer.reset();
 
     // Show level selection
-    if ( selectedLevelIndex === null ) {
+    if ( gameState === 'level-selection' ) {
+      this.hideChallenges( levelNodesParent, levelNodes );
+      rewardScreenNode.hide();
       levelSelectionNode.show();
-      levelNodesParent.visible = false;
-      levelNodes.forEach( levelNode => {
-        levelNode.hide();
-      } );
+    }
+    else if ( gameState === 'reward' ) {
+      this.hideChallenges( levelNodesParent, levelNodes );
+      levelSelectionNode.hide();
+      rewardScreenNode.show();
     }
     else {
-
-      // Show selected level
       levelSelectionNode.hide();
-      levelNodesParent.visible = true;
-      levelNodes.forEach( ( levelNode, index ) => {
-        if ( index === selectedLevelIndex ) {
-          levelNode.show();
-        }
-        else {
-          levelNode.hide();
-        }
-      } );
-
-      gameTimer.start();
+      rewardScreenNode.hide();
+      this.showChallenges( levelNodesParent, levelNodes, levelNumber, gameTimer );
     }
+  }
+
+  private showChallenges( levelNodesParent: Node, levelNodes: GameScreenNode[], levelNumber: number, gameTimer: GameTimer ): void {
+    levelNodesParent.visible = true;
+    levelNodes.forEach( ( levelNode, index ) => {
+      if ( index === levelNumber - 1 ) {
+        levelNode.show();
+      }
+      else {
+        levelNode.hide();
+      }
+    } );
+
+    gameTimer.start();
+  }
+
+  private hideChallenges( levelNodesParent: Node, levelNodes: GameScreenNode[] ): void {
+    levelNodesParent.visible = false;
+    levelNodes.forEach( levelNode => {
+      levelNode.hide();
+    } );
+  }
+}
+
+class MyRewardScreenNode extends RewardScreenNode {
+  public constructor( levelNumberProperty: TReadOnlyProperty<number> ) {
+    super( levelNumberProperty );
   }
 }
 
 class MyGameScreenNode extends GameScreenNode {
   private readonly addPointButton: Node;
   private readonly focusHeadingWhenVisible: boolean;
-  private readonly level: number;
+  private readonly levelNumberProperty: ReadOnlyProperty<number>;
 
   public constructor(
-    level: number,
+    levelNumberProperty: ReadOnlyProperty<number>,
     layoutBounds: Bounds2,
     visibleBoundsProperty: Property<Bounds2>,
     scoreProperty: NumberProperty,
     gameOverProperty: TReadOnlyProperty<boolean>,
     gameTimer: GameTimer,
     timerEnabledProperty: Property<boolean>,
-    selectedLevelIndexProperty: Property<number | null>,
+    gameStateProperty: Property<GameState>,
     challengeNumberProperty: Property<number>,
     numberOfChallengesProperty: Property<number>,
     focusHeadingWhenVisible: boolean
@@ -191,14 +269,14 @@ class MyGameScreenNode extends GameScreenNode {
     } );
 
     const statusBar = new FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, {
-      levelNumberProperty: new Property( level + 1 ),
+      levelNumberProperty: levelNumberProperty,
       challengeNumberProperty: challengeNumberProperty,
       numberOfChallengesProperty: numberOfChallengesProperty,
       elapsedTimeProperty: gameTimer.elapsedTimeProperty,
       timerEnabledProperty: timerEnabledProperty,
       startOverButtonOptions: {
         listener: () => {
-          selectedLevelIndexProperty.value = null;
+          gameStateProperty.value = 'level-selection';
         }
       }
     } );
@@ -253,7 +331,7 @@ class MyGameScreenNode extends GameScreenNode {
     ];
 
     this.addPointButton = addPointButton;
-    this.level = level;
+    this.levelNumberProperty = levelNumberProperty;
     this.focusHeadingWhenVisible = focusHeadingWhenVisible;
   }
 
@@ -267,8 +345,9 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
   private readonly layoutBounds: Bounds2;
 
   public constructor(
+    levelNumberProperty: NumberProperty,
     scoreProperty: NumberProperty,
-    selectedLevelIndexProperty: Property<number | null>,
+    gameStateProperty: Property<GameState>,
     layoutBounds: Bounds2,
     focusHeadingWhenVisible: ( levelNumber: number ) => boolean,
     numberOfChallengesProperty: Property<number>,
@@ -298,7 +377,8 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
               return level === 4 ? this.transientButton! : levelSelectionButtonGroup.buttons[ level ];
             } );
 
-            selectedLevelIndexProperty.value = level;
+            levelNumberProperty.value = level + 1;
+            gameStateProperty.value = 'challenge';
           },
           scoreDisplayProportion: 0.5,
           createScoreDisplay: () => {
@@ -318,7 +398,8 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
     const resetButton = new ResetAllButton( {
       listener: () => {
         scoreProperty.value = 0;
-        selectedLevelIndexProperty.value = null;
+        levelNumberProperty.value = 1;
+        gameStateProperty.value = 'level-selection';
       }
     } );
 
