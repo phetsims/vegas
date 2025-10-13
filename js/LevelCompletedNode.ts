@@ -141,8 +141,6 @@ export default class LevelCompletedNode extends Panel {
         pattern => StringUtils.format( pattern, level )
       );
 
-      // TODO: The level is not included in the list, is that correct? See https://github.com/phetsims/vegas/issues/138
-      //  The level number will be in the accessible heading for this node (or section?) And it will also be included in a context response.
       vBoxChildren.push( new Text( levelStringProperty, {
         font: options.infoFont,
         maxWidth: options.contentMaxWidth
