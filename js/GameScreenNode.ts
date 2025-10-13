@@ -26,6 +26,10 @@ type SelfOptions = {
   // Property for the total number of challenges. If provided, is used in the accessible heading
   // for the challenge section. If provided, the challengeNumberProperty must also be provided.
   challengeCountProperty?: TReadOnlyProperty<number> | null;
+
+  // Property for the current level. If provided, this level number will be included in the accessible
+  // heading for the "status" section.
+  levelNumberProperty?: TReadOnlyProperty<number> | null;
 };
 type ParentOptions = NodeOptions;
 export type GameScreenNodeOptions = SelfOptions & ParentOptions;
@@ -51,7 +55,8 @@ export default class GameScreenNode extends VegasScreenNode {
 
     const options = optionize<GameScreenNodeOptions, SelfOptions, ParentOptions>()( {
       challengeNumberProperty: null,
-      challengeCountProperty: null
+      challengeCountProperty: null,
+      levelNumberProperty: null
     }, providedOptions );
 
     // Affirm that if one is provided, both are provided.
@@ -87,22 +92,35 @@ export default class GameScreenNode extends VegasScreenNode {
     this.accessibleChallengeSectionNode = new Node( {
       tagName: 'section',
 
-      // This section does not have an accessibleHeading because the heading is provided as the focusable one.
-      // However, headings below this section should be incremented as if they are below the h2 for the "Challenge" section.
-      accessibleHeadingIncrement: 2
+      // This section does not include an accessible heading, as the heading is provided by the focusable heading node above.
+      // Headings within this section should be incremented to reflect their logical nesting under the h2 "Challenge" heading.
+      // The intended accessible heading structure is as follows:
+      // h1 - Title
+      //   h2 - Focusable Challenge Heading
+      //     h3 - Content within this section
+      // Therefore, `accessibleHeadingIncrement` is set to 3 to maintain this hierarchy.
+      accessibleHeadingIncrement: 3
     } );
 
     this.accessibleAnswerSectionNode = new PDOMSectionNode( VegasFluent.a11y.gameScreenNode.accessibleAnswerSectionStringProperty, {
       accessibleHeadingIncrement: 2
     } );
 
-    // This section does not have an accessible heading. It is only used to contain the status bars. Keeping it here allows the status bars
-    // to be placed in a section and has symmetry with the other sections.
-    this.accessibleStatusSectionNode = new Node( {
-      tagName: 'section',
+    // Compute the accessible heading for the "status" section, possibly including the level number. If a Property
+    // is created from a pattern, it must be disposed.
+    let statusHeadingProperty: TReadOnlyProperty<string>;
+    let disposableStatusHeadingProperty: TReadOnlyProperty<string> | null = null;
+    if ( options.levelNumberProperty ) {
+      statusHeadingProperty = VegasFluent.a11y.statusBar.accessibleHeadingWithLevelNumber.createProperty( {
+        levelNumber: options.levelNumberProperty
+      } );
+      disposableStatusHeadingProperty = statusHeadingProperty;
+    }
+    else {
+      statusHeadingProperty = VegasFluent.a11y.statusBar.accessibleHeadingStringProperty;
+    }
 
-      // This section does not have an accessibleHeading because we expect the heading to be set on the status bar.
-      // However, headings below this section should be incremented as if they are below the h2 for the "Progress" section.
+    this.accessibleStatusSectionNode = new PDOMSectionNode( statusHeadingProperty, {
       accessibleHeadingIncrement: 2
     } );
 
@@ -121,6 +139,8 @@ export default class GameScreenNode extends VegasScreenNode {
       this.accessibleChallengeSectionNode.dispose();
       this.accessibleAnswerSectionNode.dispose();
       this.accessibleStatusSectionNode.dispose();
+      statusHeadingProperty.dispose();
+      disposableStatusHeadingProperty && disposableStatusHeadingProperty.dispose();
     };
   }
 

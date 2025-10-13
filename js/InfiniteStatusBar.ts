@@ -34,17 +34,13 @@ type SelfOptions = {
   // score display
   createScoreDisplay?: ( scoreProperty: ReadOnlyProperty<number> ) => TScoreDisplayNode;
 
-  // An optional value for the level number. If provided, it will be included in the
-  // accessible heading for the status bar.
-  levelNumberProperty?: ReadOnlyProperty<number> | null;
-
   // An optional accessible string for the message of this bar. By default, we try to find a stringProperty
   // from the messageNode. But if you need the accessible content to be different or if the messageNode
   // is not Text, you can provide it here.
   accessibleMessageStringProperty?: TReadOnlyProperty<string> | null;
 };
 
-export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight' | 'accessibleHeading'>;
+export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
 
 export default class InfiniteStatusBar extends StatusBar {
 
@@ -71,7 +67,6 @@ export default class InfiniteStatusBar extends StatusBar {
       yMargin: 10,
       spacing: 10,
       createScoreDisplay: ( scoreProperty: ReadOnlyProperty<number> ) => new ScoreDisplayNumberAndStar( scoreProperty ),
-      levelNumberProperty: null,
       accessibleMessageStringProperty: null
     }, providedOptions );
 
@@ -115,21 +110,6 @@ export default class InfiniteStatusBar extends StatusBar {
 
     super( layoutBounds, visibleBoundsProperty, options );
 
-    // Compute the accessible heading, possibly including the level number. If a Property
-    // is created from a pattern, it must be disposed.
-    let accessibleHeadingProperty: TReadOnlyProperty<string>;
-    let disposableHeading: TReadOnlyProperty<string> | null = null;
-    if ( options.levelNumberProperty ) {
-      accessibleHeadingProperty = VegasFluent.a11y.statusBar.accessibleHeadingWithLevelNumber.createProperty( {
-        levelNumber: options.levelNumberProperty
-      } );
-      disposableHeading = accessibleHeadingProperty;
-    }
-    else {
-      accessibleHeadingProperty = VegasFluent.a11y.statusBar.accessibleHeadingStringProperty;
-    }
-    this.accessibleHeading = accessibleHeadingProperty;
-
     // Position components on the bar.
     this.positioningBoundsProperty.link( positioningBounds => {
       leftNodes.left = positioningBounds.left;
@@ -149,7 +129,6 @@ export default class InfiniteStatusBar extends StatusBar {
     this.disposeInfiniteStatusBar = () => {
       scoreDisplay.dispose();
       accessibleListNode.dispose();
-      disposableHeading && disposableHeading.dispose();
     };
   }
 

@@ -18,7 +18,6 @@ import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import AccessibleListNode, { AccessibleListItem } from '../../scenery-phet/js/accessibility/AccessibleListNode.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
-import { PDOMValueType } from '../../scenery/js/accessibility/pdom/ParallelDOM.js';
 import HBox from '../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Rectangle from '../../scenery/js/nodes/Rectangle.js';
@@ -34,7 +33,6 @@ import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import { TScoreDisplayNode } from './TScoreDisplayNode.js';
 import vegas from './vegas.js';
-import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {
@@ -81,7 +79,7 @@ type SelfOptions = {
   levelLabelStringProperty?: TReadOnlyProperty<string> | null;
 };
 
-export type FiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight' | 'accessibleHeading'>;
+export type FiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
 
 export default class FiniteStatusBar extends StatusBar {
 
@@ -142,10 +140,6 @@ export default class FiniteStatusBar extends StatusBar {
       stroke: options.barStroke
     } );
 
-    // The accessible heading will be built dynamically as the pattern depends on provided options.
-    let accessibleHeading: PDOMValueType;
-    let disposableHeading: TReadOnlyProperty<string> | null; // If a Property is created, it will need to be disposed.
-
     // The described components of the status bar will be combined into an AccessibleListNode.
     const accessibleListItems: ( TReadOnlyProperty<string> | AccessibleListItem )[] = [];
 
@@ -178,14 +172,6 @@ export default class FiniteStatusBar extends StatusBar {
       if ( levelNumberText.isPhetioInstrumented() && options.levelNumberProperty.isPhetioInstrumented() ) {
         levelNumberText.addLinkedElement( options.levelNumberProperty );
       }
-
-      accessibleHeading = VegasFluent.a11y.statusBar.accessibleHeadingWithLevelNumber.createProperty( {
-        levelNumber: options.levelNumberProperty
-      } );
-      disposableHeading = accessibleHeading;
-    }
-    else {
-      accessibleHeading = VegasFluent.a11y.statusBar.accessibleHeadingStringProperty;
     }
 
     // Challenge N of M
@@ -283,9 +269,6 @@ export default class FiniteStatusBar extends StatusBar {
 
     super( layoutBounds, visibleBoundsProperty, options );
 
-    // Apply computed content
-    this.accessibleHeading = accessibleHeading;
-
     // Dynamically position components on the bar.
     Multilink.multilink( [ this.positioningBoundsProperty, leftNodes.boundsProperty, startOverButton.boundsProperty ],
       ( positioningBounds: Bounds2, leftNodeBounds: Bounds2, startOverButtonBounds: Bounds2 ) => {
@@ -298,10 +281,8 @@ export default class FiniteStatusBar extends StatusBar {
 
     this.disposeFiniteStatusBar = () => {
       levelNumberText.dispose();
-      accessibleHeading.dispose();
       challengeNumberText.dispose();
       challengeNumberStringProperty && challengeNumberStringProperty.dispose();
-      disposableHeading && disposableHeading.dispose();
       scoreDisplay.dispose();
       elapsedTimeNode && elapsedTimeNode.dispose();
       startOverButton.dispose();
