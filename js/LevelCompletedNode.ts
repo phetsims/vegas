@@ -13,6 +13,7 @@ import Property from '../../axon/js/Property.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
+import AccessibleListNode, { AccessibleListItem } from '../../scenery-phet/js/accessibility/AccessibleListNode.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import VBox from '../../scenery/js/layout/nodes/VBox.js';
@@ -88,11 +89,12 @@ export default class LevelCompletedNode extends Panel {
       cornerRadius: 35,
       xMargin: 20,
       yMargin: 20,
-      tandem: Tandem.REQUIRED,
-
-      // pdom - the information in this dialog is contained in a list
-      tagName: 'ul'
+      tandem: Tandem.REQUIRED
     }, providedOptions );
+
+    // The accessible content will be contained in an AccessibleListNode. Children will depend on
+    // content included in options.
+    const accessibleListItems: ( AccessibleListItem | TReadOnlyProperty<string> )[] = [];
 
     const vBoxChildren: Node[] = [];
 
@@ -110,12 +112,10 @@ export default class LevelCompletedNode extends Panel {
     }
     const title = new Text( titleTextStringProperty, {
       font: options.titleFont,
-      maxWidth: options.contentMaxWidth,
-
-      tagName: 'li',
-      innerContent: titleTextStringProperty
+      maxWidth: options.contentMaxWidth
     } );
     vBoxChildren.push( title );
+    accessibleListItems.push( titleTextStringProperty );
 
     // Progress indicator
     const scoreDisplayStars = new ScoreDisplayStars( new Property( score ), {
@@ -127,11 +127,10 @@ export default class LevelCompletedNode extends Panel {
           outerRadius: options.starDiameter / 2
         }
       },
-      maxWidth: options.contentMaxWidth,
-      tagName: 'li'
+      maxWidth: options.contentMaxWidth
     } );
     vBoxChildren.push( scoreDisplayStars );
-    scoreDisplayStars.innerContent = scoreDisplayStars.accessibleScoreStringProperty;
+    accessibleListItems.push( scoreDisplayStars.accessibleScoreStringProperty );
 
     // Level (optional)
     if ( options.levelVisible ) {
@@ -154,16 +153,16 @@ export default class LevelCompletedNode extends Panel {
     );
     vBoxChildren.push( new Text( scoreStringProperty, {
       font: options.infoFont,
-      maxWidth: options.contentMaxWidth,
-
-      tagName: 'li',
-      innerContent: scoreStringProperty
+      maxWidth: options.contentMaxWidth
     } ) );
+    accessibleListItems.push( scoreStringProperty );
 
     // Time (optional)
     let elapsedTimeStringProperty: TReadOnlyProperty<string>;
     let timeStringProperty: TReadOnlyProperty<string>;
+    let accessibleTimeStringProperty: TReadOnlyProperty<string> | null = null;
     if ( timerEnabled ) {
+      const formattedTime = GameTimer.formatTime( elapsedTime );
 
       // Time: MM:SS
       elapsedTimeStringProperty = new DerivedStringProperty( [
@@ -173,22 +172,23 @@ export default class LevelCompletedNode extends Panel {
           VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2secondsStringProperty' ],
           VegasStrings.pattern[ '0minutes' ][ '1secondsStringProperty' ]
         ],
-        pattern => StringUtils.format( pattern, GameTimer.formatTime( elapsedTime ) )
+        pattern => StringUtils.format( pattern, formattedTime )
       );
 
       if ( isNewBestTime ) {
 
         // Time: MM:SS
         // (Your New Best!)
-        // TODO: Create a new string pattern for the accessible content that removes breaks and parens, see https://github.com/phetsims/vegas/issues/138
-        // Your new best: MM:SS (if new best)
-        // Time: MM:SS (if not new best)
         timeStringProperty = new DerivedStringProperty(
           [ elapsedTimeStringProperty, VegasStrings.yourNewBestStringProperty ],
           ( elapsedTime: string, yourNewBest: string ) => `${elapsedTime}<br>${yourNewBest}`
         );
+        accessibleTimeStringProperty = VegasFluent.a11y.levelCompletedNode.timeItem.timeWithNewBest.createProperty( {
+          time: formattedTime
+        } );
       }
       else if ( bestTimeAtThisLevel !== null ) {
+        const formattedBestTime = GameTimer.formatTime( bestTimeAtThisLevel );
 
         // Time: MM:SS
         // (Your Best: MM:SS)
@@ -201,22 +201,30 @@ export default class LevelCompletedNode extends Panel {
             VegasStrings.pattern[ '0minutes' ][ '1secondsStringProperty' ]
           ],
           ( elapsedTime: string, pattern: string ) =>
-            `${elapsedTime}<br>${StringUtils.format( pattern, GameTimer.formatTime( bestTimeAtThisLevel ) )}`
+            `${elapsedTime}<br>${StringUtils.format( pattern, formattedBestTime )}`
         );
+
+        // Time: MM:SS. Your Best: MM:SS.
+        accessibleTimeStringProperty = VegasFluent.a11y.levelCompletedNode.timeItem.timeWithBest.createProperty( {
+          time: formattedTime,
+          bestTime: formattedBestTime
+        } );
       }
       else {
 
         // Time: MM:SS
         timeStringProperty = elapsedTimeStringProperty;
+        accessibleTimeStringProperty = VegasFluent.a11y.levelCompletedNode.timeItem.time.createProperty( {
+          time: formattedTime
+        } );
       }
 
       vBoxChildren.push( new RichText( timeStringProperty, {
         font: options.infoFont,
         align: 'center',
-        maxWidth: options.contentMaxWidth,
-        tagName: 'li',
-        innerContent: timeStringProperty
+        maxWidth: options.contentMaxWidth
       } ) );
+      accessibleListItems.push( accessibleTimeStringProperty );
     }
 
     // Continue button
@@ -229,6 +237,10 @@ export default class LevelCompletedNode extends Panel {
       accessibleHelpText: VegasFluent.a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty
     } );
     vBoxChildren.push( continueButton );
+
+    // Assemble the accessible list content.
+    const accessibleListNode = new AccessibleListNode( accessibleListItems );
+    vBoxChildren.push( accessibleListNode );
 
     const content = new VBox( {
       children: vBoxChildren,
@@ -247,6 +259,7 @@ export default class LevelCompletedNode extends Panel {
       if ( timeStringProperty && timeStringProperty !== elapsedTimeStringProperty ) {
         timeStringProperty.dispose();
       }
+      accessibleTimeStringProperty && accessibleTimeStringProperty.dispose();
 
       // All VBox children are linked to dynamic string Properties, so must be disposed.
       vBoxChildren.forEach( child => child.dispose() );

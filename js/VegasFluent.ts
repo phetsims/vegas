@@ -64,6 +64,9 @@ addToMapIfDefined( 'a11y_checkButton_accessibleName', 'a11y.checkButton.accessib
 addToMapIfDefined( 'a11y_checkButton_accessibleHelpText', 'a11y.checkButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOn', 'a11y.gameTimerToggleButton.accessibleContextResponseOnStringProperty' );
 addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOff', 'a11y.gameTimerToggleButton.accessibleContextResponseOffStringProperty' );
+addToMapIfDefined( 'a11y_levelCompletedNode_timeItem_time', 'a11y.levelCompletedNode.timeItem.timeStringProperty' );
+addToMapIfDefined( 'a11y_levelCompletedNode_timeItem_timeWithBest', 'a11y.levelCompletedNode.timeItem.timeWithBestStringProperty' );
+addToMapIfDefined( 'a11y_levelCompletedNode_timeItem_timeWithNewBest', 'a11y.levelCompletedNode.timeItem.timeWithNewBestStringProperty' );
 addToMapIfDefined( 'a11y_levelCompletedNode_continueButton_accessibleHelpText', 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleName', 'a11y.gameInfoButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleHelpText', 'a11y.gameInfoButton.accessibleHelpTextStringProperty' );
@@ -128,6 +131,7 @@ const VegasFluent = {
   label: {
     levelStringProperty: _.get( VegasStrings, 'label.levelStringProperty' ),
     scorePatternStringProperty: _.get( VegasStrings, 'label.scorePatternStringProperty' ),
+    _comment_0: new FluentComment( {"comment":"Just a display of the time.","associatedKey":"time"} ),
     timeStringProperty: _.get( VegasStrings, 'label.timeStringProperty' ),
     score: {
       maxStringProperty: _.get( VegasStrings, 'label.score.maxStringProperty' )
@@ -184,6 +188,14 @@ const VegasFluent = {
       accessibleContextResponseOffStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameTimerToggleButton_accessibleContextResponseOff', _.get( VegasStrings, 'a11y.gameTimerToggleButton.accessibleContextResponseOffStringProperty' ) )
     },
     levelCompletedNode: {
+      timeItem: {
+        _comment_0: new FluentComment( {"comment":"Just a display of the time.","associatedKey":"time"} ),
+        time: new FluentPattern<{ time: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_timeItem_time', _.get( VegasStrings, 'a11y.levelCompletedNode.timeItem.timeStringProperty' ), [{"name":"time"}] ),
+        _comment_1: new FluentComment( {"comment":"A display of the time, with the best play time.","associatedKey":"timeWithBest"} ),
+        timeWithBest: new FluentPattern<{ bestTime: FluentVariable, time: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_timeItem_timeWithBest', _.get( VegasStrings, 'a11y.levelCompletedNode.timeItem.timeWithBestStringProperty' ), [{"name":"bestTime"},{"name":"time"}] ),
+        _comment_2: new FluentComment( {"comment":"A display of the time when it is the new best time.","associatedKey":"timeWithNewBest"} ),
+        timeWithNewBest: new FluentPattern<{ time: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_timeItem_timeWithNewBest', _.get( VegasStrings, 'a11y.levelCompletedNode.timeItem.timeWithNewBestStringProperty' ), [{"name":"time"}] )
+      },
       continueButton: {
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_continueButton_accessibleHelpText', _.get( VegasStrings, 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' ) )
       }

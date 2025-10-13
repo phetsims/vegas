@@ -100,6 +100,11 @@ type StringsType = {
       'accessibleContextResponseOffStringProperty': LocalizedStringProperty;
     };
     'levelCompletedNode': {
+      'timeItem': {
+        'timeStringProperty': LocalizedStringProperty;
+        'timeWithBestStringProperty': LocalizedStringProperty;
+        'timeWithNewBestStringProperty': LocalizedStringProperty;
+      };
       'continueButton': {
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       }

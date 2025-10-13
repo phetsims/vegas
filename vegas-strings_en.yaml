@@ -68,6 +68,16 @@ a11y:
     accessibleContextResponseOn:  Play game with Timer on.
     accessibleContextResponseOff: Play game without Timer.
   levelCompletedNode:
+    timeItem:
+
+      # Just a display of the time.
+      time: 'Time: { $time }'
+
+      # A display of the time, with the best play time.
+      timeWithBest: 'Time: { $time }. Your Best: { $bestTime }'
+
+      # A display of the time when it is the new best time.
+      timeWithNewBest: 'Time: { $time }. Your New Best!'
     continueButton:
       accessibleHelpText: Return to level selection screen and keep playing.
   gameInfoButton:
