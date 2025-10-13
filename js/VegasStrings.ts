@@ -117,7 +117,7 @@ type StringsType = {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
     };
-    'gameScreenNode': {
+    'challengeScreenNode': {
       'accessibleHeadingChallengeStringProperty': LocalizedStringProperty;
       'accessibleAnswerSectionStringProperty': LocalizedStringProperty;
       'accessibleProgressSectionStringProperty': LocalizedStringProperty;

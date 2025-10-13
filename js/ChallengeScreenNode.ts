@@ -79,7 +79,7 @@ export default class ChallengeScreenNode extends VegasScreenNode {
     else {
 
       // Use the default property from VegasFluent
-      accessibleHeadingContentProperty = VegasFluent.a11y.gameScreenNode.accessibleHeadingChallengeStringProperty;
+      accessibleHeadingContentProperty = VegasFluent.a11y.challengeScreenNode.accessibleHeadingChallengeStringProperty;
     }
 
     // Although the logical heading of the challenge section, it is not a child of that section
@@ -102,7 +102,7 @@ export default class ChallengeScreenNode extends VegasScreenNode {
       accessibleHeadingIncrement: 3
     } );
 
-    this.accessibleAnswerSectionNode = new PDOMSectionNode( VegasFluent.a11y.gameScreenNode.accessibleAnswerSectionStringProperty, {
+    this.accessibleAnswerSectionNode = new PDOMSectionNode( VegasFluent.a11y.challengeScreenNode.accessibleAnswerSectionStringProperty, {
       accessibleHeadingIncrement: 2
     } );
 

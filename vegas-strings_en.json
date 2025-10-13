@@ -190,7 +190,7 @@
         "value": "Answer displayed. Review and move on."
       }
     },
-    "gameScreenNode": {
+    "challengeScreenNode": {
       "accessibleHeadingChallenge": {
         "value": "Challenge"
       },

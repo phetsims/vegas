@@ -87,7 +87,7 @@ a11y:
   showAnswerButton:
     accessibleHelpText: Review answer to move on.
     accessibleContextResponse: Answer displayed. Review and move on.
-  gameScreenNode:
+  challengeScreenNode:
 
     # Simple accessibleHeading when a game does not have a defined number of challenges. If it does, the accessibleHeading
     # will use the visual pattern for challenge like "Challenge 1 of 5".

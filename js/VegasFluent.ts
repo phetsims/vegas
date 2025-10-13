@@ -72,9 +72,9 @@ addToMapIfDefined( 'a11y_gameInfoButton_accessibleName', 'a11y.gameInfoButton.ac
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleHelpText', 'a11y.gameInfoButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_showAnswerButton_accessibleHelpText', 'a11y.showAnswerButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_showAnswerButton_accessibleContextResponse', 'a11y.showAnswerButton.accessibleContextResponseStringProperty' );
-addToMapIfDefined( 'a11y_gameScreenNode_accessibleHeadingChallenge', 'a11y.gameScreenNode.accessibleHeadingChallengeStringProperty' );
-addToMapIfDefined( 'a11y_gameScreenNode_accessibleAnswerSection', 'a11y.gameScreenNode.accessibleAnswerSectionStringProperty' );
-addToMapIfDefined( 'a11y_gameScreenNode_accessibleProgressSection', 'a11y.gameScreenNode.accessibleProgressSectionStringProperty' );
+addToMapIfDefined( 'a11y_challengeScreenNode_accessibleHeadingChallenge', 'a11y.challengeScreenNode.accessibleHeadingChallengeStringProperty' );
+addToMapIfDefined( 'a11y_challengeScreenNode_accessibleAnswerSection', 'a11y.challengeScreenNode.accessibleAnswerSectionStringProperty' );
+addToMapIfDefined( 'a11y_challengeScreenNode_accessibleProgressSection', 'a11y.challengeScreenNode.accessibleProgressSectionStringProperty' );
 addToMapIfDefined( 'a11y_rewardScreenNode_accessibleHeading', 'a11y.rewardScreenNode.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_units_stars_pattern', 'a11y.units.stars.patternStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleName', 'a11y.levelSelectionButton.accessibleNameStringProperty' );
@@ -209,12 +209,12 @@ const VegasFluent = {
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_showAnswerButton_accessibleHelpText', _.get( VegasStrings, 'a11y.showAnswerButton.accessibleHelpTextStringProperty' ) ),
       accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_showAnswerButton_accessibleContextResponse', _.get( VegasStrings, 'a11y.showAnswerButton.accessibleContextResponseStringProperty' ) )
     },
-    gameScreenNode: {
+    challengeScreenNode: {
       _comment_0: new FluentComment( {"comment":"Simple accessibleHeading when a game does not have a defined number of challenges. If it does, the accessibleHeading","associatedKey":"accessibleHeadingChallenge"} ),
       _comment_1: new FluentComment( {"comment":"will use the visual pattern for challenge like \"Challenge 1 of 5\".","associatedKey":"accessibleHeadingChallenge"} ),
-      accessibleHeadingChallengeStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleHeadingChallenge', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleHeadingChallengeStringProperty' ) ),
-      accessibleAnswerSectionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleAnswerSection', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleAnswerSectionStringProperty' ) ),
-      accessibleProgressSection: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_gameScreenNode_accessibleProgressSection', _.get( VegasStrings, 'a11y.gameScreenNode.accessibleProgressSectionStringProperty' ), [{"name":"levelNumber"}] )
+      accessibleHeadingChallengeStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_challengeScreenNode_accessibleHeadingChallenge', _.get( VegasStrings, 'a11y.challengeScreenNode.accessibleHeadingChallengeStringProperty' ) ),
+      accessibleAnswerSectionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_challengeScreenNode_accessibleAnswerSection', _.get( VegasStrings, 'a11y.challengeScreenNode.accessibleAnswerSectionStringProperty' ) ),
+      accessibleProgressSection: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_challengeScreenNode_accessibleProgressSection', _.get( VegasStrings, 'a11y.challengeScreenNode.accessibleProgressSectionStringProperty' ), [{"name":"levelNumber"}] )
     },
     rewardScreenNode: {
       accessibleHeading: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardScreenNode_accessibleHeading', _.get( VegasStrings, 'a11y.rewardScreenNode.accessibleHeadingStringProperty' ), [{"name":"levelNumber"}] )
