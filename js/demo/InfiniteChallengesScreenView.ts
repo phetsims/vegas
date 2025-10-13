@@ -41,7 +41,6 @@ export default class InfiniteChallengesScreenView extends ScreenView {
       font: StatusBar.DEFAULT_FONT
     } );
     const statusBar = new InfiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, messageNode, scoreProperty, {
-      levelNumberProperty: new NumberProperty( 1 ),
       backButtonListener: () => console.log( 'back' ),
       tandem: Tandem.OPT_OUT
     } );
