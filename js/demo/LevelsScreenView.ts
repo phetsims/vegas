@@ -6,7 +6,7 @@
  *
  * Testing some building blocks for focus management and PDOM content.
  * - FocusableHeadingNode for accessible headings.
- * - GameScreenNode as a base class for game screens, with show/hide callbacks for focus management.
+ * - ChallengeScreenNode as a base class for game screens, with show/hide callbacks for focus management.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
@@ -33,7 +33,7 @@ import GameTimerToggleButton from '../buttons/GameTimerToggleButton.js';
 import ShowAnswerButton from '../buttons/ShowAnswerButton.js';
 import TryAgainButton from '../buttons/TryAgainButton.js';
 import FiniteStatusBar from '../FiniteStatusBar.js';
-import GameScreenNode from '../GameScreenNode.js';
+import ChallengeScreenNode from '../ChallengeScreenNode.js';
 import GameTimer from '../GameTimer.js';
 import LevelCompletedNode from '../LevelCompletedNode.js';
 import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem } from '../LevelSelectionButtonGroup.js';
@@ -82,11 +82,11 @@ export default class LevelsScreenView extends ScreenView {
     };
 
     //-------------------- Create level screens -------------------
-    const levelNodes: GameScreenNode[] = [];
+    const levelNodes: ChallengeScreenNode[] = [];
     for ( let level = 0; level < NUMBER_OF_LEVELS; level++ ) {
       const challengeNumberProperty = new Property( level + 1 );
 
-      const levelNode = new MyGameScreenNode(
+      const levelNode = new MyChallengeScreenNode(
         levelNumberProperty,
         this.layoutBounds,
         this.visibleBoundsProperty,
@@ -187,7 +187,7 @@ export default class LevelsScreenView extends ScreenView {
     levelNumber: number,
     levelSelectionNode: VegasScreenNode,
     levelNodesParent: Node,
-    levelNodes: GameScreenNode[],
+    levelNodes: ChallengeScreenNode[],
     rewardScreenNode: VegasScreenNode,
     gameTimer: GameTimer
   ): void {
@@ -212,7 +212,7 @@ export default class LevelsScreenView extends ScreenView {
     }
   }
 
-  private showChallenges( levelNodesParent: Node, levelNodes: GameScreenNode[], levelNumber: number, gameTimer: GameTimer ): void {
+  private showChallenges( levelNodesParent: Node, levelNodes: ChallengeScreenNode[], levelNumber: number, gameTimer: GameTimer ): void {
     levelNodesParent.visible = true;
     levelNodes.forEach( ( levelNode, index ) => {
       if ( index === levelNumber - 1 ) {
@@ -226,7 +226,7 @@ export default class LevelsScreenView extends ScreenView {
     gameTimer.start();
   }
 
-  private hideChallenges( levelNodesParent: Node, levelNodes: GameScreenNode[] ): void {
+  private hideChallenges( levelNodesParent: Node, levelNodes: ChallengeScreenNode[] ): void {
     levelNodesParent.visible = false;
     levelNodes.forEach( levelNode => {
       levelNode.hide();
@@ -240,7 +240,7 @@ class MyRewardScreenNode extends RewardScreenNode {
   }
 }
 
-class MyGameScreenNode extends GameScreenNode {
+class MyChallengeScreenNode extends ChallengeScreenNode {
   private readonly addPointButton: Node;
   private readonly focusHeadingWhenVisible: boolean;
   private readonly levelNumberProperty: ReadOnlyProperty<number>;

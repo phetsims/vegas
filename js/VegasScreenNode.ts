@@ -46,8 +46,8 @@ class VegasScreenNode extends Node {
    * Subclasses should organize accessible content under section nodes instead.
    */
   public override setPDOMOrder( pdomOrder: Array<Node | null> | null ): void {
-    throw new Error( 'Do not set the pdomOrder on GameScreenNode directly. Order Nodes under the ' +
-                     'accessible section Nodes provided by GameScreeenNode subclasses. ' +
+    throw new Error( 'Do not set the pdomOrder on a game screen Node directly. Order Nodes under the ' +
+                     'accessible section Nodes provided by VegasScreenNode subclasses. ' +
                      'This ensures that game screens have a consistent heading structure and that content ' +
                      'is placed under those sections which is important for screen reader accessibility.'
     );

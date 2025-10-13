@@ -16,7 +16,7 @@ import Text from '../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../sun/js/buttons/RectangularPushButton.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import GameScreenNode from '../GameScreenNode.js';
+import ChallengeScreenNode from '../ChallengeScreenNode.js';
 import InfiniteStatusBar from '../InfiniteStatusBar.js';
 import RewardDialog from '../RewardDialog.js';
 import vegas from '../vegas.js';
@@ -30,7 +30,7 @@ export default class InfiniteChallengesScreenView extends ScreenView {
       includeAccessibleSectionNodes: false
     } );
 
-    const gameScreenNode = new GameScreenNode();
+    const challengeScreenNode = new ChallengeScreenNode();
 
     const scoreProperty = new NumberProperty( 0, {
       range: new Range( 0, 1000 )
@@ -74,22 +74,22 @@ export default class InfiniteChallengesScreenView extends ScreenView {
     } );
 
     this.children = [
-      gameScreenNode,
+      challengeScreenNode,
       statusBar,
       scoreSlider,
       openButton
     ];
 
     // pdom order - assign components into sections
-    gameScreenNode.accessibleChallengeSectionNode.pdomOrder = [
+    challengeScreenNode.accessibleChallengeSectionNode.pdomOrder = [
       scoreSlider
     ];
 
-    gameScreenNode.accessibleAnswerSectionNode.pdomOrder = [
+    challengeScreenNode.accessibleAnswerSectionNode.pdomOrder = [
       openButton
     ];
 
-    gameScreenNode.accessibleStatusSectionNode.pdomOrder = [
+    challengeScreenNode.accessibleStatusSectionNode.pdomOrder = [
       statusBar
     ];
   }
