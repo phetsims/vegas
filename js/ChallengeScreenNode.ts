@@ -32,9 +32,9 @@ type SelfOptions = {
   levelNumberProperty?: TReadOnlyProperty<number> | null;
 };
 type ParentOptions = NodeOptions;
-export type GameScreenNodeOptions = SelfOptions & ParentOptions;
+export type ChallengeScreenNodeOptions = SelfOptions & ParentOptions;
 
-export default class GameScreenNode extends VegasScreenNode {
+export default class ChallengeScreenNode extends VegasScreenNode {
 
   // Focusable heading node for the challenge. Whenever this screen is shown,
   // focus is moved to this Node.
@@ -49,11 +49,11 @@ export default class GameScreenNode extends VegasScreenNode {
   // Section node for progress/status information.
   public readonly accessibleStatusSectionNode: Node;
 
-  private readonly disposeGameScreenNode: () => void;
+  private readonly disposeChallengeScreenNode: () => void;
 
-  public constructor( providedOptions?: GameScreenNodeOptions ) {
+  public constructor( providedOptions?: ChallengeScreenNodeOptions ) {
 
-    const options = optionize<GameScreenNodeOptions, SelfOptions, ParentOptions>()( {
+    const options = optionize<ChallengeScreenNodeOptions, SelfOptions, ParentOptions>()( {
       challengeNumberProperty: null,
       challengeCountProperty: null,
       levelNumberProperty: null
@@ -133,7 +133,7 @@ export default class GameScreenNode extends VegasScreenNode {
       this.accessibleStatusSectionNode
     ];
 
-    this.disposeGameScreenNode = () => {
+    this.disposeChallengeScreenNode = () => {
       challengeStringProperty && challengeStringProperty.dispose();
       this.accessibleFocusableHeadingNode.dispose();
       this.accessibleChallengeSectionNode.dispose();
@@ -148,7 +148,7 @@ export default class GameScreenNode extends VegasScreenNode {
    * Free for garbage collection.
    */
   public override dispose(): void {
-    this.disposeGameScreenNode();
+    this.disposeChallengeScreenNode();
     super.dispose();
   }
 
@@ -168,4 +168,4 @@ export default class GameScreenNode extends VegasScreenNode {
   }
 }
 
-vegas.register( 'GameScreenNode', GameScreenNode );
+vegas.register( 'ChallengeScreenNode', ChallengeScreenNode );
