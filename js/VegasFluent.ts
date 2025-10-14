@@ -57,9 +57,7 @@ addToMapIfDefined( 'a11y_statusBar_accessibleHeading', 'a11y.statusBar.accessibl
 addToMapIfDefined( 'a11y_statusBar_accessibleHeadingWithLevelNumber', 'a11y.statusBar.accessibleHeadingWithLevelNumberStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleName', 'a11y.statusBar.backButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleHelpText', 'a11y.statusBar.backButton.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_statusBar_backButton_accessibleContextResponse', 'a11y.statusBar.backButton.accessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_startOver_accessibleHelpText', 'a11y.statusBar.startOver.accessibleHelpTextStringProperty' );
-addToMapIfDefined( 'a11y_statusBar_startOver_accessibleContextResponse', 'a11y.statusBar.startOver.accessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_checkButton_accessibleName', 'a11y.checkButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_checkButton_accessibleHelpText', 'a11y.checkButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOn', 'a11y.gameTimerToggleButton.accessibleContextResponseOnStringProperty' );
@@ -170,12 +168,10 @@ const VegasFluent = {
       backButton: {
         _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_backButton_accessibleName', _.get( VegasStrings, 'a11y.statusBar.backButton.accessibleNameStringProperty' ) ),
-        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_backButton_accessibleHelpText', _.get( VegasStrings, 'a11y.statusBar.backButton.accessibleHelpTextStringProperty' ) ),
-        accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_backButton_accessibleContextResponse', _.get( VegasStrings, 'a11y.statusBar.backButton.accessibleContextResponseStringProperty' ) )
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_backButton_accessibleHelpText', _.get( VegasStrings, 'a11y.statusBar.backButton.accessibleHelpTextStringProperty' ) )
       },
       startOver: {
-        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_startOver_accessibleHelpText', _.get( VegasStrings, 'a11y.statusBar.startOver.accessibleHelpTextStringProperty' ) ),
-        accessibleContextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_startOver_accessibleContextResponse', _.get( VegasStrings, 'a11y.statusBar.startOver.accessibleContextResponseStringProperty' ) )
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_startOver_accessibleHelpText', _.get( VegasStrings, 'a11y.statusBar.startOver.accessibleHelpTextStringProperty' ) )
       }
     },
     checkButton: {

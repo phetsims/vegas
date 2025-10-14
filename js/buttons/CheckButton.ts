@@ -21,6 +21,8 @@ export default class CheckButton extends TextPushButton {
   public constructor( providedOptions?: CheckButtonOptions ) {
     super( VegasStrings.checkStringProperty, optionize<CheckButtonOptions, SelfOptions, ParentOptions>()( {
       accessibleName: VegasStrings.a11y.checkButton.accessibleNameStringProperty,
+
+      // TODO Remove this help text, see #138
       accessibleHelpText: VegasStrings.a11y.checkButton.accessibleHelpTextStringProperty
     }, providedOptions ) );
   }

@@ -33,6 +33,7 @@ import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import { TScoreDisplayNode } from './TScoreDisplayNode.js';
 import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {
@@ -242,7 +243,8 @@ export default class FiniteStatusBar extends StatusBar {
       listener: _.noop,
       maxWidth: 0.2 * ( layoutBounds.width - ( 2 * options.xMargin ) ), // use 20% of available width
       soundPlayer: sharedSoundPlayers.get( 'goBack' ),
-      tandem: options.tandem.createTandem( 'startOverButton' )
+      tandem: options.tandem.createTandem( 'startOverButton' ),
+      accessibleHelpText: VegasFluent.a11y.statusBar.startOver.accessibleHelpTextStringProperty
     }, options.startOverButtonOptions ) );
 
     // Add a vertical strut so that barNode will be the correct height when we show/hide the timer.

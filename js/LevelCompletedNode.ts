@@ -268,6 +268,9 @@ export default class LevelCompletedNode extends Panel {
 
   public focusContinueButton(): void {
     this.continueButton.focus();
+
+    // TODO: After this is focused, speak a context response like this. See #138.
+    //   Level {{#}} complete. {{#}} Stars, {{progressMessage}}
   }
 
   public override dispose(): void {

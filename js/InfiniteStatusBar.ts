@@ -81,7 +81,6 @@ export default class InfiniteStatusBar extends StatusBar {
     const backButton = new BackButton( {
       accessibleName: VegasFluent.a11y.statusBar.backButton.accessibleNameStringProperty,
       accessibleHelpText: VegasFluent.a11y.statusBar.backButton.accessibleHelpTextStringProperty,
-      accessibleContextResponse: VegasFluent.a11y.statusBar.backButton.accessibleContextResponseStringProperty,
       listener: options.backButtonListener,
       xMargin: 8,
       yMargin: 10,

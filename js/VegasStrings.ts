@@ -84,11 +84,9 @@ type StringsType = {
       'backButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
-        'accessibleContextResponseStringProperty': LocalizedStringProperty;
       };
       'startOver': {
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
-        'accessibleContextResponseStringProperty': LocalizedStringProperty;
       }
     };
     'checkButton': {
