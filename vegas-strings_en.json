@@ -200,6 +200,21 @@
         "value": "Level { $levelNumber } Summary"
       }
     },
+    "rewardDialog": {
+      "accessibleName": {
+        "value": "Level { $levelNumber } Summary"
+      },
+      "phetGirl": {
+        "accessibleParagraph": {
+          "value": "PhET Girl juggles a few of your { $stars }."
+        }
+      },
+      "newLevelButton": {
+        "accessibleParagraph": {
+          "value": "Choose a New Level or Keep Going with Level { $level }."
+        }
+      }
+    },
     "units": {
       "stars": {
         "pattern": {

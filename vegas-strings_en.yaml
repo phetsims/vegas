@@ -55,10 +55,10 @@ a11y:
     accessibleHeading:                Level Progress
     accessibleHeadingWithLevelNumber: Level { $levelNumber } Progress
     backButton:
-      accessibleName:            Back
-      accessibleHelpText:        Go back to choose a new level.
+      accessibleName:     Back
+      accessibleHelpText: Go back to choose a new level.
     startOver:
-      accessibleHelpText:        Erase progress and choose a new level.
+      accessibleHelpText: Erase progress and choose a new level.
   checkButton:
     accessibleName:     Check Answer
     accessibleHelpText: Read challenge details carefully.
@@ -69,10 +69,10 @@ a11y:
     timeItem:
 
       # Just a display of the time.
-      time: 'Time: { $time }'
+      time:            'Time: { $time }'
 
       # A display of the time, with the best play time.
-      timeWithBest: 'Time: { $time }. Your Best: { $bestTime }'
+      timeWithBest:    'Time: { $time }. Your Best: { $bestTime }'
 
       # A display of the time when it is the new best time.
       timeWithNewBest: 'Time: { $time }. Your New Best!'
@@ -83,7 +83,7 @@ a11y:
     accessibleHelpText: If needed, read brief details for each level.
 
   showAnswerButton:
-    accessibleHelpText: Review answer to move on.
+    accessibleHelpText:        Review answer to move on.
     accessibleContextResponse: Answer displayed. Review and move on.
   challengeScreenNode:
 
@@ -94,6 +94,12 @@ a11y:
     accessibleProgressSection:  Level { $levelNumber } Progress
   rewardScreenNode:
     accessibleHeading: Level { $levelNumber } Summary
+  rewardDialog:
+    accessibleName: Level { $levelNumber } Summary
+    phetGirl:
+      accessibleParagraph: PhET Girl juggles a few of your { $stars }.
+    newLevelButton:
+      accessibleParagraph: Choose a New Level or Keep Going with Level { $level }.
   units:
     stars:
       pattern: |-
@@ -108,8 +114,8 @@ a11y:
     accessibleName:              'Level { $levelNumber }, { $scoreDescription }'
     accessibleNameWithLevelName: 'Level { $levelNumber }: { $levelName }, { $scoreDescription }'
   levelSelectionScreenNode:
-    accessibleHeadingChooseLevel: Choose Your Level
-    accessibleHeadingOptions: Game Options
+    accessibleHeadingChooseLevel:  Choose Your Level
+    accessibleHeadingOptions:      Game Options
     accessibleContextResponseShow: Choose Your Level!
     screenSummary:
       intro:            Welcome to the { $screenName } Screen. Choose a level to start earning stars. Use reset all to clear game and start over.

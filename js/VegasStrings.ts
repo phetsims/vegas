@@ -123,6 +123,15 @@ type StringsType = {
     'rewardScreenNode': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
     };
+    'rewardDialog': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'phetGirl': {
+        'accessibleParagraphStringProperty': LocalizedStringProperty;
+      };
+      'newLevelButton': {
+        'accessibleParagraphStringProperty': LocalizedStringProperty;
+      }
+    };
     'units': {
       'stars': {
         'patternStringProperty': LocalizedStringProperty;

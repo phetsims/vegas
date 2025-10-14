@@ -12,6 +12,7 @@
  */
 
 import NumberProperty from '../../axon/js/NumberProperty.js';
+import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -28,8 +29,8 @@ import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
 import phetGirlJugglingStars_png from '../images/phetGirlJugglingStars_png.js';
 import ScoreDisplayNumberAndStar, { ScoreDisplayNumberAndStarOptions } from './ScoreDisplayNumberAndStar.js';
 import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
-import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 
 // constants
 const DEFAULT_BUTTONS_FONT = new PhetFont( 20 );
@@ -45,11 +46,14 @@ type SelfOptions = {
   scoreDisplayOptions?: ScoreDisplayNumberAndStarOptions;
 };
 
-export type RewardDialogOptions = SelfOptions & StrictOmit<DialogOptions, 'focusOnShowNode'>;
+export type RewardDialogOptions = SelfOptions & StrictOmit<DialogOptions, 'focusOnShowNode' | 'accessibleName'>;
 
 export default class RewardDialog extends Dialog {
 
   public constructor( level: number | TReadOnlyProperty<number>, score: number | ReadOnlyProperty<number>, providedOptions?: RewardDialogOptions ) {
+
+    // To be disposed.
+    const accessibleNameStringProperty = VegasFluent.a11y.rewardDialog.accessibleName.createProperty( { levelNumber: level } );
 
     const options = optionize<RewardDialogOptions, SelfOptions, DialogOptions>()( {
 
@@ -74,15 +78,20 @@ export default class RewardDialog extends Dialog {
 
       // DialogOptions
       // pdom - Since we are setting the focusOnShowNode to be the first element in content, put the closeButton last
-      closeButtonLastInPDOM: true
+      closeButtonLastInPDOM: true,
+      accessibleName: accessibleNameStringProperty
     }, providedOptions );
-
-    const phetGirlNode = new Image( phetGirlJugglingStars_png, {
-      scale: options.phetGirlScale
-    } );
 
     const scoreProperty = ( typeof score === 'number' ) ? new NumberProperty( score ) : score;
     const scoreDisplay = new ScoreDisplayNumberAndStar( scoreProperty, options.scoreDisplayOptions );
+
+    const phetGirlAccessibleParagraphStringProperty = VegasFluent.a11y.rewardDialog.phetGirl.accessibleParagraph.createProperty( { stars: scoreDisplay.accessibleScoreStringProperty } );
+    const phetGirlNode = new Image( phetGirlJugglingStars_png, {
+      scale: options.phetGirlScale,
+
+      // pdom
+      accessibleParagraph: phetGirlAccessibleParagraphStringProperty
+    } );
 
     const buttonOptions = {
       font: options.buttonsFont,
@@ -92,12 +101,14 @@ export default class RewardDialog extends Dialog {
 
     const textOptions = { font: DEFAULT_BUTTONS_FONT, maxWidth: options.buttonsWidth * 0.9 };
 
+    const newLevelAccessibleHelpTextStringProperty = VegasFluent.a11y.rewardDialog.newLevelButton.accessibleParagraph.createProperty( { level: level } );
     const newLevelButton = new RectangularPushButton(
       combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
         content: new Text( VegasStrings.newLevelStringProperty, textOptions ),
         listener: options.newLevelButtonListener,
         baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
-        tandem: options.tandem?.createTandem( 'newLevelButton' )
+        tandem: options.tandem?.createTandem( 'newLevelButton' ),
+        accessibleHelpText: newLevelAccessibleHelpTextStringProperty
       } ) );
 
     const keepGoingButton = new RectangularPushButton(
@@ -132,6 +143,13 @@ export default class RewardDialog extends Dialog {
     options.focusOnShowNode = newLevelButton;
 
     super( content, options );
+
+    // Disposal
+    this.addDisposable(
+      phetGirlAccessibleParagraphStringProperty,
+      newLevelAccessibleHelpTextStringProperty,
+      accessibleNameStringProperty
+    );
   }
 }
 
