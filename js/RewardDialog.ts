@@ -12,6 +12,7 @@
  */
 
 import NumberProperty from '../../axon/js/NumberProperty.js';
+import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
@@ -48,7 +49,7 @@ export type RewardDialogOptions = SelfOptions & StrictOmit<DialogOptions, 'focus
 
 export default class RewardDialog extends Dialog {
 
-  public constructor( score: number | ReadOnlyProperty<number>, providedOptions?: RewardDialogOptions ) {
+  public constructor( level: number | TReadOnlyProperty<number>, score: number | ReadOnlyProperty<number>, providedOptions?: RewardDialogOptions ) {
 
     const options = optionize<RewardDialogOptions, SelfOptions, DialogOptions>()( {
 
