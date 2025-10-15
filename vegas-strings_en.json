@@ -210,6 +210,11 @@
       "accessibleContextResponseHidden": {
         "value": "Continue playing level { $levelNumber }."
       },
+      "keepGoingButton": {
+        "accessibleContextResponse": {
+          "value": "Continue playing Level { $levelNumber }."
+        }
+      },
       "phetGirl": {
         "accessibleParagraph": {
           "value": "PhET Girl juggles a few of your { $stars }."
@@ -217,7 +222,7 @@
       },
       "newLevelButton": {
         "accessibleParagraph": {
-          "value": "Choose a New Level or Keep Going with Level { $level }."
+          "value": "Choose a New Level or Keep Going with Level { $levelNumber }."
         }
       }
     },

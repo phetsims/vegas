@@ -77,6 +77,7 @@ addToMapIfDefined( 'a11y_rewardScreenNode_accessibleHeading', 'a11y.rewardScreen
 addToMapIfDefined( 'a11y_rewardDialog_accessibleName', 'a11y.rewardDialog.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_rewardDialog_accessibleContextResponseShown', 'a11y.rewardDialog.accessibleContextResponseShownStringProperty' );
 addToMapIfDefined( 'a11y_rewardDialog_accessibleContextResponseHidden', 'a11y.rewardDialog.accessibleContextResponseHiddenStringProperty' );
+addToMapIfDefined( 'a11y_rewardDialog_keepGoingButton_accessibleContextResponse', 'a11y.rewardDialog.keepGoingButton.accessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_rewardDialog_phetGirl_accessibleParagraph', 'a11y.rewardDialog.phetGirl.accessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_rewardDialog_newLevelButton_accessibleParagraph', 'a11y.rewardDialog.newLevelButton.accessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_units_stars_pattern', 'a11y.units.stars.patternStringProperty' );
@@ -225,11 +226,14 @@ const VegasFluent = {
       accessibleName: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_accessibleName', _.get( VegasStrings, 'a11y.rewardDialog.accessibleNameStringProperty' ), [{"name":"levelNumber"}] ),
       accessibleContextResponseShown: new FluentPattern<{ levelNumber: FluentVariable, stars: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_accessibleContextResponseShown', _.get( VegasStrings, 'a11y.rewardDialog.accessibleContextResponseShownStringProperty' ), [{"name":"levelNumber"},{"name":"stars"}] ),
       accessibleContextResponseHidden: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_accessibleContextResponseHidden', _.get( VegasStrings, 'a11y.rewardDialog.accessibleContextResponseHiddenStringProperty' ), [{"name":"levelNumber"}] ),
+      keepGoingButton: {
+        accessibleContextResponse: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_keepGoingButton_accessibleContextResponse', _.get( VegasStrings, 'a11y.rewardDialog.keepGoingButton.accessibleContextResponseStringProperty' ), [{"name":"levelNumber"}] )
+      },
       phetGirl: {
         accessibleParagraph: new FluentPattern<{ stars: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_phetGirl_accessibleParagraph', _.get( VegasStrings, 'a11y.rewardDialog.phetGirl.accessibleParagraphStringProperty' ), [{"name":"stars"}] )
       },
       newLevelButton: {
-        accessibleParagraph: new FluentPattern<{ level: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_newLevelButton_accessibleParagraph', _.get( VegasStrings, 'a11y.rewardDialog.newLevelButton.accessibleParagraphStringProperty' ), [{"name":"level"}] )
+        accessibleParagraph: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_newLevelButton_accessibleParagraph', _.get( VegasStrings, 'a11y.rewardDialog.newLevelButton.accessibleParagraphStringProperty' ), [{"name":"levelNumber"}] )
       }
     },
     units: {

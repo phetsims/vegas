@@ -98,10 +98,12 @@ a11y:
     accessibleName: Level { $levelNumber } Summary
     accessibleContextResponseShown: Level { $levelNumber } complete with { $stars }.
     accessibleContextResponseHidden: Continue playing level { $levelNumber }.
+    keepGoingButton:
+      accessibleContextResponse: Continue playing Level { $levelNumber }.
     phetGirl:
       accessibleParagraph: PhET Girl juggles a few of your { $stars }.
     newLevelButton:
-      accessibleParagraph: Choose a New Level or Keep Going with Level { $level }.
+      accessibleParagraph: Choose a New Level or Keep Going with Level { $levelNumber }.
   units:
     stars:
       pattern: |-

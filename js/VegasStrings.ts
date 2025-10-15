@@ -127,6 +127,9 @@ type StringsType = {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleContextResponseShownStringProperty': LocalizedStringProperty;
       'accessibleContextResponseHiddenStringProperty': LocalizedStringProperty;
+      'keepGoingButton': {
+        'accessibleContextResponseStringProperty': LocalizedStringProperty;
+      };
       'phetGirl': {
         'accessibleParagraphStringProperty': LocalizedStringProperty;
       };

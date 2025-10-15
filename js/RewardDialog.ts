@@ -4,7 +4,6 @@
  * A dialog that the client displays when the user gets a specific number of stars.
  * See specification in https://github.com/phetsims/vegas/issues/59.
  *
- * TODO: This requires accessible content, see https://github.com/phetsims/vegas/issues/138
  * TODO: It will have a context response when shown like this: RewardDialog context response: Level {{#}} complete with {{numOfstars}} stars.
  *
  * @author Andrea Lin
@@ -18,6 +17,7 @@ import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
+import PDOMUtils from '../../scenery/js/accessibility/pdom/PDOMUtils.js';
 import HBox from '../../scenery/js/layout/nodes/HBox.js';
 import VBox from '../../scenery/js/layout/nodes/VBox.js';
 import Image from '../../scenery/js/nodes/Image.js';
@@ -103,7 +103,7 @@ export default class RewardDialog extends Dialog {
 
     const textOptions = { font: DEFAULT_BUTTONS_FONT, maxWidth: options.buttonsWidth * 0.9 };
 
-    const newLevelAccessibleHelpTextStringProperty = VegasFluent.a11y.rewardDialog.newLevelButton.accessibleParagraph.createProperty( { level: level } );
+    const newLevelAccessibleHelpTextStringProperty = VegasFluent.a11y.rewardDialog.newLevelButton.accessibleParagraph.createProperty( { levelNumber: level } );
     const newLevelButton = new RectangularPushButton(
       combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
         content: new Text( VegasStrings.newLevelStringProperty, textOptions ),
@@ -142,7 +142,27 @@ export default class RewardDialog extends Dialog {
       spacing: 52
     } );
 
+    // Focus the newLevelButton when the Dialog is shown.
     options.focusOnShowNode = newLevelButton;
+
+    // When the dialog is dismissed (close button or keep going button), we need to
+    // hide the dialog, focus the first element at the top of the page, and then
+    // speak a context response that indicates to the user that they can continue playing.
+    // TODO: It is up to clients to make the Keep Going button close the dialog. Are there any cases
+    //  where we would NOT want the focus change + response behavior in the keep going button?
+    //  See https://github.com/phetsims/vegas/issues/138
+    options.closeButtonListener = () => {
+
+      // It is the responsibility of the client to hide the dialog when the keep going button is pressed.
+      // TODO: Can we confirm that close and Keep Going are supposed to do exactly the same thing?
+      //  See https://github.com/phetsims/vegas/issues/138
+      options.keepGoingButtonListener();
+
+      PDOMUtils.focusTop();
+      this.addAccessibleContextResponse( VegasFluent.a11y.rewardDialog.keepGoingButton.accessibleContextResponse.format( {
+        levelNumber: level
+      } ), { alertWhenNotDisplayed: true } );
+    };
 
     super( content, options );
 
