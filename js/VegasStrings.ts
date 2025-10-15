@@ -91,7 +91,6 @@ type StringsType = {
     };
     'checkButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
-      'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'gameTimerToggleButton': {
       'accessibleContextResponseOnStringProperty': LocalizedStringProperty;

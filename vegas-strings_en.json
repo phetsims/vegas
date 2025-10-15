@@ -137,9 +137,6 @@
     "checkButton": {
       "accessibleName": {
         "value": "Check Answer"
-      },
-      "accessibleHelpText": {
-        "value": "Read challenge details carefully."
       }
     },
     "gameTimerToggleButton": {

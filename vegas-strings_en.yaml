@@ -61,7 +61,6 @@ a11y:
       accessibleHelpText: Erase progress and choose a new level.
   checkButton:
     accessibleName:     Check Answer
-    accessibleHelpText: Read challenge details carefully.
   gameTimerToggleButton:
     accessibleContextResponseOn:  Play game with Timer on.
     accessibleContextResponseOff: Play game without Timer.

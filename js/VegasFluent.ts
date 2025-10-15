@@ -59,7 +59,6 @@ addToMapIfDefined( 'a11y_statusBar_backButton_accessibleName', 'a11y.statusBar.b
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleHelpText', 'a11y.statusBar.backButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_startOver_accessibleHelpText', 'a11y.statusBar.startOver.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_checkButton_accessibleName', 'a11y.checkButton.accessibleNameStringProperty' );
-addToMapIfDefined( 'a11y_checkButton_accessibleHelpText', 'a11y.checkButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOn', 'a11y.gameTimerToggleButton.accessibleContextResponseOnStringProperty' );
 addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOff', 'a11y.gameTimerToggleButton.accessibleContextResponseOffStringProperty' );
 addToMapIfDefined( 'a11y_levelCompletedNode_timeItem_time', 'a11y.levelCompletedNode.timeItem.timeStringProperty' );
@@ -182,8 +181,7 @@ const VegasFluent = {
     },
     checkButton: {
       _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
-      accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleName', _.get( VegasStrings, 'a11y.checkButton.accessibleNameStringProperty' ) ),
-      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleHelpText', _.get( VegasStrings, 'a11y.checkButton.accessibleHelpTextStringProperty' ) )
+      accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleName', _.get( VegasStrings, 'a11y.checkButton.accessibleNameStringProperty' ) )
     },
     gameTimerToggleButton: {
       accessibleContextResponseOnStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameTimerToggleButton_accessibleContextResponseOn', _.get( VegasStrings, 'a11y.gameTimerToggleButton.accessibleContextResponseOnStringProperty' ) ),
