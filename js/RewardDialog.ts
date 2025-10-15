@@ -154,6 +154,10 @@ export default class RewardDialog extends Dialog {
       // It is the responsibility of the client to hide the dialog when the keep going button is pressed.
       // TODO: Can we confirm that close and Keep Going are supposed to do exactly the same thing?
       //  See https://github.com/phetsims/vegas/issues/138
+      //
+
+      // TODO: Make the Keep Going button do the same thing as the Close button, make that very clear. Posssibly
+      //   rename this to dismissListener. See https://github.com/phetsims/vegas/issues/138
       options.keepGoingButtonListener();
 
       PDOMUtils.focusTop();

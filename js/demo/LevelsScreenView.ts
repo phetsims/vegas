@@ -139,7 +139,7 @@ export default class LevelsScreenView extends ScreenView {
         rewardScreenNode.accessibleRewardSectionNode.pdomOrder = [ levelCompletedNode ];
         gameStateProperty.value = 'reward';
 
-        levelCompletedNode.focusContinueButton();
+        levelCompletedNode.show();
 
         oldCompletedNode = levelCompletedNode;
       }

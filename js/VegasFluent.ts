@@ -65,6 +65,7 @@ addToMapIfDefined( 'a11y_levelCompletedNode_timeItem_time', 'a11y.levelCompleted
 addToMapIfDefined( 'a11y_levelCompletedNode_timeItem_timeWithBest', 'a11y.levelCompletedNode.timeItem.timeWithBestStringProperty' );
 addToMapIfDefined( 'a11y_levelCompletedNode_timeItem_timeWithNewBest', 'a11y.levelCompletedNode.timeItem.timeWithNewBestStringProperty' );
 addToMapIfDefined( 'a11y_levelCompletedNode_continueButton_accessibleHelpText', 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_levelCompletedNode_accessibleContextResponse', 'a11y.levelCompletedNode.accessibleContextResponseStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleName', 'a11y.gameInfoButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleHelpText', 'a11y.gameInfoButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_showAnswerButton_accessibleHelpText', 'a11y.showAnswerButton.accessibleHelpTextStringProperty' );
@@ -198,7 +199,8 @@ const VegasFluent = {
       },
       continueButton: {
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_continueButton_accessibleHelpText', _.get( VegasStrings, 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' ) )
-      }
+      },
+      accessibleContextResponse: new FluentPattern<{ levelNumber: FluentVariable, progressMessage: FluentVariable, stars: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_accessibleContextResponse', _.get( VegasStrings, 'a11y.levelCompletedNode.accessibleContextResponseStringProperty' ), [{"name":"levelNumber"},{"name":"progressMessage"},{"name":"stars"}] )
     },
     gameInfoButton: {
       _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),

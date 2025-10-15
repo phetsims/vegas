@@ -53,6 +53,7 @@ type SelfOptions = {
   // A brief accessible name for the level. It is added to the accessibleName after the level number.
   // For example, if the value is "Beginner", the accessibleName will be:
   // "Level 1: Beginner, 2 stars".
+  // TODO: rename to accessibleBriefLevelName to match the design document, see #138
   accessibleNameForLevel?: TReadOnlyProperty<string> | null;
 
   // The number for the level. This is used in the accessibleName for the button. 1-based.

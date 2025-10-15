@@ -49,6 +49,11 @@ export default class ChallengeScreenNode extends VegasScreenNode {
   // Section node for progress/status information.
   public readonly accessibleStatusSectionNode: Node;
 
+  // TODO: It seems like this kind of thing will be needed for all games, consider adding options for these.
+  //   Add this: See #138
+  //   accessibleChallengePrompt
+  //   accessibleAnswerSummary
+
   private readonly disposeChallengeScreenNode: () => void;
 
   public constructor( providedOptions?: ChallengeScreenNodeOptions ) {

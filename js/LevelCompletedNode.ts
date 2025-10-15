@@ -266,11 +266,24 @@ export default class LevelCompletedNode extends Panel {
     };
   }
 
-  public focusContinueButton(): void {
+  /**
+   * Show the LevelCompletedNode, managing focus and context responses for accessibility.
+   */
+  public show(): void {
+    this.visibleProperty.value = true;
     this.continueButton.focus();
+    this.addAccessibleContextResponse( VegasFluent.a11y.levelCompletedNode.accessibleContextResponse.format( {
+      levelNumber: 1, // TODO, see #138
+      stars: 'X', // TODO, see #138
+      progressMessage: 'Keep Going' // TODO, see #138
+    } ) );
+  }
 
-    // TODO: After this is focused, speak a context response like this. See #138.
-    //   Level {{#}} complete. {{#}} Stars, {{progressMessage}}
+  /**
+   * Hides this Node. Currently, no other work but adds symmetry with show().
+   */
+  public hide(): void {
+    this.visibleProperty.value = false;
   }
 
   public override dispose(): void {

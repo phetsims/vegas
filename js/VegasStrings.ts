@@ -104,7 +104,8 @@ type StringsType = {
       };
       'continueButton': {
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      }
+      };
+      'accessibleContextResponseStringProperty': LocalizedStringProperty;
     };
     'gameInfoButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;

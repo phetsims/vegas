@@ -163,6 +163,9 @@
         "accessibleHelpText": {
           "value": "Choose a new level and keep playing."
         }
+      },
+      "accessibleContextResponse": {
+        "value": "Level { $levelNumber } complete. { $stars }, { $progressMessage }"
       }
     },
     "gameInfoButton": {
