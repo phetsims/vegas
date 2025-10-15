@@ -23,8 +23,6 @@ export default class ShowAnswerButton extends TextPushButton {
   public constructor( providedOptions?: ShowAnswerButtonOptions ) {
     super( VegasStrings.showAnswerStringProperty, optionize<ShowAnswerButtonOptions, SelfOptions, ParentOptions>()( {
       accessibleHelpText: VegasFluent.a11y.showAnswerButton.accessibleHelpTextStringProperty,
-
-      // TODO: When the button becomes invisible this isn't spoken. How do we handle that? See #138.
       accessibleContextResponse: VegasFluent.a11y.showAnswerButton.accessibleContextResponseStringProperty
     }, providedOptions ) );
   }
