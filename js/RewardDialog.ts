@@ -4,8 +4,6 @@
  * A dialog that the client displays when the user gets a specific number of stars.
  * See specification in https://github.com/phetsims/vegas/issues/59.
  *
- * TODO: It will have a context response when shown like this: RewardDialog context response: Level {{#}} complete with {{numOfstars}} stars.
- *
  * @author Andrea Lin
  * @author Chris Malley (PixelZoom, Inc.)
  */
