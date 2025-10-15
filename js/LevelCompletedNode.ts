@@ -53,6 +53,9 @@ export default class LevelCompletedNode extends Panel {
 
   private readonly disposeLevelCompletedNode: () => void;
   private readonly continueButton: Node;
+  private readonly level: number;
+  private readonly accessibleScoreStringProperty: TReadOnlyProperty<string>;
+  private readonly titleTextStringProperty: TReadOnlyProperty<string>;
 
   /**
    * @param level - the game level that has been completed
@@ -250,6 +253,9 @@ export default class LevelCompletedNode extends Panel {
     super( content, options );
 
     this.continueButton = continueButton;
+    this.level = level;
+    this.accessibleScoreStringProperty = scoreDisplayStars.accessibleScoreStringProperty;
+    this.titleTextStringProperty = titleTextStringProperty;
 
     this.disposeLevelCompletedNode = () => {
 
@@ -273,9 +279,9 @@ export default class LevelCompletedNode extends Panel {
     this.visibleProperty.value = true;
     this.continueButton.focus();
     this.addAccessibleContextResponse( VegasFluent.a11y.levelCompletedNode.accessibleContextResponse.format( {
-      levelNumber: 1, // TODO, see #138
-      stars: 'X', // TODO, see #138
-      progressMessage: 'Keep Going' // TODO, see #138
+      levelNumber: this.level,
+      stars: this.accessibleScoreStringProperty,
+      progressMessage: this.titleTextStringProperty
     } ) );
   }
 
