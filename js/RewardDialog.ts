@@ -111,10 +111,26 @@ export default class RewardDialog extends Dialog {
         accessibleHelpText: newLevelAccessibleHelpTextStringProperty
       } ) );
 
+    // Handles dialog dismissal via close button, escape key, or "Keep Going" button.
+    // - Executes the client-provided dismissal callback.
+    // - Moves focus to the top of the game challenge for accessibility.
+    // - Announces a context response to guide the user on how to continue.
+    const dismissListener = () => {
+
+      // TODO: Rename to dismissListener, see #138.
+      options.keepGoingButtonListener();
+      PDOMUtils.focusTop();
+      this.addAccessibleContextResponse( VegasFluent.a11y.rewardDialog.keepGoingButton.accessibleContextResponse.format( {
+        levelNumber: level
+      } ), { alertWhenNotDisplayed: true } );
+    };
+
+    options.closeButtonListener = dismissListener;
+
     const keepGoingButton = new RectangularPushButton(
       combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
         content: new Text( VegasStrings.keepGoingStringProperty, textOptions ),
-        listener: options.keepGoingButtonListener,
+        listener: dismissListener,
         baseColor: 'white',
         tandem: options.tandem?.createTandem( 'keepGoingButton' )
       } ) );
@@ -142,29 +158,6 @@ export default class RewardDialog extends Dialog {
 
     // Focus the newLevelButton when the Dialog is shown.
     options.focusOnShowNode = newLevelButton;
-
-    // When the dialog is dismissed (close button or keep going button), we need to
-    // hide the dialog, focus the first element at the top of the page, and then
-    // speak a context response that indicates to the user that they can continue playing.
-    // TODO: It is up to clients to make the Keep Going button close the dialog. Are there any cases
-    //  where we would NOT want the focus change + response behavior in the keep going button?
-    //  See https://github.com/phetsims/vegas/issues/138
-    options.closeButtonListener = () => {
-
-      // It is the responsibility of the client to hide the dialog when the keep going button is pressed.
-      // TODO: Can we confirm that close and Keep Going are supposed to do exactly the same thing?
-      //  See https://github.com/phetsims/vegas/issues/138
-      //
-
-      // TODO: Make the Keep Going button do the same thing as the Close button, make that very clear. Posssibly
-      //   rename this to dismissListener. See https://github.com/phetsims/vegas/issues/138
-      options.keepGoingButtonListener();
-
-      PDOMUtils.focusTop();
-      this.addAccessibleContextResponse( VegasFluent.a11y.rewardDialog.keepGoingButton.accessibleContextResponse.format( {
-        levelNumber: level
-      } ), { alertWhenNotDisplayed: true } );
-    };
 
     super( content, options );
 
