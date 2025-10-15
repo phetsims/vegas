@@ -204,6 +204,12 @@
       "accessibleName": {
         "value": "Level { $levelNumber } Summary"
       },
+      "accessibleContextResponseShown": {
+        "value": "Level { $levelNumber } complete with { $stars }."
+      },
+      "accessibleContextResponseHidden": {
+        "value": "Continue playing level { $levelNumber }."
+      },
       "phetGirl": {
         "accessibleParagraph": {
           "value": "PhET Girl juggles a few of your { $stars }."

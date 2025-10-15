@@ -49,6 +49,8 @@ type SelfOptions = {
 export type RewardDialogOptions = SelfOptions & StrictOmit<DialogOptions, 'focusOnShowNode' | 'accessibleName'>;
 
 export default class RewardDialog extends Dialog {
+  private readonly level: number | TReadOnlyProperty<number>;
+  private readonly accessibleScoreStringProperty: TReadOnlyProperty<string>;
 
   public constructor( level: number | TReadOnlyProperty<number>, score: number | ReadOnlyProperty<number>, providedOptions?: RewardDialogOptions ) {
 
@@ -144,12 +146,27 @@ export default class RewardDialog extends Dialog {
 
     super( content, options );
 
+    this.level = level;
+    this.accessibleScoreStringProperty = scoreDisplay.accessibleScoreStringProperty;
+
     // Disposal
     this.addDisposable(
       phetGirlAccessibleParagraphStringProperty,
       newLevelAccessibleHelpTextStringProperty,
       accessibleNameStringProperty
     );
+  }
+
+  /**
+   * When the dialog is shown, a custom context response is spoken summarizing the information.
+   */
+  public override show(): void {
+    super.show();
+
+    this.addAccessibleContextResponse( VegasFluent.a11y.rewardDialog.accessibleContextResponseShown.format( {
+      levelNumber: this.level,
+      stars: this.accessibleScoreStringProperty
+    } ) );
   }
 }
 

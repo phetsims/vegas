@@ -96,6 +96,8 @@ a11y:
     accessibleHeading: Level { $levelNumber } Summary
   rewardDialog:
     accessibleName: Level { $levelNumber } Summary
+    accessibleContextResponseShown: Level { $levelNumber } complete with { $stars }.
+    accessibleContextResponseHidden: Continue playing level { $levelNumber }.
     phetGirl:
       accessibleParagraph: PhET Girl juggles a few of your { $stars }.
     newLevelButton:

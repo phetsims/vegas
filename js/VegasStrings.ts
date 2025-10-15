@@ -125,6 +125,8 @@ type StringsType = {
     };
     'rewardDialog': {
       'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseShownStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseHiddenStringProperty': LocalizedStringProperty;
       'phetGirl': {
         'accessibleParagraphStringProperty': LocalizedStringProperty;
       };
