@@ -137,6 +137,15 @@
     "checkButton": {
       "accessibleName": {
         "value": "Check Answer"
+      },
+      "accessibleContextResponseCorrectStars": {
+        "value": "Great! You earned { $stars ->\n[one] { $stars } star\n*[other] { $stars } stars\n}."
+      },
+      "accessibleContextResponseCorrectPoints": {
+        "value": "Great! You earned { $points ->\n[one] { $points } point\n*[other] { $points } points\n}."
+      },
+      "accessibleContextResponseIncorrect": {
+        "value": "Oops! Let’s review."
       }
     },
     "gameTimerToggleButton": {
@@ -230,6 +239,11 @@
       "stars": {
         "pattern": {
           "value": "{ $value ->\n  [one] { $value } star\n  *[other] { $value } stars\n}"
+        }
+      },
+      "points": {
+        "pattern": {
+          "value": "{ $value ->\n  [one] { $value } point\n  *[other] { $value } points\n}"
         }
       }
     },

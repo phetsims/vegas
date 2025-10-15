@@ -91,6 +91,9 @@ type StringsType = {
     };
     'checkButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseCorrectStarsStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseCorrectPointsStringProperty': LocalizedStringProperty;
+      'accessibleContextResponseIncorrectStringProperty': LocalizedStringProperty;
     };
     'gameTimerToggleButton': {
       'accessibleContextResponseOnStringProperty': LocalizedStringProperty;
@@ -139,6 +142,9 @@ type StringsType = {
     };
     'units': {
       'stars': {
+        'patternStringProperty': LocalizedStringProperty;
+      };
+      'points': {
         'patternStringProperty': LocalizedStringProperty;
       }
     };

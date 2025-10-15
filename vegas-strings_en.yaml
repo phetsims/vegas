@@ -60,7 +60,18 @@ a11y:
     startOver:
       accessibleHelpText: Erase progress and choose a new level.
   checkButton:
-    accessibleName:     Check Answer
+    accessibleName:                         Check Answer
+    accessibleContextResponseCorrectStars:  |-
+                                            Great! You earned { $stars ->
+                                            [one] { $stars } star
+                                            *[other] { $stars } stars
+                                            }.
+    accessibleContextResponseCorrectPoints: |-
+                                            Great! You earned { $points ->
+                                            [one] { $points } point
+                                            *[other] { $points } points
+                                            }.
+    accessibleContextResponseIncorrect:     Oops! Let’s review.
   gameTimerToggleButton:
     accessibleContextResponseOn:  Play game with Timer on.
     accessibleContextResponseOff: Play game without Timer.
@@ -95,8 +106,8 @@ a11y:
   rewardScreenNode:
     accessibleHeading: Level { $levelNumber } Summary
   rewardDialog:
-    accessibleName: Level { $levelNumber } Summary
-    accessibleContextResponseShown: Level { $levelNumber } complete with { $stars }.
+    accessibleName:                  Level { $levelNumber } Summary
+    accessibleContextResponseShown:  Level { $levelNumber } complete with { $stars }.
     accessibleContextResponseHidden: Continue playing level { $levelNumber }.
     keepGoingButton:
       accessibleContextResponse: Continue playing Level { $levelNumber }.
@@ -110,6 +121,12 @@ a11y:
                { $value ->
                  [one] { $value } star
                  *[other] { $value } stars
+               }
+    points:
+      pattern: |-
+               { $value ->
+                 [one] { $value } point
+                 *[other] { $value } points
                }
 
   levelSelectionButton:

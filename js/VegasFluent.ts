@@ -59,6 +59,9 @@ addToMapIfDefined( 'a11y_statusBar_backButton_accessibleName', 'a11y.statusBar.b
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleHelpText', 'a11y.statusBar.backButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_startOver_accessibleHelpText', 'a11y.statusBar.startOver.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_checkButton_accessibleName', 'a11y.checkButton.accessibleNameStringProperty' );
+addToMapIfDefined( 'a11y_checkButton_accessibleContextResponseCorrectStars', 'a11y.checkButton.accessibleContextResponseCorrectStarsStringProperty' );
+addToMapIfDefined( 'a11y_checkButton_accessibleContextResponseCorrectPoints', 'a11y.checkButton.accessibleContextResponseCorrectPointsStringProperty' );
+addToMapIfDefined( 'a11y_checkButton_accessibleContextResponseIncorrect', 'a11y.checkButton.accessibleContextResponseIncorrectStringProperty' );
 addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOn', 'a11y.gameTimerToggleButton.accessibleContextResponseOnStringProperty' );
 addToMapIfDefined( 'a11y_gameTimerToggleButton_accessibleContextResponseOff', 'a11y.gameTimerToggleButton.accessibleContextResponseOffStringProperty' );
 addToMapIfDefined( 'a11y_levelCompletedNode_timeItem_time', 'a11y.levelCompletedNode.timeItem.timeStringProperty' );
@@ -81,6 +84,7 @@ addToMapIfDefined( 'a11y_rewardDialog_keepGoingButton_accessibleContextResponse'
 addToMapIfDefined( 'a11y_rewardDialog_phetGirl_accessibleParagraph', 'a11y.rewardDialog.phetGirl.accessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_rewardDialog_newLevelButton_accessibleParagraph', 'a11y.rewardDialog.newLevelButton.accessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_units_stars_pattern', 'a11y.units.stars.patternStringProperty' );
+addToMapIfDefined( 'a11y_units_points_pattern', 'a11y.units.points.patternStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleName', 'a11y.levelSelectionButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleNameWithLevelName', 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_accessibleHeadingChooseLevel', 'a11y.levelSelectionScreenNode.accessibleHeadingChooseLevelStringProperty' );
@@ -182,7 +186,10 @@ const VegasFluent = {
     },
     checkButton: {
       _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
-      accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleName', _.get( VegasStrings, 'a11y.checkButton.accessibleNameStringProperty' ) )
+      accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleName', _.get( VegasStrings, 'a11y.checkButton.accessibleNameStringProperty' ) ),
+      accessibleContextResponseCorrectStars: new FluentPattern<{ stars: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleContextResponseCorrectStars', _.get( VegasStrings, 'a11y.checkButton.accessibleContextResponseCorrectStarsStringProperty' ), [{"name":"stars","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] ),
+      accessibleContextResponseCorrectPoints: new FluentPattern<{ points: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleContextResponseCorrectPoints', _.get( VegasStrings, 'a11y.checkButton.accessibleContextResponseCorrectPointsStringProperty' ), [{"name":"points","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] ),
+      accessibleContextResponseIncorrectStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleContextResponseIncorrect', _.get( VegasStrings, 'a11y.checkButton.accessibleContextResponseIncorrectStringProperty' ) )
     },
     gameTimerToggleButton: {
       accessibleContextResponseOnStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameTimerToggleButton_accessibleContextResponseOn', _.get( VegasStrings, 'a11y.gameTimerToggleButton.accessibleContextResponseOnStringProperty' ) ),
@@ -239,6 +246,9 @@ const VegasFluent = {
     units: {
       stars: {
         pattern: new FluentPattern<{ value: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_units_stars_pattern', _.get( VegasStrings, 'a11y.units.stars.patternStringProperty' ), [{"name":"value","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] )
+      },
+      points: {
+        pattern: new FluentPattern<{ value: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_units_points_pattern', _.get( VegasStrings, 'a11y.units.points.patternStringProperty' ), [{"name":"value","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] )
       }
     },
     levelSelectionButton: {
