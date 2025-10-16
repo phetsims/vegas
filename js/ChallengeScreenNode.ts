@@ -194,6 +194,11 @@ export default class ChallengeScreenNode extends VegasScreenNode {
     super.hide();
   }
 
+  /**
+   * Sets the visibility of the answer summary node for accessibility.
+   * Should be called when the answer summary should be shown or hidden,
+   * typically in games with a "show answer" mode.
+   */
   public setAnswerSummaryVisible( visible: boolean ): void {
     this.accessibleAnswerSummaryNode.visible = visible;
   }
