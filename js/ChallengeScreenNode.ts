@@ -1,8 +1,13 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Represents the main screen for a Vegas game challenge, including accessible sections for gameplay,
- * answer submission, and progress. Handles focus management when the screen is first shown.
+ * Represents the main screen for a Vegas game challenge, providing accessible sections for gameplay, answer submission,
+ * and progress/status. Manages focus and heading structure for accessibility, including dynamic headings based on
+ * challenge and level.
+ *
+ * Also supports optional accessible prompts and answer summaries, if provided with options.
+ *
+ * Use show() and hide() methods when the challenge becomes visible for built-in focus management behavior.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
