@@ -117,6 +117,8 @@ export default class RewardDialog extends Dialog {
     // - Announces a context response to guide the user on how to continue.
     const closeDialogListener = () => {
       options.dismissListener();
+
+      // TODO: add an option for where focus should go, it actually seems like focus should go to a designed location, see #138
       PDOMUtils.focusTop();
       this.addAccessibleContextResponse( VegasFluent.a11y.rewardDialog.keepGoingButton.accessibleContextResponse.format( {
         levelNumber: level
