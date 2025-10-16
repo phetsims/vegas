@@ -44,7 +44,8 @@ export type LevelSelectionButtonGroupItem = {
   tandemName?: string;
 
   // Listener function invoked when this button is pressed.
-  // Note: Do not use `options.listener` for this purpose, as the group manages additional logic beyond the game's requirements.
+  // Note: Do not use `options.listener` for this purpose, as the group manages additional logic beyond
+  // the game's requirements.
   buttonListener?: PushButtonListener;
 
   // Options for the button. These will override LevelSelectionButtonGroupOptions.levelSelectionButtonOptions.
