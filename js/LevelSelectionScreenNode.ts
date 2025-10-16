@@ -1,15 +1,19 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
- * Represents the level selection screen for the Vegas game.
- * Provides accessible sections for level selection buttons and game controls,
- * ensuring a clear structure for screen readers.
+ * Represents the level selection screen for a Vegas game, providing accessible sections for level selection buttons
+ * and game controls. Ensures a clear heading structure and leading summary for screen readers, with optional
+ * inclusion of a game options description.
  *
- * Place level selection buttons in `accessibleLevelsSectionNode` and other controls
- * (timers, reset, info, etc.) in `accessibleControlsSectionNode` using pdomOrder.
+ * Place level selection buttons in `accessibleLevelsSectionNode` and other controls in `accessibleControlsSectionNode`
+ * using pdomOrder. Focus is restored to the previously selected button when shown.
+ *
+ * Use show() and hide() methods when the screen becomes visible for built-in focus management and context
+ * response behavior.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
+
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';
@@ -80,6 +84,9 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
     this.levelSelectionButtonGroup = levelSelectionButtonGroup;
   }
 
+  /**
+   * Show the level selection screen, restoring focus to the previously selected button
+   */
   public override show(): void {
     super.show();
     this.levelSelectionButtonGroup.focusPressedButton();
