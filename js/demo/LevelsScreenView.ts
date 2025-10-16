@@ -260,7 +260,10 @@ class MyChallengeScreenNode extends ChallengeScreenNode {
   ) {
     super( {
       challengeNumberProperty: challengeNumberProperty,
-      challengeCountProperty: numberOfChallengesProperty
+      challengeCountProperty: numberOfChallengesProperty,
+
+      accessibleChallengePrompt: 'This is the challenge prompt. Try to get 5 stars to complete the level.',
+      accessibleAnswerSummary: 'This is the answer summary after pressing Show Answer.'
     } );
 
     const statusBar = new FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, {
@@ -288,7 +291,11 @@ class MyChallengeScreenNode extends ChallengeScreenNode {
 
     const checkAnswerButton = new CheckButton();
     const tryAgainButton = new TryAgainButton();
-    const showAnswerButton = new ShowAnswerButton();
+    const showAnswerButton = new ShowAnswerButton( {
+      listener: () => {
+        this.setAnswerSummaryVisible( true );
+      }
+    } );
 
     const winnerNode = new Text( '😲 😀 ☺️ 😀 😲', {
       font: new PhetFont( 50 ),

@@ -30,6 +30,15 @@ type SelfOptions = {
   // Property for the current level. If provided, this level number will be included in the accessible
   // heading for the "status" section.
   levelNumberProperty?: TReadOnlyProperty<number> | null;
+
+  // A prompt that introduces the challenge. It appears near the top of the screen, just below the top-most
+  // heading. If provided, it is always shown.
+  accessibleChallengePrompt?: string | TReadOnlyProperty<string> | null;
+
+  // A description of the challenge answer. This appears near the top of the screen, just below the accessible
+  // challenge prompt. It is usually invisible and should only be shown in games where there is a "show answer" mode.
+  // If your game has a "show answer" button/mode, call setAnswerSummaryVisible( true ) when the answer summary should be visible.
+  accessibleAnswerSummary?: string | TReadOnlyProperty<string> | null;
 };
 type ParentOptions = NodeOptions;
 export type ChallengeScreenNodeOptions = SelfOptions & ParentOptions;
@@ -49,10 +58,8 @@ export default class ChallengeScreenNode extends VegasScreenNode {
   // Section node for progress/status information.
   public readonly accessibleStatusSectionNode: Node;
 
-  // TODO: It seems like this kind of thing will be needed for all games, consider adding options for these.
-  //   Add this: See #138
-  //   accessibleChallengePrompt
-  //   accessibleAnswerSummary
+  // Reference to the "answer summary" Node, so that it can be shown/hidden as needed.
+  private readonly accessibleAnswerSummaryNode: Node;
 
   private readonly disposeChallengeScreenNode: () => void;
 
@@ -61,7 +68,9 @@ export default class ChallengeScreenNode extends VegasScreenNode {
     const options = optionize<ChallengeScreenNodeOptions, SelfOptions, ParentOptions>()( {
       challengeNumberProperty: null,
       challengeCountProperty: null,
-      levelNumberProperty: null
+      levelNumberProperty: null,
+      accessibleChallengePrompt: null,
+      accessibleAnswerSummary: null
     }, providedOptions );
 
     // Affirm that if one is provided, both are provided.
@@ -92,6 +101,15 @@ export default class ChallengeScreenNode extends VegasScreenNode {
     this.accessibleFocusableHeadingNode = new FocusableHeadingNode( {
       accessibleName: accessibleHeadingContentProperty,
       headingLevel: 2
+    } );
+
+    const accessibleChallengePromptNode = new Node( {
+      accessibleParagraph: options.accessibleChallengePrompt
+    } );
+
+    this.accessibleAnswerSummaryNode = new Node( {
+      accessibleParagraph: options.accessibleAnswerSummary,
+      visible: false
     } );
 
     this.accessibleChallengeSectionNode = new Node( {
@@ -133,6 +151,8 @@ export default class ChallengeScreenNode extends VegasScreenNode {
     // correct place in the pdom order.
     this.pdomParentNode.children = [
       this.accessibleFocusableHeadingNode,
+      accessibleChallengePromptNode,
+      this.accessibleAnswerSummaryNode,
       this.accessibleChallengeSectionNode,
       this.accessibleAnswerSectionNode,
       this.accessibleStatusSectionNode
@@ -141,6 +161,8 @@ export default class ChallengeScreenNode extends VegasScreenNode {
     this.disposeChallengeScreenNode = () => {
       challengeStringProperty && challengeStringProperty.dispose();
       this.accessibleFocusableHeadingNode.dispose();
+      accessibleChallengePromptNode.dispose();
+      this.accessibleAnswerSummaryNode.dispose();
       this.accessibleChallengeSectionNode.dispose();
       this.accessibleAnswerSectionNode.dispose();
       this.accessibleStatusSectionNode.dispose();
@@ -170,6 +192,10 @@ export default class ChallengeScreenNode extends VegasScreenNode {
    */
   public override hide(): void {
     super.hide();
+  }
+
+  public setAnswerSummaryVisible( visible: boolean ): void {
+    this.accessibleAnswerSummaryNode.visible = visible;
   }
 }
 
