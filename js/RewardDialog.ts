@@ -39,7 +39,14 @@ type SelfOptions = {
   buttonsFont?: Font;
   buttonsWidth?: number; // fixed width for both buttons
   buttonsYSpacing?: number;
-  dismissListener?: PushButtonListener; // called when 'Keep Going', 'Close' button, or 'Esc' key is pressed
+
+  // called when 'Keep Going', 'Close' button, or 'Esc' key is pressed
+  dismissListener?: PushButtonListener;
+
+  // Called after the dialog is dismissed for focus management. Default behavior is to move focus
+  // back to the first interactive element in the game.
+  focusAfterDismissal?: () => void;
+
   newLevelButtonListener?: PushButtonListener; // called when 'New Level' button is pressed
   scoreDisplayOptions?: ScoreDisplayNumberAndStarOptions;
 };
@@ -64,6 +71,9 @@ export default class RewardDialog extends Dialog {
       buttonsYSpacing: 20,
       dismissListener: _.noop,
       newLevelButtonListener: _.noop,
+      focusAfterDismissal: () => {
+        PDOMUtils.focusTop();
+      },
       scoreDisplayOptions: {
         font: DEFAULT_SCORE_DISPLAY_FONT,
         spacing: 8,
@@ -117,9 +127,8 @@ export default class RewardDialog extends Dialog {
     // - Announces a context response to guide the user on how to continue.
     const closeDialogListener = () => {
       options.dismissListener();
+      options.focusAfterDismissal();
 
-      // TODO: add an option for where focus should go, it actually seems like focus should go to a designed location, see #138
-      PDOMUtils.focusTop();
       this.addAccessibleContextResponse( VegasFluent.a11y.rewardDialog.keepGoingButton.accessibleContextResponse.format( {
         levelNumber: level
       } ), { alertWhenNotDisplayed: true } );
