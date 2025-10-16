@@ -59,8 +59,8 @@ export default class InfiniteChallengesScreenView extends ScreenView {
       content: new Text( 'open RewardDialog', { font: new PhetFont( 20 ) } ),
       listener: function() {
         const rewardDialog = new RewardDialog( 1, 10, {
-          keepGoingButtonListener: () => {
-            console.log( 'Keep Going button' );
+          dismissListener: () => {
+            console.log( 'Dialog dismissed: Keep Going, escape, or close button' );
             rewardDialog.dispose();
           },
           newLevelButtonListener: () => {

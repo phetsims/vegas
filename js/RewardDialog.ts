@@ -39,7 +39,7 @@ type SelfOptions = {
   buttonsFont?: Font;
   buttonsWidth?: number; // fixed width for both buttons
   buttonsYSpacing?: number;
-  keepGoingButtonListener?: PushButtonListener; // called when 'Keep Going' button is pressed
+  dismissListener?: PushButtonListener; // called when 'Keep Going', 'Close' button, or 'Esc' key is pressed
   newLevelButtonListener?: PushButtonListener; // called when 'New Level' button is pressed
   scoreDisplayOptions?: ScoreDisplayNumberAndStarOptions;
 };
@@ -62,7 +62,7 @@ export default class RewardDialog extends Dialog {
       buttonsFont: DEFAULT_BUTTONS_FONT,
       buttonsWidth: 145,
       buttonsYSpacing: 20,
-      keepGoingButtonListener: _.noop,
+      dismissListener: _.noop,
       newLevelButtonListener: _.noop,
       scoreDisplayOptions: {
         font: DEFAULT_SCORE_DISPLAY_FONT,
@@ -115,22 +115,20 @@ export default class RewardDialog extends Dialog {
     // - Executes the client-provided dismissal callback.
     // - Moves focus to the top of the game challenge for accessibility.
     // - Announces a context response to guide the user on how to continue.
-    const dismissListener = () => {
-
-      // TODO: Rename to dismissListener, see #138.
-      options.keepGoingButtonListener();
+    const closeDialogListener = () => {
+      options.dismissListener();
       PDOMUtils.focusTop();
       this.addAccessibleContextResponse( VegasFluent.a11y.rewardDialog.keepGoingButton.accessibleContextResponse.format( {
         levelNumber: level
       } ), { alertWhenNotDisplayed: true } );
     };
 
-    options.closeButtonListener = dismissListener;
+    options.closeButtonListener = closeDialogListener;
 
     const keepGoingButton = new RectangularPushButton(
       combineOptions<RectangularPushButtonOptions>( {}, buttonOptions, {
         content: new Text( VegasStrings.keepGoingStringProperty, textOptions ),
-        listener: dismissListener,
+        listener: closeDialogListener,
         baseColor: 'white',
         tandem: options.tandem?.createTandem( 'keepGoingButton' )
       } ) );
