@@ -27,6 +27,8 @@ export default class LevelsModel implements TModel {
   // Each level has a number of challenges.
   public readonly levelNumberProperty = new NumberProperty( 1 );
   public readonly numberOfLevelsProperty = new NumberProperty( NUMBER_OF_LEVELS );
+
+  public readonly challengeNumberProperty = new NumberProperty( 1 );
   public readonly challengesPerLevelProperty = new NumberProperty( CHALLENGES_PER_LEVEL );
 
   // Drives the current game screen.

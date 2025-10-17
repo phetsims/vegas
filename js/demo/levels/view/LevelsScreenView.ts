@@ -53,26 +53,17 @@ export default class LevelsScreenView extends ScreenView {
 
       // Game screens will not have the usual "play area" and "control area" content.
       includeAccessibleSectionNodes: false,
-
       tandem: Tandem.OPT_OUT
     } );
 
     //-------------------- Create level screens -------------------
     const levelNodes: ChallengeScreenNode[] = [];
     for ( let level = 0; level < NUMBER_OF_LEVELS; level++ ) {
-      const challengeNumberProperty = new Property( level + 1 );
 
       const levelNode = new MyChallengeScreenNode(
-        levelsModel.levelNumberProperty,
+        levelsModel,
         this.layoutBounds,
-        this.visibleBoundsProperty,
-        levelsModel.scoreProperty,
-        levelsModel.gameOverProperty,
-        levelsModel.gameTimer,
-        levelsModel.timerEnabledProperty,
-        levelsModel.gameStateProperty,
-        challengeNumberProperty,
-        levelsModel.challengesPerLevelProperty
+        this.visibleBoundsProperty
       );
 
       levelNodes.push( levelNode );
@@ -219,43 +210,36 @@ class MyChallengeScreenNode extends ChallengeScreenNode {
   private readonly levelNumberProperty: ReadOnlyProperty<number>;
 
   public constructor(
-    levelNumberProperty: ReadOnlyProperty<number>,
+    levelsModel: LevelsModel,
     layoutBounds: Bounds2,
-    visibleBoundsProperty: Property<Bounds2>,
-    scoreProperty: NumberProperty,
-    gameOverProperty: TReadOnlyProperty<boolean>,
-    gameTimer: GameTimer,
-    timerEnabledProperty: Property<boolean>,
-    gameStateProperty: Property<GameState>,
-    challengeNumberProperty: Property<number>,
-    numberOfChallengesProperty: Property<number>
+    visibleBoundsProperty: Property<Bounds2>
   ) {
     super( {
-      challengeNumberProperty: challengeNumberProperty,
-      challengeCountProperty: numberOfChallengesProperty,
+      challengeNumberProperty: levelsModel.challengeNumberProperty,
+      challengeCountProperty: levelsModel.challengesPerLevelProperty,
 
       accessibleChallengePrompt: 'This is the challenge prompt. Try to get 5 stars to complete the level.',
       accessibleAnswerSummary: 'This is the answer summary after pressing Show Answer.'
     } );
 
-    const statusBar = new FiniteStatusBar( layoutBounds, visibleBoundsProperty, scoreProperty, {
-      levelNumberProperty: levelNumberProperty,
-      challengeNumberProperty: challengeNumberProperty,
-      numberOfChallengesProperty: numberOfChallengesProperty,
-      elapsedTimeProperty: gameTimer.elapsedTimeProperty,
-      timerEnabledProperty: timerEnabledProperty,
+    const statusBar = new FiniteStatusBar( layoutBounds, visibleBoundsProperty, levelsModel.scoreProperty, {
+      levelNumberProperty: levelsModel.levelNumberProperty,
+      challengeNumberProperty: levelsModel.challengeNumberProperty,
+      numberOfChallengesProperty: levelsModel.challengesPerLevelProperty,
+      elapsedTimeProperty: levelsModel.gameTimer.elapsedTimeProperty,
+      timerEnabledProperty: levelsModel.timerEnabledProperty,
       startOverButtonOptions: {
         listener: () => {
-          gameStateProperty.value = 'levelSelection';
+          levelsModel.gameStateProperty.value = 'levelSelection';
         }
       }
     } );
 
     const addPointButton = new TextPushButton( 'You are a ★', {
       listener: () => {
-        scoreProperty.value = Math.min( scoreProperty.value + 1, scoreProperty.range.max );
+        levelsModel.scoreProperty.value = Math.min( levelsModel.scoreProperty.value + 1, levelsModel.scoreProperty.range.max );
       },
-      enabledProperty: DerivedProperty.not( gameOverProperty ),
+      enabledProperty: DerivedProperty.not( levelsModel.gameOverProperty ),
       fireOnHold: true,
       fireOnHoldInterval: 25,
       font: FONT
@@ -271,7 +255,7 @@ class MyChallengeScreenNode extends ChallengeScreenNode {
 
     const winnerNode = new Text( '😲 😀 ☺️ 😀 😲', {
       font: new PhetFont( 50 ),
-      visibleProperty: gameOverProperty,
+      visibleProperty: levelsModel.gameOverProperty,
       accessibleParagraph: 'You are a winner! Congratulations!'
     } );
 
@@ -305,12 +289,11 @@ class MyChallengeScreenNode extends ChallengeScreenNode {
     ];
 
     this.addPointButton = addPointButton;
-    this.levelNumberProperty = levelNumberProperty;
+    this.levelNumberProperty = levelsModel.levelNumberProperty;
   }
 }
 
 class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
-  private transientButton: Node | null = null;
   private readonly layoutBounds: Bounds2;
 
   public constructor(
