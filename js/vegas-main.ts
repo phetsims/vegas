@@ -16,7 +16,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
-import LevelsScreenView from './demo/levels/model/view/LevelsScreenView.js';
+import LevelsScreenView from './demo/levels/view/LevelsScreenView.js';
 import VegasStrings from './VegasStrings.js';
 
 // constants
