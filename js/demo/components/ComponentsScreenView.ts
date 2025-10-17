@@ -18,6 +18,7 @@ import demoLevelSelectionButton from './demoLevelSelectionButton.js';
 import demoLevelSelectionButtonGroup from './demoLevelSelectionButtonGroup.js';
 import demoRewardNode from './demoRewardNode.js';
 import demoScoreDisplays from './demoScoreDisplays.js';
+import demoVegasButtons from './demoVegasButtons.js';
 
 type SelfOptions = EmptySelfOptions;
 type ComponentsScreenViewOptions = SelfOptions & DemosScreenViewOptions;
@@ -37,7 +38,8 @@ export default class ComponentsScreenView extends DemosScreenView {
       { label: 'LevelSelectionButton', createNode: demoLevelSelectionButton },
       { label: 'LevelSelectionButtonGroup', createNode: demoLevelSelectionButtonGroup },
       { label: 'RewardNode', createNode: demoRewardNode },
-      { label: 'ScoreDisplays', createNode: demoScoreDisplays }
+      { label: 'ScoreDisplays', createNode: demoScoreDisplays },
+      { label: 'VegasButtons', createNode: demoVegasButtons, tandemName: 'vegasButtons' }
     ];
 
     super( demos, options );
