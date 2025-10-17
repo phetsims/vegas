@@ -7,7 +7,6 @@
  */
 
 import Property from '../../axon/js/Property.js';
-import StringProperty from '../../axon/js/StringProperty.js';
 import Screen from '../../joist/js/Screen.js';
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
@@ -16,8 +15,6 @@ import Tandem from '../../tandem/js/Tandem.js';
 import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
-import LevelsModel from './demo/levels/model/LevelsModel.js';
-import LevelsScreenView from './demo/levels/view/LevelsScreenView.js';
 import VegasStrings from './VegasStrings.js';
 
 // constants
@@ -62,17 +59,6 @@ simLauncher.launch( () => {
         name: VegasStrings.screen.infiniteChallengesStringProperty,
         backgroundColorProperty: new Property( 'white' ),
         tandem: Tandem.OPT_OUT
-      } ),
-
-    new Screen(
-      () => new LevelsModel(),
-      levelsModel => new LevelsScreenView( levelsModel ), {
-
-        // demo is not translatable
-        name: new StringProperty( 'Levels' ),
-        backgroundColorProperty: new Property( 'white' ),
-        tandem: Tandem.OPT_OUT
       } )
-
   ], simOptions ).start();
 } );
