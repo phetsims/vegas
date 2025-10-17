@@ -24,7 +24,7 @@ const CHALLENGES_PER_LEVEL = 2;
 
 export default class LevelsModel implements TModel {
 
-  // Each level has a number of challenges.
+  // Each level has a number of levels, and a number of challenges within each level.
   public readonly levelNumberProperty = new NumberProperty( 1 );
   public readonly numberOfLevelsProperty = new NumberProperty( NUMBER_OF_LEVELS );
 

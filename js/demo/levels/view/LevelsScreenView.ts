@@ -11,27 +11,18 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../../axon/js/NumberProperty.js';
 import Property from '../../../../../axon/js/Property.js';
-import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import StringProperty from '../../../../../axon/js/StringProperty.js';
-import { TReadOnlyProperty } from '../../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import TextPushButton from '../../../../../sun/js/buttons/TextPushButton.js';
 import Tandem from '../../../../../tandem/js/Tandem.js';
-import CheckButton from '../../../buttons/CheckButton.js';
 import GameInfoButton from '../../../buttons/GameInfoButton.js';
 import GameTimerToggleButton from '../../../buttons/GameTimerToggleButton.js';
-import ShowAnswerButton from '../../../buttons/ShowAnswerButton.js';
-import TryAgainButton from '../../../buttons/TryAgainButton.js';
-import FiniteStatusBar from '../../../FiniteStatusBar.js';
 import ChallengeScreenNode from '../../../ChallengeScreenNode.js';
 import GameTimer from '../../../GameTimer.js';
 import LevelCompletedNode from '../../../LevelCompletedNode.js';
@@ -42,9 +33,9 @@ import ScoreDisplayStars from '../../../ScoreDisplayStars.js';
 import vegas from '../../../vegas.js';
 import VegasScreenNode from '../../../VegasScreenNode.js';
 import LevelsModel, { GameState } from '../model/LevelsModel.js';
+import LevelsChallengeScreenNode from './LevelsChallengeScreenNode.js';
 
 const NUMBER_OF_LEVELS = 5;
-const FONT = new PhetFont( 25 );
 
 
 export default class LevelsScreenView extends ScreenView {
@@ -60,7 +51,7 @@ export default class LevelsScreenView extends ScreenView {
     const levelNodes: ChallengeScreenNode[] = [];
     for ( let level = 0; level < NUMBER_OF_LEVELS; level++ ) {
 
-      const levelNode = new MyChallengeScreenNode(
+      const levelNode = new LevelsChallengeScreenNode(
         levelsModel,
         this.layoutBounds,
         this.visibleBoundsProperty
@@ -69,7 +60,7 @@ export default class LevelsScreenView extends ScreenView {
       levelNodes.push( levelNode );
     }
 
-    const rewardScreenNode = new MyRewardScreenNode( levelsModel.levelNumberProperty );
+    const rewardScreenNode = new RewardScreenNode( levelsModel.levelNumberProperty );
 
     let oldCompletedNode: Node | null;
 
@@ -199,100 +190,6 @@ export default class LevelsScreenView extends ScreenView {
   }
 }
 
-class MyRewardScreenNode extends RewardScreenNode {
-  public constructor( levelNumberProperty: TReadOnlyProperty<number> ) {
-    super( levelNumberProperty );
-  }
-}
-
-class MyChallengeScreenNode extends ChallengeScreenNode {
-  private readonly addPointButton: Node;
-  private readonly levelNumberProperty: ReadOnlyProperty<number>;
-
-  public constructor(
-    levelsModel: LevelsModel,
-    layoutBounds: Bounds2,
-    visibleBoundsProperty: Property<Bounds2>
-  ) {
-    super( {
-      challengeNumberProperty: levelsModel.challengeNumberProperty,
-      challengeCountProperty: levelsModel.challengesPerLevelProperty,
-
-      accessibleChallengePrompt: 'This is the challenge prompt. Try to get 5 stars to complete the level.',
-      accessibleAnswerSummary: 'This is the answer summary after pressing Show Answer.'
-    } );
-
-    const statusBar = new FiniteStatusBar( layoutBounds, visibleBoundsProperty, levelsModel.scoreProperty, {
-      levelNumberProperty: levelsModel.levelNumberProperty,
-      challengeNumberProperty: levelsModel.challengeNumberProperty,
-      numberOfChallengesProperty: levelsModel.challengesPerLevelProperty,
-      elapsedTimeProperty: levelsModel.gameTimer.elapsedTimeProperty,
-      timerEnabledProperty: levelsModel.timerEnabledProperty,
-      startOverButtonOptions: {
-        listener: () => {
-          levelsModel.gameStateProperty.value = 'levelSelection';
-        }
-      }
-    } );
-
-    const addPointButton = new TextPushButton( 'You are a ★', {
-      listener: () => {
-        levelsModel.scoreProperty.value = Math.min( levelsModel.scoreProperty.value + 1, levelsModel.scoreProperty.range.max );
-      },
-      enabledProperty: DerivedProperty.not( levelsModel.gameOverProperty ),
-      fireOnHold: true,
-      fireOnHoldInterval: 25,
-      font: FONT
-    } );
-
-    const checkAnswerButton = new CheckButton();
-    const tryAgainButton = new TryAgainButton();
-    const showAnswerButton = new ShowAnswerButton( {
-      listener: () => {
-        this.setAnswerSummaryVisible( true );
-      }
-    } );
-
-    const winnerNode = new Text( '😲 😀 ☺️ 😀 😲', {
-      font: new PhetFont( 50 ),
-      visibleProperty: levelsModel.gameOverProperty,
-      accessibleParagraph: 'You are a winner! Congratulations!'
-    } );
-
-    // layout - status bar manages layout at the top
-    addPointButton.center = layoutBounds.center;
-    winnerNode.centerTop = addPointButton.centerBottom.plusXY( 0, 20 );
-    checkAnswerButton.centerTop = winnerNode.centerBottom.plusXY( 0, 20 );
-    tryAgainButton.centerTop = checkAnswerButton.centerBottom.plusXY( 0, 20 );
-    showAnswerButton.centerTop = tryAgainButton.centerBottom.plusXY( 0, 20 );
-
-    this.addChild( winnerNode );
-    this.addChild( checkAnswerButton );
-    this.addChild( tryAgainButton );
-    this.addChild( showAnswerButton );
-    this.addChild( addPointButton );
-    this.addChild( statusBar );
-
-    this.accessibleChallengeSectionNode.pdomOrder = [
-      addPointButton
-    ];
-
-    this.accessibleAnswerSectionNode.pdomOrder = [
-      winnerNode,
-      checkAnswerButton,
-      tryAgainButton,
-      showAnswerButton
-    ];
-
-    this.accessibleStatusSectionNode.pdomOrder = [
-      statusBar
-    ];
-
-    this.addPointButton = addPointButton;
-    this.levelNumberProperty = levelsModel.levelNumberProperty;
-  }
-}
-
 class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
   private readonly layoutBounds: Bounds2;
 
@@ -311,7 +208,7 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
 
 
       levelButtonsItems.push( {
-        icon: new Text( `Level ${level + 1}`, { font: FONT } ),
+        icon: new Text( `Level ${level + 1}` ),
         scoreProperty: scoreProperty,
 
         buttonListener: () => {
