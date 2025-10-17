@@ -15,7 +15,6 @@ import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import PDOMUtils from '../../scenery/js/accessibility/pdom/PDOMUtils.js';
 import HBox from '../../scenery/js/layout/nodes/HBox.js';
 import VBox from '../../scenery/js/layout/nodes/VBox.js';
 import Image from '../../scenery/js/nodes/Image.js';
@@ -40,12 +39,10 @@ type SelfOptions = {
   buttonsWidth?: number; // fixed width for both buttons
   buttonsYSpacing?: number;
 
-  // called when 'Keep Going', 'Close' button, or 'Esc' key is pressed
+  // Called when 'Keep Going', 'Close' button, or 'Esc' key is pressed.
+  // You should generally use this to call hide() on the dialog, and then
+  // place focus on the appropriate element to continue the game.
   dismissListener?: PushButtonListener;
-
-  // Called after the dialog is dismissed for focus management. Default behavior is to move focus
-  // back to the first interactive element in the game.
-  focusAfterDismissal?: () => void;
 
   newLevelButtonListener?: PushButtonListener; // called when 'New Level' button is pressed
   scoreDisplayOptions?: ScoreDisplayNumberAndStarOptions;
@@ -71,9 +68,6 @@ export default class RewardDialog extends Dialog {
       buttonsYSpacing: 20,
       dismissListener: _.noop,
       newLevelButtonListener: _.noop,
-      focusAfterDismissal: () => {
-        PDOMUtils.focusTop();
-      },
       scoreDisplayOptions: {
         font: DEFAULT_SCORE_DISPLAY_FONT,
         spacing: 8,
@@ -123,12 +117,9 @@ export default class RewardDialog extends Dialog {
 
     // Handles dialog dismissal via close button, escape key, or "Keep Going" button.
     // - Executes the client-provided dismissal callback.
-    // - Moves focus to the top of the game challenge for accessibility.
     // - Announces a context response to guide the user on how to continue.
     const closeDialogListener = () => {
       options.dismissListener();
-      options.focusAfterDismissal();
-
       this.addAccessibleContextResponse( VegasFluent.a11y.rewardDialog.keepGoingButton.accessibleContextResponse.format( {
         levelNumber: level
       } ), { alertWhenNotDisplayed: true } );
