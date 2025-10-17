@@ -5,7 +5,7 @@
  * and game controls. Ensures a clear heading structure and leading summary for screen readers, with optional
  * inclusion of a game options description.
  *
- * Place level selection buttons in `accessibleLevelsSectionNode` and other controls in `accessibleControlsSectionNode`
+ * Place level selection buttons in `accessibleLevelsSectionNode` and other controls in `accessibleOptionsSectionNode`
  * using pdomOrder. Focus is restored to the previously selected button when shown.
  *
  * It is assumed that visibleProperty changes when a game screen is shown or hidden. Important work is linked to that
@@ -40,9 +40,9 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
   // Assign level selection buttons to this section using pdomOrder.
   public readonly accessibleLevelsSectionNode: PDOMSectionNode;
 
-  // Accessible section for other game controls (timers, reset, info, etc.).
+  // Accessible section for game options and other controls (timers, reset, info, etc.).
   // Assign control components to this section using pdomOrder.
-  public readonly accessibleControlsSectionNode: PDOMSectionNode;
+  public readonly accessibleOptionsSectionNode: PDOMSectionNode;
 
   // Reference to the level selection button group, enabling automatic restoration of focus to the previously selected button when this screen is displayed.
   // Note: It is the developer's responsibility to add these buttons to the scene graph and configure their pdomOrder.
@@ -80,7 +80,7 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
     ];
 
     this.accessibleLevelsSectionNode = levelsSection;
-    this.accessibleControlsSectionNode = controlsSection;
+    this.accessibleOptionsSectionNode = controlsSection;
     this.levelSelectionButtonGroup = levelSelectionButtonGroup;
 
     this.visibleProperty.lazyLink( visible => {

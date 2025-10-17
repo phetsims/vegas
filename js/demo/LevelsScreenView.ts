@@ -409,7 +409,7 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
       levelSelectionButtonGroup
     ];
 
-    this.accessibleControlsSectionNode.pdomOrder = [
+    this.accessibleOptionsSectionNode.pdomOrder = [
       gameInfoButton,
       timerButton,
       resetButton
