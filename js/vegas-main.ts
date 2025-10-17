@@ -16,6 +16,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
+import LevelsModel from './demo/levels/model/LevelsModel.js';
 import LevelsScreenView from './demo/levels/view/LevelsScreenView.js';
 import VegasStrings from './VegasStrings.js';
 
@@ -64,8 +65,8 @@ simLauncher.launch( () => {
       } ),
 
     new Screen(
-      createEmptyModel,
-      () => new LevelsScreenView(), {
+      () => new LevelsModel(),
+      levelsModel => new LevelsScreenView( levelsModel ), {
 
         // demo is not translatable
         name: new StringProperty( 'Levels' ),

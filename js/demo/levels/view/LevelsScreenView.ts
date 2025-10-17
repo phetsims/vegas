@@ -19,7 +19,6 @@ import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import StringProperty from '../../../../../axon/js/StringProperty.js';
 import { TReadOnlyProperty } from '../../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../../dot/js/Bounds2.js';
-import Range from '../../../../../dot/js/Range.js';
 import ScreenView from '../../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -42,14 +41,14 @@ import RewardScreenNode from '../../../RewardScreenNode.js';
 import ScoreDisplayStars from '../../../ScoreDisplayStars.js';
 import vegas from '../../../vegas.js';
 import VegasScreenNode from '../../../VegasScreenNode.js';
+import LevelsModel, { GameState } from '../model/LevelsModel.js';
 
 const NUMBER_OF_LEVELS = 5;
 const FONT = new PhetFont( 25 );
 
-type GameState = 'level-selection' | 'challenge' | 'reward';
 
 export default class LevelsScreenView extends ScreenView {
-  public constructor() {
+  public constructor( levelsModel: LevelsModel ) {
     super( {
 
       // Game screens will not have the usual "play area" and "control area" content.
@@ -58,57 +57,33 @@ export default class LevelsScreenView extends ScreenView {
       tandem: Tandem.OPT_OUT
     } );
 
-    //-------------------- "Model" components -------------------
-    const gameStateProperty = new Property<GameState>( 'level-selection' );
-    const levelNumberProperty = new NumberProperty( 1 );
-
-    const scoreProperty = new NumberProperty( 0, {
-      range: new Range( 0, 5 )
-    } );
-    const gameOverProperty = new DerivedProperty( [
-      scoreProperty
-    ], ( score: number ) => {
-      return score === scoreProperty.range.max;
-    } );
-    const gameTimer = new GameTimer();
-    const timerEnabledProperty = new Property( true );
-
-    const numberOfChallengesProperty = new Property( NUMBER_OF_LEVELS );
-
-    // Even levels will put focus on the accessible heading when the level is shown, odd levels will put focus on
-    // a game button.
-    const focusHeadingWhenVisible = ( levelNumber: number ) => {
-      return levelNumber % 2 === 0;
-    };
-
     //-------------------- Create level screens -------------------
     const levelNodes: ChallengeScreenNode[] = [];
     for ( let level = 0; level < NUMBER_OF_LEVELS; level++ ) {
       const challengeNumberProperty = new Property( level + 1 );
 
       const levelNode = new MyChallengeScreenNode(
-        levelNumberProperty,
+        levelsModel.levelNumberProperty,
         this.layoutBounds,
         this.visibleBoundsProperty,
-        scoreProperty,
-        gameOverProperty,
-        gameTimer,
-        timerEnabledProperty,
-        gameStateProperty,
+        levelsModel.scoreProperty,
+        levelsModel.gameOverProperty,
+        levelsModel.gameTimer,
+        levelsModel.timerEnabledProperty,
+        levelsModel.gameStateProperty,
         challengeNumberProperty,
-        numberOfChallengesProperty,
-        focusHeadingWhenVisible( level )
+        levelsModel.challengesPerLevelProperty
       );
 
       levelNodes.push( levelNode );
     }
 
-    const rewardScreenNode = new MyRewardScreenNode( levelNumberProperty );
+    const rewardScreenNode = new MyRewardScreenNode( levelsModel.levelNumberProperty );
 
     let oldCompletedNode: Node | null;
 
-    scoreProperty.link( score => {
-      if ( score === scoreProperty.range.max ) {
+    levelsModel.scoreProperty.link( score => {
+      if ( score === levelsModel.scoreProperty.range.max ) {
 
         if ( oldCompletedNode ) {
           oldCompletedNode.dispose();
@@ -117,16 +92,16 @@ export default class LevelsScreenView extends ScreenView {
 
         // create a level completed node to show the level completion dialog
         const levelCompletedNode = new LevelCompletedNode(
-          levelNumberProperty.value,
-          scoreProperty.value,
-          scoreProperty.range.max,
+          levelsModel.levelNumberProperty.value,
+          levelsModel.scoreProperty.value,
+          levelsModel.scoreProperty.range.max,
           5,
-          timerEnabledProperty.value,
-          gameTimer.elapsedTimeProperty.value,
+          levelsModel.timerEnabledProperty.value,
+          levelsModel.gameTimer.elapsedTimeProperty.value,
           null,
           true,
           () => {
-            gameStateProperty.value = 'level-selection';
+            levelsModel.gameStateProperty.value = 'levelSelection';
 
             levelCompletedNode.dispose();
             oldCompletedNode = null;
@@ -137,7 +112,7 @@ export default class LevelsScreenView extends ScreenView {
         levelCompletedNode.center = this.layoutBounds.center;
 
         rewardScreenNode.accessibleRewardSectionNode.pdomOrder = [ levelCompletedNode ];
-        gameStateProperty.value = 'reward';
+        levelsModel.gameStateProperty.value = 'reward';
 
         levelCompletedNode.visible = true;
 
@@ -147,13 +122,12 @@ export default class LevelsScreenView extends ScreenView {
 
     //------------------- Add to scene graph -------------------
     const levelSelectionNode = new TestLevelSelectionScreenNode(
-      levelNumberProperty,
-      scoreProperty,
-      gameStateProperty,
+      levelsModel.levelNumberProperty,
+      levelsModel.scoreProperty,
+      levelsModel.gameStateProperty,
       this.layoutBounds,
-      focusHeadingWhenVisible,
-      numberOfChallengesProperty,
-      timerEnabledProperty
+      levelsModel.challengesPerLevelProperty,
+      levelsModel.timerEnabledProperty
     );
     const levelNodesParent = new Node(); // parent for all level scenes
     levelNodesParent.children = [ ...levelNodes ];
@@ -164,10 +138,10 @@ export default class LevelsScreenView extends ScreenView {
 
     //------------------- Visibility management -------------------
     Multilink.multilink( [
-      gameStateProperty,
-      levelNumberProperty
+      levelsModel.gameStateProperty,
+      levelsModel.levelNumberProperty
     ], ( gameState, levelNumber ) => {
-      this.updateVisibility( gameState, levelNumber, levelSelectionNode, levelNodesParent, levelNodes, rewardScreenNode, gameTimer );
+      this.updateVisibility( gameState, levelNumber, levelSelectionNode, levelNodesParent, levelNodes, rewardScreenNode, levelsModel.gameTimer );
     } );
   }
 
@@ -195,7 +169,7 @@ export default class LevelsScreenView extends ScreenView {
     gameTimer.reset();
 
     // Show level selection
-    if ( gameState === 'level-selection' ) {
+    if ( gameState === 'levelSelection' ) {
       this.hideChallenges( levelNodesParent, levelNodes );
       rewardScreenNode.visibleProperty.value = false;
       levelSelectionNode.visibleProperty.value = true;
@@ -242,7 +216,6 @@ class MyRewardScreenNode extends RewardScreenNode {
 
 class MyChallengeScreenNode extends ChallengeScreenNode {
   private readonly addPointButton: Node;
-  private readonly focusHeadingWhenVisible: boolean;
   private readonly levelNumberProperty: ReadOnlyProperty<number>;
 
   public constructor(
@@ -255,8 +228,7 @@ class MyChallengeScreenNode extends ChallengeScreenNode {
     timerEnabledProperty: Property<boolean>,
     gameStateProperty: Property<GameState>,
     challengeNumberProperty: Property<number>,
-    numberOfChallengesProperty: Property<number>,
-    focusHeadingWhenVisible: boolean
+    numberOfChallengesProperty: Property<number>
   ) {
     super( {
       challengeNumberProperty: challengeNumberProperty,
@@ -274,7 +246,7 @@ class MyChallengeScreenNode extends ChallengeScreenNode {
       timerEnabledProperty: timerEnabledProperty,
       startOverButtonOptions: {
         listener: () => {
-          gameStateProperty.value = 'level-selection';
+          gameStateProperty.value = 'levelSelection';
         }
       }
     } );
@@ -334,7 +306,6 @@ class MyChallengeScreenNode extends ChallengeScreenNode {
 
     this.addPointButton = addPointButton;
     this.levelNumberProperty = levelNumberProperty;
-    this.focusHeadingWhenVisible = focusHeadingWhenVisible;
   }
 }
 
@@ -347,7 +318,6 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
     scoreProperty: NumberProperty,
     gameStateProperty: Property<GameState>,
     layoutBounds: Bounds2,
-    focusHeadingWhenVisible: ( levelNumber: number ) => boolean,
     numberOfChallengesProperty: Property<number>,
     timerEnabledProperty: Property<boolean>
   ) {
@@ -392,7 +362,7 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
       listener: () => {
         scoreProperty.value = 0;
         levelNumberProperty.value = 1;
-        gameStateProperty.value = 'level-selection';
+        gameStateProperty.value = 'levelSelection';
       }
     } );
 
