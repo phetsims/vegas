@@ -8,7 +8,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DemosScreenView, { DemosScreenViewOptions } from '../../../../sun/js/demo/DemosScreenView.js';
 import vegas from '../../vegas.js';
 import demoAllLevelsCompletedNode from './demoAllLevelsCompletedNode.js';
@@ -24,7 +24,10 @@ type ComponentsScreenViewOptions = SelfOptions & DemosScreenViewOptions;
 
 export default class ComponentsScreenView extends DemosScreenView {
 
-  public constructor( options?: ComponentsScreenViewOptions ) {
+  public constructor( providedOptions?: ComponentsScreenViewOptions ) {
+    const options = optionize<ComponentsScreenViewOptions, SelfOptions, DemosScreenViewOptions>()( {
+      includeAccessibleSectionNodes: false
+    }, providedOptions );
 
     // To add a demo, add an entry here of type DemoItemData.
     const demos = [

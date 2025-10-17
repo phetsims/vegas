@@ -35,6 +35,7 @@ export default class FiniteChallengesScreenView extends ScreenView {
   public constructor() {
 
     super( {
+      includeAccessibleSectionNodes: false,
       tandem: Tandem.OPT_OUT
     } );
 
