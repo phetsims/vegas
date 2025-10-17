@@ -52,22 +52,6 @@ class VegasScreenNode extends Node {
                      'is placed under those sections which is important for screen reader accessibility.'
     );
   }
-
-  /**
-   * Shows the screen by making it visible. This can be used as a hook for
-   * focus management when the screen is shown.
-   */
-  public show(): void {
-    this.visible = true;
-  }
-
-  /**
-   * Hides the screen by making it invisible. This can be used as a hook for
-   * focus management when the screen is hidden.
-   */
-  public hide(): void {
-    this.visible = false;
-  }
 }
 
 export default VegasScreenNode;

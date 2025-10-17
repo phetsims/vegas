@@ -197,17 +197,17 @@ export default class LevelsScreenView extends ScreenView {
     // Show level selection
     if ( gameState === 'level-selection' ) {
       this.hideChallenges( levelNodesParent, levelNodes );
-      rewardScreenNode.hide();
-      levelSelectionNode.show();
+      rewardScreenNode.visibleProperty.value = false;
+      levelSelectionNode.visibleProperty.value = true;
     }
     else if ( gameState === 'reward' ) {
       this.hideChallenges( levelNodesParent, levelNodes );
-      levelSelectionNode.hide();
-      rewardScreenNode.show();
+      levelSelectionNode.visibleProperty.value = false;
+      rewardScreenNode.visibleProperty.value = true;
     }
     else {
-      levelSelectionNode.hide();
-      rewardScreenNode.hide();
+      levelSelectionNode.visibleProperty.value = false;
+      rewardScreenNode.visibleProperty.value = false;
       this.showChallenges( levelNodesParent, levelNodes, levelNumber, gameTimer );
     }
   }
@@ -216,10 +216,10 @@ export default class LevelsScreenView extends ScreenView {
     levelNodesParent.visible = true;
     levelNodes.forEach( ( levelNode, index ) => {
       if ( index === levelNumber - 1 ) {
-        levelNode.show();
+        levelNode.visibleProperty.value = true;
       }
       else {
-        levelNode.hide();
+        levelNode.visibleProperty.value = false;
       }
     } );
 
@@ -229,7 +229,7 @@ export default class LevelsScreenView extends ScreenView {
   private hideChallenges( levelNodesParent: Node, levelNodes: ChallengeScreenNode[] ): void {
     levelNodesParent.visible = false;
     levelNodes.forEach( levelNode => {
-      levelNode.hide();
+      levelNode.visibleProperty.value = false;
     } );
   }
 }
@@ -336,10 +336,6 @@ class MyChallengeScreenNode extends ChallengeScreenNode {
     this.levelNumberProperty = levelNumberProperty;
     this.focusHeadingWhenVisible = focusHeadingWhenVisible;
   }
-
-  public override hide(): void {
-    super.hide();
-  }
 }
 
 class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
@@ -424,34 +420,6 @@ class TestLevelSelectionScreenNode extends LevelSelectionScreenNode {
     resetButton.rightBottom = layoutBounds.rightBottom.minusXY( 20, 20 );
     gameInfoButton.rightCenter = resetButton.leftCenter.minusXY( 20, 0 );
     timerButton.rightCenter = gameInfoButton.leftCenter.minusXY( 20, 0 );
-  }
-
-  public override show(): void {
-    super.show();
-
-    if ( this.transientButton ) {
-      this.transientButton.dispose();
-    }
-
-    this.transientButton = new TextPushButton( 'Transient Button', {
-      font: FONT,
-      listener: () => {
-
-        // Don't alert when fuzz testing because it halts everything.
-        if ( !phet.chipper.isFuzzEnabled() ) {
-          alert(
-            'This button is re-created every time the level selection screen is shown. ' +
-            'It is here to test focus management. Focus should land here after screen 5.'
-          );
-        }
-      },
-      leftBottom: this.layoutBounds.leftBottom.plusXY( 20, -20 )
-    } );
-    this.addChild( this.transientButton );
-  }
-
-  public override hide(): void {
-    super.hide();
   }
 }
 

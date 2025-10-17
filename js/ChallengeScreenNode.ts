@@ -7,7 +7,8 @@
  *
  * Also supports optional accessible prompts and answer summaries, if provided with options.
  *
- * Use show() and hide() methods when the challenge becomes visible for built-in focus management behavior.
+ * It is assumed that visibleProperty changes when a game screen is shown or hidden. Important work is linked to that
+ * event.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
@@ -174,6 +175,12 @@ export default class ChallengeScreenNode extends VegasScreenNode {
       statusHeadingProperty.dispose();
       disposableStatusHeadingProperty && disposableStatusHeadingProperty.dispose();
     };
+
+    this.visibleProperty.lazyLink( visible => {
+      if ( visible ) {
+        this.accessibleFocusableHeadingNode.focus();
+      }
+    } );
   }
 
   /**
@@ -182,21 +189,6 @@ export default class ChallengeScreenNode extends VegasScreenNode {
   public override dispose(): void {
     this.disposeChallengeScreenNode();
     super.dispose();
-  }
-
-  /**
-   * Shows the screen and moves focus to the heading node for accessibility.
-   */
-  public override show(): void {
-    super.show();
-    this.accessibleFocusableHeadingNode.focus();
-  }
-
-  /**
-   * Hides the screen.
-   */
-  public override hide(): void {
-    super.hide();
   }
 
   /**

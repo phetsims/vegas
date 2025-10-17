@@ -8,8 +8,8 @@
  * Place level selection buttons in `accessibleLevelsSectionNode` and other controls in `accessibleControlsSectionNode`
  * using pdomOrder. Focus is restored to the previously selected button when shown.
  *
- * Use show() and hide() methods when the screen becomes visible for built-in focus management and context
- * response behavior.
+ * It is assumed that visibleProperty changes when a game screen is shown or hidden. Important work is linked to that
+ * event.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
@@ -82,19 +82,13 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
     this.accessibleLevelsSectionNode = levelsSection;
     this.accessibleControlsSectionNode = controlsSection;
     this.levelSelectionButtonGroup = levelSelectionButtonGroup;
-  }
 
-  /**
-   * Show the level selection screen, restoring focus to the previously selected button
-   */
-  public override show(): void {
-    super.show();
-    this.levelSelectionButtonGroup.focusPressedButton();
-    this.addAccessibleContextResponse( VegasFluent.a11y.levelSelectionScreenNode.accessibleContextResponseShowStringProperty );
-  }
-
-  public override hide(): void {
-    super.hide();
+    this.visibleProperty.lazyLink( visible => {
+      if ( visible ) {
+        this.levelSelectionButtonGroup.focusPressedButton();
+        this.addAccessibleContextResponse( VegasFluent.a11y.levelSelectionScreenNode.accessibleContextResponseShowStringProperty );
+      }
+    } );
   }
 }
 
