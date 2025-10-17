@@ -270,26 +270,16 @@ export default class LevelCompletedNode extends Panel {
       // All VBox children are linked to dynamic string Properties, so must be disposed.
       vBoxChildren.forEach( child => child.dispose() );
     };
-  }
 
-  /**
-   * Show the LevelCompletedNode, managing focus and context responses for accessibility.
-   */
-  public show(): void {
-    this.visibleProperty.value = true;
-    this.continueButton.focus();
-    this.addAccessibleContextResponse( VegasFluent.a11y.levelCompletedNode.accessibleContextResponse.format( {
-      levelNumber: this.level,
-      stars: this.accessibleScoreStringProperty,
-      progressMessage: this.titleTextStringProperty
-    } ) );
-  }
-
-  /**
-   * Hides this Node. Currently, no other work but adds symmetry with show().
-   */
-  public hide(): void {
-    this.visibleProperty.value = false;
+    // When visibility changes, automatically manage focus and context responses for accessibility.
+    this.visibleProperty.lazyLink( visible => {
+      this.continueButton.focus();
+      this.addAccessibleContextResponse( VegasFluent.a11y.levelCompletedNode.accessibleContextResponse.format( {
+        levelNumber: this.level,
+        stars: this.accessibleScoreStringProperty,
+        progressMessage: this.titleTextStringProperty
+      } ) );
+    } );
   }
 
   public override dispose(): void {
