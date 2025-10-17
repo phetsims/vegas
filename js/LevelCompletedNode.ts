@@ -273,12 +273,14 @@ export default class LevelCompletedNode extends Panel {
 
     // When visibility changes, automatically manage focus and context responses for accessibility.
     this.visibleProperty.lazyLink( visible => {
-      this.continueButton.focus();
-      this.addAccessibleContextResponse( VegasFluent.a11y.levelCompletedNode.accessibleContextResponse.format( {
-        levelNumber: this.level,
-        stars: this.accessibleScoreStringProperty,
-        progressMessage: this.titleTextStringProperty
-      } ) );
+      if ( visible ) {
+        this.continueButton.focus();
+        this.addAccessibleContextResponse( VegasFluent.a11y.levelCompletedNode.accessibleContextResponse.format( {
+          levelNumber: this.level,
+          stars: this.accessibleScoreStringProperty,
+          progressMessage: this.titleTextStringProperty
+        } ) );
+      }
     } );
   }
 
