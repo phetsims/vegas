@@ -97,8 +97,6 @@ export default class ChallengeScreenNode extends VegasScreenNode {
       accessibleHeadingContentProperty = challengeStringProperty;
     }
     else {
-
-      // Use the default property from VegasFluent
       accessibleHeadingContentProperty = VegasFluent.a11y.challengeScreenNode.accessibleHeadingChallengeStringProperty;
     }
 
