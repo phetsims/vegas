@@ -91,7 +91,7 @@ export default class LevelSelectionButtonGroup extends Node {
    * @param [providedOptions]
    */
   public constructor( items: LevelSelectionButtonGroupItem[], providedOptions?: LevelSelectionButtonGroupOptions ) {
-    assert && assert( items.length > 0, 'at least one item must be specified' );
+    affirm( items.length > 0, 'at least one item must be specified' );
 
     const options = optionize<LevelSelectionButtonGroupOptions,
       StrictOmit<SelfOptions, 'createLayoutNode' | 'gameLevels' | 'levelSelectionButtonOptions'>, NodeOptions>()( {
@@ -146,8 +146,8 @@ export default class LevelSelectionButtonGroup extends Node {
     // All buttons must be instantiated so that the PhET-iO API is not changed conditionally.
     // While options.gameLevels is required, this guard is provided for .js sims that do not comply.
     if ( options.gameLevels ) {
-      assert && assert( options.gameLevels.length > 0, 'at least 1 gameLevel must be visible' );
-      assert && assert( _.every( options.gameLevels, gameLevel => ( Number.isInteger( gameLevel ) && gameLevel > 0 ) ),
+      affirm( options.gameLevels.length > 0, 'at least 1 gameLevel must be visible' );
+      affirm( _.every( options.gameLevels, gameLevel => ( Number.isInteger( gameLevel ) && gameLevel > 0 ) ),
         'gameLevels must be positive integers' );
       buttons.forEach( ( button, index ) => {
         button.visible = options.gameLevels.includes( index + 1 );
@@ -192,8 +192,7 @@ export default class LevelSelectionButtonGroup extends Node {
    * @param level - numbered starting from 1, to comply with gameLevels query parameter
    */
   public focusLevelSelectionButton( level: number ): void {
-    assert && assert( Number.isInteger( level ) && level > 0 && level <= this.buttons.length,
-      `invalid level: ${level}` );
+    affirm( Number.isInteger( level ) && level > 0 && level <= this.buttons.length, `invalid level: ${level}` );
     this.buttons[ level - 1 ].focus();
   }
 }
