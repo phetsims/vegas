@@ -53,7 +53,7 @@ export default class ChallengeScreenNode extends VegasScreenNode {
 
   // Focusable heading node for the challenge. Whenever this screen is shown,
   // focus is moved to this Node.
-  public readonly accessibleFocusableHeadingNode: FocusableHeadingNode;
+  private readonly accessibleFocusableHeadingNode: FocusableHeadingNode;
 
   // Main gameplay area section node.
   public readonly accessibleChallengeSectionNode: PDOMSectionNode;
@@ -176,7 +176,7 @@ export default class ChallengeScreenNode extends VegasScreenNode {
 
     this.visibleProperty.lazyLink( visible => {
       if ( visible ) {
-        this.accessibleFocusableHeadingNode.focus();
+        this.handleShow();
       }
     } );
   }
@@ -187,6 +187,14 @@ export default class ChallengeScreenNode extends VegasScreenNode {
   public override dispose(): void {
     this.disposeChallengeScreenNode();
     super.dispose();
+  }
+
+  /**
+   * Place focus on the accessible heading for this challenge. If the visibleProperty link in the constructor
+   * does not work for your implementation you can manually call this instead.
+   */
+  public handleShow(): void {
+    this.accessibleFocusableHeadingNode.focus();
   }
 
   /**
