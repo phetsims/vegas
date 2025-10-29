@@ -69,6 +69,9 @@ addToMapIfDefined( 'a11y_levelCompletedNode_timeItem_timeWithBest', 'a11y.levelC
 addToMapIfDefined( 'a11y_levelCompletedNode_timeItem_timeWithNewBest', 'a11y.levelCompletedNode.timeItem.timeWithNewBestStringProperty' );
 addToMapIfDefined( 'a11y_levelCompletedNode_continueButton_accessibleHelpText', 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_levelCompletedNode_accessibleContextResponse', 'a11y.levelCompletedNode.accessibleContextResponseStringProperty' );
+addToMapIfDefined( 'a11y_allLevelsCompletedNode_faceNode_accessibleParagraph', 'a11y.allLevelsCompletedNode.faceNode.accessibleParagraphStringProperty' );
+addToMapIfDefined( 'a11y_allLevelsCompletedNode_doneButton_accessibleHelpText', 'a11y.allLevelsCompletedNode.doneButton.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_allLevelsCompletedNode_accessibleContextResponseShow', 'a11y.allLevelsCompletedNode.accessibleContextResponseShowStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleName', 'a11y.gameInfoButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_gameInfoButton_accessibleHelpText', 'a11y.gameInfoButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_showAnswerButton_accessibleHelpText', 'a11y.showAnswerButton.accessibleHelpTextStringProperty' );
@@ -208,6 +211,15 @@ const VegasFluent = {
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_continueButton_accessibleHelpText', _.get( VegasStrings, 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' ) )
       },
       accessibleContextResponse: new FluentPattern<{ levelNumber: FluentVariable, progressMessage: FluentVariable, stars: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_accessibleContextResponse', _.get( VegasStrings, 'a11y.levelCompletedNode.accessibleContextResponseStringProperty' ), [{"name":"levelNumber"},{"name":"progressMessage"},{"name":"stars"}] )
+    },
+    allLevelsCompletedNode: {
+      faceNode: {
+        accessibleParagraphStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_allLevelsCompletedNode_faceNode_accessibleParagraph', _.get( VegasStrings, 'a11y.allLevelsCompletedNode.faceNode.accessibleParagraphStringProperty' ) )
+      },
+      doneButton: {
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_allLevelsCompletedNode_doneButton_accessibleHelpText', _.get( VegasStrings, 'a11y.allLevelsCompletedNode.doneButton.accessibleHelpTextStringProperty' ) )
+      },
+      accessibleContextResponseShowStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_allLevelsCompletedNode_accessibleContextResponseShow', _.get( VegasStrings, 'a11y.allLevelsCompletedNode.accessibleContextResponseShowStringProperty' ) )
     },
     gameInfoButton: {
       _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),

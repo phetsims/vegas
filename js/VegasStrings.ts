@@ -110,6 +110,15 @@ type StringsType = {
       };
       'accessibleContextResponseStringProperty': LocalizedStringProperty;
     };
+    'allLevelsCompletedNode': {
+      'faceNode': {
+        'accessibleParagraphStringProperty': LocalizedStringProperty;
+      };
+      'doneButton': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'accessibleContextResponseShowStringProperty': LocalizedStringProperty;
+    };
     'gameInfoButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;

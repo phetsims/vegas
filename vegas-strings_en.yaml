@@ -89,6 +89,12 @@ a11y:
     continueButton:
       accessibleHelpText: Choose a new level and keep playing.
     accessibleContextResponse: Level { $levelNumber } complete. { $stars }, { $progressMessage }
+  allLevelsCompletedNode:
+    faceNode:
+      accessibleParagraph: A big smiley is happy you completed all levels!
+    doneButton:
+      accessibleHelpText: Return to level selection screen to check progress or keep playing.
+    accessibleContextResponseShow: You completed all levels!
   gameInfoButton:
     accessibleName:     Game Info
     accessibleHelpText: If needed, read brief details for each level.

@@ -17,6 +17,7 @@ import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../sun/js/Panel.js';
 import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {
@@ -31,6 +32,7 @@ type SelfOptions = {
 export type AllLevelsCompletedNodeOptions = SelfOptions & NodeOptions;
 
 export default class AllLevelsCompletedNode extends Node {
+  private readonly button: Node;
 
   /**
    * @param listener function that gets called when 'next' button is pressed
@@ -47,7 +49,9 @@ export default class AllLevelsCompletedNode extends Node {
     }, providedOptions );
 
     // create the smiley face
-    const faceNode = new FaceNode( options.faceDiameter );
+    const faceNode = new FaceNode( options.faceDiameter, {
+      accessibleParagraph: VegasFluent.a11y.allLevelsCompletedNode.faceNode.accessibleParagraphStringProperty
+    } );
 
     // create the dialog text
     const textMessage = new RichText( VegasStrings.youCompletedAllLevelsStringProperty, {
@@ -58,22 +62,39 @@ export default class AllLevelsCompletedNode extends Node {
     } );
 
     // create the button
-    const button = new RectangularPushButton( {
+    this.button = new RectangularPushButton( {
       content: new Text( VegasStrings.doneStringProperty, {
         font: new PhetFont( 30 ),
         maxWidth: options.maxTextWidth
       } ),
       listener: listener,
-      baseColor: 'yellow'
+      baseColor: 'yellow',
+      accessibleHelpText: VegasFluent.a11y.allLevelsCompletedNode.doneButton.accessibleHelpTextStringProperty
     } );
 
     // add the main background panel
     this.addChild( new Panel(
-      new VBox( { children: [ faceNode, textMessage, button ], spacing: 20 } ),
+      new VBox( { children: [ faceNode, textMessage, this.button ], spacing: 20 } ),
       { xMargin: 50, yMargin: 20 }
     ) );
 
     this.mutate( options );
+
+    this.visibleProperty.lazyLink( visible => {
+      if ( visible ) {
+        this.handleShow();
+      }
+    } );
+  }
+
+  /**
+   * Does work that should happen whenever this node is shown. Called when visibility changes by
+   * default, but if your implementation does not go through this Node's visibilityProperty, you should
+   * call this method manually.
+   */
+  public handleShow(): void {
+    this.button.focus();
+    this.addAccessibleContextResponse( VegasFluent.a11y.allLevelsCompletedNode.accessibleContextResponseShowStringProperty );
   }
 }
 
