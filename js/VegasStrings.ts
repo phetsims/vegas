@@ -66,6 +66,10 @@ type StringsType = {
   'doneStringProperty': LocalizedStringProperty;
   'youCompletedAllLevelsStringProperty': LocalizedStringProperty;
   'chooseYourLevelStringProperty': LocalizedStringProperty;
+  'keyboardHelpDialog': {
+    'gameShortcutsStringProperty': LocalizedStringProperty;
+    'checkAnswerStringProperty': LocalizedStringProperty;
+  };
   'a11y': {
     'scoreDisplays': {
       'scoreDisplayStars': {
@@ -168,6 +172,12 @@ type StringsType = {
       'screenSummary': {
         'introStringProperty': LocalizedStringProperty;
         'introWithOptionsStringProperty': LocalizedStringProperty;
+      }
+    };
+    'keyboardHelpDialog': {
+      'gameShortcutsStringProperty': LocalizedStringProperty;
+      'checkAnswerButton': {
+        'accessibleParagraphStringProperty': LocalizedStringProperty;
       }
     }
   }

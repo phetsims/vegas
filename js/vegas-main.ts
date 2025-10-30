@@ -11,10 +11,14 @@ import Screen from '../../joist/js/Screen.js';
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import TModel from '../../joist/js/TModel.js';
+import BasicActionsKeyboardHelpSection from '../../scenery-phet/js/keyboard/help/BasicActionsKeyboardHelpSection.js';
+import TwoColumnKeyboardHelpContent from '../../scenery-phet/js/keyboard/help/TwoColumnKeyboardHelpContent.js';
+import Node from '../../scenery/js/nodes/Node.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
 import FiniteChallengesScreenView from './demo/FiniteChallengesScreenView.js';
 import InfiniteChallengesScreenView from './demo/InfiniteChallengesScreenView.js';
+import GameShortcutsKeyboardHelpSection from './keyboard/GameShortcutsKeyboardHelpSection.js';
 import VegasStrings from './VegasStrings.js';
 
 // constants
@@ -34,6 +38,13 @@ function createEmptyModel(): VegasModel {
   return new VegasModel();
 }
 
+function createKeyboardHelpNode(): Node {
+  return new TwoColumnKeyboardHelpContent(
+    [ new GameShortcutsKeyboardHelpSection() ],
+    [ new BasicActionsKeyboardHelpSection() ]
+  );
+}
+
 simLauncher.launch( () => {
   new Sim( vegasTitleStringProperty, [
 
@@ -42,6 +53,7 @@ simLauncher.launch( () => {
       () => new ComponentsScreenView(), {
         name: VegasStrings.screen.componentsStringProperty,
         backgroundColorProperty: new Property( 'white' ),
+        createKeyboardHelpNode: createKeyboardHelpNode,
         tandem: Tandem.OPT_OUT
       } ),
 
@@ -50,6 +62,7 @@ simLauncher.launch( () => {
       () => new FiniteChallengesScreenView(), {
         name: VegasStrings.screen.finiteChallengesStringProperty,
         backgroundColorProperty: new Property( 'white' ),
+        createKeyboardHelpNode: createKeyboardHelpNode,
         tandem: Tandem.OPT_OUT
       } ),
 
@@ -58,6 +71,7 @@ simLauncher.launch( () => {
       () => new InfiniteChallengesScreenView(), {
         name: VegasStrings.screen.infiniteChallengesStringProperty,
         backgroundColorProperty: new Property( 'white' ),
+        createKeyboardHelpNode: createKeyboardHelpNode,
         tandem: Tandem.OPT_OUT
       } )
   ], simOptions ).start();

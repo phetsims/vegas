@@ -31,6 +31,9 @@ done:                             Done
 youCompletedAllLevels:            You completed all levels!
 chooseYourLevel:                  Choose Your Level!
 
+keyboardHelpDialog.gameShortcuts: Game Shortcuts
+keyboardHelpDialog.checkAnswer:   Check Answer
+
 a11y:
   scoreDisplays:
     scoreDisplayStars:
@@ -147,3 +150,9 @@ a11y:
     screenSummary:
       intro:            Welcome to the { $screenName } Screen. Choose a level to start earning stars. Use reset all to clear game and start over.
       introWithOptions: Welcome to the { $screenName } Screen. Choose a level to start earning stars. Set available game options to your liking. Use reset all to clear game and start over.
+  keyboardHelpDialog:
+    gameShortcuts: Game Shortcuts
+    checkAnswerButton:
+
+      # Accessible description of the action in the dialog.
+      accessibleParagraph: Check Answer with { $altOrOption } key plus C key.
