@@ -301,7 +301,7 @@
       },
       "checkAnswerButton": {
         "accessibleParagraph": {
-          "value": "Check Answer with { $altOrOption } plus C key."
+          "value": "Check Answer with { $altOrOption } key plus C key."
         }
       }
     }
