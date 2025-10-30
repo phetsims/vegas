@@ -12,7 +12,9 @@ import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import TModel from '../../joist/js/TModel.js';
 import BasicActionsKeyboardHelpSection from '../../scenery-phet/js/keyboard/help/BasicActionsKeyboardHelpSection.js';
+import KeyboardHelpSectionRow from '../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import TwoColumnKeyboardHelpContent from '../../scenery-phet/js/keyboard/help/TwoColumnKeyboardHelpContent.js';
+import TextKeyNode from '../../scenery-phet/js/keyboard/TextKeyNode.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ComponentsScreenView from './demo/components/ComponentsScreenView.js';
@@ -38,9 +40,20 @@ function createEmptyModel(): VegasModel {
   return new VegasModel();
 }
 
+// Demonstrate the keyboard help content for game shortcuts.
 function createKeyboardHelpNode(): Node {
+
+  // Game shortcuts on the left, basic actions on the right
   return new TwoColumnKeyboardHelpContent(
-    [ new GameShortcutsKeyboardHelpSection() ],
+    [ new GameShortcutsKeyboardHelpSection( {
+
+      // You can put additional rows in the game shortcuts section if desired.
+      additionalContent: [
+        KeyboardHelpSectionRow.labelWithIcon( 'Do a thing', TextKeyNode.space(), {
+          labelInnerContent: 'Do a thing with spacebar.'
+        } )
+      ]
+    } ) ],
     [ new BasicActionsKeyboardHelpSection() ]
   );
 }
