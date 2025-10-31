@@ -148,8 +148,8 @@ a11y:
     accessibleHeadingOptions:      Game Options
     accessibleContextResponseShow: Choose Your Level!
     screenSummary:
-      intro:            Welcome to the { $screenName } Screen. Choose a level to start earning stars. Use reset all to clear game and start over.
-      introWithOptions: Welcome to the { $screenName } Screen. Choose a level to start earning stars. Set available game options to your liking. Use reset all to clear game and start over.
+      intro:            Welcome to the { $screenName } Screen. Choose a level to start earning stars. Use reset all to clear all game progress and start over.
+      introWithOptions: Welcome to the { $screenName } Screen. Choose a level to start earning stars. Set available game options to your liking. Use reset all to clear all game progress and start over.
   keyboardHelpDialog:
     gameShortcuts: Game Shortcuts
     checkAnswerButton:
