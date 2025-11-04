@@ -92,7 +92,8 @@ export default class InfiniteStatusBar extends StatusBar {
       spacing: options.spacing,
       align: 'center',
       children: [ backButton, messageNode ],
-      maxWidth: 0.7 * layoutBounds.width
+      maxWidth: 0.7 * layoutBounds.width,
+      excludeInvisibleChildrenFromBounds: false
     } );
 
     // Create the score display.
