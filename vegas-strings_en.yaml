@@ -30,6 +30,7 @@ score:                            'Score:'
 done:                             Done
 youCompletedAllLevels:            You completed all levels!
 chooseYourLevel:                  Choose Your Level!
+levels:                           Levels
 
 keyboardHelpDialog.gameShortcuts: Game Shortcuts
 keyboardHelpDialog.checkAnswer:   Check Answer

@@ -50,6 +50,7 @@ addToMapIfDefined( 'score', 'scoreStringProperty' );
 addToMapIfDefined( 'done', 'doneStringProperty' );
 addToMapIfDefined( 'youCompletedAllLevels', 'youCompletedAllLevelsStringProperty' );
 addToMapIfDefined( 'chooseYourLevel', 'chooseYourLevelStringProperty' );
+addToMapIfDefined( 'levels', 'levelsStringProperty' );
 addToMapIfDefined( 'keyboardHelpDialog_gameShortcuts', 'keyboardHelpDialog.gameShortcutsStringProperty' );
 addToMapIfDefined( 'keyboardHelpDialog_checkAnswer', 'keyboardHelpDialog.checkAnswerStringProperty' );
 addToMapIfDefined( 'a11y_scoreDisplays_scoreDisplayStars_accessibleScore', 'a11y.scoreDisplays.scoreDisplayStars.accessibleScoreStringProperty' );
@@ -167,6 +168,7 @@ const VegasFluent = {
   doneStringProperty: _.get( VegasStrings, 'doneStringProperty' ),
   youCompletedAllLevelsStringProperty: _.get( VegasStrings, 'youCompletedAllLevelsStringProperty' ),
   chooseYourLevelStringProperty: _.get( VegasStrings, 'chooseYourLevelStringProperty' ),
+  levelsStringProperty: _.get( VegasStrings, 'levelsStringProperty' ),
   keyboardHelpDialog: {
     gameShortcutsStringProperty: _.get( VegasStrings, 'keyboardHelpDialog.gameShortcutsStringProperty' ),
     checkAnswerStringProperty: _.get( VegasStrings, 'keyboardHelpDialog.checkAnswerStringProperty' )

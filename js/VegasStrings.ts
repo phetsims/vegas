@@ -66,6 +66,7 @@ type StringsType = {
   'doneStringProperty': LocalizedStringProperty;
   'youCompletedAllLevelsStringProperty': LocalizedStringProperty;
   'chooseYourLevelStringProperty': LocalizedStringProperty;
+  'levelsStringProperty': LocalizedStringProperty;
   'keyboardHelpDialog': {
     'gameShortcutsStringProperty': LocalizedStringProperty;
     'checkAnswerStringProperty': LocalizedStringProperty;

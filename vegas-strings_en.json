@@ -95,6 +95,9 @@
   "chooseYourLevel": {
     "value": "Choose Your Level!"
   },
+  "levels": {
+    "value": "Levels"
+  },
   "keyboardHelpDialog.gameShortcuts": {
     "value": "Game Shortcuts"
   },
