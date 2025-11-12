@@ -14,7 +14,9 @@
  */
 
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
+import assertMutuallyExclusiveOptions from '../../phet-core/js/assertMutuallyExclusiveOptions.js';
 import optionize from '../../phet-core/js/optionize.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';
 import FocusableHeadingNode from '../../scenery/js/accessibility/pdom/FocusableHeadingNode.js';
 import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
@@ -33,6 +35,11 @@ type SelfOptions = {
   // for the challenge section. If provided, the challengeNumberProperty must also be provided.
   challengeCountProperty?: TReadOnlyProperty<number> | null;
 
+  // The accessible heading for the challenge. Mutually exclusive with the challengeNumberProperty and
+  // challengeCountProperty options. If provided, this heading will be used instead of the default
+  // heading, which may use the challenge number/count.
+  accessibleHeadingContent?: string | TReadOnlyProperty<string> | null;
+
   // Property for the current level. If provided, this level number will be included in the accessible
   // heading for the "status" section.
   levelNumberProperty?: TReadOnlyProperty<number> | null;
@@ -47,7 +54,7 @@ type SelfOptions = {
   accessibleAnswerSummary?: string | TReadOnlyProperty<string> | null;
 };
 type ParentOptions = NodeOptions;
-export type ChallengeScreenNodeOptions = SelfOptions & ParentOptions;
+export type ChallengeScreenNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'accessibleHeading'>;
 
 export default class ChallengeScreenNode extends VegasScreenNode {
 
@@ -71,9 +78,13 @@ export default class ChallengeScreenNode extends VegasScreenNode {
 
   public constructor( providedOptions?: ChallengeScreenNodeOptions ) {
 
+    // Assirt that if accessibleHeadingContent is provided, challengeNumberProperty and challengeCountProperty are not provided.
+    assert && assertMutuallyExclusiveOptions( providedOptions, [ 'accessibleHeadingContent' ], [ 'challengeNumberProperty', 'challengeCountProperty' ] );
+
     const options = optionize<ChallengeScreenNodeOptions, SelfOptions, ParentOptions>()( {
       challengeNumberProperty: null,
       challengeCountProperty: null,
+      accessibleHeadingContent: null,
       levelNumberProperty: null,
       accessibleChallengePrompt: null,
       accessibleAnswerSummary: null
@@ -87,9 +98,14 @@ export default class ChallengeScreenNode extends VegasScreenNode {
 
     // Use a local variable to track if we need to dispose challengeStringProperty
     let challengeStringProperty: TReadOnlyProperty<string> | null = null;
-    let accessibleHeadingContentProperty: TReadOnlyProperty<string>;
+    let accessibleHeadingContentProperty: TReadOnlyProperty<string> | string;
 
-    if ( options.challengeNumberProperty && options.challengeCountProperty ) {
+    if ( options.accessibleHeadingContent ) {
+
+      // Use the provided accessible heading for the challenge section.
+      accessibleHeadingContentProperty = options.accessibleHeadingContent;
+    }
+    else if ( options.challengeNumberProperty && options.challengeCountProperty ) {
 
       // Both properties are provided, so use them to create a ChallengeNumberStringProperty. The challengeStringProperty
       // itself must be disposed.
