@@ -78,7 +78,7 @@ export default class ChallengeScreenNode extends VegasScreenNode {
 
   public constructor( providedOptions?: ChallengeScreenNodeOptions ) {
 
-    // Assirt that if accessibleHeadingContent is provided, challengeNumberProperty and challengeCountProperty are not provided.
+    // Assert that if accessibleHeadingContent is provided, challengeNumberProperty and challengeCountProperty are not provided.
     assert && assertMutuallyExclusiveOptions( providedOptions, [ 'accessibleHeadingContent' ], [ 'challengeNumberProperty', 'challengeCountProperty' ] );
 
     const options = optionize<ChallengeScreenNodeOptions, SelfOptions, ParentOptions>()( {
