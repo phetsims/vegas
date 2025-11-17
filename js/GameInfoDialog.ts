@@ -10,17 +10,21 @@
 
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import ScreenView from '../../joist/js/ScreenView.js';
+import assertMutuallyExclusiveOptions from '../../phet-core/js/assertMutuallyExclusiveOptions.js';
 import optionize, { EmptySelfOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import VBox, { VBoxOptions } from '../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import RichText, { RichTextOptions } from '../../scenery/js/nodes/RichText.js';
+import Text, { TextOptions } from '../../scenery/js/nodes/Text.js';
 import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import vegas from './vegas.js';
+import VegasFluent from './VegasFluent.js';
 
 const DEFAULT_DESCRIPTION_TEXT_FONT = new PhetFont( 24 );
+const DEFAULT_TITLE_TEXT_FONT = new PhetFont( { size: 32, weight: 'bold' } );
 
 type SelfOptions = {
 
@@ -31,6 +35,10 @@ type SelfOptions = {
 
   // Options for the description text nodes
   descriptionTextOptions?: StrictOmit<RichTextOptions, 'tandem'>;
+
+  // Options for the title Text. Mutually exclusive with options.title. If you need a fully custom title, use
+  // that option instead. Otherwise, this option is preferred and uses a default string.
+  titleTextOptions?: StrictOmit<TextOptions, 'tandem'>;
 
   // Visible properties for the game levels, used to control visibility of the descriptions.
   descriptionVisibleProperties?: TReadOnlyProperty<boolean>[];
@@ -54,12 +62,18 @@ export default class GameInfoDialog extends Dialog {
    */
   public constructor( levelDescriptions: ( string | TReadOnlyProperty<string> )[], providedOptions?: GameInfoDialogOptions ) {
 
+    // titleTextOptions are only used with the default title Node. If you create your own title, style it yourself.
+    assert && assertMutuallyExclusiveOptions( providedOptions, [ 'title' ], [ 'titleTextOptions' ] );
+
     const options = optionize<GameInfoDialogOptions, StrictOmit<SelfOptions, 'gameLevels'>, DialogOptions>()( {
       descriptionTextOptions: {
         font: DEFAULT_DESCRIPTION_TEXT_FONT,
 
         // pdom - each description is a list item under a parent unordered list
         tagName: 'li'
+      },
+      titleTextOptions: {
+        font: DEFAULT_TITLE_TEXT_FONT
       },
       descriptionVisibleProperties: [],
       vBoxOptions: {
@@ -69,6 +83,12 @@ export default class GameInfoDialog extends Dialog {
       maxContentWidth: 0.75 * ScreenView.DEFAULT_LAYOUT_BOUNDS.width,
       tandem: Tandem.REQUIRED
     }, providedOptions );
+
+    // User may provide their own title. If not, create a default with the provided titleTextOptions. If explicitly
+    // set to null, no title will be shown.
+    if ( options.title === undefined ) {
+      options.title = new Text( VegasFluent.levelsStringProperty, options.titleTextOptions );
+    }
 
     // Constrain the width of the title, and ensure that the title can still be used with scenery DAG feature.
     if ( options.title ) {
