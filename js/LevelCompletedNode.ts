@@ -231,13 +231,16 @@ export default class LevelCompletedNode extends Panel {
     }
 
     // Continue button
+    const continueButtonHelpTextStringProperty = VegasFluent.a11y.levelCompletedNode.continueButton.accessibleHelpText.createProperty( {
+      levelNumber: level
+    } );
     const continueButton = new TextPushButton( VegasStrings.continueStringProperty, {
       listener: continueFunction,
       font: options.buttonFont,
       baseColor: options.buttonFill,
       tandem: options.tandem.createTandem( 'continueButton' ),
       maxWidth: options.contentMaxWidth,
-      accessibleHelpText: VegasFluent.a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty
+      accessibleHelpText: continueButtonHelpTextStringProperty
     } );
     vBoxChildren.push( continueButton );
 
@@ -266,6 +269,8 @@ export default class LevelCompletedNode extends Panel {
         timeStringProperty.dispose();
       }
       accessibleTimeStringProperty && accessibleTimeStringProperty.dispose();
+
+      continueButtonHelpTextStringProperty.dispose();
 
       // All VBox children are linked to dynamic string Properties, so must be disposed.
       vBoxChildren.forEach( child => child.dispose() );

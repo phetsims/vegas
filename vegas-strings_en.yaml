@@ -91,7 +91,7 @@ a11y:
       # A display of the time when it is the new best time.
       timeWithNewBest: 'Time: { $time }. Your New Best!'
     continueButton:
-      accessibleHelpText: Choose a new level and keep playing.
+      accessibleHelpText: Read on to review Level { $levelNumber } Summary, or hit Continue to choose a level and keep playing.
     accessibleContextResponse: Level { $levelNumber } complete. { $stars }, { $progressMessage }
   allLevelsCompletedNode:
     faceNode:

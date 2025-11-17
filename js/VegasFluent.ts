@@ -218,7 +218,7 @@ const VegasFluent = {
         timeWithNewBest: new FluentPattern<{ time: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_timeItem_timeWithNewBest', _.get( VegasStrings, 'a11y.levelCompletedNode.timeItem.timeWithNewBestStringProperty' ), [{"name":"time"}] )
       },
       continueButton: {
-        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_continueButton_accessibleHelpText', _.get( VegasStrings, 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' ) )
+        accessibleHelpText: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_continueButton_accessibleHelpText', _.get( VegasStrings, 'a11y.levelCompletedNode.continueButton.accessibleHelpTextStringProperty' ), [{"name":"levelNumber"}] )
       },
       accessibleContextResponse: new FluentPattern<{ levelNumber: FluentVariable, progressMessage: FluentVariable, stars: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelCompletedNode_accessibleContextResponse', _.get( VegasStrings, 'a11y.levelCompletedNode.accessibleContextResponseStringProperty' ), [{"name":"levelNumber"},{"name":"progressMessage"},{"name":"stars"}] )
     },

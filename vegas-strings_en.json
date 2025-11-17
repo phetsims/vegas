@@ -179,7 +179,7 @@
       },
       "continueButton": {
         "accessibleHelpText": {
-          "value": "Choose a new level and keep playing."
+          "value": "Read on to review Level { $levelNumber } Summary, or hit Continue to choose a level and keep playing."
         }
       },
       "accessibleContextResponse": {
