@@ -18,7 +18,10 @@ export default function demoLevelCompletedNode( layoutBounds: Bounds2 ): Node {
 
   const visibleProperty = new BooleanProperty( false );
   const levelCompletedNode = new LevelCompletedNode( 1, 10, 10, 5, true, 2000, null, true,
-    () => visibleProperty.toggle(), {
+    () => {
+      visibleProperty.toggle();
+      completeLevelButton.focus();
+    }, {
     contentMaxWidth: 500,
     visibleProperty: visibleProperty
   } );
