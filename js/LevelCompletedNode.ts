@@ -279,14 +279,23 @@ export default class LevelCompletedNode extends Panel {
     // When visibility changes, automatically manage focus and context responses for accessibility.
     this.visibleProperty.lazyLink( visible => {
       if ( visible ) {
-        this.continueButton.focus();
-        this.addAccessibleContextResponse( VegasFluent.a11y.levelCompletedNode.accessibleContextResponse.format( {
-          levelNumber: this.level,
-          stars: this.accessibleScoreStringProperty,
-          progressMessage: this.titleTextStringProperty
-        } ) );
+        this.handleShow();
       }
     } );
+  }
+
+  /**
+   * Place focus on the continue button and add a context response that describes the level status.
+   * If the visibleProperty link in the constructo does not work for your implementation you can manually call
+   * this directly instead.
+   */
+  public handleShow(): void {
+    this.continueButton.focus();
+    this.addAccessibleContextResponse( VegasFluent.a11y.levelCompletedNode.accessibleContextResponse.format( {
+      levelNumber: this.level,
+      stars: this.accessibleScoreStringProperty,
+      progressMessage: this.titleTextStringProperty
+    } ) );
   }
 
   public override dispose(): void {
