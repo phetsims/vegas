@@ -1,6 +1,9 @@
 // Copyright 2025, University of Colorado Boulder
 
 /**
+ * A keyboard help section for game shortcuts in Vegas. Includes the "check answer" shortcut.
+ *
+ * You can provide additional content rows via the `additionalContent` option.
  *
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
