@@ -20,11 +20,12 @@ import Property from '../../axon/js/Property.js';
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
-import optionize from '../../phet-core/js/optionize.js';
+import affirm from '../../perennial-alias/js/browser-and-node/affirm.js';
+import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import { findStringProperty } from '../../scenery/js/accessibility/pdom/findStringProperty.js';
-import VBox from '../../scenery/js/layout/nodes/VBox.js';
+import VBox, { VBoxOptions } from '../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Rectangle from '../../scenery/js/nodes/Rectangle.js';
 import Text from '../../scenery/js/nodes/Text.js';
@@ -43,7 +44,7 @@ import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 
 // constants
-const DEFAULT_BEST_TIME_FONT = new PhetFont( 24 );
+const DEFAULT_BEST_TIME_FONT = new PhetFont( 22 );
 
 type SelfOptions = {
 
@@ -56,8 +57,6 @@ type SelfOptions = {
   scoreDisplayProportion?: number; // percentage of the button height occupied by scoreDisplay, (0,0.5]
   scoreDisplayMinXMargin?: number; // horizontal margin between scoreDisplay and its background
   scoreDisplayMinYMargin?: number;  // vertical margin between scoreDisplay and its background
-  iconToScoreDisplayYSpace?: number; // vertical space between icon and score display
-
 
   // The best time for the current score, displayed on the button. If null, no time is displayed.
   // Use LevelSelectionButton.updateScoreWithBestTime() to update the score and best time together.
@@ -80,6 +79,10 @@ type SelfOptions = {
 
   // The number for the level. This is used in the accessibleName for the button. 1-based.
   accessibleLevelNumber?: number;
+
+  // Options to control the layout of the content within the button. Content includes: icon, score,
+  // and best time (if provided).
+  contentVBoxOptions?: StrictOmit<VBoxOptions, 'children' | 'excludeInvisibleChildrenFromBounds'>;
 };
 
 // Cannot provide a custom accessibleName, see options in SelfOptions which are used in a pattern for this button's accessibleName.
@@ -105,13 +108,15 @@ export default class LevelSelectionButton extends RectangularPushButton {
       scoreDisplayProportion: 0.2,
       scoreDisplayMinXMargin: 10,
       scoreDisplayMinYMargin: 5,
-      iconToScoreDisplayYSpace: 10,
       accessibleBriefLevelName: null,
       accessibleLevelNumber: 1,
       bestTimeForScoreProperty: null, // default is no best time display
       bestTimeFill: 'black',
       bestTimeFont: DEFAULT_BEST_TIME_FONT,
       bestTimeVisibleProperty: new BooleanProperty( true ),
+      contentVBoxOptions: {
+        spacing: 10
+      },
 
       // RectangularPushButton options
       cornerRadius: 10,
@@ -124,7 +129,7 @@ export default class LevelSelectionButton extends RectangularPushButton {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
-    assert && assert( options.soundPlayerIndex >= 0, `invalid soundPlayerIndex: ${options.soundPlayerIndex}` );
+    affirm( options.soundPlayerIndex >= 0, `invalid soundPlayerIndex: ${options.soundPlayerIndex}` );
 
     const maxContentWidth = options.buttonWidth - 2 * options.xMargin;
 
@@ -144,11 +149,9 @@ export default class LevelSelectionButton extends RectangularPushButton {
     scoreDisplay.maxHeight = scoreDisplayBackground.height - ( 2 * options.scoreDisplayMinYMargin );
 
     // Icon, scaled and padded to fit and to make the button size correct.
-    const iconHeight = options.buttonHeight - scoreDisplayBackground.height - 2 * options.yMargin - options.iconToScoreDisplayYSpace;
+    const iconHeight = options.buttonHeight - scoreDisplayBackground.height - 2 * options.yMargin - options.contentVBoxOptions.spacing!;
     const iconSize = new Dimension2( maxContentWidth, iconHeight );
     const adjustedIcon = LevelSelectionButton.createSizedImageNode( icon, iconSize );
-    adjustedIcon.centerX = scoreDisplayBackground.centerX;
-    adjustedIcon.bottom = scoreDisplayBackground.top - options.iconToScoreDisplayYSpace;
 
     // Keep scoreDisplay centered in its background when its bounds change
     const scoreDisplayUpdateLayout = () => {
@@ -157,16 +160,18 @@ export default class LevelSelectionButton extends RectangularPushButton {
     scoreDisplay.boundsProperty.lazyLink( scoreDisplayUpdateLayout );
     scoreDisplayUpdateLayout();
 
-    const contentVBox = new VBox( {
+
+    const contentVBox = new VBox( combineOptions<VBoxOptions>( {
       children: [
+        adjustedIcon,
         new Node( {
-          children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ]
+          children: [ scoreDisplayBackground, scoreDisplay ]
         } )
       ],
 
-      // if we add best time, we want to include it in bounds even when not visible
+      // We do not want the button size to change if different parts of the content change visibility (i.e. best time).
       excludeInvisibleChildrenFromBounds: false
-    } );
+    }, options.contentVBoxOptions ) );
     options.content = contentVBox;
 
     // The accessibleName pattern depends on whether there is a brief descriptor and/or best time is provided.
