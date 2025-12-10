@@ -22,6 +22,7 @@ import affirm from '../../perennial-alias/js/browser-and-node/affirm.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import PickRequired from '../../phet-core/js/types/PickRequired.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import AlignGroup from '../../scenery/js/layout/constraints/AlignGroup.js';
 import NodeLayoutConstraint from '../../scenery/js/layout/constraints/NodeLayoutConstraint.js';
 import FlowBox, { FlowBoxOptions } from '../../scenery/js/layout/nodes/FlowBox.js';
 import LayoutNode from '../../scenery/js/layout/nodes/LayoutNode.js';
@@ -107,6 +108,8 @@ export default class LevelSelectionButtonGroup extends Node {
       tagName: 'ol'
     }, providedOptions );
 
+    const buttonsAlignGroup = new AlignGroup();
+
     // Create the LevelSelectionButton instances.
     const buttons = items.map( ( item, index ) => {
 
@@ -127,6 +130,7 @@ export default class LevelSelectionButtonGroup extends Node {
       const buttonOptions = combineOptions<LevelSelectionButtonOptions>( {
         buttonHeight: options.groupButtonHeight,
         buttonWidth: options.groupButtonWidth,
+        alignGroup: buttonsAlignGroup,
         tandem: tandem,
 
         listener: () => {

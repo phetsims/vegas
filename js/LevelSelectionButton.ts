@@ -25,6 +25,7 @@ import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import { findStringProperty } from '../../scenery/js/accessibility/pdom/findStringProperty.js';
+import AlignGroup from '../../scenery/js/layout/constraints/AlignGroup.js';
 import VBox, { VBoxOptions } from '../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Rectangle from '../../scenery/js/nodes/Rectangle.js';
@@ -82,7 +83,8 @@ type SelfOptions = {
 
   // Options to control the layout of the content within the button. Content includes: icon, score,
   // and best time (if provided).
-  contentVBoxOptions?: StrictOmit<VBoxOptions, 'children' | 'excludeInvisibleChildrenFromBounds'>;
+  vBoxOptions?: StrictOmit<VBoxOptions, 'children' | 'excludeInvisibleChildrenFromBounds'>;
+  alignGroup?: AlignGroup | null;
 };
 
 // Cannot provide a custom accessibleName, see options in SelfOptions which are used in a pattern for this button's accessibleName.
@@ -114,9 +116,10 @@ export default class LevelSelectionButton extends RectangularPushButton {
       bestTimeFill: 'black',
       bestTimeFont: DEFAULT_BEST_TIME_FONT,
       bestTimeVisibleProperty: new BooleanProperty( true ),
-      contentVBoxOptions: {
+      vBoxOptions: {
         spacing: 10
       },
+      alignGroup: null,
 
       // RectangularPushButton options
       cornerRadius: 10,
@@ -149,7 +152,7 @@ export default class LevelSelectionButton extends RectangularPushButton {
     scoreDisplay.maxHeight = scoreDisplayBackground.height - ( 2 * options.scoreDisplayMinYMargin );
 
     // Icon, scaled and padded to fit and to make the button size correct.
-    const iconHeight = options.buttonHeight - scoreDisplayBackground.height - 2 * options.yMargin - options.contentVBoxOptions.spacing!;
+    const iconHeight = options.buttonHeight - scoreDisplayBackground.height - 2 * options.yMargin - options.vBoxOptions.spacing!;
     const iconSize = new Dimension2( maxContentWidth, iconHeight );
     const adjustedIcon = LevelSelectionButton.createSizedImageNode( icon, iconSize );
 
@@ -167,12 +170,9 @@ export default class LevelSelectionButton extends RectangularPushButton {
         new Node( {
           children: [ scoreDisplayBackground, scoreDisplay ]
         } )
-      ],
-
-      // We do not want the button size to change if different parts of the content change visibility (i.e. best time).
-      excludeInvisibleChildrenFromBounds: false
-    }, options.contentVBoxOptions ) );
-    options.content = contentVBox;
+      ]
+    }, options.vBoxOptions ) );
+    options.content = options.alignGroup ? options.alignGroup.createBox( contentVBox, { yAlign: 'top' } ) : contentVBox;
 
     // The accessibleName pattern depends on whether there is a brief descriptor and/or best time is provided.
     let accessibleNameStringProperty;
