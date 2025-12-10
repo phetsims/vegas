@@ -165,6 +165,8 @@ type StringsType = {
     'levelSelectionButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleNameWithLevelNameStringProperty': LocalizedStringProperty;
+      'accessibleNameWithBestTimeStringProperty': LocalizedStringProperty;
+      'accessibleNameWithLevelNameAndBestTimeStringProperty': LocalizedStringProperty;
     };
     'levelSelectionScreenNode': {
       'accessibleHeadingChooseLevelStringProperty': LocalizedStringProperty;

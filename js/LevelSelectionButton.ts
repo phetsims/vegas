@@ -169,21 +169,42 @@ export default class LevelSelectionButton extends RectangularPushButton {
     } );
     options.content = contentVBox;
 
-    // TODO: Update accessible name with best time, https://github.com/phetsims/vegas/issues/130
-    // The accessibleName pattern depends on whether there is a brief descriptor.
+    // The accessibleName pattern depends on whether there is a brief descriptor and/or best time is provided.
     let accessibleNameStringProperty;
+    const getTimeString = ( bestTime: number | null ) => {
+      return bestTime === null ? GameTimer.formatTime( 0 ) : GameTimer.formatTime( bestTime );
+    };
     if ( options.accessibleBriefLevelName ) {
-      accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelName.createProperty( {
-        levelNumber: options.accessibleLevelNumber,
-        levelName: options.accessibleBriefLevelName,
-        scoreDescription: scoreDisplay.accessibleScoreStringProperty
-      } );
+      if ( options.bestTimeForScoreProperty ) {
+        accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelNameAndBestTime.createProperty( {
+          levelNumber: options.accessibleLevelNumber,
+          levelName: options.accessibleBriefLevelName,
+          scoreDescription: scoreDisplay.accessibleScoreStringProperty,
+          time: options.bestTimeForScoreProperty.derived( bestTime => getTimeString( bestTime ) )
+        } );
+      }
+      else {
+        accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelName.createProperty( {
+          levelNumber: options.accessibleLevelNumber,
+          levelName: options.accessibleBriefLevelName,
+          scoreDescription: scoreDisplay.accessibleScoreStringProperty
+        } );
+      }
     }
     else {
-      accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleName.createProperty( {
-        levelNumber: options.accessibleLevelNumber,
-        scoreDescription: scoreDisplay.accessibleScoreStringProperty
-      } );
+      if ( options.bestTimeForScoreProperty ) {
+        accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithBestTime.createProperty( {
+          levelNumber: options.accessibleLevelNumber,
+          scoreDescription: scoreDisplay.accessibleScoreStringProperty,
+          time: options.bestTimeForScoreProperty.derived( bestTime => getTimeString( bestTime ) )
+        } );
+        }
+      else {
+        accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleName.createProperty( {
+          levelNumber: options.accessibleLevelNumber,
+          scoreDescription: scoreDisplay.accessibleScoreStringProperty
+        } );
+      }
     }
     options.accessibleName = accessibleNameStringProperty;
 

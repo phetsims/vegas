@@ -277,6 +277,12 @@
       },
       "accessibleNameWithLevelName": {
         "value": "Level { $levelNumber }: { $levelName }, { $scoreDescription }"
+      },
+      "accessibleNameWithBestTime": {
+        "value": "Level { $levelNumber }, { $scoreDescription }, best time { $time }"
+      },
+      "accessibleNameWithLevelNameAndBestTime": {
+        "value": "Level { $levelNumber }: { $levelName }, { $scoreDescription }, best time { $time }"
       }
     },
     "levelSelectionScreenNode": {

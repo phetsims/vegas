@@ -93,6 +93,8 @@ addToMapIfDefined( 'a11y_units_stars_pattern', 'a11y.units.stars.patternStringPr
 addToMapIfDefined( 'a11y_units_points_pattern', 'a11y.units.points.patternStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleName', 'a11y.levelSelectionButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionButton_accessibleNameWithLevelName', 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' );
+addToMapIfDefined( 'a11y_levelSelectionButton_accessibleNameWithBestTime', 'a11y.levelSelectionButton.accessibleNameWithBestTimeStringProperty' );
+addToMapIfDefined( 'a11y_levelSelectionButton_accessibleNameWithLevelNameAndBestTime', 'a11y.levelSelectionButton.accessibleNameWithLevelNameAndBestTimeStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_accessibleHeadingChooseLevel', 'a11y.levelSelectionScreenNode.accessibleHeadingChooseLevelStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_accessibleHeadingOptions', 'a11y.levelSelectionScreenNode.accessibleHeadingOptionsStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_accessibleContextResponseShow', 'a11y.levelSelectionScreenNode.accessibleContextResponseShowStringProperty' );
@@ -189,7 +191,7 @@ const VegasFluent = {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_accessibleHeading', _.get( VegasStrings, 'a11y.statusBar.accessibleHeadingStringProperty' ) ),
       accessibleHeadingWithLevelNumber: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_statusBar_accessibleHeadingWithLevelNumber', _.get( VegasStrings, 'a11y.statusBar.accessibleHeadingWithLevelNumberStringProperty' ), [{"name":"levelNumber"}] ),
       backButton: {
-        _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
+        _comment_0: new FluentComment( {"comment":"The accessible name has four variants - with and without a descriptive name and additionally with and without best time.","associatedKey":"accessibleName"} ),
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_backButton_accessibleName', _.get( VegasStrings, 'a11y.statusBar.backButton.accessibleNameStringProperty' ) ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_backButton_accessibleHelpText', _.get( VegasStrings, 'a11y.statusBar.backButton.accessibleHelpTextStringProperty' ) )
       },
@@ -198,7 +200,7 @@ const VegasFluent = {
       }
     },
     checkButton: {
-      _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
+      _comment_0: new FluentComment( {"comment":"The accessible name has four variants - with and without a descriptive name and additionally with and without best time.","associatedKey":"accessibleName"} ),
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleName', _.get( VegasStrings, 'a11y.checkButton.accessibleNameStringProperty' ) ),
       accessibleContextResponseCorrectStars: new FluentPattern<{ stars: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleContextResponseCorrectStars', _.get( VegasStrings, 'a11y.checkButton.accessibleContextResponseCorrectStarsStringProperty' ), [{"name":"stars","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] ),
       accessibleContextResponseCorrectPoints: new FluentPattern<{ points: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_checkButton_accessibleContextResponseCorrectPoints', _.get( VegasStrings, 'a11y.checkButton.accessibleContextResponseCorrectPointsStringProperty' ), [{"name":"points","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] ),
@@ -233,7 +235,7 @@ const VegasFluent = {
       accessibleContextResponseShowStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_allLevelsCompletedNode_accessibleContextResponseShow', _.get( VegasStrings, 'a11y.allLevelsCompletedNode.accessibleContextResponseShowStringProperty' ) )
     },
     gameInfoButton: {
-      _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
+      _comment_0: new FluentComment( {"comment":"The accessible name has four variants - with and without a descriptive name and additionally with and without best time.","associatedKey":"accessibleName"} ),
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameInfoButton_accessibleName', _.get( VegasStrings, 'a11y.gameInfoButton.accessibleNameStringProperty' ) ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_gameInfoButton_accessibleHelpText', _.get( VegasStrings, 'a11y.gameInfoButton.accessibleHelpTextStringProperty' ) )
     },
@@ -252,7 +254,7 @@ const VegasFluent = {
       accessibleHeading: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardScreenNode_accessibleHeading', _.get( VegasStrings, 'a11y.rewardScreenNode.accessibleHeadingStringProperty' ), [{"name":"levelNumber"}] )
     },
     rewardDialog: {
-      _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
+      _comment_0: new FluentComment( {"comment":"The accessible name has four variants - with and without a descriptive name and additionally with and without best time.","associatedKey":"accessibleName"} ),
       accessibleName: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_accessibleName', _.get( VegasStrings, 'a11y.rewardDialog.accessibleNameStringProperty' ), [{"name":"levelNumber"}] ),
       accessibleContextResponseShown: new FluentPattern<{ levelNumber: FluentVariable, stars: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_accessibleContextResponseShown', _.get( VegasStrings, 'a11y.rewardDialog.accessibleContextResponseShownStringProperty' ), [{"name":"levelNumber"},{"name":"stars"}] ),
       accessibleContextResponseHidden: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_accessibleContextResponseHidden', _.get( VegasStrings, 'a11y.rewardDialog.accessibleContextResponseHiddenStringProperty' ), [{"name":"levelNumber"}] ),
@@ -277,9 +279,11 @@ const VegasFluent = {
       }
     },
     levelSelectionButton: {
-      _comment_0: new FluentComment( {"comment":"The accessible name has two variants - with and without a descriptive name.","associatedKey":"accessibleName"} ),
+      _comment_0: new FluentComment( {"comment":"The accessible name has four variants - with and without a descriptive name and additionally with and without best time.","associatedKey":"accessibleName"} ),
       accessibleName: new FluentPattern<{ levelNumber: FluentVariable, scoreDescription: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionButton_accessibleName', _.get( VegasStrings, 'a11y.levelSelectionButton.accessibleNameStringProperty' ), [{"name":"levelNumber"},{"name":"scoreDescription"}] ),
-      accessibleNameWithLevelName: new FluentPattern<{ levelName: FluentVariable, levelNumber: FluentVariable, scoreDescription: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionButton_accessibleNameWithLevelName', _.get( VegasStrings, 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' ), [{"name":"levelName"},{"name":"levelNumber"},{"name":"scoreDescription"}] )
+      accessibleNameWithLevelName: new FluentPattern<{ levelName: FluentVariable, levelNumber: FluentVariable, scoreDescription: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionButton_accessibleNameWithLevelName', _.get( VegasStrings, 'a11y.levelSelectionButton.accessibleNameWithLevelNameStringProperty' ), [{"name":"levelName"},{"name":"levelNumber"},{"name":"scoreDescription"}] ),
+      accessibleNameWithBestTime: new FluentPattern<{ levelNumber: FluentVariable, scoreDescription: FluentVariable, time: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionButton_accessibleNameWithBestTime', _.get( VegasStrings, 'a11y.levelSelectionButton.accessibleNameWithBestTimeStringProperty' ), [{"name":"levelNumber"},{"name":"scoreDescription"},{"name":"time"}] ),
+      accessibleNameWithLevelNameAndBestTime: new FluentPattern<{ levelName: FluentVariable, levelNumber: FluentVariable, scoreDescription: FluentVariable, time: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionButton_accessibleNameWithLevelNameAndBestTime', _.get( VegasStrings, 'a11y.levelSelectionButton.accessibleNameWithLevelNameAndBestTimeStringProperty' ), [{"name":"levelName"},{"name":"levelNumber"},{"name":"scoreDescription"},{"name":"time"}] )
     },
     levelSelectionScreenNode: {
       accessibleHeadingChooseLevelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_accessibleHeadingChooseLevel', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.accessibleHeadingChooseLevelStringProperty' ) ),
