@@ -108,7 +108,7 @@
     "scoreDisplays": {
       "scoreDisplayStars": {
         "accessibleScore": {
-          "value": "{ $stars ->\n  [one] { $stars } star\n  *[other] { $stars } stars\n }"
+          "value": "{ $stars ->\n  [one] { $stars } Star\n  *[other] { $stars } Stars\n }"
         }
       },
       "scoreDisplayLabelledStars": {
@@ -279,10 +279,10 @@
         "value": "Level { $levelNumber }: { $levelName }, { $scoreDescription }"
       },
       "accessibleNameWithBestTime": {
-        "value": "Level { $levelNumber }, { $scoreDescription }, best time { $time }"
+        "value": "Level { $levelNumber }, { $scoreDescription }, Best Time { $time }"
       },
       "accessibleNameWithLevelNameAndBestTime": {
-        "value": "Level { $levelNumber }: { $levelName }, { $scoreDescription }, best time { $time }"
+        "value": "Level { $levelNumber }: { $levelName }, { $scoreDescription }, Best Time { $time }"
       }
     },
     "levelSelectionScreenNode": {

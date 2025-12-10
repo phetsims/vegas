@@ -40,8 +40,8 @@ a11y:
     scoreDisplayStars:
       accessibleScore: |-
                        { $stars ->
-                         [one] { $stars } star
-                         *[other] { $stars } stars
+                         [one] { $stars } Star
+                         *[other] { $stars } Stars
                         }
     scoreDisplayLabelledStars:
       accessibleScore: |-
@@ -144,8 +144,8 @@ a11y:
     # The accessible name has four variants - with and without a descriptive name and additionally with and without best time.
     accessibleName:              'Level { $levelNumber }, { $scoreDescription }'
     accessibleNameWithLevelName: 'Level { $levelNumber }: { $levelName }, { $scoreDescription }'
-    accessibleNameWithBestTime: 'Level { $levelNumber }, { $scoreDescription }, best time { $time }'
-    accessibleNameWithLevelNameAndBestTime: 'Level { $levelNumber }: { $levelName }, { $scoreDescription }, best time { $time }'
+    accessibleNameWithBestTime: 'Level { $levelNumber }, { $scoreDescription }, Best Time { $time }'
+    accessibleNameWithLevelNameAndBestTime: 'Level { $levelNumber }: { $levelName }, { $scoreDescription }, Best Time { $time }'
   levelSelectionScreenNode:
     accessibleHeadingChooseLevel:  Choose Your Level
     accessibleHeadingOptions:      Game Options
