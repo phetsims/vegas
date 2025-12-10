@@ -14,24 +14,36 @@
  * @author Andrea Lin
  */
 
+import BooleanProperty from '../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../axon/js/DerivedProperty.js';
+import Property from '../../axon/js/Property.js';
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import { findStringProperty } from '../../scenery/js/accessibility/pdom/findStringProperty.js';
+import VBox from '../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Rectangle from '../../scenery/js/nodes/Rectangle.js';
+import Text from '../../scenery/js/nodes/Text.js';
+import Font from '../../scenery/js/util/Font.js';
+import TColor from '../../scenery/js/util/TColor.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../sun/js/buttons/RectangularPushButton.js';
 import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
 import soundConstants from '../../tambo/js/soundConstants.js';
 import soundManager from '../../tambo/js/soundManager.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import levelSelectionButton_mp3 from '../sounds/levelSelectionButton_mp3.js';
+import GameTimer from './GameTimer.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import { TScoreDisplayNode } from './TScoreDisplayNode.js';
 import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
+
+// constants
+const DEFAULT_BEST_TIME_FONT = new PhetFont( 24 );
 
 type SelfOptions = {
 
@@ -45,6 +57,17 @@ type SelfOptions = {
   scoreDisplayMinXMargin?: number; // horizontal margin between scoreDisplay and its background
   scoreDisplayMinYMargin?: number;  // vertical margin between scoreDisplay and its background
   iconToScoreDisplayYSpace?: number; // vertical space between icon and score display
+
+
+  // The best time for the current score, displayed on the button. If null, no time is displayed.
+  // Use LevelSelectionButton.updateScoreWithBestTime() to update the score and best time together.
+  bestTimeForScoreProperty?: TReadOnlyProperty<number | null> | null;
+  bestTimeFill?: TColor;
+  bestTimeFont?: Font;
+
+  // If provided, controls the visibility of the best time display. Otherwise, visibility is determined by whether the
+  // bestTimeForScoreProperty has a non-null value.
+  bestTimeVisibleProperty?: TReadOnlyProperty<boolean>;
 
   // Configures the soundPlayer for a specific game level. Note that this assumes zero-based indexing for game level,
   // which is often not the case. This option is ignored if RectangularPushButtonOptions.soundPlayer is provided.
@@ -85,6 +108,10 @@ export default class LevelSelectionButton extends RectangularPushButton {
       iconToScoreDisplayYSpace: 10,
       accessibleBriefLevelName: null,
       accessibleLevelNumber: 1,
+      bestTimeForScoreProperty: null, // default is no best time display
+      bestTimeFill: 'black',
+      bestTimeFont: DEFAULT_BEST_TIME_FONT,
+      bestTimeVisibleProperty: new BooleanProperty( true ),
 
       // RectangularPushButton options
       cornerRadius: 10,
@@ -130,10 +157,19 @@ export default class LevelSelectionButton extends RectangularPushButton {
     scoreDisplay.boundsProperty.lazyLink( scoreDisplayUpdateLayout );
     scoreDisplayUpdateLayout();
 
-    options.content = new Node( {
-      children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ]
-    } );
+    const contentVBox = new VBox( {
+      children: [
+        new Node( {
+          children: [ adjustedIcon, scoreDisplayBackground, scoreDisplay ]
+        } )
+      ],
 
+      // if we add best time, we want to include it in bounds even when not visible
+      excludeInvisibleChildrenFromBounds: false
+    } );
+    options.content = contentVBox;
+
+    // TODO: Update accessible name with best time, https://github.com/phetsims/vegas/issues/130
     // The accessibleName pattern depends on whether there is a brief descriptor.
     let accessibleNameStringProperty;
     if ( options.accessibleBriefLevelName ) {
@@ -171,6 +207,34 @@ export default class LevelSelectionButton extends RectangularPushButton {
 
     super( options );
 
+    // Variables that are set if options.bestTimeForScoreProperty is specified.
+    let bestTimeListener: ( ( bestTime: number | null ) => void ) | null = null;
+    let bestTimeNodeVisibleProperty: TReadOnlyProperty<boolean> | null = null;
+
+    // Best time decoration (optional), centered below the button, does not move when button is pressed
+    if ( options.bestTimeForScoreProperty ) {
+
+      bestTimeNodeVisibleProperty = new DerivedProperty( [ options.bestTimeForScoreProperty, options.bestTimeVisibleProperty ], ( bestTime, visible ) => {
+        // Best time should only be visible if the best time value is non-null and greater than 0
+        return visible && bestTime !== null && bestTime > 0;
+      } );
+
+      const bestTimeNode = new Text( '', {
+        visibleProperty: bestTimeNodeVisibleProperty,
+        font: options.bestTimeFont,
+        fill: options.bestTimeFill,
+        maxWidth: this.width // constrain to width of the push button
+      } );
+      contentVBox.addChild( bestTimeNode );
+
+      bestTimeListener = ( bestTime: number | null ) => {
+        if ( bestTime !== null ) {
+          bestTimeNode.string = ( bestTime ? GameTimer.formatTime( bestTime ) : '' );
+        }
+      };
+      options.bestTimeForScoreProperty.link( bestTimeListener );
+    }
+
     // If no accessibleName is provided, look for one in the content Node
     if ( !options.accessibleName ) {
       this.accessibleName = findStringProperty( icon );
@@ -178,7 +242,46 @@ export default class LevelSelectionButton extends RectangularPushButton {
 
     this.disposeLevelSelectionButton = () => {
       scoreDisplay.dispose();
+
+      if ( options.bestTimeForScoreProperty && bestTimeListener && options.bestTimeForScoreProperty.hasListener( bestTimeListener ) ) {
+        options.bestTimeForScoreProperty.unlink( bestTimeListener );
+      }
+
+      if ( bestTimeNodeVisibleProperty ) {
+        bestTimeNodeVisibleProperty.dispose();
+      }
     };
+  }
+
+  /**
+   * Updates the score and time together, ensuring that they remain appropriately synchronized. Will return true if
+   * either the score or time was updated.
+   * @param score
+   * @param time
+   * @param scoreProperty
+   * @param bestTimeForScoreProperty
+   */
+  public static tryUpdateScoreAndBestTime( score: number, time: number, scoreProperty: Property<number>,
+                                           bestTimeForScoreProperty: Property<number> | Property<number | null> ): boolean {
+    // Track whether we have a new best score or time.
+    let newBest = false;
+
+    // If we have a new high score, update both score and best time.
+    if ( score > scoreProperty.value ) {
+      scoreProperty.value = score;
+      bestTimeForScoreProperty.value = time;
+      newBest = true;
+    }
+
+    // Only update the time if it has not been recorded yet, or if the new time is better than the old time when
+    // the score is tied.
+    else if ( bestTimeForScoreProperty.value === null ||
+              ( score === scoreProperty.value && time < bestTimeForScoreProperty.value ) ) {
+      bestTimeForScoreProperty.value = time;
+      newBest = true;
+    }
+
+    return newBest;
   }
 
   /**
