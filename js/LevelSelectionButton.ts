@@ -16,7 +16,6 @@
 
 import BooleanProperty from '../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../axon/js/DerivedProperty.js';
-import Property from '../../axon/js/Property.js';
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
@@ -39,6 +38,7 @@ import soundManager from '../../tambo/js/soundManager.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import levelSelectionButton_mp3 from '../sounds/levelSelectionButton_mp3.js';
 import GameTimer from './GameTimer.js';
+import GameUtils from './GameUtils.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import { TScoreDisplayNode } from './TScoreDisplayNode.js';
 import vegas from './vegas.js';
@@ -176,16 +176,13 @@ export default class LevelSelectionButton extends RectangularPushButton {
 
     // The accessibleName pattern depends on whether there is a brief descriptor and/or best time is provided.
     let accessibleNameStringProperty;
-    const getTimeString = ( bestTime: number | null ) => {
-      return bestTime === null ? GameTimer.formatTime( 0 ) : GameTimer.formatTime( bestTime );
-    };
     if ( options.accessibleBriefLevelName ) {
       if ( options.bestTimeForScoreProperty ) {
         accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelNameAndBestTime.createProperty( {
           levelNumber: options.accessibleLevelNumber,
           levelName: options.accessibleBriefLevelName,
           scoreDescription: scoreDisplay.accessibleScoreStringProperty,
-          time: options.bestTimeForScoreProperty.derived( bestTime => getTimeString( bestTime ) )
+          time: options.bestTimeForScoreProperty.derived( bestTime => GameUtils.getMinutesAndSecondsString( bestTime || 0 ) )
         } );
       }
       else {
@@ -201,9 +198,9 @@ export default class LevelSelectionButton extends RectangularPushButton {
         accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithBestTime.createProperty( {
           levelNumber: options.accessibleLevelNumber,
           scoreDescription: scoreDisplay.accessibleScoreStringProperty,
-          time: options.bestTimeForScoreProperty.derived( bestTime => getTimeString( bestTime ) )
+          time: options.bestTimeForScoreProperty.derived( bestTime => GameUtils.getMinutesAndSecondsString( bestTime || 0 ) )
         } );
-        }
+      }
       else {
         accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleName.createProperty( {
           levelNumber: options.accessibleLevelNumber,
@@ -277,37 +274,6 @@ export default class LevelSelectionButton extends RectangularPushButton {
         bestTimeNodeVisibleProperty.dispose();
       }
     };
-  }
-
-  /**
-   * Updates the score and time together, ensuring that they remain appropriately synchronized. Will return true if
-   * either the score or time was updated.
-   * @param score
-   * @param time
-   * @param scoreProperty
-   * @param bestTimeForScoreProperty
-   */
-  public static tryUpdateScoreAndBestTime( score: number, time: number, scoreProperty: Property<number>,
-                                           bestTimeForScoreProperty: Property<number> | Property<number | null> ): boolean {
-    // Track whether we have a new best score or time.
-    let newBest = false;
-
-    // If we have a new high score, update both score and best time.
-    if ( score > scoreProperty.value ) {
-      scoreProperty.value = score;
-      bestTimeForScoreProperty.value = time;
-      newBest = true;
-    }
-
-    // Only update the time if it has not been recorded yet, or if the new time is better than the old time when
-    // the score is tied.
-    else if ( bestTimeForScoreProperty.value === null ||
-              ( score === scoreProperty.value && time < bestTimeForScoreProperty.value ) ) {
-      bestTimeForScoreProperty.value = time;
-      newBest = true;
-    }
-
-    return newBest;
   }
 
   /**

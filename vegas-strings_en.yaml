@@ -55,6 +55,21 @@ a11y:
                          [one] { $stars } star
                          *[other] { $stars } stars
                         }
+  timeDisplayPattern: |-
+                      { $hours ->
+                        [0] { $minutes ->
+                                [one] 1 minute and { $seconds } seconds
+                                *[other] { $minutes } minutes and { $seconds } seconds
+                                }
+                        [one] { $minutes ->
+                              [one] 1 hour, 1 minute and { $seconds } seconds
+                              *[other] 1 hour, { $minutes } minutes and { $seconds } seconds
+                              }
+                        *[other] { $minutes ->
+                                  [one] { $hours } hours, 1 minute and { $seconds } seconds
+                                  *[other] { $hours } hours, { $minutes } minutes and { $seconds } seconds
+                                  }
+                      }
   statusBar:
     accessibleHeading:                Level Progress
     accessibleHeadingWithLevelNumber: Level { $levelNumber } Progress

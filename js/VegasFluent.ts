@@ -56,6 +56,7 @@ addToMapIfDefined( 'keyboardHelpDialog_checkAnswer', 'keyboardHelpDialog.checkAn
 addToMapIfDefined( 'a11y_scoreDisplays_scoreDisplayStars_accessibleScore', 'a11y.scoreDisplays.scoreDisplayStars.accessibleScoreStringProperty' );
 addToMapIfDefined( 'a11y_scoreDisplays_scoreDisplayLabelledStars_accessibleScore', 'a11y.scoreDisplays.scoreDisplayLabelledStars.accessibleScoreStringProperty' );
 addToMapIfDefined( 'a11y_scoreDisplays_scoreDisplayNumberAndStar_accessibleScore', 'a11y.scoreDisplays.scoreDisplayNumberAndStar.accessibleScoreStringProperty' );
+addToMapIfDefined( 'a11y_timeDisplayPattern', 'a11y.timeDisplayPatternStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_accessibleHeading', 'a11y.statusBar.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_accessibleHeadingWithLevelNumber', 'a11y.statusBar.accessibleHeadingWithLevelNumberStringProperty' );
 addToMapIfDefined( 'a11y_statusBar_backButton_accessibleName', 'a11y.statusBar.backButton.accessibleNameStringProperty' );
@@ -187,6 +188,7 @@ const VegasFluent = {
         accessibleScore: new FluentPattern<{ stars: number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_scoreDisplays_scoreDisplayNumberAndStar_accessibleScore', _.get( VegasStrings, 'a11y.scoreDisplays.scoreDisplayNumberAndStar.accessibleScoreStringProperty' ), [{"name":"stars","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"}]}] )
       }
     },
+    timeDisplayPattern: new FluentPattern<{ hours: 0 | number | 'one' | number | 'other' | TReadOnlyProperty<0 | number | 'one' | number | 'other'>, minutes: number | 'one' | number | 'other' | number | 'one' | number | 'other' | number | 'one' | number | 'other' | TReadOnlyProperty<number | 'one' | number | 'other' | number | 'one' | number | 'other' | number | 'one' | number | 'other'>, seconds: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_timeDisplayPattern', _.get( VegasStrings, 'a11y.timeDisplayPatternStringProperty' ), [{"name":"hours","variants":[0,{"type":"number","value":"one"},{"type":"number","value":"other"}]},{"name":"minutes","variants":[{"type":"number","value":"one"},{"type":"number","value":"other"},{"type":"number","value":"one"},{"type":"number","value":"other"},{"type":"number","value":"one"},{"type":"number","value":"other"}]},{"name":"seconds"}] ),
     statusBar: {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_statusBar_accessibleHeading', _.get( VegasStrings, 'a11y.statusBar.accessibleHeadingStringProperty' ) ),
       accessibleHeadingWithLevelNumber: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_statusBar_accessibleHeadingWithLevelNumber', _.get( VegasStrings, 'a11y.statusBar.accessibleHeadingWithLevelNumberStringProperty' ), [{"name":"levelNumber"}] ),

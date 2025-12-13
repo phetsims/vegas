@@ -27,6 +27,7 @@ import TextPushButton from '../../sun/js/buttons/TextPushButton.js';
 import Panel, { PanelOptions } from '../../sun/js/Panel.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import GameTimer from './GameTimer.js';
+import GameUtils from './GameUtils.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
@@ -187,7 +188,7 @@ export default class LevelCompletedNode extends Panel {
           ( elapsedTime: string, yourNewBest: string ) => `${elapsedTime}<br>${yourNewBest}`
         );
         accessibleTimeStringProperty = VegasFluent.a11y.levelCompletedNode.timeItem.timeWithNewBest.createProperty( {
-          time: formattedTime
+          time: GameUtils.getMinutesAndSecondsStringProperty( elapsedTime )
         } );
       }
       else if ( bestTimeAtThisLevel !== null ) {
@@ -207,18 +208,18 @@ export default class LevelCompletedNode extends Panel {
             `${elapsedTime}<br>${StringUtils.format( pattern, formattedBestTime )}`
         );
 
-        // Time: MM:SS. Your Best: MM:SS.
+        // Time: { $minutes} minutes and { $seconds } seconds. Your Best: { $minutes} minutes and { $seconds } seconds.
         accessibleTimeStringProperty = VegasFluent.a11y.levelCompletedNode.timeItem.timeWithBest.createProperty( {
-          time: formattedTime,
-          bestTime: formattedBestTime
+          time: GameUtils.getMinutesAndSecondsStringProperty( elapsedTime ),
+          bestTime: GameUtils.getMinutesAndSecondsStringProperty( bestTimeAtThisLevel )
         } );
       }
       else {
 
-        // Time: MM:SS
+        // Time: { $minutes} minutes and { $seconds } seconds
         timeStringProperty = elapsedTimeStringProperty;
         accessibleTimeStringProperty = VegasFluent.a11y.levelCompletedNode.timeItem.time.createProperty( {
-          time: formattedTime
+          time: GameUtils.getMinutesAndSecondsStringProperty( elapsedTime )
         } );
       }
 
@@ -286,7 +287,7 @@ export default class LevelCompletedNode extends Panel {
 
   /**
    * Place focus on the continue button and add a context response that describes the level status.
-   * If the visibleProperty link in the constructo does not work for your implementation you can manually call
+   * If the visibleProperty link in the constructor does not work for your implementation you can manually call
    * this directly instead.
    */
   public handleShow(): void {

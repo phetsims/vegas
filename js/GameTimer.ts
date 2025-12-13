@@ -15,6 +15,7 @@ import stepTimer from '../../axon/js/stepTimer.js';
 import { TimerListener } from '../../axon/js/Timer.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import Tandem from '../../tandem/js/Tandem.js';
+import GameUtils from './GameUtils.js';
 import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 import PhetioObject from '../../tandem/js/PhetioObject.js';
@@ -123,9 +124,10 @@ export default class GameTimer extends PhetioObject {
    */
   public static formatTime( time: number ): string {
 
-    const hours = Math.floor( time / 3600 );
-    const minutes = Math.floor( ( time - ( hours * 3600 ) ) / 60 );
-    const seconds = Math.floor( time - ( hours * 3600 ) - ( minutes * 60 ) );
+    const extractedHoursMinutesAndSeconds = GameUtils.extractHoursMinutesAndSeconds( time );
+    const hours = extractedHoursMinutesAndSeconds.hours;
+    const minutes = extractedHoursMinutesAndSeconds.minutes;
+    const seconds = extractedHoursMinutesAndSeconds.seconds;
 
     const minutesString = ( minutes > 9 || hours === 0 ) ? minutes : ( `0${minutes}` );
     const secondsString = ( seconds > 9 ) ? seconds : ( `0${seconds}` );

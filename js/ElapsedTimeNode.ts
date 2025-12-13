@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Multilink from '../../axon/js/Multilink.js';
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import StringProperty from '../../axon/js/StringProperty.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
@@ -20,8 +19,9 @@ import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import GameTimer from './GameTimer.js';
+import GameUtils from './GameUtils.js';
 import vegas from './vegas.js';
-import VegasStrings from './VegasStrings.js';
+import VegasFluent from './VegasFluent.js';
 
 type SelfOptions = {
   clockIconRadius?: number;
@@ -64,20 +64,17 @@ export default class ElapsedTimeNode extends HBox {
 
     super( options );
 
-    this.timeValueStringProperty = this._timeValueStringProperty;
+    this.timeValueStringProperty = VegasFluent.a11y.timeDisplayPattern.createProperty( {
+      hours: elapsedTimeProperty.derived( time => GameUtils.extractHoursMinutesAndSeconds( time ).hours ),
+      minutes: elapsedTimeProperty.derived( time => GameUtils.extractHoursMinutesAndSeconds( time ).minutes ),
+      seconds: elapsedTimeProperty.derived( time => GameUtils.extractHoursMinutesAndSeconds( time ).seconds )
+    } );
 
     // Update the time display.
-    const multilink = new Multilink( [
-      elapsedTimeProperty,
-
-      // Dynamic strings used by GameTimer.formatTime
-      VegasStrings.pattern[ '0hours' ][ '1minutes' ][ '2secondsStringProperty' ],
-      VegasStrings.pattern[ '0minutes' ][ '1secondsStringProperty' ]
-    ], ( elapsedTime, pattern1, pattern2 ) => {
-      const timeValueString = GameTimer.formatTime( elapsedTime );
-      timeValue.string = timeValueString;
-      this._timeValueStringProperty.value = timeValueString;
-    } );
+    const elapsedTimePropertyListener = ( elapsedTime: number ) => {
+      timeValue.string = GameTimer.formatTime( elapsedTime );
+    };
+    elapsedTimeProperty.link( elapsedTimePropertyListener );
 
     if ( this.isPhetioInstrumented() && elapsedTimeProperty.isPhetioInstrumented() ) {
       this.addLinkedElement( elapsedTimeProperty );
@@ -85,7 +82,7 @@ export default class ElapsedTimeNode extends HBox {
 
     this.disposeElapsedTimeNode = () => {
       this._timeValueStringProperty.dispose();
-      multilink.dispose();
+      elapsedTimeProperty.unlink( elapsedTimePropertyListener );
     };
   }
 

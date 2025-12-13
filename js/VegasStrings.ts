@@ -83,6 +83,7 @@ type StringsType = {
         'accessibleScoreStringProperty': LocalizedStringProperty;
       }
     };
+    'timeDisplayPatternStringProperty': LocalizedStringProperty;
     'statusBar': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
       'accessibleHeadingWithLevelNumberStringProperty': LocalizedStringProperty;
