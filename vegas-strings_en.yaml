@@ -58,6 +58,7 @@ a11y:
   timeDisplayPattern: |-
                       { $hours ->
                         [0] { $minutes ->
+                                [0] { $seconds } seconds
                                 [one] 1 minute and { $seconds } seconds
                                 *[other] { $minutes } minutes and { $seconds } seconds
                                 }

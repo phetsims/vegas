@@ -123,7 +123,7 @@
       }
     },
     "timeDisplayPattern": {
-      "value": "{ $hours ->\n  [0] { $minutes ->\n          [one] 1 minute and { $seconds } seconds\n          *[other] { $minutes } minutes and { $seconds } seconds\n          }\n  [one] { $minutes ->\n        [one] 1 hour, 1 minute and { $seconds } seconds\n        *[other] 1 hour, { $minutes } minutes and { $seconds } seconds\n        }\n  *[other] { $minutes ->\n            [one] { $hours } hours, 1 minute and { $seconds } seconds\n            *[other] { $hours } hours, { $minutes } minutes and { $seconds } seconds\n            }\n}"
+      "value": "{ $hours ->\n  [0] { $minutes ->\n          [0] { $seconds } seconds\n          [one] 1 minute and { $seconds } seconds\n          *[other] { $minutes } minutes and { $seconds } seconds\n          }\n  [one] { $minutes ->\n        [one] 1 hour, 1 minute and { $seconds } seconds\n        *[other] 1 hour, { $minutes } minutes and { $seconds } seconds\n        }\n  *[other] { $minutes ->\n            [one] { $hours } hours, 1 minute and { $seconds } seconds\n            *[other] { $hours } hours, { $minutes } minutes and { $seconds } seconds\n            }\n}"
     },
     "statusBar": {
       "accessibleHeading": {

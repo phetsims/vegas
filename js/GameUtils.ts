@@ -34,9 +34,11 @@ const GameUtils = {
     }
 
     // Only update the time if our current score has not changed and time has not been set yet,
-    // or we have a new best time for this score.
+    // or we have a new best time for this score. A time has not been set yet if it is null or 0.
     else if ( score === scoreProperty.value &&
-              ( bestTimeForScoreProperty.value === null || time < bestTimeForScoreProperty.value ) ) {
+              ( bestTimeForScoreProperty.value === null ||
+                bestTimeForScoreProperty.value === 0 ||
+                time < bestTimeForScoreProperty.value ) ) {
       bestTimeForScoreProperty.value = time;
       newBest = true;
     }
