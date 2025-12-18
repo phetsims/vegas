@@ -16,8 +16,10 @@
 
 import BooleanProperty from '../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../axon/js/DerivedProperty.js';
+import DynamicProperty from '../../axon/js/DynamicProperty.js';
 import ReadOnlyProperty from '../../axon/js/ReadOnlyProperty.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
+import { FluentPatternDerivedProperty } from '../../chipper/js/browser/FluentPattern.js';
 import Dimension2 from '../../dot/js/Dimension2.js';
 import affirm from '../../perennial-alias/js/browser-and-node/affirm.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
@@ -175,40 +177,21 @@ export default class LevelSelectionButton extends RectangularPushButton {
     options.content = options.alignGroup ? options.alignGroup.createBox( contentVBox, { yAlign: 'top' } ) : contentVBox;
 
     // The accessibleName pattern depends on whether there is a brief descriptor and/or best time is provided.
-    let accessibleNameStringProperty;
+    // If best time is provided accessibleNameStringProperty will be overridden later in the constructor.
+    let accessibleNameStringProperty: null | TReadOnlyProperty<string>;
     if ( options.accessibleBriefLevelName ) {
-      if ( options.bestTimeForScoreProperty ) {
-        accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelNameAndBestTime.createProperty( {
-          levelNumber: options.accessibleLevelNumber,
-          levelName: options.accessibleBriefLevelName,
-          scoreDescription: scoreDisplay.accessibleScoreStringProperty,
-          time: options.bestTimeForScoreProperty.derived( bestTime => GameUtils.getMinutesAndSecondsString( bestTime || 0 ) )
-        } );
-      }
-      else {
-        accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelName.createProperty( {
-          levelNumber: options.accessibleLevelNumber,
-          levelName: options.accessibleBriefLevelName,
-          scoreDescription: scoreDisplay.accessibleScoreStringProperty
-        } );
-      }
+      accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelName.createProperty( {
+        levelNumber: options.accessibleLevelNumber,
+        levelName: options.accessibleBriefLevelName,
+        scoreDescription: scoreDisplay.accessibleScoreStringProperty
+      } );
     }
     else {
-      if ( options.bestTimeForScoreProperty ) {
-        accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleNameWithBestTime.createProperty( {
-          levelNumber: options.accessibleLevelNumber,
-          scoreDescription: scoreDisplay.accessibleScoreStringProperty,
-          time: options.bestTimeForScoreProperty.derived( bestTime => GameUtils.getMinutesAndSecondsString( bestTime || 0 ) )
-        } );
-      }
-      else {
-        accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleName.createProperty( {
-          levelNumber: options.accessibleLevelNumber,
-          scoreDescription: scoreDisplay.accessibleScoreStringProperty
-        } );
-      }
+      accessibleNameStringProperty = VegasFluent.a11y.levelSelectionButton.accessibleName.createProperty( {
+        levelNumber: options.accessibleLevelNumber,
+        scoreDescription: scoreDisplay.accessibleScoreStringProperty
+      } );
     }
-    options.accessibleName = accessibleNameStringProperty;
 
     // If no sound player was provided, create the default.
     if ( options.soundPlayer === undefined ) {
@@ -256,10 +239,55 @@ export default class LevelSelectionButton extends RectangularPushButton {
         }
       };
       options.bestTimeForScoreProperty.link( bestTimeListener );
+
+      // Update accessibleName to include best time. The accessibleName needs to listen to the
+      // bestTimeNodeVisibleProperty, in order to update the string when the best time visibility changes.
+      if ( options.accessibleBriefLevelName ) {
+        accessibleNameStringProperty = new DynamicProperty<string, string, FluentPatternDerivedProperty>(
+          bestTimeNodeVisibleProperty.derived( visible => {
+            if ( visible ) {
+              return VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelNameAndBestTime.createProperty( {
+                levelNumber: options.accessibleLevelNumber,
+                levelName: options.accessibleBriefLevelName!,
+                scoreDescription: scoreDisplay.accessibleScoreStringProperty,
+                time: options.bestTimeForScoreProperty!.derived( bestTime => GameUtils.getMinutesAndSecondsString( bestTime || 0 ) )
+              } );
+            }
+            else {
+              return VegasFluent.a11y.levelSelectionButton.accessibleNameWithLevelName.createProperty( {
+                levelNumber: options.accessibleLevelNumber,
+                levelName: options.accessibleBriefLevelName!,
+                scoreDescription: scoreDisplay.accessibleScoreStringProperty
+              } );
+            }
+          } ) );
+      }
+      else {
+        accessibleNameStringProperty = new DynamicProperty<string, string, FluentPatternDerivedProperty>(
+          bestTimeNodeVisibleProperty.derived( visible => {
+            if ( visible ) {
+              return VegasFluent.a11y.levelSelectionButton.accessibleNameWithBestTime.createProperty( {
+                levelNumber: options.accessibleLevelNumber,
+                scoreDescription: scoreDisplay.accessibleScoreStringProperty,
+                time: options.bestTimeForScoreProperty!.derived( bestTime => GameUtils.getMinutesAndSecondsString( bestTime || 0 ) )
+              } );
+            }
+            else {
+              return VegasFluent.a11y.levelSelectionButton.accessibleName.createProperty( {
+                levelNumber: options.accessibleLevelNumber,
+                scoreDescription: scoreDisplay.accessibleScoreStringProperty
+              } );
+            }
+          } ) );
+
+      }
     }
 
-    // If no accessibleName is provided, look for one in the content Node
-    if ( !options.accessibleName ) {
+    this.accessibleName = accessibleNameStringProperty;
+
+    // TODO: JG, is it even possible to hit this scenario? Can we remove this if block? https://github.com/phetsims/vegas/issues/130
+    // If no accessibleName was created, look for one in the content Node
+    if ( !accessibleNameStringProperty ) {
       this.accessibleName = findStringProperty( icon );
     }
 
