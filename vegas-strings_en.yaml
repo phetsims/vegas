@@ -174,4 +174,4 @@ a11y:
     checkAnswerButton:
 
       # Accessible description of the action in the dialog.
-      accessibleParagraph: Check Answer with { $altOrOption } key plus C key.
+      accessibleParagraph: Check Answer with { $altOrOption } plus C key.
