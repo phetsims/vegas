@@ -169,5 +169,3 @@ a11y:
     screenSummary:
       intro:            Welcome to the { $screenName } Screen. Choose a level to start earning stars. Clear everything with Reset All to start over.
       introWithOptions: Welcome to the { $screenName } Screen. Choose a level to start earning stars. Set available game options to your liking. Clear everything with Reset All to start over.
-  keyboardHelpDialog:
-    gameShortcuts: Game Shortcuts

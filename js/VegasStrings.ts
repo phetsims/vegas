@@ -177,9 +177,6 @@ type StringsType = {
         'introStringProperty': LocalizedStringProperty;
         'introWithOptionsStringProperty': LocalizedStringProperty;
       }
-    };
-    'keyboardHelpDialog': {
-      'gameShortcutsStringProperty': LocalizedStringProperty;
     }
   }
 };

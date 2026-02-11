@@ -102,7 +102,6 @@ addToMapIfDefined( 'a11y_levelSelectionScreenNode_accessibleHeadingOptions', 'a1
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_accessibleContextResponseShow', 'a11y.levelSelectionScreenNode.accessibleContextResponseShowStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_screenSummary_intro', 'a11y.levelSelectionScreenNode.screenSummary.introStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_screenSummary_introWithOptions', 'a11y.levelSelectionScreenNode.screenSummary.introWithOptionsStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelpDialog_gameShortcuts', 'a11y.keyboardHelpDialog.gameShortcutsStringProperty' );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
 const createFluentFile = (): string => {
@@ -292,9 +291,6 @@ const VegasFluent = {
         intro: new FluentPattern<{ screenName: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_screenSummary_intro', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.screenSummary.introStringProperty' ), [{"name":"screenName"}] ),
         introWithOptions: new FluentPattern<{ screenName: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_levelSelectionScreenNode_screenSummary_introWithOptions', _.get( VegasStrings, 'a11y.levelSelectionScreenNode.screenSummary.introWithOptionsStringProperty' ), [{"name":"screenName"}] )
       }
-    },
-    keyboardHelpDialog: {
-      gameShortcutsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelpDialog_gameShortcuts', _.get( VegasStrings, 'a11y.keyboardHelpDialog.gameShortcutsStringProperty' ) )
     }
   }
 };
