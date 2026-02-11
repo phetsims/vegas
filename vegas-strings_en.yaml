@@ -171,7 +171,3 @@ a11y:
       introWithOptions: Welcome to the { $screenName } Screen. Choose a level to start earning stars. Set available game options to your liking. Clear everything with Reset All to start over.
   keyboardHelpDialog:
     gameShortcuts: Game Shortcuts
-    checkAnswerButton:
-
-      # Accessible description of the action in the dialog.
-      accessibleParagraph: Check Answer with { $altOrOption } plus C key.

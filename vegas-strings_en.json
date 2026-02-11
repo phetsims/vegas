@@ -310,11 +310,6 @@
     "keyboardHelpDialog": {
       "gameShortcuts": {
         "value": "Game Shortcuts"
-      },
-      "checkAnswerButton": {
-        "accessibleParagraph": {
-          "value": "Check Answer with { $altOrOption } plus C key."
-        }
       }
     }
   }

@@ -180,9 +180,6 @@ type StringsType = {
     };
     'keyboardHelpDialog': {
       'gameShortcutsStringProperty': LocalizedStringProperty;
-      'checkAnswerButton': {
-        'accessibleParagraphStringProperty': LocalizedStringProperty;
-      }
     }
   }
 };

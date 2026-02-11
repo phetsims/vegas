@@ -103,7 +103,6 @@ addToMapIfDefined( 'a11y_levelSelectionScreenNode_accessibleContextResponseShow'
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_screenSummary_intro', 'a11y.levelSelectionScreenNode.screenSummary.introStringProperty' );
 addToMapIfDefined( 'a11y_levelSelectionScreenNode_screenSummary_introWithOptions', 'a11y.levelSelectionScreenNode.screenSummary.introWithOptionsStringProperty' );
 addToMapIfDefined( 'a11y_keyboardHelpDialog_gameShortcuts', 'a11y.keyboardHelpDialog.gameShortcutsStringProperty' );
-addToMapIfDefined( 'a11y_keyboardHelpDialog_checkAnswerButton_accessibleParagraph', 'a11y.keyboardHelpDialog.checkAnswerButton.accessibleParagraphStringProperty' );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
 const createFluentFile = (): string => {
@@ -229,7 +228,6 @@ const VegasFluent = {
     },
     allLevelsCompletedNode: {
       faceNode: {
-        _comment_0: new FluentComment( {"comment":"Accessible description of the action in the dialog.","associatedKey":"accessibleParagraph"} ),
         accessibleParagraphStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_allLevelsCompletedNode_faceNode_accessibleParagraph', _.get( VegasStrings, 'a11y.allLevelsCompletedNode.faceNode.accessibleParagraphStringProperty' ) )
       },
       doneButton: {
@@ -265,11 +263,9 @@ const VegasFluent = {
         accessibleContextResponse: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_keepGoingButton_accessibleContextResponse', _.get( VegasStrings, 'a11y.rewardDialog.keepGoingButton.accessibleContextResponseStringProperty' ), [{"name":"levelNumber"}] )
       },
       phetGirl: {
-        _comment_0: new FluentComment( {"comment":"Accessible description of the action in the dialog.","associatedKey":"accessibleParagraph"} ),
         accessibleParagraph: new FluentPattern<{ stars: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_phetGirl_accessibleParagraph', _.get( VegasStrings, 'a11y.rewardDialog.phetGirl.accessibleParagraphStringProperty' ), [{"name":"stars"}] )
       },
       newLevelButton: {
-        _comment_0: new FluentComment( {"comment":"Accessible description of the action in the dialog.","associatedKey":"accessibleParagraph"} ),
         accessibleParagraph: new FluentPattern<{ levelNumber: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_rewardDialog_newLevelButton_accessibleParagraph', _.get( VegasStrings, 'a11y.rewardDialog.newLevelButton.accessibleParagraphStringProperty' ), [{"name":"levelNumber"}] )
       }
     },
@@ -298,11 +294,7 @@ const VegasFluent = {
       }
     },
     keyboardHelpDialog: {
-      gameShortcutsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelpDialog_gameShortcuts', _.get( VegasStrings, 'a11y.keyboardHelpDialog.gameShortcutsStringProperty' ) ),
-      checkAnswerButton: {
-        _comment_0: new FluentComment( {"comment":"Accessible description of the action in the dialog.","associatedKey":"accessibleParagraph"} ),
-        accessibleParagraph: new FluentPattern<{ altOrOption: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_keyboardHelpDialog_checkAnswerButton_accessibleParagraph', _.get( VegasStrings, 'a11y.keyboardHelpDialog.checkAnswerButton.accessibleParagraphStringProperty' ), [{"name":"altOrOption"}] )
-      }
+      gameShortcutsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelpDialog_gameShortcuts', _.get( VegasStrings, 'a11y.keyboardHelpDialog.gameShortcutsStringProperty' ) )
     }
   }
 };

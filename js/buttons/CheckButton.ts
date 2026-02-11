@@ -9,7 +9,6 @@
  */
 
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import TextKeyNode from '../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import HotkeyData from '../../../scenery/js/input/HotkeyData.js';
 import KeyboardListener from '../../../scenery/js/listeners/KeyboardListener.js';
 import TextPushButton, { TextPushButtonOptions } from '../../../sun/js/buttons/TextPushButton.js';
@@ -52,11 +51,6 @@ export default class CheckButton extends TextPushButton {
 
     // visual label for this Hotkey in the Keyboard Help dialog
     keyboardHelpDialogLabelStringProperty: VegasFluent.keyboardHelpDialog.checkAnswerStringProperty,
-
-    // PDOM description for this Hotkey in the Keyboard Help dialog
-    keyboardHelpDialogPDOMLabelStringProperty: VegasFluent.a11y.keyboardHelpDialog.checkAnswerButton.accessibleParagraph.createProperty( {
-      altOrOption: TextKeyNode.getAltKeyString()
-    } ),
 
     repoName: vegas.name,
     global: true
