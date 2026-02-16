@@ -50,7 +50,7 @@ function createKeyboardHelpNode(): Node {
       // You can put additional rows in the game shortcuts section if desired.
       additionalContent: [
         KeyboardHelpSectionRow.labelWithIcon( 'Do a thing', TextKeyNode.space(), {
-          labelInnerContent: 'Do a thing with spacebar.'
+          accessibleRowDescriptionProperty: 'Do a thing with spacebar.'
         } )
       ]
     } ) ],
