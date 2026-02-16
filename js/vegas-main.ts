@@ -7,6 +7,7 @@
  */
 
 import Property from '../../axon/js/Property.js';
+import TinyProperty from '../../axon/js/TinyProperty.js';
 import Screen from '../../joist/js/Screen.js';
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
@@ -50,7 +51,7 @@ function createKeyboardHelpNode(): Node {
       // You can put additional rows in the game shortcuts section if desired.
       additionalContent: [
         KeyboardHelpSectionRow.labelWithIcon( 'Do a thing', TextKeyNode.space(), {
-          accessibleRowDescriptionProperty: 'Do a thing with spacebar.'
+          accessibleRowDescriptionProperty: new TinyProperty( 'Do a thing with spacebar.' )
         } )
       ]
     } ) ],
