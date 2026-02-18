@@ -26,16 +26,18 @@ const GameUtils = {
     // Track whether we have a new best score or time.
     let newBest = false;
 
-    // If we have a new high score, update both score and best time.
+    // If we have a new high score, update both score and best time
     if ( score && score > scoreProperty.value ) {
       scoreProperty.value = score;
-      bestTimeForScoreProperty.value = time;
+
+      // Do not update the best time for this score if the time is 0, which indicates that the timer was not running.
+      bestTimeForScoreProperty.value = time === 0 ? bestTimeForScoreProperty.value : time;
       newBest = true;
     }
 
-    // Only update the time if our current score has not changed and time has not been set yet,
-    // or we have a new best time for this score. A time has not been set yet if it is null or 0.
-    else if ( score && score === scoreProperty.value &&
+    // Only update the time if the timer was running and our current score has not changed and time has not been set
+    // yet, or we have a new best time for this score. A time has not been set yet if it is null or 0.
+    else if ( time !== 0 && score && score === scoreProperty.value &&
               ( bestTimeForScoreProperty.value === null ||
                 bestTimeForScoreProperty.value === 0 ||
                 time < bestTimeForScoreProperty.value ) ) {
