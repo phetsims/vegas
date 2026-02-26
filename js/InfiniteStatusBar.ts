@@ -13,7 +13,7 @@ import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import AccessibleListNode, { AccessibleListItem } from '../../scenery-phet/js/accessibility/AccessibleListNode.js';
+import AccessibleList, { AccessibleListItem } from '../../scenery-phet/js/accessibility/AccessibleList.js';
 import BackButton from '../../scenery-phet/js/buttons/BackButton.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import { findStringProperty } from '../../scenery/js/accessibility/pdom/findStringProperty.js';
@@ -40,7 +40,7 @@ type SelfOptions = {
   accessibleMessageStringProperty?: TReadOnlyProperty<string> | null;
 };
 
-export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight'>;
+export type InfiniteStatusBarOptions = SelfOptions & StrictOmit<StatusBarOptions, 'children' | 'barHeight' | 'accessibleTemplate'>;
 
 export default class InfiniteStatusBar extends StatusBar {
 
@@ -102,9 +102,12 @@ export default class InfiniteStatusBar extends StatusBar {
     accessibleListItems.push( scoreDisplay.accessibleScoreStringProperty );
 
     // Assemble the accessible list.
-    const accessibleListNode = new AccessibleListNode( accessibleListItems );
+    const accessibleTemplateProperty = AccessibleList.createTemplate( {
+      listItems: accessibleListItems
+    } );
+    options.accessibleTemplate = accessibleTemplateProperty;
 
-    options.children = [ leftNodes, scoreDisplay, accessibleListNode ];
+    options.children = [ leftNodes, scoreDisplay ];
 
     options.barHeight = Math.max( leftNodes.height, scoreDisplay.height ) + ( 2 * options.yMargin );
 
@@ -123,12 +126,9 @@ export default class InfiniteStatusBar extends StatusBar {
       scoreDisplay.right = this.positioningBoundsProperty.value.right;
     } );
 
-    // pdom order - list before everything else
-    this.setPDOMOrder( [ accessibleListNode ] );
-
     this.disposeInfiniteStatusBar = () => {
       scoreDisplay.dispose();
-      accessibleListNode.dispose();
+      accessibleTemplateProperty.dispose();
     };
   }
 
