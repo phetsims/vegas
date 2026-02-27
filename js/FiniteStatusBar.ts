@@ -15,8 +15,7 @@ import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
-import { AccessibleListItem } from '../../scenery-phet/js/accessibility/AccessibleList.js';
-import AccessibleListNode from '../../scenery-phet/js/accessibility/AccessibleListNode.js';
+import AccessibleList, { AccessibleListItem } from '../../scenery-phet/js/accessibility/AccessibleList.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import StatusBar, { StatusBarOptions } from '../../scenery-phet/js/StatusBar.js';
 import HBox from '../../scenery/js/layout/nodes/HBox.js';
@@ -142,7 +141,7 @@ export default class FiniteStatusBar extends StatusBar {
       stroke: options.barStroke
     } );
 
-    // The described components of the status bar will be combined into an AccessibleListNode.
+    // The described components of the status bar are appended as an accessible list template.
     const accessibleListItems: ( TReadOnlyProperty<string> | AccessibleListItem )[] = [];
 
     // Nodes on the left end of the bar
@@ -253,13 +252,14 @@ export default class FiniteStatusBar extends StatusBar {
     const maxHeightLeftChildren = _.maxBy( leftChildren, child => child.height )!.height;
     leftChildren.push( new VStrut( maxHeightLeftChildren ) );
 
-    const accessibleListNode = new AccessibleListNode( accessibleListItems );
-    leftChildren.push( accessibleListNode );
-
     // Nodes on the left end of the bar
     const leftNodes = new HBox( {
       spacing: options.xSpacing,
-      children: leftChildren
+      children: leftChildren,
+      accessibleTemplate: AccessibleList.createTemplate( {
+        listItems: accessibleListItems
+      } ),
+      appendAccessibleTemplate: true
     } );
 
     options.children = [
@@ -290,7 +290,6 @@ export default class FiniteStatusBar extends StatusBar {
       elapsedTimeNode && elapsedTimeNode.dispose();
       startOverButton.dispose();
       elapsedTimeNode && elapsedTimeNode.dispose();
-      accessibleListNode.dispose();
     };
   }
 
