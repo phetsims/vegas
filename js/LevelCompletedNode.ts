@@ -13,8 +13,7 @@ import Property from '../../axon/js/Property.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
-import { AccessibleListItem } from '../../scenery-phet/js/accessibility/AccessibleList.js';
-import AccessibleListNode from '../../scenery-phet/js/accessibility/AccessibleListNode.js';
+import AccessibleList, { AccessibleListItem } from '../../scenery-phet/js/accessibility/AccessibleList.js';
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import VBox from '../../scenery/js/layout/nodes/VBox.js';
@@ -97,8 +96,7 @@ export default class LevelCompletedNode extends Panel {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
-    // The accessible content will be contained in an AccessibleListNode. Children will depend on
-    // content included in options.
+    // The accessible content is rendered as an appended list template.
     const accessibleListItems: ( AccessibleListItem | TReadOnlyProperty<string> )[] = [];
 
     const vBoxChildren: Node[] = [];
@@ -246,13 +244,13 @@ export default class LevelCompletedNode extends Panel {
     } );
     vBoxChildren.push( continueButton );
 
-    // Assemble the accessible list content.
-    const accessibleListNode = new AccessibleListNode( accessibleListItems );
-    vBoxChildren.push( accessibleListNode );
-
     const content = new VBox( {
       children: vBoxChildren,
-      spacing: options.ySpacing
+      spacing: options.ySpacing,
+      accessibleTemplate: AccessibleList.createTemplate( {
+        listItems: accessibleListItems
+      } ),
+      appendAccessibleTemplate: true
     } );
 
     super( content, options );
