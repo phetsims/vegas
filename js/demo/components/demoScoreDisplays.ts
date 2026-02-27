@@ -10,7 +10,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
-import AccessibleListNode from '../../../../scenery-phet/js/accessibility/AccessibleListNode.js';
+import AccessibleList from '../../../../scenery-phet/js/accessibility/AccessibleList.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
@@ -40,30 +40,29 @@ export default function demoScoreDisplays( layoutBounds: Bounds2 ): Node {
   const scoreDisplayNumberAndStar = new ScoreDisplayNumberAndStar( scoreProperty );
   const scoreDisplayLabeledNumber = new ScoreDisplayLabeledNumber( scoreProperty );
 
-  // An accessible list Node demonstrating the accessible strings reading the score displays.
-  const accessibleScoreListNode = new AccessibleListNode( [
-    scoreDisplayStars.accessibleScoreStringProperty,
-    scoreDisplayLabelledStars.accessibleScoreStringProperty,
-    scoreDisplayNumberAndStar.accessibleScoreStringProperty,
-    scoreDisplayLabeledNumber.accessibleScoreStringProperty
-  ], {
-    leadingParagraphStringProperty: new Property( 'Score displays:' )
-  } );
-
   // Various options for displaying score.
   const scoreDisplays = new VBox( {
     resize: false,
     spacing: 50,
     align: 'left',
+
+    // An accessible list demonstrating the accessible strings reading the score displays.
+    accessibleTemplate: AccessibleList.createTemplate( {
+      leadingParagraphStringProperty: new Property( 'Score displays:' ),
+      listItems: [
+        scoreDisplayStars.accessibleScoreStringProperty,
+        scoreDisplayLabelledStars.accessibleScoreStringProperty,
+        scoreDisplayNumberAndStar.accessibleScoreStringProperty,
+        scoreDisplayLabeledNumber.accessibleScoreStringProperty
+      ]
+    } ),
     centerX: layoutBounds.centerX,
     top: layoutBounds.top + 20,
     children: [
       scoreDisplayStars,
       scoreDisplayLabelledStars,
       scoreDisplayNumberAndStar,
-      scoreDisplayLabeledNumber,
-
-      accessibleScoreListNode
+      scoreDisplayLabeledNumber
     ]
   } );
 
