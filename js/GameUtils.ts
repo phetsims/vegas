@@ -31,7 +31,7 @@ const GameUtils = {
       scoreProperty.value = score;
 
       // Do not update the best time for this score if the time is 0, which indicates that the timer was not running.
-      bestTimeForScoreProperty.value = time === 0 ? bestTimeForScoreProperty.value : time;
+      bestTimeForScoreProperty.value = time;
       newBest = true;
     }
 
