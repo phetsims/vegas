@@ -256,7 +256,7 @@ export default class FiniteStatusBar extends StatusBar {
     const leftNodes = new HBox( {
       spacing: options.xSpacing,
       children: leftChildren,
-      accessibleTemplate: AccessibleList.createTemplate( {
+      accessibleTemplate: AccessibleList.createTemplateProperty( {
         listItems: accessibleListItems
       } ),
       appendAccessibleTemplate: true

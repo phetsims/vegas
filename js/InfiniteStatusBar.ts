@@ -102,7 +102,7 @@ export default class InfiniteStatusBar extends StatusBar {
     accessibleListItems.push( scoreDisplay.accessibleScoreStringProperty );
 
     // Assemble the accessible list.
-    const accessibleTemplateProperty = AccessibleList.createTemplate( {
+    const accessibleTemplateProperty = AccessibleList.createTemplateProperty( {
       listItems: accessibleListItems
     } );
     options.accessibleTemplate = accessibleTemplateProperty;

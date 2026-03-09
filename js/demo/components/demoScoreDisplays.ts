@@ -47,7 +47,7 @@ export default function demoScoreDisplays( layoutBounds: Bounds2 ): Node {
     align: 'left',
 
     // An accessible list demonstrating the accessible strings reading the score displays.
-    accessibleTemplate: AccessibleList.createTemplate( {
+    accessibleTemplate: AccessibleList.createTemplateProperty( {
       leadingParagraphStringProperty: new Property( 'Score displays:' ),
       listItems: [
         scoreDisplayStars.accessibleScoreStringProperty,

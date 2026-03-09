@@ -247,7 +247,7 @@ export default class LevelCompletedNode extends Panel {
     const content = new VBox( {
       children: vBoxChildren,
       spacing: options.ySpacing,
-      accessibleTemplate: AccessibleList.createTemplate( {
+      accessibleTemplate: AccessibleList.createTemplateProperty( {
         listItems: accessibleListItems
       } ),
       appendAccessibleTemplate: true
