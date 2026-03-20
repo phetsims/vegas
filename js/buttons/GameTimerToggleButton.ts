@@ -11,7 +11,6 @@
 import Property from '../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import TimerToggleButton, { TimerToggleButtonOptions } from '../../../scenery-phet/js/buttons/TimerToggleButton.js';
-import vegas from '../vegas.js';
 import VegasFluent from '../VegasFluent.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -26,5 +25,3 @@ export default class GameTimerToggleButton extends TimerToggleButton {
     }, providedOptions ) );
   }
 }
-
-vegas.register( 'GameTimerToggleButton', GameTimerToggleButton );

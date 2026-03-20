@@ -10,7 +10,6 @@
 
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import TextPushButton, { TextPushButtonOptions } from '../../../sun/js/buttons/TextPushButton.js';
-import vegas from '../vegas.js';
 import VegasFluent from '../VegasFluent.js';
 import VegasStrings from '../VegasStrings.js';
 
@@ -27,5 +26,3 @@ export default class ShowAnswerButton extends TextPushButton {
     }, providedOptions ) );
   }
 }
-
-vegas.register( 'ShowAnswerButton', ShowAnswerButton );

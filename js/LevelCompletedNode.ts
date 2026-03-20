@@ -29,7 +29,6 @@ import Tandem from '../../tandem/js/Tandem.js';
 import GameTimer from './GameTimer.js';
 import GameUtils from './GameUtils.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
 
@@ -303,5 +302,3 @@ export default class LevelCompletedNode extends Panel {
     super.dispose();
   }
 }
-
-vegas.register( 'LevelCompletedNode', LevelCompletedNode );

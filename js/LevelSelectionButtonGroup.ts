@@ -30,7 +30,6 @@ import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import LevelSelectionButton, { LevelSelectionButtonOptions } from './LevelSelectionButton.js';
-import vegas from './vegas.js';
 
 // Describes one LevelSelectionButton
 export type LevelSelectionButtonGroupItem = {
@@ -200,5 +199,3 @@ export default class LevelSelectionButtonGroup extends Node {
     this.buttons[ level - 1 ].focus();
   }
 }
-
-vegas.register( 'LevelSelectionButtonGroup', LevelSelectionButtonGroup );

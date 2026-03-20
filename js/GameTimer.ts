@@ -16,7 +16,6 @@ import { TimerListener } from '../../axon/js/Timer.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import GameUtils from './GameUtils.js';
-import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 import PhetioObject from '../../tandem/js/PhetioObject.js';
 import phetioStateSetEmitter from '../../tandem/js/phetioStateSetEmitter.js';
@@ -143,5 +142,3 @@ export default class GameTimer extends PhetioObject {
     }
   }
 }
-
-vegas.register( 'GameTimer', GameTimer );

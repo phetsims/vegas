@@ -11,7 +11,6 @@
  */
 
 import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
-import vegas from './vegas.js';
 
 class VegasScreenNode extends Node {
 
@@ -55,5 +54,3 @@ class VegasScreenNode extends Node {
 }
 
 export default VegasScreenNode;
-
-vegas.register( 'VegasScreenNode', VegasScreenNode );

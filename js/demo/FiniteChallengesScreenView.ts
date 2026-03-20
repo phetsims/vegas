@@ -23,7 +23,6 @@ import HSlider from '../../../sun/js/HSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import FiniteStatusBar from '../FiniteStatusBar.js';
 import LevelCompletedNode from '../LevelCompletedNode.js';
-import vegas from '../vegas.js';
 
 // constants
 const PERFECT_SCORE = 10;
@@ -169,5 +168,3 @@ export default class FiniteChallengesScreenView extends ScreenView {
     this.children = [ statusBar, controls, levelCompletedNode ];
   }
 }
-
-vegas.register( 'FiniteChallengesScreenView', FiniteChallengesScreenView );

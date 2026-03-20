@@ -56,5 +56,3 @@ export default class CheckButton extends TextPushButton {
     global: true
   } );
 }
-
-vegas.register( 'CheckButton', CheckButton );

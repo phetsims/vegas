@@ -43,7 +43,6 @@ import GameTimer from './GameTimer.js';
 import GameUtils from './GameUtils.js';
 import ScoreDisplayStars from './ScoreDisplayStars.js';
 import { TScoreDisplayNode } from './TScoreDisplayNode.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 
 // constants
@@ -329,5 +328,3 @@ export default class LevelSelectionButton extends RectangularPushButton {
     super.dispose();
   }
 }
-
-vegas.register( 'LevelSelectionButton', LevelSelectionButton );

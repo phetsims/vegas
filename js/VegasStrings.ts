@@ -183,6 +183,4 @@ type StringsType = {
 
 const VegasStrings = getStringModule( 'VEGAS' ) as StringsType;
 
-vegas.register( 'VegasStrings', VegasStrings );
-
 export default VegasStrings;

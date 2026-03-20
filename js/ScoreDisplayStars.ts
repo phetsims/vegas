@@ -18,7 +18,6 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import StarNode, { StarNodeOptions } from '../../scenery-phet/js/StarNode.js';
 import HBox, { HBoxOptions } from '../../scenery/js/layout/nodes/HBox.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 
 type SelfOptions = {
@@ -129,5 +128,3 @@ export default class ScoreDisplayStars extends HBox {
     super.dispose();
   }
 }
-
-vegas.register( 'ScoreDisplayStars', ScoreDisplayStars );

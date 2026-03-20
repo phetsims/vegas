@@ -8,7 +8,6 @@
 
 import Property from '../../axon/js/Property.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 
 const GameUtils = {
@@ -88,5 +87,4 @@ const GameUtils = {
   }
 };
 
-vegas.register( 'GameUtils', GameUtils );
 export default GameUtils;

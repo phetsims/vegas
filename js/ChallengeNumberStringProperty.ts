@@ -10,7 +10,6 @@ import { DerivedProperty3 } from '../../axon/js/DerivedProperty.js';
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import StringUtils from '../../phetcommon/js/util/StringUtils.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 
 export default class ChallengeNumberStringProperty extends DerivedProperty3<string, string, number, number> {
@@ -28,5 +27,3 @@ export default class ChallengeNumberStringProperty extends DerivedProperty3<stri
       } );
   }
 }
-
-vegas.register( 'ChallengeNumberStringProperty', ChallengeNumberStringProperty );

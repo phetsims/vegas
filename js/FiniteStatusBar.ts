@@ -32,7 +32,6 @@ import ChallengeNumberStringProperty from './ChallengeNumberStringProperty.js';
 import ElapsedTimeNode from './ElapsedTimeNode.js';
 import ScoreDisplayLabeledNumber from './ScoreDisplayLabeledNumber.js';
 import { TScoreDisplayNode } from './TScoreDisplayNode.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
 
@@ -298,5 +297,3 @@ export default class FiniteStatusBar extends StatusBar {
     super.dispose();
   }
 }
-
-vegas.register( 'FiniteStatusBar', FiniteStatusBar );

@@ -16,7 +16,6 @@ import Text from '../../scenery/js/nodes/Text.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import RectangularPushButton from '../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../sun/js/Panel.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
 
@@ -97,5 +96,3 @@ export default class AllLevelsCompletedNode extends Node {
     this.addAccessibleContextResponse( VegasFluent.a11y.allLevelsCompletedNode.accessibleContextResponseShowStringProperty );
   }
 }
-
-vegas.register( 'AllLevelsCompletedNode', AllLevelsCompletedNode );

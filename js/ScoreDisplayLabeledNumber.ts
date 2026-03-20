@@ -20,7 +20,6 @@ import Text from '../../scenery/js/nodes/Text.js';
 import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import vegas from './vegas.js';
 import VegasStrings from './VegasStrings.js';
 
 type SelfOptions = {
@@ -89,5 +88,3 @@ export default class ScoreDisplayLabeledNumber extends Node {
     super.dispose();
   }
 }
-
-vegas.register( 'ScoreDisplayLabeledNumber', ScoreDisplayLabeledNumber );

@@ -28,7 +28,6 @@ import CanvasNode, { CanvasNodeOptions } from '../../scenery/js/nodes/CanvasNode
 import Node from '../../scenery/js/nodes/Node.js';
 import TransformTracker from '../../scenery/js/util/TransformTracker.js';
 import phetioStateSetEmitter from '../../tandem/js/phetioStateSetEmitter.js';
-import vegas from './vegas.js';
 
 // constants
 const DEBUG_CANVAS_NODE_BOUNDS = false; // shows a gray rectangle for the CanvasNode to help ensure that its bounds are accurate
@@ -326,5 +325,3 @@ export default class RewardNode extends CanvasNode {
     return array;
   }
 }
-
-vegas.register( 'RewardNode', RewardNode );

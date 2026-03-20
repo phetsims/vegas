@@ -21,7 +21,6 @@ import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode
 import FocusableHeadingNode from '../../scenery/js/accessibility/pdom/FocusableHeadingNode.js';
 import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import ChallengeNumberStringProperty from './ChallengeNumberStringProperty.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasScreenNode from './VegasScreenNode.js';
 
@@ -222,5 +221,3 @@ export default class ChallengeScreenNode extends VegasScreenNode {
     this.accessibleAnswerSummaryNode.visible = visible;
   }
 }
-
-vegas.register( 'ChallengeScreenNode', ChallengeScreenNode );

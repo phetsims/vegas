@@ -16,8 +16,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import vegas from './vegas.js';
-
 function getGameLevelsSchema( numberOfLevels: number ) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types, phet/explicit-method-return-type
 
   assert && assert( Number.isInteger( numberOfLevels ) && numberOfLevels > 0,
@@ -50,5 +48,4 @@ function getGameLevelsSchema( numberOfLevels: number ) { // eslint-disable-line 
   } as const;
 }
 
-vegas.register( 'getGameLevelsSchema', getGameLevelsSchema );
 export default getGameLevelsSchema;

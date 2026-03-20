@@ -10,7 +10,6 @@
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';
 import { NodeOptions } from '../../scenery/js/nodes/Node.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasScreenNode from './VegasScreenNode.js';
 
@@ -43,5 +42,3 @@ export default class RewardScreenNode extends VegasScreenNode {
     super.dispose();
   }
 }
-
-vegas.register( 'RewardScreenNode', RewardScreenNode );

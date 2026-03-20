@@ -17,7 +17,6 @@ import Font from '../../scenery/js/util/Font.js';
 import TColor from '../../scenery/js/util/TColor.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ScoreDisplayStars, { ScoreDisplayStarsOptions } from './ScoreDisplayStars.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
 
@@ -86,5 +85,3 @@ export default class ScoreDisplayLabeledStars extends HBox {
     super.dispose();
   }
 }
-
-vegas.register( 'ScoreDisplayLabeledStars', ScoreDisplayLabeledStars );

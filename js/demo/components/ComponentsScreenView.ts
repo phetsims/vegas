@@ -10,7 +10,6 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DemosScreenView, { DemosScreenViewOptions } from '../../../../sun/js/demo/DemosScreenView.js';
-import vegas from '../../vegas.js';
 import demoAllLevelsCompletedNode from './demoAllLevelsCompletedNode.js';
 import demoGameInfoDialog from './demoGameInfoDialog.js';
 import demoLevelCompletedNode from './demoLevelCompletedNode.js';
@@ -45,5 +44,3 @@ export default class ComponentsScreenView extends DemosScreenView {
     super( demos, options );
   }
 }
-
-vegas.register( 'ComponentsScreenView', ComponentsScreenView );

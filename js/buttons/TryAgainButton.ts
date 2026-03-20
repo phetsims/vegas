@@ -12,7 +12,6 @@
  */
 
 import TextPushButton, { TextPushButtonOptions } from '../../../sun/js/buttons/TextPushButton.js';
-import vegas from '../vegas.js';
 import VegasStrings from '../VegasStrings.js';
 
 export type TryAgainButtonOptions = TextPushButtonOptions;
@@ -22,5 +21,3 @@ export default class TryAgainButton extends TextPushButton {
     super( VegasStrings.tryAgainStringProperty, providedOptions );
   }
 }
-
-vegas.register( 'TryAgainButton', TryAgainButton );

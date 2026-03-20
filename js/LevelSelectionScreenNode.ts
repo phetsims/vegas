@@ -19,7 +19,6 @@ import optionize from '../../phet-core/js/optionize.js';
 import PDOMSectionNode from '../../scenery-phet/js/accessibility/PDOMSectionNode.js';
 import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import LevelSelectionButtonGroup from './LevelSelectionButtonGroup.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasScreenNode from './VegasScreenNode.js';
 
@@ -91,5 +90,3 @@ export default class LevelSelectionScreenNode extends VegasScreenNode {
     } );
   }
 }
-
-vegas.register( 'LevelSelectionScreenNode', LevelSelectionScreenNode );

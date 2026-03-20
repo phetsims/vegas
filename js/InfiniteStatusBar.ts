@@ -22,7 +22,6 @@ import Node from '../../scenery/js/nodes/Node.js';
 import { PushButtonListener } from '../../sun/js/buttons/PushButtonModel.js';
 import ScoreDisplayNumberAndStar from './ScoreDisplayNumberAndStar.js';
 import { TScoreDisplayNode } from './TScoreDisplayNode.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 
 type SelfOptions = {
@@ -137,5 +136,3 @@ export default class InfiniteStatusBar extends StatusBar {
     super.dispose();
   }
 }
-
-vegas.register( 'InfiniteStatusBar', InfiniteStatusBar );

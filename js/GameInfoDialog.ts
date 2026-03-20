@@ -20,7 +20,6 @@ import RichText, { RichTextOptions } from '../../scenery/js/nodes/RichText.js';
 import Text, { TextOptions } from '../../scenery/js/nodes/Text.js';
 import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 
 const DEFAULT_DESCRIPTION_TEXT_FONT = new PhetFont( 24 );
@@ -141,5 +140,3 @@ export default class GameInfoDialog extends Dialog {
     super.dispose();
   }
 }
-
-vegas.register( 'GameInfoDialog', GameInfoDialog );

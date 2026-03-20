@@ -8,7 +8,6 @@
 
 import { QueryStringMachine } from '../../query-string-machine/js/QueryStringMachineModule.js';
 import getGameLevelsSchema from './getGameLevelsSchema.js';
-import vegas from './vegas.js';
 
 const NUMBER_OF_GAME_LEVELS = 5;
 export { NUMBER_OF_GAME_LEVELS };
@@ -19,5 +18,4 @@ const vegasQueryParameters = QueryStringMachine.getAll( {
   gameLevels: getGameLevelsSchema( NUMBER_OF_GAME_LEVELS )
 } );
 
-vegas.register( 'vegasQueryParameters', vegasQueryParameters );
 export default vegasQueryParameters;

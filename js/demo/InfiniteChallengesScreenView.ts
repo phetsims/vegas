@@ -19,7 +19,6 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import ChallengeScreenNode from '../ChallengeScreenNode.js';
 import InfiniteStatusBar from '../InfiniteStatusBar.js';
 import RewardDialog from '../RewardDialog.js';
-import vegas from '../vegas.js';
 
 export default class InfiniteChallengesScreenView extends ScreenView {
 
@@ -94,5 +93,3 @@ export default class InfiniteChallengesScreenView extends ScreenView {
     ];
   }
 }
-
-vegas.register( 'InfiniteChallengesScreenView', InfiniteChallengesScreenView );

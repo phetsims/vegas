@@ -12,7 +12,6 @@ import optionize from '../../../phet-core/js/optionize.js';
 import KeyboardHelpSection, { KeyboardHelpSectionOptions } from '../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
 import KeyboardHelpSectionRow from '../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import CheckButton from '../buttons/CheckButton.js';
-import vegas from '../vegas.js';
 import VegasFluent from '../VegasFluent.js';
 
 type SelfOptions = {
@@ -42,5 +41,3 @@ export default class GameShortcutsKeyboardHelpSection extends KeyboardHelpSectio
     super( VegasFluent.keyboardHelpDialog.gameShortcutsStringProperty, content, options );
   }
 }
-
-vegas.register( 'GameShortcutsKeyboardHelpSection', GameShortcutsKeyboardHelpSection );

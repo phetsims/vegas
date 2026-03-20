@@ -20,7 +20,6 @@ import TColor from '../../scenery/js/util/TColor.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import GameTimer from './GameTimer.js';
 import GameUtils from './GameUtils.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 
 type SelfOptions = {
@@ -91,5 +90,3 @@ export default class ElapsedTimeNode extends HBox {
     super.dispose();
   }
 }
-
-vegas.register( 'ElapsedTimeNode', ElapsedTimeNode );

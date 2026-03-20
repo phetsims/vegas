@@ -9,7 +9,6 @@
  */
 
 import TextPushButton, { TextPushButtonOptions } from '../../../sun/js/buttons/TextPushButton.js';
-import vegas from '../vegas.js';
 import VegasStrings from '../VegasStrings.js';
 
 export type NextButtonOptions = TextPushButtonOptions;
@@ -19,5 +18,3 @@ export default class NextButton extends TextPushButton {
     super( VegasStrings.nextStringProperty, providedOptions );
   }
 }
-
-vegas.register( 'NextButton', NextButton );

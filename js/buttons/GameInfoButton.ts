@@ -10,7 +10,6 @@
 
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import InfoButton, { InfoButtonOptions } from '../../../scenery-phet/js/buttons/InfoButton.js';
-import vegas from '../vegas.js';
 import VegasStrings from '../VegasStrings.js';
 
 
@@ -26,5 +25,3 @@ export default class GameInfoButton extends InfoButton {
     }, providedOptions ) );
   }
 }
-
-vegas.register( 'GameInfoButton', GameInfoButton );

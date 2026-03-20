@@ -13,7 +13,6 @@ import cheer_mp3 from '../sounds/cheer_mp3.js';
 import ding_mp3 from '../sounds/ding_mp3.js';
 import organ_mp3 from '../sounds/organ_mp3.js';
 import trumpet_mp3 from '../sounds/trumpet_mp3.js';
-import vegas from './vegas.js';
 
 // constants
 const ding = new SoundClip( ding_mp3 );
@@ -87,5 +86,3 @@ export default class GameAudioPlayer {
     cheer.play();
   }
 }
-
-vegas.register( 'GameAudioPlayer', GameAudioPlayer );

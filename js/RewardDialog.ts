@@ -25,7 +25,6 @@ import RectangularPushButton, { RectangularPushButtonOptions } from '../../sun/j
 import Dialog, { DialogOptions } from '../../sun/js/Dialog.js';
 import phetGirlJugglingStars_png from '../images/phetGirlJugglingStars_png.js';
 import ScoreDisplayNumberAndStar, { ScoreDisplayNumberAndStarOptions } from './ScoreDisplayNumberAndStar.js';
-import vegas from './vegas.js';
 import VegasFluent from './VegasFluent.js';
 import VegasStrings from './VegasStrings.js';
 
@@ -184,5 +183,3 @@ export default class RewardDialog extends Dialog {
     } ) );
   }
 }
-
-vegas.register( 'RewardDialog', RewardDialog );
