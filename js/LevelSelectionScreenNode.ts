@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 
 /**
  * Represents the level selection screen for a Vegas game, providing accessible sections for level selection buttons
