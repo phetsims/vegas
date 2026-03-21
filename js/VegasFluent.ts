@@ -296,3 +296,5 @@ const VegasFluent = {
 };
 
 export default VegasFluent;
+
+vegas.register('VegasFluent', VegasFluent);
